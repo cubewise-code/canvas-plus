@@ -1,0 +1,6 @@
+{
+  "top-nav": {
+    "url": "/top-nav",
+    "templateUrl": "html/Top-nav.html"
+  }
+}
