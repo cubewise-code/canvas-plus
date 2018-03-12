@@ -1,0 +1,37 @@
+{
+  "id": "example",
+  "name": "Example",
+  "tasks":[
+    {
+      "name": "Print Sample",
+      "type": "report",
+      "instance": "dev",
+      "active": true,
+      "threadCount": 5,
+      "email": {
+          "burstSend": false,
+          "subject": "This is a Test Email!",
+          "to": "addyouremailaddress@company.com",
+          "body": "Add an email body here..."
+      },
+      "attachments": [
+        {
+          "instance": "dev",
+          "name": "Attachment",
+          "url": "/sample/sample-print",
+          "orientation": "LANDSCAPE",
+          "pageSize": "A4"
+        }
+      ]
+    }
+  ],  
+  "credentials": [
+    {
+      "instance": "dev",
+      "userName": "admin",
+      "password": "",
+      "encryptedCredential": "Basic YWRtaW46"
+    }
+  ],
+  "triggers": []
+}

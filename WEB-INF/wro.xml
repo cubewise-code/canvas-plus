@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro">
+  <!-- START: These are REQUIRED LINEs -->
+  <import>classpath:wro.canvas.xml</import>
+    
+  <group name="client">
+    <js>/js/controllers/*.js</js>
+    <css>/css/*.css</css>
+  </group>
+  <!-- END: These are REQUIRED LINEs -->
+  
+</groups>

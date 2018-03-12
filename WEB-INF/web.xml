@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="Canvas" version="3.0">
+  <display-name>appbase</display-name>
+  <welcome-file-list>
+    <welcome-file>index</welcome-file>
+  </welcome-file-list>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Forbidden</web-resource-name>
+      <url-pattern>/*</url-pattern>
+                  
+      <http-method>DELETE</http-method>
+      <http-method>HEAD</http-method>
+      <http-method>PATCH</http-method>
+      <http-method>PUT</http-method>
+      <http-method>TRACE</http-method>
+    </web-resource-collection>
+    <auth-constraint />
+  </security-constraint>
+  
+  <!-- Filters -->  
+  <!-- Security Check Filter -->
+  <filter>
+      <filter-name>restSecurity</filter-name>
+      <filter-class>com.cubewise.rest.RestSecurityFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>restSecurity</filter-name>
+      <url-pattern>/api/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher>
+      <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
+  
+  <!-- Expiration Filter -->
+  <filter>
+	 <filter-name>ExpiresFilter</filter-name>
+	 <filter-class>org.apache.catalina.filters.ExpiresFilter</filter-class>
+	 <init-param>
+	    <param-name>ExpiresByType text/css</param-name>
+	    <param-value>access plus 60 minutes</param-value>
+	 </init-param>
+	 <init-param>
+	    <param-name>ExpiresByType application/javascript</param-name>
+	    <param-value>access plus 60 minutes</param-value>
+	 </init-param>
+	 <init-param>
+		 <param-name>ExpiresByType text/html</param-name>
+		 <param-value>access plus 60 minutes</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+	 <filter-name>ExpiresFilter</filter-name>
+	 <url-pattern>/*</url-pattern>
+	 <dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+  
+  <!-- Nonce Generation Filter -->
+  <filter>
+    <filter-name>RestCSRF</filter-name>
+    <filter-class>org.apache.catalina.filters.RestCsrfPreventionFilter</filter-class>
+    <init-param>
+      <param-name>denyStatus</param-name>
+      <param-value>406</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>RestCSRF</filter-name>
+    
+    <!-- Modifying operations -->
+    <url-pattern>/api/dbs/*</url-pattern>    
+    <url-pattern>/api/dbra</url-pattern> 
+    <url-pattern>/api/mdx/*</url-pattern>
+    <url-pattern>/api/dbr/comments/save</url-pattern>    
+    <url-pattern>/api/processes</url-pattern>
+    <url-pattern>/api/email</url-pattern>
+    
+    <!-- Non Modifying -->
+    <url-pattern>/api/sec</url-pattern>
+    
+  </filter-mapping>
+  
+  <!-- WRO Filter -->
+  <filter>
+    <filter-name>WebResourceOptimizer</filter-name>
+    <filter-class>ro.isdc.wro.http.WroFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>WebResourceOptimizer</filter-name>
+    <url-pattern>/client-assets/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- Admin API Filter -->
+  <filter>
+      <filter-name>admin</filter-name>
+      <filter-class>com.cubewise.rest.admin.AdminServletFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>admin</filter-name>
+      <url-pattern>/api/admin/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- Application API Filter -->
+  <filter>
+      <filter-name>rest</filter-name>
+      <filter-class>com.cubewise.rest.RestServletFilter</filter-class>
+      <init-param>
+          <param-name>madvoc.configurator</param-name>
+          <param-value>com.cubewise.rest.WebConfigurator</param-value>
+      </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>rest</filter-name>
+      <url-pattern>/api/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher>
+      <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
+  
+	
+
+  
+  <servlet>
+    <servlet-name>freemarker</servlet-name>
+    <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
+    <init-param>
+      <param-name>TemplatePath</param-name>
+      <param-value>WEB-INF/pages</param-value>
+    </init-param>
+    <init-param>
+      <param-name>NoCache</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ContentType</param-name>
+      <param-value>text/html; charset=UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>template_update_delay</param-name>
+      <param-value>0</param-value>
+    </init-param>
+    <init-param>
+      <param-name>template_exception_handler</param-name>
+      <param-value>com.cubewise.servlets.FreemarkerTemplateExceptionHandler</param-value>
+    </init-param>
+    <init-param>
+      <param-name>default_encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>url_escaping_charset</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>number_format</param-name>
+      <param-value>#.####</param-value>
+    </init-param>
+    <init-param>
+      <param-name>date_format</param-name>
+      <param-value>yyyy-MM-dd X</param-value>
+    </init-param>
+    <init-param>
+      <param-name>datetime_format</param-name>
+      <param-value>yyyy-MM-dd HH:mm:ss X</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>freemarker</servlet-name>
+    <url-pattern>*.ftl</url-pattern>
+  </servlet-mapping>
+  
+  <context-param>
+    <param-name>quartz:shutdown-on-unload</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>quartz:wait-on-shutdown</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <param-name>quartz:start-scheduler-on-load</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  
+  <listener>
+    <listener-class>
+        org.quartz.ee.servlet.QuartzInitializerListener
+    </listener-class>
+  </listener>
+  
+  <listener>
+    <listener-class>
+      com.cubewise.servlets.ApplicationContext
+    </listener-class>
+  </listener>
+  
+  <listener>
+    <listener-class>
+      com.cubewise.servlets.ApplicationSessionListener
+    </listener-class>
+  </listener>
+  
+  <session-config>
+    <session-timeout>30</session-timeout>
+    <cookie-config>
+        <name>APPBASESESSIONID</name>
+    </cookie-config>
+  </session-config>
+  
+  <servlet>
+       <servlet-name>jsp</servlet-name>
+       <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+       <init-param>
+           <param-name>fork</param-name>
+           <param-value>false</param-value>
+       </init-param>
+       <init-param>
+           <param-name>xpoweredBy</param-name>
+           <param-value>false</param-value>
+       </init-param>
+         <init-param>
+           <param-name>compilerSourceVM</param-name>
+           <param-value>1.7</param-value>
+       </init-param>
+       <init-param>
+           <param-name>compilerTargetVM</param-name>
+           <param-value>1.7</param-value>
+       </init-param>
+       <load-on-startup>3</load-on-startup>
+   </servlet>
+
+</web-app>

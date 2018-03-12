@@ -1,0 +1,24 @@
+[	
+  {
+    "label": "Bootstrap",
+    "icon_class": "fa-code",
+      "data": {"page": "bootstrap"}
+  }, 
+  
+  {
+		"label": "Configuration",
+	 	"icon_class": "fa-cogs",
+	  	"data": {"page": "configuration"}
+	}, 
+	{
+		"label": "Help",
+	 	"icon_class": "fa-question",
+	  	"data": {"page": "help"}
+	},
+	
+	{
+		"label": "About",
+	 	"icon_class": "fa-info-circle",
+	  	"data": {"page": "about"}
+	}	
+]

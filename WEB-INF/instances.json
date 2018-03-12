@@ -1,0 +1,9 @@
+[
+  {
+    "name":"dev",
+    "restUri":"https://localhost:8882",
+    "tm1WebUri":"http://localhost:9510/tm1web",
+    "applyParenthesisFormatting":true,
+    "chartColorScheme":["#FB6900", "#F63700", "#004853", "#007E80", "#00B9BD"]
+  }
+]

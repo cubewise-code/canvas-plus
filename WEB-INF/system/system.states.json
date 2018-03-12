@@ -1,0 +1,56 @@
+{
+    "home":{
+    	"url": "/",
+        "templateUrl": "html/home.html"
+    },
+    
+    "help": {
+        "url": "/help",
+        "templateUrl": "html/system/help.html"
+    },
+      
+    "configuration": {
+        "url": "/configuration",
+        "templateUrl": "html/system/configuration.html"
+    },
+    
+    "bootstrap":{
+        "url": "/bootstrap",
+        "templateUrl": "html/system/bootstrap.html"
+    },
+    
+    "about":{
+    	"url": "/about",
+        "templateUrl": "assets/html/about.html"
+    },
+    
+    "login":{
+    	"url": "/login/:instance?type&name",
+      "templateUrl": "html/login.html"
+    },
+    
+    "system-test-service":{
+    	"url": "/test/services",
+      "templateUrl": "html/system/test/services.html"
+    },
+    
+    "system-test-directive":{
+      "url": "/test/directives",
+      "templateUrl": "html/system/test/directives.html"
+    },
+    
+    "system-test-performance":{
+      "url": "/test/performance",
+      "templateUrl": "html/system/test/performance.html"
+    },
+    
+    "system-test-temp1":{
+      "url": "/test/temp1",
+      "templateUrl": "html/system/test/temp1.html"
+    },
+    
+    "system-test-temp2":{
+      "url": "/test/temp2",
+      "templateUrl": "html/system/test/temp2.html"
+    }
+}

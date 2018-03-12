@@ -1,0 +1,2058 @@
+<div ng-controller="BootstrapCtrl">
+<style>
+.container-v2 {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+  line-height: 1;
+  width:100%
+}
+.btn{
+  margin-top:4px;
+}
+.label{
+  margin-top:4px;
+}
+ .nav-tabs > li:active{
+    background-color:#ccc;
+ }
+btn {
+    cursor: default;
+    background-color: #FFF;
+    border-radius: 4px;
+    text-align: left;
+}
+ .codesnipet{
+  margin:0px;
+   width:100%; 
+   height:inherit; 
+   height:200px; 
+   position:absolute; 
+   z-index:99999; 
+   overflow:auto; 
+   top:0px; 
+   left:0px; 
+   background-color:#FFF;
+   border:thin solid #ccc;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+ }
+  .closecodebtn{
+  right:0px;
+  color:#fff;
+  position:absolute; 
+  background-color: #3e3e3f;
+  top:-5px; 
+  z-index:999999999;
+ }
+ .closecodebtn:hover{
+  right:0px;
+  color:#666;
+  position:absolute; 
+  background-color: #fff;
+  top:-5px; 
+  z-index:999999999;
+ }
+ .copycodebtn{
+  right:30px;
+  position:absolute; 
+  
+  top:-5px; 
+  z-index:999999999;
+ }
+ #page-view-v2 > div{
+  padding:0px;
+}
+ .no-border{
+   border:none;
+ }
+ .no-padding{
+   padding:0px;
+ }
+ .small-padding{
+   padding:2px;
+ }
+ .mid-padding{
+   background-color:#ccc;
+   padding:5px;
+
+ }
+ .sm-padding{
+  
+   padding:5px;
+
+ }
+ .open-copy-code{
+   position:absolute; 
+   right:0px;
+   top:0px;  
+   z-index:9;
+   border-radius: 0px;
+   -webkit-box-shadow:  0px 0px 5px 0px rgba(102,102,102,0.4);    
+   -moz-box-shadow:  0px 0px 5px 0px rgba(102,102,102,0.4); 
+   box-shadow:  0px 0px 5px 0px rgba(102,102,102,0.4);
+
+ }
+ .tabbable{
+   background-color: #fff;
+ }
+ .btn-group{
+   border-bottom:thin solid#ccc; width:100%; 
+   -webkit-box-shadow: inset 0px -6px 25px -14px rgba(102,102,102,0.4);    
+   -moz-box-shadow: inset 0px -6px 25px -14px rgba(102,102,102,0.4); 
+   box-shadow: inset 0px -6px 25px -14px rgba(102,102,102,0.4);
+ }
+ .relative-section{
+   position:relative; 
+   width:100%; 
+   height:100%;
+ }
+ .email-inline-holder{
+   display:inline-block;  
+   width:auto;   
+   margin: 0px;    
+   left: 0px;    
+   padding: 0px;    
+   margin-left: 0px;    
+   margin-bottom: 10px;
+ }
+ .password-inline-holder{
+    display:inline-block;  
+   width:auto;   
+   margin: 0px;    
+   left: 0px;    
+   padding: 0px;    
+   margin-left: 0px;    
+   margin-bottom: 10px;
+   margin-right:5px;
+ }
+ .dropdown-check{
+   position:inherit; 
+   position: inherit; 
+   margin-top: -25px;
+   left: 10px;
+ }
+ .dropdown-btn{
+  width:100%; 
+  text-align:left; 
+  margin-top: 35px;
+ }
+ .dropdown-arrow{
+   float:right; 
+   right:10px;
+ }
+</style>
+ 
+
+ <div class="container-v2 theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+     
+ 
+<div class="row">
+ 
+    <div class="col-md-12">
+      <h3>Bootstrap 3 Theme example</h3>
+      <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+      
+    </div>
+     
+    
+     
+</div>
+<div class="row rowborder">
+    <div class="col-md-12">
+      <h3>Column Grid</h3>
+    </div>
+</div>
+<div class="row rowborder no-border" >
+  <div class="col-lg-12">
+  <div class="col-md-2 small-padding"  >
+  <div class="mid-padding">col-md-2</div>
+  </div>
+  <div class="col-md-2 small-padding"  >
+  <div class="mid-padding">col-md-2</div>
+  </div>
+ <div class="col-md-2 small-padding" >
+  <div class="mid-padding">col-md-2</div>
+  </div>
+  <div class="col-md-2 small-padding"  >
+  <div class="mid-padding">col-md-2</div>
+  </div>
+  <div class="col-md-2 small-padding"  >
+  <div class="mid-padding">col-md-2</div>
+  </div>
+  <div class="col-md-2 small-padding" >
+  <div class="mid-padding">col-md-2</div>
+  </div>
+  <div ng-init="displayCode0 = 0" ng-click="displayCode0 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+        <div  ng-show="displayCode0 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode0 = 0" >x</div>
+        <button id="codecopy0" data-clipboard-target="#code0" ng-show="displayCode0 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+     
+<pre hljs id="code0" class="codesnipet" ng-show="displayCode0 == 1" readonly content-editable >
+<div class="row rowborder no-border">
+  <div class="col-md-2"  >
+    ...
+  </div>
+  <div class="col-md-2"  >
+    ...
+  </div>
+ <div class="col-md-2"  >
+    ...
+  </div>
+  <div class="col-md-2"  >
+    ...
+  </div>
+  <div class="col-md-2"  >
+    ...
+  </div>
+  <div class="col-md-2"  >
+    ...
+  </div>
+</div>
+</pre>
+  </div>
+</div>
+
+<div class="row rowborder no-border" >
+  <div class="col-lg-12" >
+  <div class="col-md-8 small-padding">
+    <div class="mid-padding">col-md-8</div> 
+  </div>
+  <div class="col-md-4 small-padding">
+    <div class="mid-padding">col-md-4</div> 
+  </div>
+  <div ng-init="displayCode00 = 0" ng-click="displayCode00 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+  <div  ng-show="displayCode00 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode00 = 0" >x</div>
+  <button id="codecopy00" data-clipboard-target="#code00" ng-show="displayCode00 == 1" class="btn btn-info copycodebtn"  >Copy</button> 
+     
+<pre hljs id="code00" class="codesnipet" ng-show="displayCode00 == 1" readonly content-editable >
+<div class="col-md-8"  >
+  ...
+</div>
+<div class="col-md-4"  >
+  ...
+</div>
+</pre>
+
+  </div>
+</div>
+
+<div class="row rowborder no-border no-border">
+  <div class="col-lg-12">
+  <div class="col-md-4 small-padding">
+  <div class="mid-padding">col-md-4</div> 
+  </div>
+  <div class="col-md-4 small-padding">
+  <div class="mid-padding">col-md-4</div> 
+  </div>
+  <div class="col-md-4 small-padding">
+   <div class="mid-padding">col-md-4</div> 
+  </div>
+  <div ng-init="displayCode000 = 0" ng-click="displayCode000 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+  <div  ng-show="displayCode000 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode000 = 0" >x</div>
+  <button id="codecopy000" data-clipboard-target="#code000" ng-show="displayCode000 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+     
+<pre hljs id="code000" class="codesnipet" ng-show="displayCode000 == 1" readonly content-editable >
+  <div class="col-md-4"  >
+    ...
+  </div>
+  <div class="col-md-4"  >
+    ... 
+  </div>
+  <div class="col-md-4"  >
+   ... 
+  </div>
+</pre>
+  </div>
+</div>
+
+<div class="row rowborder no-border">
+  <div class="col-lg-12">
+  <div class="col-md-6 small-padding">
+   <div class="mid-padding">col-md-6</div> 
+  </div>
+  <div class="col-md-6 small-padding">
+   <div class="mid-padding">col-md-6</div> 
+  </div>
+  
+  <div ng-init="displayCode0000 = 0" ng-click="displayCode0000 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+  <div  ng-show="displayCode0000 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode0000 = 0" >x</div>
+  <button id="codecopy0000" data-clipboard-target="#code0000" ng-show="displayCode0000 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+     
+<pre hljs id="code0000" class="codesnipet" ng-show="displayCode0000 == 1" readonly content-editable >
+<div class="col-md-6"  >
+ ...
+</div>
+<div class="col-md-6"  >
+  ...
+</div>
+  
+</pre>
+  
+  </div>
+</div>
+ 
+ <div class="row rowborder">
+    <div class="col-md-12">
+      <h3>Headings</h3>
+    </div>
+</div>
+<div class="row">
+ <div class="col-md-4">
+        <h1>h1. Heading <span class="badge badge-default">New</span></h1>
+        <h2>h2. Heading <span class="badge badge-default">New</span></h2>
+        <h3>h3. Heading <span class="badge badge-default">New</span></h3>
+        <h4>h4. Heading <span class="badge badge-default">New</span></h4>
+        <h5>h5. Heading <span class="badge badge-default">New</span></h5>
+        <h6>h6. Heading <span class="badge badge-default">New</span></h6>
+        <div ng-init="displayCode1 = 0" ng-click="displayCode1 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+        <div  ng-show="displayCode1 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode1 = 0" >x</div>
+        <button id="codecopy1" data-clipboard-target="#code1" ng-show="displayCode1 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+     
+<pre hljs id="code1" class="codesnipet" ng-show="displayCode1 == 1" readonly content-editable >
+<h1>h1. Example heading <span class="badge badge-default">New</span></h1>
+<h2>h2. Example heading <span class="badge badge-default">New</span></h2>
+<h3>h3. Example heading <span class="badge badge-default">New</span></h3>
+<h4>h4. Example heading <span class="badge badge-default">New</span></h4>
+<h5>h5. Example heading <span class="badge badge-default">New</span></h5>
+<h6>h6. Example heading <span class="badge badge-default">New</span></h6>
+</pre>
+ 
+ 
+
+  </div>
+  <div class="col-md-8">
+    <div class="col-md-6 no-padding">
+<p>Use the contextual classes to provide "meaning through colors":</p>
+  <p class="text-muted">This text is muted.</p>
+  <p class="text-primary">This text is important.</p>
+  <p class="text-success">This text indicates success.</p>
+  <p class="text-info">This text represents some information.</p>
+  <p class="text-warning">This text represents a warning.</p>
+  <p class="text-danger">This text represents danger.</p>
+  <div ng-init="displayCode00000 = 0" ng-click="displayCode00000 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+        <div  ng-show="displayCode00000 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode00000 = 0" >x</div>
+        <button id="codecopy00000" data-clipboard-target="#code00000" ng-show="displayCode00000 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+     
+<pre hljs id="code00000" class="codesnipet" ng-show="displayCode00000 == 1" readonly content-editable >
+  <p class="text-muted">This text is muted.</p>
+  <p class="text-primary">This text is important.</p>
+  <p class="text-success">This text indicates success.</p>
+  <p class="text-info">This text represents some information.</p>
+  <p class="text-warning">This text represents a warning.</p>
+  <p class="text-danger">This text represents danger.</p>
+</pre>
+    </div>
+    <div class="col-md-6 no-padding">
+<blockquote class="blockquote blockquote-reverse">
+  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+</blockquote>
+<div ng-init="displayCode000000 = 0" ng-click="displayCode000000 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+        <div  ng-show="displayCode000000 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode000000 = 0" >x</div>
+        <button id="codecopy00000" data-clipboard-target="#code000000" ng-show="displayCode000000 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+     
+<pre hljs id="code000000" class="codesnipet" ng-show="displayCode000000 == 1" readonly content-editable >
+   <blockquote class="blockquote blockquote-reverse">
+  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+</blockquote>
+</pre>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<div class="row rowborder">
+ 
+    <div class="col-md-6">
+      <div class="page-header">
+        <h3>Buttons</h3>
+      </div>
+     
+       
+      <p>
+        <button type="button" class="btn btn-default">Default</button>
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button type="button" class="btn btn-success">Success</button>
+        <button type="button" class="btn btn-info">Info</button>
+        <button type="button" class="btn btn-warning">Warning</button>
+        <button type="button" class="btn btn-danger">Danger</button>
+        <button type="button" class="btn btn-link">Link</button>
+      </p>
+      <p>
+        <button type="button" class="btn btn-sm btn-default">Default</button>
+        <button type="button" class="btn btn-sm btn-primary">Primary</button>
+        <button type="button" class="btn btn-sm btn-success">Success</button>
+        <button type="button" class="btn btn-sm btn-info">Info</button>
+        <button type="button" class="btn btn-sm btn-warning">Warning</button>
+        <button type="button" class="btn btn-sm btn-danger">Danger</button>
+        <button type="button" class="btn btn-sm btn-link">Link</button>
+      </p>
+      <p>
+        <button type="button" class="btn btn-xs btn-default">Default</button>
+        <button type="button" class="btn btn-xs btn-primary">Primary</button>
+        <button type="button" class="btn btn-xs btn-success">Success</button>
+        <button type="button" class="btn btn-xs btn-info">Info</button>
+        <button type="button" class="btn btn-xs btn-warning">Warning</button>
+        <button type="button" class="btn btn-xs btn-danger">Danger</button>
+        <button type="button" class="btn btn-xs btn-link">Link</button>
+      </p>
+      <div ng-init="displayCode2 = 0" ng-click="displayCode2 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+        <div  ng-show="displayCode2 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode2 = 0">x</div>
+         <button id="codecopy2" data-clipboard-target="#code2" ng-show="displayCode2 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+     <pre hljs id="code2"  class="codesnipet"  ng-show="displayCode2 == 1" readonly content-editable  >
+<p>
+  <button type="button" class="btn btn-default">Default</button>
+  <button type="button" class="btn btn-primary">Primary</button>
+  <button type="button" class="btn btn-success">Success</button>
+  <button type="button" class="btn btn-info">Info</button>
+  <button type="button" class="btn btn-warning">Warning</button>
+  <button type="button" class="btn btn-danger">Danger</button>
+  <button type="button" class="btn btn-link">Link</button>
+</p>
+<p>
+  <button type="button" class="btn btn-sm btn-default">Default</button>
+  <button type="button" class="btn btn-sm btn-primary">Primary</button>
+  <button type="button" class="btn btn-sm btn-success">Success</button>
+  <button type="button" class="btn btn-sm btn-info">Info</button>
+  <button type="button" class="btn btn-sm btn-warning">Warning</button>
+  <button type="button" class="btn btn-sm btn-danger">Danger</button>
+  <button type="button" class="btn btn-sm btn-link">Link</button>
+</p>
+<p>
+  <button type="button" class="btn btn-xs btn-default">Default</button>
+  <button type="button" class="btn btn-xs btn-primary">Primary</button>
+  <button type="button" class="btn btn-xs btn-success">Success</button>
+  <button type="button" class="btn btn-xs btn-info">Info</button>
+  <button type="button" class="btn btn-xs btn-warning">Warning</button>
+  <button type="button" class="btn btn-xs btn-danger">Danger</button>
+  <button type="button" class="btn btn-xs btn-link">Link</button>
+</p>
+     </pre>
+   
+  </div>
+
+  <div class="col-md-6">
+      <div class="page-header">
+        <h3>Labels</h3>
+      </div>
+     
+      <h3>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h3>
+      <h4>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h4>
+      <h5>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h5>
+      <h6>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h6>
+      <p>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </p>
+      <div ng-init="displayCode3 = 0" ng-click="displayCode3 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+      <div  ng-show="displayCode3 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode3 = 0" >x</div>
+      <button id="codecopy3" data-clipboard-target="#code3" ng-show="displayCode3 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+      <pre hljs id="code3"  class="codesnipet" ng-show="displayCode3 == 1" readonly content-editable >
+<h3>
+  <span class="label label-default">Default</span>
+  <span class="label label-primary">Primary</span>
+  <span class="label label-success">Success</span>
+  <span class="label label-info">Info</span>
+  <span class="label label-warning">Warning</span>
+  <span class="label label-danger">Danger</span>
+</h3>
+<h4>
+  <span class="label label-default">Default</span>
+  <span class="label label-primary">Primary</span>
+  <span class="label label-success">Success</span>
+  <span class="label label-info">Info</span>
+  <span class="label label-warning">Warning</span>
+  <span class="label label-danger">Danger</span>
+</h4>
+<h5>
+  <span class="label label-default">Default</span>
+  <span class="label label-primary">Primary</span>
+  <span class="label label-success">Success</span>
+  <span class="label label-info">Info</span>
+  <span class="label label-warning">Warning</span>
+  <span class="label label-danger">Danger</span>
+</h5>
+<h6>
+  <span class="label label-default">Default</span>
+  <span class="label label-primary">Primary</span>
+  <span class="label label-success">Success</span>
+  <span class="label label-info">Info</span>
+  <span class="label label-warning">Warning</span>
+  <span class="label label-danger">Danger</span>
+</h6>
+<p>
+  <span class="label label-default">Default</span>
+  <span class="label label-primary">Primary</span>
+  <span class="label label-success">Success</span>
+  <span class="label label-info">Info</span>
+  <span class="label label-warning">Warning</span>
+  <span class="label label-danger">Danger</span>
+</p>
+     
+     </pre>
+
+  
+    </div>
+   
+</div>
+
+
+    <div class="row rowborder" >
+     
+        <div class="col-lg-12" >
+          <div class="page-header">
+              <h3 id="tabs" >Tabs with AngularJS</h3>
+          </div>
+          <ul class="nav nav-tabs" ng-init="activeTab = 1">
+            <li class="active"><a ng-click="activeTab = 1"  data-toggle="tab">Section 1</a></li>
+            <li><a ng-click="activeTab = 2" data-toggle="tab">Section 2</a></li>
+            <li><a ng-click="activeTab = 3" data-toggle="tab">Section 3</a></li>
+          </ul>
+          <div class="tabbable" >
+            <div class="tab-content">
+              <div class="tab-pane active" ng-show="activeTab == 1">
+                
+                <p>This is Section A.</p>
+              </div>
+              <div class="tab-pane active" ng-show="activeTab == 2">
+                <p>This is Section B.</p>
+              </div>
+              <div class="tab-pane active" ng-show="activeTab == 3">
+                <p>This is Section C.</p>
+              </div>
+            </div>
+          </div> 
+          <div ng-init="displayCode8 = 0" ng-click="displayCode8 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode8 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode8 = 0"  >x</div>
+          <button id="codecopy8" data-clipboard-target="#code8" ng-show="displayCode8 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code8"  class="codesnipet" ng-show="displayCode8 == 1" readonly content-editable >
+<ul class="nav nav-tabs" ng-init="activeTab = 1">
+  <li class="active"><a ng-click="activeTab = 1"  data-toggle="tab">Section 1</a></li>
+  <li><a ng-click="activeTab = 2" data-toggle="tab">Section 2</a></li>
+  <li><a ng-click="activeTab = 3" data-toggle="tab">Section 3</a></li>
+</ul>
+<div class="tabbable" >
+  <div class="tab-content">
+    <div class="tab-pane active" ng-show="activeTab == 1">
+      
+      <p>I'm in Section A.</p>
+    </div>
+    <div class="tab-pane active" ng-show="activeTab == 2">
+      <p>Howdy, I'm in Section B.</p>
+    </div>
+    <div class="tab-pane active" ng-show="activeTab == 3">
+      <p>What up girl, this is Section C.</p>
+    </div>
+  </div>
+</div> 
+     </pre>
+     
+        </div>
+        <div class="col-lg-6">
+        <div class="page-header" >
+          <h3 id="pills">Inline Radio Buttons <small>(Preselected)</small></h3>
+        </div>
+        <div class="btn-group" data-toggle="buttons" >
+          <label class="btn btn-default active">
+            <input  type="radio" name="options" id="option1" autocomplete="off" checked> Radio 1 
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Radio 2
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Radio 3
+          </label>
+        </div>
+         <div ng-init="displayCode9 = 0" ng-click="displayCode9 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode9 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode9 = 0"  >x</div>
+          <button id="codecopy9" data-clipboard-target="#code9" ng-show="displayCode9 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code9" class="codesnipet" ng-show="displayCode9 == 1" readonly content-editable >
+<div class="btn-group" data-toggle="buttons" >
+  <label class="btn btn-default active">
+    <input  type="radio" name="options" id="option1" autocomplete="off" checked> Radio 1 
+  </label>
+  <label class="btn btn-default">
+    <input type="radio" name="options" id="option2" autocomplete="off"> Radio 2
+  </label>
+  <label class="btn btn-default">
+    <input type="radio" name="options" id="option3" autocomplete="off"> Radio 3
+  </label>
+</div>
+     </pre>
+    
+      </div>
+    
+      <div class="col-lg-6">
+        <div class="page-header">
+          <h3 id="pills">Pills</h3>
+        </div>
+        <ul class="nav nav-pills">
+          <li class="active"><a href="">Home</a></li>
+          <li><a href="">Profile</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="">Action</a></li>
+              <li><a href="">Another action</a></li>
+              <li><a href="">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="">Separated link</a></li>
+            </ul>
+          </li>
+          <li class="disabled"><a href="">Disabled link</a></li>
+        </ul>
+            <div ng-init="displayCode10 = 0" ng-click="displayCode10 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+            <div  ng-show="displayCode10 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode10 = 0"  >x</div>
+            <button id="codecopy10" data-clipboard-target="#code10" ng-show="displayCode10 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+            <pre hljs id="code10" class="codesnipet" ng-show="displayCode10 == 1" readonly content-editable >
+<ul class="nav nav-pills">
+  <li class="active"><a href="">Home</a></li>
+  <li><a href="">Profile</a></li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="">Dropdown <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><a href="">Action</a></li>
+      <li><a href="">Another action</a></li>
+      <li><a href="">Something else here</a></li>
+      <li class="divider"></li>
+      <li><a href="">Separated link</a></li>
+    </ul>
+  </li>
+  <li class="disabled"><a href="">Disabled link</a></li>
+</ul>
+     </pre>
+     
+      </div>
+      
+</div>
+
+<section id="miscellaneous">
+   
+
+  <div class="row rowborder">
+    
+   <div class="col-lg-6">
+    <div class="page-header">
+        <h3>Badges</h3>
+      </div>
+       
+      <ul class="nav nav-pills" role="tablist" >
+        <li role="presentation" class=""> <a href="">Inbox <span class="badge">42</span></a></li>
+        <li role="presentation" class="active"><a href="">Home <span class="badge">42</span></a></li>
+        <li role="presentation"><a href="">Profile</a></li>
+        <li role="presentation"><a href="">Messages <span class="badge">3</span></a></li>
+      </ul>
+    
+            <div ng-init="displayCode11 = 0" ng-click="displayCode11 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+             <div  ng-show="displayCode11 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode11 = 0"  >x</div>
+            <button id="codecopy11" data-clipboard-target="#code11" ng-show="displayCode11 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+            <pre hljs id="code11" class="codesnipet" ng-show="displayCode11 == 1" readonly content-editable >
+<ul class="nav nav-pills" role="tablist" >
+  <li role="presentation" class=""> <a href="">Inbox <span class="badge">42</span></a></li>
+  <li role="presentation" class="active"><a href="">Home <span class="badge">42</span></a></li>
+  <li role="presentation"><a href="">Profile</a></li>
+  <li role="presentation"><a href="">Messages <span class="badge">3</span></a></li>
+</ul>
+     </pre>
+    
+    </div>
+     <div class="col-lg-6">
+       <div class="page-header">
+          <h3 id="pagination">Pagination</h3>
+        </div>
+        <ul class="pagination">
+          <li><a href="">«</a></li>
+          <li><a href="">1</a></li>
+          <li><a href="">2</a></li>
+          <li><a href="">3</a></li>
+          <li><a href="">4</a></li>
+          <li><a href="">5</a></li>
+          <li><a href="">»</a></li>
+        </ul>
+        <div ng-init="displayCode12 = 0" ng-click="displayCode12 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+        <div  ng-show="displayCode12 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode12 = 0"  >x</div>
+        <button id="codecopy12" data-clipboard-target="#code12" ng-show="displayCode12 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+        <pre hljs id="code12" class="codesnipet" ng-show="displayCode12 == 1" readonly content-editable >
+<ul class="pagination">
+  <li><a href="">«</a></li>
+  <li><a href="">1</a></li>
+  <li><a href="">2</a></li>
+  <li><a href="">3</a></li>
+  <li><a href="">4</a></li>
+  <li><a href="">5</a></li>
+  <li><a href="">»</a></li>
+</ul>
+     </pre>
+     
+    </div>
+    <div class="col-lg-12">
+     
+      
+         <div class="page-header">
+          <h3 id="breadcrumbs">Breadcrumbs</h3>
+        </div>
+    
+        <ul class="breadcrumb">
+          <li><a href="">Home</a> <span class="divider"></span></li>
+          <li><a href="">Library</a> <span class="divider"></span></li>
+          <li class="active">Data</li>
+        </ul>
+        <div ng-init="displayCode13 = 0" ng-click="displayCode13 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+        <div  ng-show="displayCode13 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode13 = 0"  >x</div>
+        <button id="codecopy13" data-clipboard-target="#code13" ng-show="displayCode13 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+        <pre hljs id="code13" class="codesnipet" ng-show="displayCode13 == 1" readonly content-editable >
+<ul class="breadcrumb">
+  <li><a href="">Home</a> <span class="divider"></span></li>
+  <li><a href="">Library</a> <span class="divider"></span></li>
+  <li class="active">Data</li>
+</ul>
+          </pre>
+          
+    </div>
+       
+   
+  </div>
+    
+   
+</section>
+
+
+
+<div class="row rowborder" >
+   
+    <div class="col-lg-12" >
+      <div class="page-header">
+        <h3>Tables</h3>
+      </div>
+    </div>
+       
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+          <div ng-init="displayCode4 = 0" ng-click="displayCode4 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode4 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode4 = 0" >x</div>
+           <button id="codecopy4" data-clipboard-target="#code4" ng-show="displayCode4 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code4"  class="codesnipet" ng-show="displayCode4 == 1" readonly content-editable >
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+          </pre>
+         
+        </div>
+        <div class="col-md-6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+    <div ng-init="displayCode5 = 0" ng-click="displayCode5 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+    <div  ng-show="displayCode5 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode5 = 0" >x</div>
+    <button id="codecopy5" data-clipboard-target="#code5" ng-show="displayCode5 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+    <pre hljs id="code5"  class="codesnipet" ng-show="displayCode5 == 1" readonly content-editable >
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+     </pre>
+     
+      </div>
+   
+ </div>
+      <div class="row rowborder no-border">
+         
+        <div class="col-md-6">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2">1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@TwBootstrap</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div ng-init="displayCode6 = 0" ng-click="displayCode6 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+      <div  ng-show="displayCode6 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode6 = 0"  >x</div>
+      <button id="codecopy6" data-clipboard-target="#code6" ng-show="displayCode6 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+    <pre hljs id="code6" class="codesnipet" ng-show="displayCode6 == 1" readonly content-editable >
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@TwBootstrap</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+
+     </pre>
+    
+  
+        </div>
+        <div class="col-md-6">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+          <div ng-init="displayCode7 = 0" ng-click="displayCode7 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+           <div  ng-show="displayCode7 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode7 = 0"  >x</div>
+  <button id="codecopy7" data-clipboard-target="#code7" ng-show="displayCode7 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+    <pre hljs id="code7"  class="codesnipet" ng-show="displayCode7 == 1" readonly content-editable >
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+     </pre>
+    
+        </div>
+       
+      </div>
+
+
+      
+
+      
+
+      
+
+
+ 
+     <div class="row rowborder">
+ <div class="col-md-12">
+
+      <div class="page-header">
+        <h3>Modal</h3>
+      </div>
+     
+       
+<!-- Large modal -->
+<button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+
+ 
+
+<!-- Small modal -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+ 
+      <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in tortor eget metus volutpat imperdiet et a mi. Morbi eget laoreet nisi. Mauris eleifend a nisi vitae tincidunt. Sed nec nibh massa. Sed cursus eu nisl consequat suscipit. Etiam scelerisque nisi tortor, eget porta justo scelerisque id. Proin accumsan felis non purus maximus placerat quis non nulla. Vivamus purus neque, pulvinar non lobortis vitae, mattis a quam. Pellentesque egestas ex tellus, ut auctor ligula porttitor at. Donec suscipit diam nec mi lobortis blandit. Morbi efficitur turpis justo, sed semper lacus molestie ut.
+<br><br>s
+Cras massa neque, scelerisque id arcu at, ultricies euismod urna. Etiam tincidunt tortor quis augue fringilla, sit amet posuere odio laoreet. Sed vitae nisl aliquam, vestibulum sem vitae, malesuada diam. Morbi lobortis euismod elit in convallis. Sed et urna in sapien mollis viverra non a lorem. Nam dapibus elit quis eleifend sollicitudin. Etiam blandit ultricies diam. Fusce gravida libero nec felis feugiat, id laoreet purus commodo. Nulla sem erat, vehicula iaculis ante ut, feugiat tempor ipsum. Ut vel enim tellus. Morbi vel libero metus.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">Save changes</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div ng-init="displayCode28 = 0" ng-click="displayCode28 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+      <div  ng-show="displayCode28 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode28 = 0" >x</div>
+      <button id="codecopy28" data-clipboard-target="#code28" ng-show="displayCode28 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+      <pre hljs id="code28"  class="codesnipet" ng-show="displayCode28 == 1" readonly content-editable >
+
+<button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+ 
+      <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in tortor eget metus volutpat imperdiet et a mi. Morbi eget laoreet nisi. Mauris eleifend a nisi vitae tincidunt. Sed nec nibh massa. Sed cursus eu nisl consequat suscipit. Etiam scelerisque nisi tortor, eget porta justo scelerisque id. Proin accumsan felis non purus maximus placerat quis non nulla. Vivamus purus neque, pulvinar non lobortis vitae, mattis a quam. Pellentesque egestas ex tellus, ut auctor ligula porttitor at. Donec suscipit diam nec mi lobortis blandit. Morbi efficitur turpis justo, sed semper lacus molestie ut.
+<br><br>s
+Cras massa neque, scelerisque id arcu at, ultricies euismod urna. Etiam tincidunt tortor quis augue fringilla, sit amet posuere odio laoreet. Sed vitae nisl aliquam, vestibulum sem vitae, malesuada diam. Morbi lobortis euismod elit in convallis. Sed et urna in sapien mollis viverra non a lorem. Nam dapibus elit quis eleifend sollicitudin. Etiam blandit ultricies diam. Fusce gravida libero nec felis feugiat, id laoreet purus commodo. Nulla sem erat, vehicula iaculis ante ut, feugiat tempor ipsum. Ut vel enim tellus. Morbi vel libero metus.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+      </pre>
+  </div>
+</div>
+
+    <section id="forms">
+    
+     <div class="row rowborder">
+       <div class="col-lg-12"  >
+         
+            <div class="page-header">
+             <h3>Form Inline</h3>
+            </div>
+         
+        </div>
+     </div>
+      <div class="row rowborder">
+      <div class="relative-section">
+       
+            <form class="form-inline well" >
+              <div class="email-inline-holder">
+                  <input type="text" class="form-control" placeholder="Email">
+              </div>
+              <div class="password-inline-holder">
+                <input type="password" class="form-control" placeholder="Password">
+              </div>
+              <div class= "checkbox" >
+                <button  type="submit" class="btn btn-success ">Sign in</button>
+              </div>
+              <br>
+              <label >
+                <input type="checkbox" > Remember me
+              </label>
+              
+            </form>
+              <div ng-init="displayCode14 = 0" ng-click="displayCode14 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+              <div  ng-show="displayCode14 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode14 = 0"  >x</div>
+              <button id="codecopy14" data-clipboard-target="#code14" ng-show="displayCode14 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+              <pre hljs id="code14"  class="codesnipet" ng-show="displayCode14 == 1" readonly content-editable >
+<style>
+ .email-inline-holder{
+   display:inline-block;  
+   width:auto;   
+   margin: 0px;    
+   left: 0px;    
+   padding: 0px;    
+   margin-left: 0px;    
+   margin-bottom: 10px;
+ }
+ .password-inline-holder{
+    display:inline-block;  
+   width:auto;   
+   margin: 0px;    
+   left: 0px;    
+   padding: 0px;    
+   margin-left: 0px;    
+   margin-bottom: 10px;
+   margin-right:5px;
+ }
+</style>
+
+<form class="form-inline well" >
+  <div class="email-inline-holder">
+      <input type="text" class="form-control" placeholder="Email">
+  </div>
+  <div class="password-inline-holder">
+    <input type="password" class="form-control" placeholder="Password">
+  </div>
+  <div class= "checkbox" >
+    <button  type="submit" class="btn btn-success ">Sign in</button>
+  </div>
+  <br>
+  <label >
+    <input type="checkbox" > Remember me
+  </label>
+  
+</form>
+          </pre>
+         
+      </div>
+          
+     </div>
+      
+        <div class="row rowborder">
+        <div class="col-lg-12" >
+          
+            <div class="page-header">
+             <h3>Form Horizontal</h3>
+            </div>
+           
+         </div>
+        </div>
+         <div class="row rowborder">
+       
+
+        <div class="relative-section">
+        <form class="form-horizontal well">
+          <fieldset>
+            <div class="col-lg-6"  >
+              <div class="control-group">
+                <label class="control-label" for="input01">Text input</label>
+                <div class="controls">
+                  <input type="text" class="form-control input-xlarge" id="input01">
+                  <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="optionsCheckbox">Checkbox</label>
+                <div class="controls">
+                  <label class="checkbox">
+                    <input type="checkbox" id="optionsCheckbox" value="option1">
+                    Option one is this and that—be sure to include why it's great
+                  </label>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="optionsCheckbox2">Disabled checkbox</label>
+                <div class="controls">
+                  <label class="checkbox">
+                    <input type="checkbox" id="optionsCheckbox2" value="option1" disabled="">
+                    This is a disabled checkbox
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 no-padding" >
+               
+              <div class="control-group" >
+                  <button type="button" class="btn btn-default dropdown-toggle dropdown-btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-init="activeName = 'Action'"  >
+                  {{activeName}} <i class="fa fa-angle-down dropdown-arrow"  aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" ng-init="activeOption = 1">
+                    <option ng-click="activeOption = 1; activeName = 'Action'"  class="dropdown-item" href="">Action <i   ng-if="activeOption == 1" class="fa fa-check dropdown-check" aria-hidden="true"></i></option><i ng-if="activeOption == 1" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+                    <option  ng-click="activeOption = 2; activeName = 'Another action'"  class="dropdown-item" href="">Another action <i  ng-if="activeOption == 2" class="fa fa-check dropdown-check" aria-hidden="true"></i></option><i ng-if="activeOption == 2" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+                    <option  ng-click="activeOption = 3; activeName = 'Something else here'"  class="dropdown-item" href="">Something else here <i ng-if="activeOption == 3" class="fa fa-check dropdown-check" aria-hidden="true"></i></option><i ng-if="activeOption == 3" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+                    <option  ng-click="activeOption = 4; activeName = 'Separated link'"  class="dropdown-item" href="">Separated link </option><i ng-if="activeOption == 4" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+                  </div>
+              </div>       
+          </div> 
+          <div class="col-lg-6" >
+          <div class="control-group">
+            <label class="control-label" for="multiSelect">Multicon-select</label>
+            <div class="controls">
+              <select size="5" multiple="multiple" id="multiSelect" class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          </div>
+          <div class="col-lg-12 sm-padding">
+            <div class="control-group">
+              <label class="control-label" for="fileInput">File input</label>
+              <div class="controls">
+                <input class="form-control input-file" id="fileInput" type="file">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="textarea">Textarea</label>
+              <div class="controls">
+                <textarea class="form-control input-xlarge" id="textarea" rows="3"></textarea>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-lg-12 sm-padding">
+            <div class="control-group warning">
+              <label class="control-label" for="inputWarning">Input with warning</label>
+              <div class="controls">
+                <input type="text" id="inputWarning" class="form-control">
+                <span class="help-inline">Something may have gone wrong</span>
+              </div>
+            </div>
+                <hr>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-success">Submit</button>
+                  <button type="reset" class="btn btn-default">Cancel</button>
+                </div>
+              </div>
+          </fieldset>
+        </form>
+        <div ng-init="displayCode15 = 0" ng-click="displayCode15 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode15 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode15 = 0"  >x</div>
+          <button id="codecopy15" data-clipboard-target="#code15" ng-show="displayCode15 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code15" class="codesnipet" ng-show="displayCode15 == 1" readonly content-editable >
+<form class="form-horizontal well">
+  <fieldset>
+    <div class="col-lg-6"  >
+      <div class="control-group">
+        <label class="control-label" for="input01">Text input</label>
+        <div class="controls">
+          <input type="text" class="form-control input-xlarge" id="input01">
+          <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="optionsCheckbox">Checkbox</label>
+        <div class="controls">
+          <label class="checkbox">
+            <input type="checkbox" id="optionsCheckbox" value="option1">
+            Option one is this and that—be sure to include why it's great
+          </label>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="optionsCheckbox2">Disabled checkbox</label>
+        <div class="controls">
+          <label class="checkbox">
+            <input type="checkbox" id="optionsCheckbox2" value="option1" disabled="">
+            This is a disabled checkbox
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 no-padding">
+      <div class="control-group" >
+          <button type="button" class="btn btn-default dropdown-toggle dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-init="activeName = 'Action'">
+          {{activeName}} <i class="fa fa-angle-down dropdown-arrow"  aria-hidden="true"></i>
+          </button>
+          <div class="dropdown-menu" ng-init="activeOption = 1">
+            <option ng-click="activeOption = 1; activeName = 'Action'"  class="dropdown-item" href="">Action <i   ng-if="activeOption == 1" class="fa fa-check dropdown-check" aria-hidden="true"></i></option><i ng-if="activeOption == 1" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+            <option  ng-click="activeOption = 2; activeName = 'Another action'"  class="dropdown-item" href="">Another action <i  ng-if="activeOption == 2" class="fa fa-check dropdown-check" aria-hidden="true"></i></option><i ng-if="activeOption == 2" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+            <option  ng-click="activeOption = 3; activeName = 'Something else here'"  class="dropdown-item" href="">Something else here <i ng-if="activeOption == 3" class="fa fa-check dropdown-check" aria-hidden="true"></i></option><i ng-if="activeOption == 3" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+            <option  ng-click="activeOption = 4; activeName = 'Separated link'"  class="dropdown-item" href="">Separated link </option><i ng-if="activeOption == 4" class="fa fa-check dropdown-check"  aria-hidden="true"></i>
+          </div>
+      </div>       
+    </div> 
+    <div class="col-lg-6" >
+      <div class="control-group">
+        <label class="control-label" for="multiSelect">Multicon-select</label>
+        <div class="controls">
+          <select size="5" multiple="multiple" id="multiSelect" class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 sm-padding">
+      <div class="control-group">
+        <label class="control-label" for="fileInput">File input</label>
+        <div class="controls">
+          <input class="form-control input-file" id="fileInput" type="file">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="textarea">Textarea</label>
+        <div class="controls">
+          <textarea class="form-control input-xlarge" id="textarea" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 sm-padding">
+      <div class="control-group warning">
+        <label class="control-label" for="inputWarning">Input with warning</label>
+        <div class="controls">
+          <input type="text" id="inputWarning" class="form-control">
+          <span class="help-inline">Something may have gone wrong</span>
+        </div>
+      </div>
+      <hr>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="reset" class="btn btn-default">Cancel</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+          </pre>
+        </div>
+         
+         
+    </div>
+    </section>
+
+
+  
+  <div class="row rowborder">
+     
+      <div class="col-md-6" >
+        <div class="page-header">
+          <h3>Alerts</h3>
+        </div>
+        <div class="alert alert-success" role="alert">
+          <strong>Well done!</strong><hr> You successfully read this important alert message.
+        </div>
+        <div class="alert alert-info" role="alert">
+          <strong>Heads up!</strong> <hr>This alert needs your attention, but it's not super important.
+        </div>
+        <div class="alert alert-warning" role="alert">
+          <strong>Warning!</strong> <hr> Best check yo self, you're not looking too good.
+        </div>
+        <div class="alert alert-danger " role="alert">
+          <strong>Oh snap!</strong> <hr>Change a few things up and try submitting again.<a class="alert-link" href="#">click</a> 
+        </div>
+         <div ng-init="displayCode16 = 0" ng-click="displayCode16 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode16 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode16 = 0"  >x</div>
+          <button id="codecopy16" data-clipboard-target="#code16" ng-show="displayCode16 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code16" class="codesnipet" ng-show="displayCode16 == 1" readonly content-editable >
+               
+<div class="alert alert-success" role="alert">
+  <strong>Well done!</strong><hr> You successfully read this important alert message.
+</div>
+<div class="alert alert-info" role="alert">
+  <strong>Heads up!</strong> <hr>This alert needs your attention, but it's not super important.
+</div>
+<div class="alert alert-warning" role="alert">
+  <strong>Warning!</strong> <hr> Best check yo self, you're not looking too good.
+</div>
+<div class="alert alert-danger " role="alert">
+  <strong>Oh snap!</strong> <hr>Change a few things up and try submitting again.<a class="alert-link" href="#">click</a> 
+</div>
+          </pre>
+      </div>
+      <div class="col-md-6"  >
+        <div class="page-header">
+          <h3>Progress bars</h3>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60% Complete</span></div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"><span class="sr-only">40% Complete (success)</span></div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"><span class="sr-only">20% Complete</span></div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete (warning)</span></div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"><span class="sr-only">80% Complete (danger)</span></div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete</span></div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-warning" style="width: 20%"><span class="sr-only">20% Complete (warning)</span></div>
+          <div class="progress-bar progress-bar-danger" style="width: 10%"><span class="sr-only">10% Complete (danger)</span></div>
+        </div>
+         <div ng-init="displayCode17 = 0" ng-click="displayCode17 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode17 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode17 = 0"  >x</div>
+          <button id="codecopy17" data-clipboard-target="#code17" ng-show="displayCode17 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code17" class="codesnipet" ng-show="displayCode17 == 1" readonly content-editable >
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60% Complete</span></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"><span class="sr-only">40% Complete (success)</span></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"><span class="sr-only">20% Complete</span></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete (warning)</span></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"><span class="sr-only">80% Complete (danger)</span></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete</span></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-warning" style="width: 20%"><span class="sr-only">20% Complete (warning)</span></div>
+  <div class="progress-bar progress-bar-danger" style="width: 10%"><span class="sr-only">10% Complete (danger)</span></div>
+</div>
+          </pre>
+      </div>
+    
+  </div>
+  <div class="row rowborder">
+        <div class="col-lg-12" >
+         
+            <div class="page-header" >
+              <h3>List groups</h3>
+            </div>
+        
+        </div>
+       
+       
+        <div class="col-sm-4">
+          <div class="list-group">
+            <a href="" class="list-group-item active">
+              <h4 class="list-group-item-heading">List group item heading</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="" class="list-group-item">
+              <h4 class="list-group-item-heading">List group item heading</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="" class="list-group-item">
+              <h4 class="list-group-item-heading">List group item heading</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          </a>
+        </div>
+         <div ng-init="displayCode18 = 0" ng-click="displayCode18 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode18 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode18 = 0"  >x</div>
+          <button id="codecopy18" data-clipboard-target="#code18" ng-show="displayCode18 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code18" class="codesnipet" ng-show="displayCode18 == 1" readonly content-editable >
+<div class="list-group">
+  <a href="" class="list-group-item active">
+    <h4 class="list-group-item-heading">List group item heading</h4>
+    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+  </a>
+  <a href="" class="list-group-item">
+    <h4 class="list-group-item-heading">List group item heading</h4>
+    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+  </a>
+  <a href="" class="list-group-item">
+    <h4 class="list-group-item-heading">List group item heading</h4>
+    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+  </a>
+</div>
+
+          </pre>
+      </div><!-- /.col-sm-4 -->
+      <div class="col-sm-4">
+          <div class="list-group">
+            <a href="" class="list-group-item active">
+              Cras justo odio
+            </a>
+            <a href="" class="list-group-item">Dapibus ac facilisis in</a>
+            <a href="" class="list-group-item">Morbi leo risus</a>
+            <a href="" class="list-group-item">Porta ac consectetur ac</a>
+            <a href="" class="list-group-item">Vestibulum at eros</a>
+          </div>
+          <div ng-init="displayCode19 = 0" ng-click="displayCode19 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode19 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode19 = 0"  >x</div>
+          <button id="codecopy19" data-clipboard-target="#code19" ng-show="displayCode19 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code19" class="codesnipet" ng-show="displayCode19 == 1" readonly content-editable >
+<div class="list-group">
+  <a href="" class="list-group-item active">
+    Cras justo odio
+  </a>
+  <a href="" class="list-group-item">Dapibus ac facilisis in</a>
+  <a href="" class="list-group-item">Morbi leo risus</a>
+  <a href="" class="list-group-item">Porta ac consectetur ac</a>
+  <a href="" class="list-group-item">Vestibulum at eros</a>
+</div>
+
+          </pre>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4"  >
+          <ul class="list-group no-padding margin:0px;">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+          <div ng-init="displayCode20 = 0" ng-click="displayCode20 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode20 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode20 = 0"  >x</div>
+          <button id="codecopy20" data-clipboard-target="#code20" ng-show="displayCode20 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code20" class="codesnipet" ng-show="displayCode20 == 1" readonly content-editable >
+<ul class="list-group no-padding margin:0px;">
+  <li class="list-group-item">Cras justo odio</li>
+  <li class="list-group-item">Dapibus ac facilisis in</li>
+  <li class="list-group-item">Morbi leo risus</li>
+  <li class="list-group-item">Porta ac consectetur ac</li>
+  <li class="list-group-item">Vestibulum at eros</li>
+</ul>
+
+          </pre>
+        </div><!-- /.col-sm-4 -->
+    
+  </div>
+   
+  <div class="row rowborder">
+    <div class="col-lg-12" >
+       
+        <div class="page-header">
+          <h3>Panels</h3>
+        </div>
+       
+    </div>
+
+    
+      <div class="col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div ng-init="displayCode21 = 0" ng-click="displayCode21 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode21 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode21 = 0"  >x</div>
+          <button id="codecopy21" data-clipboard-target="#code21" ng-show="displayCode21 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code21" class="codesnipet" ng-show="displayCode21 == 1" readonly content-editable >
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+
+          </pre>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+           <div ng-init="displayCode22 = 0" ng-click="displayCode22 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode22 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode22 = 0"  >x</div>
+          <button id="codecopy22" data-clipboard-target="#code22" ng-show="displayCode22 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code22" class="codesnipet" ng-show="displayCode22 == 1" readonly content-editable >
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+          </pre>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div ng-init="displayCode23 = 0" ng-click="displayCode23 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode23 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode23 = 0"  >x</div>
+           <button id="codecopy23" data-clipboard-target="#code23" ng-show="displayCode23 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code23" class="codesnipet" ng-show="displayCode23 == 1" readonly content-editable >
+ <div class="panel panel-warning">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+          </pre>
+        </div><!-- /.col-sm-4 -->
+       
+    </div>
+   <div class="row rowborder">
+      <div class="col-lg-12">
+        
+          <div class="page-header">
+            <h3>Wells</h3>
+          </div>
+       
+       </div>
+      <div class="col-lg-12">
+       
+        
+        
+        <div class="well">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+        </div>
+        <div ng-init="displayCode24 = 0" ng-click="displayCode24 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode24 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode24 = 0"  >x</div>
+          <button id="codecopy24" data-clipboard-target="#code24" ng-show="displayCode24 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code24" class="codesnipet" ng-show="displayCode24 == 1" readonly content-editable >
+<div class="well">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+</div>
+          </pre>
+      </div>
+   </div>
+   
+ 
+  <div class="row rowborder">
+  <div class="col-lg-12">
+   
+      <div class="page-header">
+        <h3>Navbars</h3>
+      </div>
+      
+  </div>
+  </div>
+  <div class="row rowborder">
+
+ <div class="relative-section">
+     
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse-boot">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Project name</a>
+          </div>
+          <div class="navbar-collapse-boot collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="">Home</a></li>
+              <li><a href="">About</a></li>
+              <li><a href="">Contact</a></li>
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="">Action</a></li>
+                  <li><a href="">Another action</a></li>
+                  <li><a href="">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="">Separated link</a></li>
+                  <li><a href="">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+       <div ng-init="displayCode25 = 0" ng-click="displayCode25 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode25 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode25 = 0"  >x</div>
+          <button id="codecopy25" data-clipboard-target="#code25" ng-show="displayCode25 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code25" class="codesnipet" ng-show="displayCode25 == 1" readonly content-editable >
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse-boot">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="">Project name</a>
+    </div>
+    <div class="navbar-collapse-boot collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="">Home</a></li>
+        <li><a href="">About</a></li>
+        <li><a href="">Contact</a></li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="">Action</a></li>
+            <li><a href="">Another action</a></li>
+            <li><a href="">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Nav header</li>
+            <li><a href="">Separated link</a></li>
+            <li><a href="">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+          </pre>
+  </div>
+
+  <div class="relative-section">
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse-boot">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Project name</a>
+          </div>
+          <div class="navbar-collapse-boot collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="">Home</a></li>
+              <li><a href="">About</a></li>
+              <li><a href="">Contact</a></li>
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="">Action</a></li>
+                  <li><a href="">Another action</a></li>
+                  <li><a href="">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="">Separated link</a></li>
+                  <li><a href="">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+      <div ng-init="displayCode26 = 0" ng-click="displayCode26 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode26 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode26 = 0"  >x</div>
+          <button id="codecopy26" data-clipboard-target="#code26" ng-show="displayCode26 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code26" class="codesnipet" ng-show="displayCode26 == 1" readonly content-editable >
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse-boot">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="">Project name</a>
+    </div>
+    <div class="navbar-collapse-boot collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="">Home</a></li>
+        <li><a href="">About</a></li>
+        <li><a href="">Contact</a></li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="">Action</a></li>
+            <li><a href="">Another action</a></li>
+            <li><a href="">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Nav header</li>
+            <li><a href="">Separated link</a></li>
+            <li><a href="">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+          </pre>
+  </div>
+</div>
+<div class="row rowborder">
+<div class="col-lg-12">
+        
+          <div class="page-header">
+            <h3>Carousel</h3>
+          </div>
+       
+      </div>
+</div>
+ <div class="row rowborder">
+      
+       <div class="relative-section">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <img src="assets/img/slide1.svg" alt="First slide">
+            </div>
+            <div class="item">
+              <img src="assets/img/slide2.svg" alt="Second slide">
+            </div>
+            <div class="item">
+              <img src="assets/img/slide3.svg" alt="Third slide">
+            </div>
+          </div>
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      
+      <div ng-init="displayCode27 = 0" ng-click="displayCode27 = 1" class="btn btn-info open-copy-code"><i class="fa fa-code" aria-hidden="true"></i></div>
+          <div  ng-show="displayCode27 == 1" class="btn btn-default closecodebtn"  ng-click="displayCode27 = 0"  >x</div>
+          <button id="codecopy27" data-clipboard-target="#code27" ng-show="displayCode27 == 1" class="btn btn-info copycodebtn" >Copy</button> 
+          <pre hljs id="code27" class="codesnipet" ng-show="displayCode27 == 1" readonly content-editable >
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="assets/img/slide1.svg" alt="First slide">
+    </div>
+    <div class="item">
+      <img src="assets/img/slide2.svg" alt="Second slide">
+    </div>
+    <div class="item">
+      <img src="assets/img/slide3.svg" alt="Third slide">
+    </div>
+  </div>
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+          </pre>
+      </div>
+    </div>
+ </div></div>
+ <script>
+  var clipboard1 = new Clipboard('#codecopy1');
+  clipboard1.on('success', function(e) { e.clearSelection(); });
+  var clipboard2 = new Clipboard('#codecopy2');
+  clipboard2.on('success', function(e) { e.clearSelection(); });
+   var clipboard3 = new Clipboard('#codecopy3');
+  clipboard3.on('success', function(e) { e.clearSelection(); });
+   var clipboard4 = new Clipboard('#codecopy4');
+  clipboard4.on('success', function(e) { e.clearSelection(); });
+   var clipboard5 = new Clipboard('#codecopy5');
+  clipboard5.on('success', function(e) { e.clearSelection(); });
+   var clipboard6 = new Clipboard('#codecopy6');
+  clipboard6.on('success', function(e) { e.clearSelection(); });
+   var clipboard7 = new Clipboard('#codecopy7');
+  clipboard7.on('success', function(e) { e.clearSelection(); });
+   var clipboard8 = new Clipboard('#codecopy8');
+  clipboard8.on('success', function(e) { e.clearSelection(); });
+   var clipboard9 = new Clipboard('#codecopy9');
+  clipboard9.on('success', function(e) { e.clearSelection(); });
+   var clipboard10 = new Clipboard('#codecopy10');
+  clipboard10.on('success', function(e) { e.clearSelection(); });
+   var clipboard11 = new Clipboard('#codecopy11');
+  clipboard11.on('success', function(e) { e.clearSelection(); });
+   var clipboard12 = new Clipboard('#codecopy12');
+  clipboard12.on('success', function(e) { e.clearSelection(); });
+   var clipboard13 = new Clipboard('#codecopy13');
+  clipboard13.on('success', function(e) { e.clearSelection(); });
+   var clipboard14 = new Clipboard('#codecopy14');
+  clipboard14.on('success', function(e) { e.clearSelection(); });
+   var clipboard15 = new Clipboard('#codecopy15');
+  clipboard15.on('success', function(e) { e.clearSelection(); });
+   var clipboard16 = new Clipboard('#codecopy16');
+  clipboard16.on('success', function(e) { e.clearSelection(); });
+   var clipboard17 = new Clipboard('#codecopy17');
+  clipboard17.on('success', function(e) { e.clearSelection(); });
+   var clipboard18 = new Clipboard('#codecopy18');
+  clipboard18.on('success', function(e) { e.clearSelection(); });
+   var clipboard19 = new Clipboard('#codecopy19');
+  clipboard19.on('success', function(e) { e.clearSelection(); });
+  var clipboard20 = new Clipboard('#codecopy20');
+  clipboard20.on('success', function(e) { e.clearSelection(); });
+  var clipboard21 = new Clipboard('#codecopy21');
+  clipboard21.on('success', function(e) { e.clearSelection(); });
+  var clipboard22 = new Clipboard('#codecopy22');
+  clipboard22.on('success', function(e) { e.clearSelection(); });
+  var clipboard23 = new Clipboard('#codecopy23');
+  clipboard23.on('success', function(e) { e.clearSelection(); });
+  var clipboard24 = new Clipboard('#codecopy24');
+  clipboard24.on('success', function(e) { e.clearSelection(); });
+  var clipboard25 = new Clipboard('#codecopy25');
+  clipboard25.on('success', function(e) { e.clearSelection(); });
+  var clipboard26 = new Clipboard('#codecopy26');
+  clipboard26.on('success', function(e) { e.clearSelection(); });
+  var clipboard27 = new Clipboard('#codecopy27');
+  clipboard27.on('success', function(e) { e.clearSelection(); });
+  var clipboard28 = new Clipboard('#codecopy28');
+  clipboard28.on('success', function(e) { e.clearSelection(); });
+  var clipboard0= new Clipboard('#codecopy0');
+  clipboard0.on('success', function(e) { e.clearSelection(); });
+  var clipboard00 = new Clipboard('#codecopy00');
+  clipboard00.on('success', function(e) { e.clearSelection(); });
+   var clipboard000 = new Clipboard('#codecopy000');
+  clipboard000.on('success', function(e) { e.clearSelection(); });
+  var clipboard0000 = new Clipboard('#codecopy0000');
+  clipboard0000.on('success', function(e) { e.clearSelection(); });
+   var clipboard00000 = new Clipboard('#codecopy00000');
+  clipboard00000.on('success', function(e) { e.clearSelection(); });
+  var clipboard000000 = new Clipboard('#codecopy000000');
+  clipboard000000.on('success', function(e) { e.clearSelection(); });
+  
+  </script>
