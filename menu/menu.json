@@ -2,9 +2,71 @@
   {
     "label": "Top-nav",
     "icon_class": "fa-wrench",
+    "children": [
+      {
+        "label": "top-nav",
+        "icon_class": "fa-wrench",
+        "data": {
+          "page": "top-nav"
+        },
+        "expanded": false
+      },
+      {
+        "label": "test-page-two",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "test-page-two"
+        },
+        "expanded": false
+      },
+      {
+        "label": "test-page-three",
+        "icon_class": "fa-file-text-o",
+        "children": [
+          {
+            "label": "test-page-four",
+            "icon_class": "fa-file-text-o",
+            "data": {
+              "page": "test-page-three/test-page-four"
+            },
+            "expanded": false
+          }
+        ],
+        "data": {
+          "page": "test-page-three"
+        },
+        "expanded": true
+      }
+    ],
     "data": {
       "page": "top-nav"
     },
-    "expanded": false
+    "expanded": true
+  },
+  {
+    "label": "category-two",
+    "icon_class": "fa-file-text-o",
+    "children": [
+      {
+        "label": "category-test-page-one",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "category-test-page-one"
+        },
+        "expanded": false
+      },
+      {
+        "label": "Category-test-page-two",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "category-test-page-two"
+        },
+        "expanded": false
+      }
+    ],
+    "data": {
+      "page": "category-two"
+    },
+    "expanded": true
   }
 ]

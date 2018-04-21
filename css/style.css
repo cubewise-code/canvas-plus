@@ -1,0 +1,86 @@
+.mobilenavbtn{
+display:none !important;
+}
+.navbar-canvas{
+    display:none;
+}
+.navbar-canvas-v2{
+    
+    position: fixed;
+    min-height: 65px;
+    color: #FFF;
+    background-color: #06368b;
+    margin-bottom: 0px !important;
+    border: 0px solid transparent;
+}
+#page-view {
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    position: relative;
+}
+
+.navbar-canvas {
+    position: fixed;
+    min-height: 50px;
+    color:#FFF;
+    background-color: #06368b;
+    margin-bottom: 0px !important;
+    border: 1px solid transparent;
+}
+
+
+
+
+/* tab system */
+
+
+   
+
+     .navbuttons {
+        
+        display: inline-block;
+        overflow: auto;
+        overflow-y: hidden; 
+        max-width: 100%;
+        margin: 0 0 1em; 
+        margin-top:0px;
+        margin-bottom: 0px;
+        
+        white-space: nowrap; 
+        background: #fff; 
+
+    }
+
+    .navbuttons li {
+    display: inline-block;
+    vertical-align: bottom;
+    background-color: #ddd;
+    color: #666;
+    padding: 1em;
+   
+}
+     .navbuttons .active{
+        display: inline-block;
+        vertical-align: top; 
+         
+        background-color:#fff;
+        border: thin solid #ddd;
+        color:#666;
+
+    }
+     
+    .navbuttons a{
+        font-size:1em;
+        padding:0.8em;
+        color: #666;
+         
+        text-decoration: none;
+    }
+    #page-view{
+        
+         padding-top:100px; 
+        
+
+ 
+    }
