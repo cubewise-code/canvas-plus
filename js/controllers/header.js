@@ -10,13 +10,21 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     
     // console.log("HEADER");
     $rootScope.activeSubTab = 0;
-    $rootScope.activeTab = -1;
+     
+    
     $scope.clickedSubNav = function(num){
          
         $rootScope.activeSubTab = num;
         console.log("sub nav clicked", $rootScope.activeSubTab);
     }
-  
+  $transitions.onSuccess({}, function ($transitions) {
+       $rootScope.pathToUse = $transitions._targetState._identifier.name;
+    $timeout( function(){ 
+        if(!$rootScope.activeTab && $rootScope.pathToUse === 'base'){
+            $rootScope.activeTab = -1;
+        }
+    });
+  })
      $transitions.onStart({}, function ($transitions) {
          
            $timeout( function(){ 
@@ -25,6 +33,7 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
 
                      if($rootScope.menuData){
                          console.log("%%%%%%% R" ,   $rootScope.menuData[0]['children'][0]['data'].page, document.getElementById($rootScope.pathToUse));
+                         
                         if( $rootScope.pathToUse === '' || $rootScope.pathToUse === 'base' ){
                                  $rootScope.activeTab = -1;
                         }else{
@@ -32,9 +41,9 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
                             
                                 if($rootScope.menuData[0]['children'][i]['data'].page === $rootScope.pathToUse){
                                     $rootScope.activeTab = parseInt(i);
-                                     document.getElementById($rootScope.pathToUse).setAttribute("class", "active");
+                                    document.getElementById($rootScope.pathToUse).setAttribute("class", "active");
                                 }else{
-                                    
+                                      
                                   //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");
                                 }
                             }
