@@ -1,19 +1,7 @@
-{
-  "top-nav": {
-    "url": "/top-nav",
-    "templateUrl": "html/Top-nav.html"
-  },
-  "test-page-two": {
-    "url": "/test-page-two",
-    "templateUrl": "html/test-page-two.html"
-  },
-  "test-page-three": {
-    "url": "/test-page-three",
-    "templateUrl": "html/test-page-three.html"
-  },
-  "test-page-three/test-page-four": {
-    "url": "/test-page-three/test-page-four",
-    "templateUrl": "html/test-page-four.html"
+{ 
+  "category-one": {
+    "url": "/category-one",
+    "templateUrl": "html/category-one.html"
   },
   "category-two": {
     "url": "/category-two",
@@ -27,4 +15,5 @@
     "url": "/category-test-page-two",
     "templateUrl": "html/Category-test-page-two.html"
   }
+   
 }

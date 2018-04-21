@@ -10,31 +10,49 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     
     // console.log("HEADER");
     $rootScope.activeSubTab = 0;
+    $rootScope.activeTab = -1;
     $scope.clickedSubNav = function(num){
          
         $rootScope.activeSubTab = num;
         console.log("sub nav clicked", $rootScope.activeSubTab);
     }
+  
      $transitions.onStart({}, function ($transitions) {
+         
            $timeout( function(){ 
-                $rootScope.pathToUse = $transitions._targetState._identifier.name;
-                    $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
-              
-                    if($rootScope.menuData){
-                         for(var item in  $rootScope.menuData[0].children){
+              $rootScope.pathToUse = $transitions._targetState._identifier.name;
+                 //   $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+
+                     if($rootScope.menuData){
+                         console.log("%%%%%%% R" ,   $rootScope.menuData[0]['children'][0]['data'].page, document.getElementById($rootScope.pathToUse));
+                        if( $rootScope.pathToUse === '' || $rootScope.pathToUse === 'base' ){
+                                 $rootScope.activeTab = -1;
+                        }else{
+                            for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
                             
-                        if( $rootScope.pathToUse === 'base'){
-                            $rootScope.activeTab = 0;
-                            $rootScope.activeSubTab = 0;
-                        } else if( $rootScope.menuData[0].children[item].data.page === $rootScope.pathToUse){
-                               console.log("%%%%%%% R" ,  $rootScope.menuData[0].children[item].data.page);
+                                if($rootScope.menuData[0]['children'][i]['data'].page === $rootScope.pathToUse){
+                                    $rootScope.activeTab = parseInt(i);
+                                     document.getElementById($rootScope.pathToUse).setAttribute("class", "active");
+                                }else{
+                                    
+                                  //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");
+                                }
+                            }
+                         }
+                       //  for(var item in  $rootScope.menuData[0].children){
+                            
+                     //   if( $rootScope.pathToUse === 'base'){
+                       //     $rootScope.activeTab = 0;
+                         //   $rootScope.activeSubTab = 0;
+                        //} else if( $rootScope.menuData[0].children[item].data.page === $rootScope.pathToUse){
+                         //       
                            // $rootScope.activeTab = parseInt(item)-1;
                             //$rootScope.activeSubTab = 0;
                            
-                        } 
+                        //} 
                         
-                    }
-                    }
+                      //  }
+                 }
                     
                     
             } );

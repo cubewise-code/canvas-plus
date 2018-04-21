@@ -1,4 +1,4 @@
-app.controller('TopnavCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', function($scope, $rootScope, $log, $tm1Ui) {
+app.controller('categoryoneCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', function($scope, $rootScope, $log, $tm1Ui) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
     *     lists.* should be used to store any lists that are used with ng-repeat, i.e. tm1-ui-element-list
@@ -12,7 +12,5 @@ app.controller('TopnavCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', function
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "Top Nav";
-    document.getElementById("home-nav-btn").setAttribute("class", "");
     
 }]);
