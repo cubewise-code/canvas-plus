@@ -13,7 +13,7 @@
                     <a href="#" data-toggle="tab"  > 
                         <i ng-if="$root.activeTab === -1" class="fa fa-home fa-1x"></i> 
                         <i ng-if=" $root.activeTab != -1" 
-                        class="fa fa-caret-left fa-1x"></i>  {{  $root.activeTab != -1 ? 'Home' : ''}}  
+                        class="fa fa-caret-left fa-1x"></i>   <span class="hidden-xs"> {{  $root.activeTab != -1 ? 'Home' : ''}} </span> 
                     </a> 
                 
             </li>
@@ -27,7 +27,7 @@
             > 
                 <a   ng-href="#/{{findClickthrough(item.data.page)}}">
                     <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i> 
-                    {{item.label}}  
+                   <span class="hidden-xs"> {{item.label}}  </span>
                     
                 </a>
 
@@ -40,7 +40,7 @@
                   
                     <a  ng-href="#/{{findClickthrough(subitem.data.page)}}"  href="#">
                      <i class="fa fa-fw {{subitem.icon_class}} fa-1x" ></i> 
-                        {{subitem.label}} 
+                       <span class="hidden-xs">   {{subitem.label}} </span>
                     </a> 
                  
           
