@@ -42,27 +42,33 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
         if(!$rootScope.activeTab && $rootScope.pathToUse === 'base'){
             $rootScope.activeTab = -1;
         }else{
-             
+             if($rootScope.subPathBoolean){
              for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
                             
                                 if($rootScope.menuData[0]['children'][i]['data'].page === ($rootScope.pathArray[1].name).split("/")[0]){
-                                 
-                                             $rootScope.activeTab = parseInt(i);
-                                            document.getElementById('sub-'($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
-                                            
-                                        
+                                    $rootScope.activeTab = parseInt(i);
+                                    
+                                      if(!$rootScope.subPathBoolean){
+                                           // document.getElementById(($rootScope.menuData[0]['children'][i]['data'].page).split("/")[0]).setAttribute("class", "active"); 
+                                          
+                                            document.getElementById('level-two-'+($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
+                                             
+                                        }
                                         //document.getElementById(($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
                                        
                                    
                                     
                                 }else{
-                                      
+                                     if(document.getElementById('level-two-'+($rootScope.pathArray[0].name).split("/")[0])){
+                                          document.getElementById('level-two-'+($rootScope.pathArray[0].name).split("/")[0]).setAttribute("class", "active"); 
+                                     }
+                                    
                                   //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");
                                 }
                             }
              }
-        
-    });
+        }
+    }, 100);
   })
      $transitions.onStart({}, function ($transitions) {
          

@@ -18,7 +18,7 @@
                 </span>
             </li>
             <li   
-                id="{{(item.data.page).split('/')[0]}}"   
+                id="level-one-{{(item.data.page).split('/')[0]}}"   
                 ng-repeat="item in $root.menuData[0].children track by $index"  
                 data-toggle="tab"
                 ng-show=" $root.activeTab === -1 && !$root.subPathBoolean "
@@ -32,13 +32,14 @@
                 </a>
 
             </li>
-            <li id="sub-{{((subitem.label)).split(' ').join('-').toLowerCase()}}" 
+            <li id="level-two-{{((subitem.label)).split(' ').join('-').toLowerCase()}}" 
                 ng-class="subitem.data.page === $root.pathToUse ? 'active' :''"
                 ng-show="!$rootScope.subPathBoolean "  
                 ng-repeat="subitem in $root.menuData[0]['children'][$root.activeTab].children track by $index"  data-toggle="tab">
                
                 <span>   
                     <a  ng-href="#/{{findClickthrough(subitem.data.page)}}"  href="#">
+                     <i class="fa fa-fw {{subitem.icon_class}} fa-1x" ></i> 
                         {{subitem.label}} 
                     </a> 
                 </span>
