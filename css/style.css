@@ -58,6 +58,8 @@ display:none !important;
     background-color: #ddd;
     color: #666;
     padding: 1em;
+    padding-left:0px;
+    padding-right:0px;
    
 }
      .navbuttons .active{
@@ -65,14 +67,14 @@ display:none !important;
         vertical-align: top; 
          
         background-color:#fff;
-        border: thin solid #ddd;
+        border: 0px solid #ddd;
         color:#666;
 
     }
      
     .navbuttons a{
         font-size:1em;
-        padding:0.8em;
+        padding:1.5em;
         color: #666;
          
         text-decoration: none;

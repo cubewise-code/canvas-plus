@@ -9,13 +9,13 @@
       
         <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; background-color:#06368b;" >
             <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1  ? 'active':''">
-                <span> 
+                
                     <a href="#" data-toggle="tab"  > 
                         <i ng-if="$root.activeTab === -1" class="fa fa-home fa-1x"></i> 
                         <i ng-if=" $root.activeTab != -1" 
                         class="fa fa-caret-left fa-1x"></i>  {{  $root.activeTab != -1 ? 'Home' : ''}}  
                     </a> 
-                </span>
+                
             </li>
             <li   
                 id="level-one-{{(item.data.page).split('/')[0]}}"   
@@ -37,12 +37,12 @@
                 ng-show="!$rootScope.subPathBoolean "  
                 ng-repeat="subitem in $root.menuData[0]['children'][$root.activeTab].children track by $index"  data-toggle="tab">
                
-                <span>   
+                  
                     <a  ng-href="#/{{findClickthrough(subitem.data.page)}}"  href="#">
                      <i class="fa fa-fw {{subitem.icon_class}} fa-1x" ></i> 
                         {{subitem.label}} 
                     </a> 
-                </span>
+                 
           
             </li> 
         </ul>
