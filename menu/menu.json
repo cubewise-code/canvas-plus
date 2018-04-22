@@ -4,6 +4,14 @@
     "icon_class": "fa-file-text-o", 
     "children": [
       {
+        "label": "category-one",
+        "icon_class": "fa-file-text-o",  
+        "data": {
+          "page": "category-one"
+        },
+        "expanded": false
+      },
+      {
         "label": "category-test-page-one",
         "icon_class": "fa-file-text-o",
         "data": {
@@ -29,6 +37,14 @@
     "label": "category-two",
     "icon_class": "fa-file-text-o",
     "children": [
+      {
+        "label": "category-two",
+        "icon_class": "fa-file-text-o",  
+        "data": {
+          "page": "category-two"
+        },
+        "expanded": false
+      },
       {
         "label": "category-test-page-one",
         "icon_class": "fa-file-text-o",

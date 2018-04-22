@@ -42,21 +42,26 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
         if(!$rootScope.activeTab && $rootScope.pathToUse === 'base'){
             $rootScope.activeTab = -1;
         }else{
+             
              for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
                             
                                 if($rootScope.menuData[0]['children'][i]['data'].page === ($rootScope.pathArray[1].name).split("/")[0]){
-                                    if($rootScope.subPathBoolean){
-                                        document.getElementById(($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
-                                         $rootScope.activeTab = parseInt(i);
-                                    }
-                                    
+                                 
+                                             $rootScope.activeTab = parseInt(i);
+                                            document.getElementById('sub-'($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
+                                            
+                                        
+                                        //document.getElementById(($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
+                                       
+                                   
                                     
                                 }else{
                                       
                                   //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");
                                 }
                             }
-        }
+             }
+        
     });
   })
      $transitions.onStart({}, function ($transitions) {
@@ -78,8 +83,10 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
                             for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
                             
                                 if($rootScope.menuData[0]['children'][i]['data'].page === $rootScope.pathToUse){
-                                    $rootScope.activeTab = parseInt(i);
-                                    document.getElementById($rootScope.pathToUse).setAttribute("class", "active");
+                                     if(!$rootScope.subPathBoolean){
+                                        $rootScope.activeTab = parseInt(i);
+                                    // 
+                                     }
                                 }else{
                                       
                                   //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");

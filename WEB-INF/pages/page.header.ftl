@@ -32,7 +32,7 @@
                 </a>
 
             </li>
-            <li id="{{((subitem.label)).split(' ').join('-').toLowerCase()}}" 
+            <li id="sub-{{((subitem.label)).split(' ').join('-').toLowerCase()}}" 
                 ng-class="subitem.data.page === $root.pathToUse ? 'active' :''"
                 ng-show="!$rootScope.subPathBoolean "  
                 ng-repeat="subitem in $root.menuData[0]['children'][$root.activeTab].children track by $index"  data-toggle="tab">
