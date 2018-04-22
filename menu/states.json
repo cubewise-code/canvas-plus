@@ -7,12 +7,20 @@
     "url": "/category-two",
     "templateUrl": "html/category-two.html"
   },
-  "category-test-page-one": {
-    "url": "/category-test-page-one",
+  "category-two/category-test-page-one": {
+    "url": "/category-two/category-test-page-one",
     "templateUrl": "html/category-test-page-one.html"
   },
-  "category-test-page-two": {
-    "url": "/category-test-page-two",
+  "category-two/category-test-page-two": {
+    "url": "/category-two/category-test-page-two",
+    "templateUrl": "html/Category-test-page-two.html"
+  },
+  "category-one/category-test-page-one": {
+    "url": "/category-one/category-test-page-one",
+    "templateUrl": "html/category-test-page-one.html"
+  },
+  "category-one/category-test-page-two": {
+    "url": "/category-one/category-test-page-two",
     "templateUrl": "html/Category-test-page-two.html"
   }
    

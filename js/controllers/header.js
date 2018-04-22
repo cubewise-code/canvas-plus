@@ -10,7 +10,7 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     
     // console.log("HEADER");
     $rootScope.activeSubTab = 0;
-     
+     $rootScope.subPathBoolean = false;
     
     $scope.clickedSubNav = function(num){
          
@@ -19,9 +19,43 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     }
   $transitions.onSuccess({}, function ($transitions) {
        $rootScope.pathToUse = $transitions._targetState._identifier.name;
+      //$rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+     $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+                      
     $timeout( function(){ 
+        console.log($rootScope.pathArray, "path array");
+         
+        if(($rootScope.pathArray[1].name).split("/").length > 1  ){
+            $rootScope.subPathBoolean = true; 
+            
+            console.log(($rootScope.pathArray[1].name).split("/").length, "sub path true");
+        }else{
+            if(($rootScope.pathArray[1].name) === 'base'){
+                 console.log($rootScope.pathArray[1].name, "No Sub Path");
+                 $rootScope.subPathBoolean = false;
+            }else{
+                 console.log($rootScope.pathArray[1].name, "No Sub Path");
+                $rootScope.subPathBoolean = false;
+            }
+            
+        }
         if(!$rootScope.activeTab && $rootScope.pathToUse === 'base'){
             $rootScope.activeTab = -1;
+        }else{
+             for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
+                            
+                                if($rootScope.menuData[0]['children'][i]['data'].page === ($rootScope.pathArray[1].name).split("/")[0]){
+                                    if($rootScope.subPathBoolean){
+                                        document.getElementById(($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
+                                         $rootScope.activeTab = parseInt(i);
+                                    }
+                                    
+                                    
+                                }else{
+                                      
+                                  //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");
+                                }
+                            }
         }
     });
   })
@@ -29,14 +63,18 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
          
            $timeout( function(){ 
               $rootScope.pathToUse = $transitions._targetState._identifier.name;
-                 //   $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+                      $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+                      
 
                      if($rootScope.menuData){
-                         console.log("%%%%%%% R" ,   $rootScope.menuData[0]['children'][0]['data'].page, document.getElementById($rootScope.pathToUse));
+                           
+                          
+                         //console.log("%%%%%%% R" ,   $rootScope.menuData[0]['children'][0]['data'].page, document.getElementById($rootScope.pathToUse));
                          
                         if( $rootScope.pathToUse === '' || $rootScope.pathToUse === 'base' ){
                                  $rootScope.activeTab = -1;
                         }else{
+                             
                             for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
                             
                                 if($rootScope.menuData[0]['children'][i]['data'].page === $rootScope.pathToUse){

@@ -21,7 +21,7 @@
                 id="{{(item.data.page).split('/')[0]}}"   
                 ng-repeat="item in $root.menuData[0].children track by $index"  
                 data-toggle="tab"
-                ng-show=" $root.activeTab === -1   "
+                ng-show=" $root.activeTab === -1 && !$root.subPathBoolean "
                 ng-if="item.label "
                 ng-click="$root.activeTab = $index"
             > 
@@ -34,7 +34,7 @@
             </li>
             <li id="{{((subitem.label)).split(' ').join('-').toLowerCase()}}" 
                 ng-class="subitem.data.page === $root.pathToUse ? 'active' :''"
-                ng-show="$root.pathToUse != '' "  
+                ng-show="!$rootScope.subPathBoolean "  
                 ng-repeat="subitem in $root.menuData[0]['children'][$root.activeTab].children track by $index"  data-toggle="tab">
                
                 <span>   

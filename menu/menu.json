@@ -7,7 +7,7 @@
         "label": "category-test-page-one",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-test-page-one"
+          "page": "category-one/category-test-page-one"
         },
         "expanded": false
       },
@@ -15,7 +15,7 @@
         "label": "Category-test-page-two",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-test-page-two"
+          "page": "category-one/category-test-page-two"
         },
         "expanded": false
       }
@@ -33,7 +33,7 @@
         "label": "category-test-page-one",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-test-page-one"
+          "page": "category-two/category-test-page-one"
         },
         "expanded": false
       },
@@ -41,7 +41,7 @@
         "label": "Category-test-page-two",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-test-page-two"
+          "page": "category-two/category-test-page-two"
         },
         "expanded": false
       }
