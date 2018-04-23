@@ -11,6 +11,11 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     // console.log("HEADER");
     $rootScope.activeSubTab = 0;
      $rootScope.subPathBoolean = false;
+      $rootScope.defaultOffSet = 90;
+     $rootScope.topOffSet = 90;
+     
+      $rootScope.topOffSetPageView = $rootScope.topOffSet - 50;
+      
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";

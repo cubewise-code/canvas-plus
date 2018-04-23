@@ -1,13 +1,18 @@
 <!-- This gets appended at the top for each page  -->
-<div id="page-header"  ng-controller="headerCtrl"  >
+<div id="page-header"  ng-controller="headerCtrl" 
+  
+>
 <div id="mininavinternal"></div>
  <div ng-show='false'>
     <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
 </div>
- <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px;">       
+ <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px; height:auto;"  
+ 
+  
+ >       
    
      
-            <ul class="nav navbar-top-links-v2 navbar-right hidden-print" style="color:#fff !important; background-color:transparent !important;">
+            <ul class="nav navbar-top-links-v2 navbar-right hidden-print" style="color:#fff !important; background-color:transparent !important;"  >
             <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;">
             <span id="opened" > <span class="inline-block" style="margin-right:5px;">{{$root.user.FriendlyName}}  </span> <span class="inline-block"><tm1-ui-session></tm1-ui-session></span> </span>
             </li>
@@ -45,12 +50,15 @@
                   </li>
                 </ul>                  
               </li>
+               <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;"  ng-click="$root.topOffSet = 200; $root.topOffSetPageView = ($root.topOffSet - 50);" >
+             <i class="fa fa-filter"></i>
+            </li>
     </ul>
 </div>
-
+ 
 <div   
     class="nav"    
-    style="vertical-align: bottom !important; transition-property:padding-top;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? '50px':'100%'}}; background-color:#06368b;">  
+    style="vertical-align: bottom !important; transition-property:padding-top; position:relative; z-index:999;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.topOffSet+'px':'100%'}}; background-color:#06368b;">  
       
         <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; background-color:#06368b;" >
             <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1  ? 'active':''">
@@ -93,6 +101,12 @@
         </ul>
 
     </div>
-
+<div class="col-md-12 col-xs-12" 
+style=" height:{{$root.topOffSet != $root.defaultOffSet ? ($root.topOffSet-50):'0'}}px; position:fixed;  top:0px; margin:0px; left:0px;color:#fff; padding:10px; margin-top:50px;z-index:6; transition-property:height;  transition-duration: 1s; overflow:{{$root.topOffSet != $root.defaultOffSet ? 'auto' :'hidden'}};"
+>
+<h3>Filter Section <hr></h3>
 
 </div>
+ 
+</div>
+ 
