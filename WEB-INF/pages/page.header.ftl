@@ -21,7 +21,7 @@
                     <a href="#" data-toggle="tab"  > 
                         <i ng-if="$root.activeTab === -1" class="fa fa-home fa-1x"></i> 
                         <i ng-if=" $root.activeTab != -1" 
-                        class="fa fa-caret-left fa-1x"></i>   <span class="hidden-xs"> {{  $root.activeTab != -1 ? 'Home' : ''}} </span> 
+                        class="fa fa-caret-left fa-1x"></i>    <span class="hidden-xs"> {{  $root.activeTab != -1 ? 'Home' : ''}} </span> 
                     </a> 
                 
             </li>

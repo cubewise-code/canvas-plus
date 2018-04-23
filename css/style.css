@@ -139,3 +139,17 @@ display:none !important;
     filter: alpha(opacity=100);
     opacity: 1 !important;
 }
+.tm1-login-modal .panel {
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+        border: 0px solid transparent;
+    border-radius: 0px;
+    background-color: transparent !important;
+}
+.tm1-login-modal .panel-default > .panel-heading {
+    color: #fff;
+    /* background-color: #f5f5f5; */
+    border-color: transparent;
+     background-color: transparent !important;
+}

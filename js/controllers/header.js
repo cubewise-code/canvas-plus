@@ -15,7 +15,7 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     $scope.clickedSubNav = function(num){
          
         $rootScope.activeSubTab = num;
-        console.log("sub nav clicked", $rootScope.activeSubTab);
+        console.log("sub nav clicked", $rootScope.activeSubTab, $rootScope.session.active);
     }
   $transitions.onSuccess({}, function ($transitions) {
     
@@ -24,7 +24,7 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
       if($transitions._targetState._identifier.navigable){
         $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
       }
-      
+       
                       
     $timeout( function(){ 
         console.log($rootScope.pathArray, "path array");
