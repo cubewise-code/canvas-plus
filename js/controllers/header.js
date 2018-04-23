@@ -41,33 +41,26 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
         }
         if(!$rootScope.activeTab && $rootScope.pathToUse === 'base'){
             $rootScope.activeTab = -1;
+             $rootScope.subPathBoolean = false;
         }else{
-             if($rootScope.subPathBoolean){
+             
              for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
+                    if($rootScope.menuData[0]['children'][i]['data'].page === ($rootScope.pathArray[1].name).split("/")[0]){
+                        $rootScope.activeTab = parseInt(i); 
+                        if(document.getElementById('level-two-'+($rootScope.pathArray[1].name).split("/")[0])){
+                                // document.getElementById('level-two-'+($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
+                        }
                             
-                                if($rootScope.menuData[0]['children'][i]['data'].page === ($rootScope.pathArray[1].name).split("/")[0]){
-                                    $rootScope.activeTab = parseInt(i);
-                                    
-                                      if(!$rootScope.subPathBoolean){
-                                           // document.getElementById(($rootScope.menuData[0]['children'][i]['data'].page).split("/")[0]).setAttribute("class", "active"); 
-                                          
-                                            document.getElementById('level-two-'+($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
-                                             
-                                        }
-                                        //document.getElementById(($rootScope.pathArray[1].name).split("/")[0]).setAttribute("class", "active"); 
-                                       
-                                   
-                                    
-                                }else{
-                                     if(document.getElementById('level-two-'+($rootScope.pathArray[0].name).split("/")[0])){
-                                          document.getElementById('level-two-'+($rootScope.pathArray[0].name).split("/")[0]).setAttribute("class", "active"); 
-                                     }
-                                    
-                                  //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");
-                                }
-                            }
+                    }else{
+                        if(document.getElementById('level-two-'+($rootScope.pathArray[0].name).split("/")[0])){
+                            //document.getElementById('level-two-'+($rootScope.pathArray[0].name).split("/")[0]).setAttribute("class", "active"); 
+                        }
+                    
+                   
+                    }
+               }
              }
-        }
+        
     }, 100);
   })
      $transitions.onStart({}, function ($transitions) {
@@ -91,6 +84,7 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
                                 if($rootScope.menuData[0]['children'][i]['data'].page === $rootScope.pathToUse){
                                      if(!$rootScope.subPathBoolean){
                                         $rootScope.activeTab = parseInt(i);
+                                      //   document.getElementById(($rootScope.menuData[0]['children'][i]['data'].page).split("/")[0]).setAttribute("class", "active"); 
                                     // 
                                      }
                                 }else{

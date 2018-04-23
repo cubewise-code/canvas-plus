@@ -1,7 +1,15 @@
 <!-- This gets appended at the top for each page  -->
 <div id="page-header"  ng-controller="headerCtrl"  >
 <div id="mininavinternal"></div>
- 
+ <div ng-show='false'>
+    <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
+</div>
+ <div style="position:absolute; top:0px; right:0px; z-index:9; padding:10px;">       
+   
+    <span id="opened" ><tm1-ui-session></tm1-ui-session> </span>
+    
+    
+</div>
 
 <div   
     class="nav"    
@@ -18,12 +26,12 @@
                 
             </li>
             <li   
-                id="level-one-{{(item.data.page).split('/')[0]}}"   
+                 
                 ng-repeat="item in $root.menuData[0].children track by $index"  
-                data-toggle="tab"
-                ng-show=" $root.activeTab === -1 && !$root.subPathBoolean "
+              
+                ng-show=" $root.activeTab === -1 "
                 ng-if="item.label "
-                ng-click="$root.activeTab = $index"
+                 
             > 
                 <a   ng-href="#/{{findClickthrough(item.data.page)}}">
                     <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i> 

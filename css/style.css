@@ -86,3 +86,20 @@ display:none !important;
 
  
     }
+    .inline-block-right{
+        display:inline-block;
+        float: right;
+        text-align: right;
+        right:0px;
+    }
+    .tm1-ui-session {
+        color:#fff;
+    }
+    #locked .fa-group:before, .fa-users:before {
+        content: "\f023";
+        color: #fff;
+    }
+    #open .fa-group:before, .fa-users:before {
+        content: "\f023";
+        color: #fff;
+    }
