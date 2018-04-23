@@ -103,3 +103,39 @@ display:none !important;
         content: "\f023";
         color: #fff;
     }
+    .tm1-login-modal{
+        background-color:#06368b
+    }
+
+    @media (min-width: 768px){
+        .tm1-login-modal .modal-content {
+            border:none;
+            background-color: transparent;
+            -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
+        }
+    }
+    .tm1-login-modal .modal-content {
+            border:none;
+            background-color: transparent;
+            -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
+        }
+    .tm1-login-modal button.close {
+        color: #fff !important;
+        -webkit-appearance: none;
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+    }
+    .tm1-login-modal .close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff !important;
+     text-shadow: 0 0px 0 transparent !important; 
+    filter: alpha(opacity=100);
+    opacity: 1 !important;
+}

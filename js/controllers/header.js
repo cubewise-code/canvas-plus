@@ -18,9 +18,13 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
         console.log("sub nav clicked", $rootScope.activeSubTab);
     }
   $transitions.onSuccess({}, function ($transitions) {
-       $rootScope.pathToUse = $transitions._targetState._identifier.name;
+    
+    $rootScope.pathToUse = $transitions._targetState._identifier.name;
       //$rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
-     $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+      if($transitions._targetState._identifier.navigable){
+        $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+      }
+      
                       
     $timeout( function(){ 
         console.log($rootScope.pathArray, "path array");
@@ -67,8 +71,10 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
          
            $timeout( function(){ 
               $rootScope.pathToUse = $transitions._targetState._identifier.name;
-                      $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
-                      
+                   if($transitions._targetState._identifier.navigable){
+                        $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
+                    }
+                                    
 
                      if($rootScope.menuData){
                            

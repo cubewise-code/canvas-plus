@@ -4,7 +4,7 @@
  <div ng-show='false'>
     <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
 </div>
- <div style="position:absolute; top:0px; right:0px; z-index:9; padding:10px;">       
+ <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px;">       
    
     <span id="opened" ><tm1-ui-session></tm1-ui-session> </span>
     
@@ -13,7 +13,7 @@
 
 <div   
     class="nav"    
-    style="vertical-align: bottom !important; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:50px; background-color:#06368b;">  
+    style="vertical-align: bottom !important; transition-property:padding-top;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? '50px':'100%'}}; background-color:#06368b;">  
       
         <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; background-color:#06368b;" >
             <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1  ? 'active':''">
