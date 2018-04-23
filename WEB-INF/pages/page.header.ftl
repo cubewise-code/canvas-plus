@@ -6,6 +6,9 @@
  <div ng-show='false'>
     <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
 </div>
+
+   
+ 
  <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px; height:auto;"  
  
   
@@ -50,16 +53,24 @@
                   </li>
                 </ul>                  
               </li>
-               <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;"  ng-click="$root.topOffSet = 200; $root.topOffSetPageView = ($root.topOffSet - 50);" >
+               <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;"  ng-click="$root.topOffSet = 200; $root.topOffSetPageView = ($root.topOffSet - $root.defaultOffSet);" >
              <i class="fa fa-filter"></i>
             </li>
     </ul>
 </div>
- 
+  <div>
+    <a href="#">
+        <img src="images/logo.svg" 
+        title="Your Logo Here" 
+        style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999;" />
+    </a>
+  </div>
+
+      
 <div   
     class="nav"    
     style="vertical-align: bottom !important; transition-property:padding-top; position:relative; z-index:999;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.topOffSet+'px':'100%'}}; background-color:#06368b;">  
-      
+         
         <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; background-color:#06368b;" >
             <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1  ? 'active':''">
                 

@@ -14,7 +14,7 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
       $rootScope.defaultOffSet = 90;
      $rootScope.topOffSet = 90;
      
-      $rootScope.topOffSetPageView = $rootScope.topOffSet - 50;
+      $rootScope.topOffSetPageView = $rootScope.topOffSet - 90;
       
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
