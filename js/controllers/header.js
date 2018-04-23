@@ -11,7 +11,18 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     // console.log("HEADER");
     $rootScope.activeSubTab = 0;
      $rootScope.subPathBoolean = false;
-    
+    $scope.print={};
+    $scope.print.pageOrientation = "Landscape";
+    $scope.print.pageSize = "A3";
+
+    $rootScope.pageUrlEncoded = function() {
+		return encodeURIComponent($location.absUrl());
+	};
+	
+	$rootScope.pageUrl = function() {
+		return $location.absUrl();
+	};
+	
     $scope.clickedSubNav = function(num){
          
         $rootScope.activeSubTab = num;

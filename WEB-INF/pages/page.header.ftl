@@ -6,9 +6,46 @@
 </div>
  <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px;">       
    
-    <span id="opened" ><tm1-ui-session></tm1-ui-session> </span>
-    
-    
+     
+            <ul class="nav navbar-top-links-v2 navbar-right hidden-print" style="color:#fff !important; background-color:transparent !important;">
+            <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;">
+            <span id="opened" > <span class="inline-block" style="margin-right:5px;">{{$root.user.FriendlyName}}  </span> <span class="inline-block"><tm1-ui-session></tm1-ui-session></span> </span>
+            </li>
+            <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-share-alt fa-fw"></i>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu nav-dropdown" >
+                  <li class="paddingtop10" >                    
+                    <span>
+                      <select ng-model="print.pageOrientation" class="form-control printpageformat">
+                        <option >Landscape</option>
+                        <option>Portrait</option>
+                      </select>
+                      <select ng-model="print.pageSize" class="form-control printdropdown">
+                        <option>A5</option>
+                        <option>A4</option>
+                        <option >A3</option>
+                        <option>Letter</option>
+                        <option>Tabloid</option>
+                      </select>
+                    </span>
+                    <a href="print.pdf?url={{$root.pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
+                      <i class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
+                    </a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                      <a href="" ngclipboard data-clipboard-text="{{pageUrl()}}" ngclipboard-success="copySuccess(e);">
+                        <i class="fa fa-clipboard fa-fw marginright15"  ></i> <span translate="COPYTOCLIPBOARD"></span>
+                        <span class="pull-right">
+                          <span ng-if="isCopied" class="label label-default" translate="COPIED"></span>
+                        </span>
+                      </a>
+                  </li>
+                </ul>                  
+              </li>
+    </ul>
 </div>
 
 <div   
