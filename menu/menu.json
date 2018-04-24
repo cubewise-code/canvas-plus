@@ -1,11 +1,11 @@
 [
   {
     "label": "category-one",
-    "icon_class": "fa-file-text-o", 
+    "icon_class": "fa-file-text-o",
     "children": [
       {
         "label": "category-one",
-        "icon_class": "fa-file-text-o",  
+        "icon_class": "fa-file-text-o",
         "data": {
           "page": "category-one"
         },
@@ -39,25 +39,9 @@
     "children": [
       {
         "label": "category-two",
-        "icon_class": "fa-file-text-o",  
+        "icon_class": "fa-file-text-o",
         "data": {
           "page": "category-two"
-        },
-        "expanded": false
-      },
-      {
-        "label": "category-test-page-one",
-        "icon_class": "fa-file-text-o",
-        "data": {
-          "page": "category-two/category-test-page-one"
-        },
-        "expanded": false
-      },
-      {
-        "label": "Category-test-page-two",
-        "icon_class": "fa-file-text-o",
-        "data": {
-          "page": "category-two/category-test-page-two"
         },
         "expanded": false
       }

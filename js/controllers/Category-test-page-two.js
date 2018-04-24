@@ -12,5 +12,6 @@ app.controller('CategorytestpagetwoCtrl', ['$scope', '$rootScope', '$log', '$tm1
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
+    $rootScope.pageTitle = "Category Test Two";
     
 }]);

@@ -1,6 +1,6 @@
 <div ng-controller="CategorytestpagetwoCtrl" 
-	  style="padding-top:{{$root.defaultOffSet}}px; transition-property:padding-top;  transition-duration: 1s;"  
-  ng-click="$root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.defaultOffSet + 60);"  >
+	  style="padding-top:{{$root.defaultOffSet+60}}px; transition-property:padding-top;  transition-duration: 1s;" 
+  ng-click="$root.topOffSet = $root.defaultOffSet; "  >
 
   <h1>
     <span style="float: left; width: 50px; "><i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i><i ng-if="!$root.isLoading" class="fa fa-file-text-o"></i></span> Category-test-page-two

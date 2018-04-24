@@ -12,6 +12,7 @@ app.controller('categorytwoCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui','$ti
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
+    $rootScope.pageTitle = "Category Two";
     $timeout( function(){ 
         if(document.getElementById('level-two-category-two')){
             document.getElementById('level-two-category-two').setAttribute("class", "active");

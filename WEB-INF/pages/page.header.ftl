@@ -118,10 +118,13 @@
  
 </div>
   
-             
  
-<div class="right-hand-nav" style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-300':'0'}}px;  margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+50)+'px':'100%'}}" >
- <div class=" btn btn-primary  " style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px; top:0px; background-color:#06368b !important; margin-left:-45px;"  
+ 
+<div class="right-hand-nav" 
+    style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-260':'0'}}px;  margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}}" 
+    >
+             
+            <div class=" btn btn-primary  " style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px; background-color:#06368b !important; margin-left:-45px;"  
                 ng-click="$root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet);" 
                 ng-if="$root.topOffSet != $root.defaultOffSet"
                 >
@@ -135,10 +138,10 @@
                 >
                     <i class="fa fa-filter"></i>
             </div>
-<h4 style="padding:10px; color:#fff;">Extra Header Section <hr></h4>
+            <h4 style="padding-left:10px; color:#fff;">Critiria</h4>
             <div id="filtersubnm2" class="col-md-12 col-xs-12 filter-label" >  
                    
-                    <span class="col-md-12 col-xs-12 label label-info pull-right small-label"   >
+                    <span class="col-md-12 col-xs-12 label label-info pull-right small-label"  style="border-radius:0px;" >
                         <small> Year</small>
                     </span> 
                     <tm1-ui-subnm 
@@ -154,6 +157,12 @@
                     ></tm1-ui-subnm>
             </div>   
  </div>
-
+<div  class="col-md-12 col-xs-12 nopadding" style="color:#555 !important;padding:1em; padding-left:1.3em; padding-right:60px;   transition-property:margin-left, margin-top;  transition-duration: 1s, 1s;  position:fixed; z-index:5; border-radius:0px;  border:none; left:0px;   top:118px; background-color:#fff !important; margin-top:100%; margin-top:{{$root.user.FriendlyName ? '0px':'100%'}}"  
+                 
+                 
+                >
+                <h4 class="text-left pull-left">{{($root.subPathBoolean ? ($root.selectedsubParentPage  ):'') | capitalize }}{{$root.pageTitle}} </h4>
+                 <span class="pull-right" ng-show="$root.topOffSet === $root.defaultOffSet"> {{$root.defaults.year}} </span>
+            </div>
 </div>
  

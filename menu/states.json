@@ -1,4 +1,4 @@
-{ 
+{
   "category-one": {
     "url": "/category-one",
     "templateUrl": "html/category-one.html"
@@ -23,5 +23,4 @@
     "url": "/category-one/category-test-page-two",
     "templateUrl": "html/Category-test-page-two.html"
   }
-   
 }
