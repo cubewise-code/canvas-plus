@@ -1,4 +1,5 @@
-app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transitions','$location', '$timeout', function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout) {
+app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transitions','$location', '$timeout', 'globals', 
+function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, globals) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
     *     lists.* should be used to store any lists that are used with ng-repeat, i.e. tm1-ui-element-list
@@ -11,10 +12,11 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
     // console.log("HEADER");
     $rootScope.activeSubTab = 0;
      $rootScope.subPathBoolean = false;
-      $rootScope.defaultOffSet = 90;
-     $rootScope.topOffSet = 90;
+      $rootScope.innerHeight = window.innerHeight/2;
+      $rootScope.defaultOffSet = 70;
+     $rootScope.topOffSet = $rootScope.defaultOffSet;
      
-      $rootScope.topOffSetPageView = $rootScope.topOffSet - 90;
+      $rootScope.topOffSetPageView = $rootScope.topOffSet+60;
       
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
@@ -33,6 +35,46 @@ app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transi
         $rootScope.activeSubTab = num;
         console.log("sub nav clicked", $rootScope.activeSubTab, $rootScope.session.active);
     }
+    $rootScope.values={
+        year:''
+    }; 
+    $rootScope.defaults={
+            year:"",
+            settingsInstance: 'dev',
+            settingsCube: 'System User Settings',
+            settingsMeasure: 'String'
+    };
+    $rootScope.selections={
+        year:''
+    };
+    
+
+    //Initialize all variables
+    /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
+    $scope.initializeVariables = function(){
+                $tm1Ui.applicationUser("dev").then(function(data){
+                    $rootScope.values.user = data;
+                   //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department);
+                    globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default"});
+                   
+                   console.log($scope.defaults.year  );
+                });   
+            }
+
+            //Initialize all variables
+        $scope.updateSettings = function (values, defaults, selections, parameter, options){
+            console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
+          globals.updateSettings(values, defaults, selections, parameter, options); 
+        }
+
+             
+
+            //Run Initialization
+            $scope.initializeVariables();
+        
+  
+  
+  
   $transitions.onSuccess({}, function ($transitions) {
     
     $rootScope.pathToUse = $transitions._targetState._identifier.name;

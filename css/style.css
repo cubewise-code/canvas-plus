@@ -53,15 +53,15 @@ display:none !important;
     }
 
     .navbuttons li {
-    display: inline-block;
-    vertical-align: bottom;
-    background-color: #ddd;
-    color: #666;
-    padding: 1em;
-    padding-left:0px;
-    padding-right:0px;
-   
-}
+        display: inline-block;
+        vertical-align: bottom;
+        background-color: #ddd;
+        color: #666;
+        padding: 1em;
+        padding-left:0px;
+        padding-right:0px;
+    
+    }
      .navbuttons .active{
         display: inline-block;
         vertical-align: top; 
@@ -79,12 +79,10 @@ display:none !important;
          
         text-decoration: none;
     }
-    #page-view{
-        
-         padding-top:100px; 
-        
-
- 
+    
+    .navbar-top-links-v2 > li > a {
+        padding: 0px;
+        min-height: 50px;
     }
     .inline-block-right{
         display:inline-block;
@@ -162,11 +160,29 @@ display:none !important;
 #page-header .nav > li > a {
     color: #fff;
     text-decoration: none;
+    cursor:pointer;
 }
 #page-header .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
      background-color: transparent !important;
     border-color: transparent !important;
+    cursor:pointer;
 }
 .inline-block{
     display:inline-block;
+}
+
+
+
+
+
+/* SUBNM CUSTOM CSS  */
+
+div.tm1-subnm-hierarchy-style ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    color: #555;
+}
+.nopadding{
+    padding:0px;
 }

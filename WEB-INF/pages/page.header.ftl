@@ -1,11 +1,12 @@
 <!-- This gets appended at the top for each page  -->
-<div id="page-header"  ng-controller="headerCtrl" 
-  
->
-<div id="mininavinternal"></div>
  <div ng-show='false'>
     <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
 </div>
+<div id="page-header"  ng-controller="headerCtrl" ng-if="$root.user.FriendlyName"
+  
+>
+<div id="mininavinternal"></div>
+ 
 
    
  
@@ -52,21 +53,53 @@
                       </a>
                   </li>
                 </ul>                  
-              </li>
-               <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;"  ng-click="$root.topOffSet = 200; $root.topOffSetPageView = ($root.topOffSet - $root.defaultOffSet);" >
-             <i class="fa fa-filter"></i>
+            </li>
+            <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;"  
+                ng-click="$root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet + 60);" 
+                ng-if="$root.topOffSet != $root.defaultOffSet"
+                >
+                    <i class="fa fa-filter"></i>
+            </li>
+            <li 
+                class="dropdown hidden-xs" 
+                style="color:#fff !important; background-color:transparent !important;"  
+                ng-click="$root.topOffSet = $root.innerHeight; $root.topOffSetPageView = ($root.topOffSet+60);" 
+                ng-if="$root.topOffSet === $root.defaultOffSet"
+                >
+                    <i class="fa fa-filter"></i>
             </li>
     </ul>
 </div>
-  <div>
+  <div class="col-md-12 col-xs-12">
+
     <a href="#">
         <img src="images/logo.svg" 
         title="Your Logo Here" 
         style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999;" />
     </a>
+   <span class="inline-block" style="z-index:999; color:#fff; ">{{$root.selections.year}}</span>
   </div>
+ 
+      <div class="col-md-12 col-xs-12 nopadding" ng-show="$root.topOffSet != $root.defaultOffSet "
+    style=" height:{{$root.topOffSet != $root.defaultOffSet ? ($root.topOffSet - 60):'0'}}px; position:fixed;  top:0px; margin:0px; left:0px;color:#fff; padding:0px; margin-top:50px;z-index:6; transition-property:height;  transition-delay: 1s;  transition-duration: 1s; overflow:{{$root.topOffSet != $root.defaultOffSet ? 'auto' :'hidden'}};"
+>
+         <h4 style="padding-left:20px;">Filters <hr /></h4>
 
-      
+            <div  class="col-md-2 col-xs-2 filter-label" >  
+                     
+                    <tm1-ui-subnm 
+                    tm1-instance="dev"  
+                    ng-if="$root.defaults.year" 
+                    tm1-dimension="Year" 
+                    tm1-subset="All Years" 
+                    tm1-default-element="{{$root.defaults.year}}"  
+                    tm1-attribute="Caption_Default" 
+                    tm1-select-only="false" 
+                    ng-model="$root.selections.year"
+                    tm1-change='updateSettings($root.values, $root.defaults, $root.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default", "value":data})'
+                    ></tm1-ui-subnm>
+            </div>   
+</div>
 <div   
     class="nav"    
     style="vertical-align: bottom !important; transition-property:padding-top; position:relative; z-index:999;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.topOffSet+'px':'100%'}}; background-color:#06368b;">  
@@ -112,12 +145,7 @@
         </ul>
 
     </div>
-<div class="col-md-12 col-xs-12" 
-style=" height:{{$root.topOffSet != $root.defaultOffSet ? ($root.topOffSet-50):'0'}}px; position:fixed;  top:0px; margin:0px; left:0px;color:#fff; padding:10px; margin-top:50px;z-index:6; transition-property:height;  transition-duration: 1s; overflow:{{$root.topOffSet != $root.defaultOffSet ? 'auto' :'hidden'}};"
->
-<h3>Filter Section <hr></h3>
-
-</div>
+ 
  
 </div>
  
