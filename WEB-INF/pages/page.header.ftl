@@ -15,12 +15,12 @@
  >       
    
      
-            <ul class="nav navbar-top-links-v2 navbar-right hidden-print" style="color:#fff !important; background-color:transparent !important;"  >
+            <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
-            <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;">
+            <li class="dropdown " style="color:#fff !important; background-color:transparent !important;">
             <span id="opened" > <span class="inline-block" style="margin-right:5px;">{{$root.user.FriendlyName}}  </span> <span class="inline-block"><tm1-ui-session></tm1-ui-session></span> </span>
             </li>
-            <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;">
+            <li class="dropdown hidden-xs hidden-print" style="color:#fff !important; background-color:transparent !important;">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-share-alt fa-fw"></i>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
                 </a>
