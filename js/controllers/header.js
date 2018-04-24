@@ -70,13 +70,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
              
 
             //Run Initialization
-            $scope.initializeVariables();
+          
         
   
   
   
   $transitions.onSuccess({}, function ($transitions) {
-    
+       $scope.initializeVariables();
     $rootScope.pathToUse = $transitions._targetState._identifier.name;
       //$rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
       if($transitions._targetState._identifier.navigable){

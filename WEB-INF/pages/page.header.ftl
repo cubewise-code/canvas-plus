@@ -1,10 +1,9 @@
 <!-- This gets appended at the top for each page  -->
- <div ng-show='false'>
+  
+<div id="page-header"  ng-controller="headerCtrl"  >
+<div ng-show='false'>
     <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
 </div>
-<div id="page-header"  ng-controller="headerCtrl" ng-if="$root.user.FriendlyName"
-  
->
 <div id="mininavinternal"></div>
  
 
@@ -17,6 +16,7 @@
    
      
             <ul class="nav navbar-top-links-v2 navbar-right hidden-print" style="color:#fff !important; background-color:transparent !important;"  >
+            
             <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;">
             <span id="opened" > <span class="inline-block" style="margin-right:5px;">{{$root.user.FriendlyName}}  </span> <span class="inline-block"><tm1-ui-session></tm1-ui-session></span> </span>
             </li>
@@ -54,55 +54,21 @@
                   </li>
                 </ul>                  
             </li>
-            <li class="dropdown hidden-xs" style="color:#fff !important; background-color:transparent !important;"  
-                ng-click="$root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet + 60);" 
-                ng-if="$root.topOffSet != $root.defaultOffSet"
-                >
-                    <i class="fa fa-filter"></i>
-            </li>
-            <li 
-                class="dropdown hidden-xs" 
-                style="color:#fff !important; background-color:transparent !important;"  
-                ng-click="$root.topOffSet = $root.innerHeight; $root.topOffSetPageView = ($root.topOffSet+60);" 
-                ng-if="$root.topOffSet === $root.defaultOffSet"
-                >
-                    <i class="fa fa-filter"></i>
-            </li>
+             
     </ul>
 </div>
-  <div class="col-md-12 col-xs-12">
-
+  <div>
     <a href="#">
         <img src="images/logo.svg" 
         title="Your Logo Here" 
         style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999;" />
     </a>
-   <span class="inline-block" style="z-index:999; color:#fff; ">{{$root.selections.year}}</span>
   </div>
- 
-      <div class="col-md-12 col-xs-12 nopadding" ng-show="$root.topOffSet != $root.defaultOffSet "
-    style=" height:{{$root.topOffSet != $root.defaultOffSet ? ($root.topOffSet - 60):'0'}}px; position:fixed;  top:0px; margin:0px; left:0px;color:#fff; padding:0px; margin-top:50px;z-index:6; transition-property:height;  transition-delay: 1s;  transition-duration: 1s; overflow:{{$root.topOffSet != $root.defaultOffSet ? 'auto' :'hidden'}};"
->
-         <h4 style="padding-left:20px;">Filters <hr /></h4>
 
-            <div  class="col-md-2 col-xs-2 filter-label" >  
-                     
-                    <tm1-ui-subnm 
-                    tm1-instance="dev"  
-                    ng-if="$root.defaults.year" 
-                    tm1-dimension="Year" 
-                    tm1-subset="All Years" 
-                    tm1-default-element="{{$root.defaults.year}}"  
-                    tm1-attribute="Caption_Default" 
-                    tm1-select-only="false" 
-                    ng-model="$root.selections.year"
-                    tm1-change='updateSettings($root.values, $root.defaults, $root.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default", "value":data})'
-                    ></tm1-ui-subnm>
-            </div>   
-</div>
+      
 <div   
     class="nav"    
-    style="vertical-align: bottom !important; transition-property:padding-top; position:relative; z-index:999;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.topOffSet+'px':'100%'}}; background-color:#06368b;">  
+    style="vertical-align: bottom !important; transition-property:padding-top; position:relative; z-index:999;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet+'px':'100%'}}; background-color:#06368b;">  
          
         <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; background-color:#06368b;" >
             <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1  ? 'active':''">
@@ -145,7 +111,49 @@
         </ul>
 
     </div>
+    <!-- height:{{$root.topOffSet != $root.defaultOffSet ? ($root.topOffSet - 60):'0'}}px; -->
+<div class="col-md-12 col-xs-12" 
+    style=" height:0px; position:fixed;  top:0px; margin:0px; left:0px;color:#fff; padding:10px; margin-top:50px;z-index:6; transition-property:height;  transition-duration: 1s; overflow:{{$root.topOffSet != $root.defaultOffSet ? 'auto' :'hidden'}};"
+>
  
+</div>
+  
+             
  
+<div class="right-hand-nav" style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-300':'0'}}px;  margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+50)+'px':'100%'}}" >
+ <div class=" btn btn-primary  " style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px; top:0px; background-color:#06368b !important; margin-left:-45px;"  
+                ng-click="$root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet);" 
+                ng-if="$root.topOffSet != $root.defaultOffSet"
+                >
+                    <i class="fa fa-filter"></i>
+            </div>
+            <div 
+                class="  btn btn-primary  " 
+                style="color:#fff !important; position:absolute; padding:1em; padding-left:1.3em; padding-right:1.3em; z-index:999; border-radius:0px;  border:none; left:0px; top:0px; background-color:#06368b !important; margin-left:-45px;"  
+                ng-click="$root.topOffSet = 200;  $root.topOffSetPageView = ($root.topOffSet);" 
+                ng-if="$root.topOffSet === $root.defaultOffSet"
+                >
+                    <i class="fa fa-filter"></i>
+            </div>
+<h4 style="padding:10px; color:#fff;">Extra Header Section <hr></h4>
+            <div id="filtersubnm2" class="col-md-12 col-xs-12 filter-label" >  
+                   
+                    <span class="col-md-12 col-xs-12 label label-info pull-right small-label"   >
+                        <small> Year</small>
+                    </span> 
+                    <tm1-ui-subnm 
+                    tm1-instance="dev"  
+                    ng-if="$root.defaults.year" 
+                    tm1-dimension="Year" 
+                    tm1-subset="All Years" 
+                    tm1-default-element="{{$root.defaults.year}}"  
+                    tm1-attribute="Caption_Default" 
+                    tm1-select-only="false" 
+                    ng-model="filter.year"
+                    tm1-change='updateSettings($root.values, $root.defaults, $root.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default", "value":data})'
+                    ></tm1-ui-subnm>
+            </div>   
+ </div>
+
 </div>
  
