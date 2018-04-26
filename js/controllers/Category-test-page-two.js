@@ -1,4 +1,4 @@
-app.controller('CategorytestpagetwoCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', function($scope, $rootScope, $log, $tm1Ui) {
+app.controller('CategorytestpagetwoCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui','$timeout', function($scope, $rootScope, $log, $tm1Ui, $timeout) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
     *     lists.* should be used to store any lists that are used with ng-repeat, i.e. tm1-ui-element-list
@@ -12,6 +12,11 @@ app.controller('CategorytestpagetwoCtrl', ['$scope', '$rootScope', '$log', '$tm1
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "Category Test Two";
-    
+    $rootScope.pageTitle = "Reports";
+    $timeout( function(){ 
+        if(document.getElementById('level-two-reports')){
+            document.getElementById('level-two-reports').setAttribute("class", "active");
+        }
+       
+    }, 100); 
 }]);

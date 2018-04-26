@@ -12,10 +12,10 @@ app.controller('categoryoneCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui','$ti
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "Category One";
+    $rootScope.pageTitle = "Planning";
     $timeout( function(){ 
-        if(document.getElementById('level-two-category-one')){
-            document.getElementById('level-two-category-one').setAttribute("class", "active");
+        if(document.getElementById('planning')){
+            document.getElementById('planning').setAttribute("class", "active");
         }
        
     }, 100); 

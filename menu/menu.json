@@ -1,53 +1,53 @@
 [
   {
-    "label": "category-one",
+    "label": "Client Target Setting",
     "icon_class": "fa-file-text-o",
     "children": [
       {
-        "label": "category-one",
+        "label": "Planning",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-one"
+          "page": "planning"
         },
         "expanded": false
       },
       {
-        "label": "category-test-page-one",
+        "label": "Sign-Off",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-one/category-test-page-one"
+          "page": "planning/sign-off"
         },
         "expanded": false
       },
       {
-        "label": "Category-test-page-two",
+        "label": "Reports",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-one/category-test-page-two"
+          "page": "planning/reports"
         },
         "expanded": false
       }
     ],
     "data": {
-      "page": "category-one"
+      "page": "planning"
     },
     "expanded": false
   },
   {
-    "label": "category-two",
+    "label": "Guidance",
     "icon_class": "fa-file-text-o",
     "children": [
       {
-        "label": "category-two",
+        "label": "Reports",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "category-two"
+          "page": "reports"
         },
         "expanded": false
       }
     ],
     "data": {
-      "page": "category-two"
+      "page": "reports"
     },
     "expanded": true
   }

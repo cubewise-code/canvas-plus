@@ -71,7 +71,8 @@
     style="vertical-align: bottom !important; transition-property:padding-top; position:relative; z-index:999;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet+'px':'100%'}}; background-color:#06368b;">  
          
         <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; background-color:#06368b;" >
-            <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1  ? 'active':''">
+            <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
+            ng-mouseover="$root.activeTabOver = 'home'"  ng-mouseleave="$root.activeTabOver = ''" >
                 
                     <a href="#" data-toggle="tab"  > 
                         <i ng-if="$root.activeTab === -1" class="fa fa-home fa-1x"></i> 
@@ -81,23 +82,32 @@
                 
             </li>
             <li   
-                 
+                 ng-mouseover="$root.activeTabOver = item.label"  ng-mouseleave="$root.activeTabOver = ''"
                 ng-repeat="item in $root.menuData[0].children track by $index"  
               
                 ng-show=" $root.activeTab === -1 "
                 ng-if="item.label "
-                 
+                 ng-class="$root.activeTabOver === item.label ? 'active':''"
             > 
-                <a   ng-href="#/{{findClickthrough(item.data.page)}}">
-                    <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i> 
-                   <span class="hidden-xs"> {{item.label}}  </span>
-                    
+               
+                <span class="btn-group" uib-dropdown dropdown-append-to-body is-open="status.isopen">
+                <a id="btn-append-to-to-body" style="padding-bottom:1em;" uib-dropdown-toggle>
+                <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i>   <span class="hidden-xs"> {{item.label}}  </span>
+                <span class="caret"></span>
                 </a>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body" 
+                style="  margin-top: 14px; margin-left: 0px;  border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: 0px; min-width:203px !important;"
+                >
+                <li ng-repeat="subitem in $root.menuData[0]['children'][$index].children track by $index" role="menuitem"  style="margin:0px; ">
+                <a ng-href="#/{{findClickthrough(subitem.data.page)}}" style="margin:0px; padding-top:8px; padding-bottom:8px;">{{subitem.label}}</a></li>
+                </ul>
+                </span>
 
             </li>
             <li id="level-two-{{((subitem.label)).split(' ').join('-').toLowerCase()}}" 
-                ng-class="subitem.data.page === $root.pathToUse ? 'active' :''"
-                ng-show="!$rootScope.subPathBoolean "  
+                ng-class="subitem.data.page === $root.pathToUse || $root.activeTabOver === subitem.label ? 'active' :''"
+                ng-show="!$rootScope.subPathBoolean " 
+                ng-mouseover="$root.activeTabOver = subitem.label"  ng-mouseleave="$root.activeTabOver = ''" 
                 ng-repeat="subitem in $root.menuData[0]['children'][$root.activeTab].children track by $index"  data-toggle="tab">
                
                   
@@ -141,8 +151,8 @@
             <h4 style="padding-left:10px; color:#fff;">Critiria</h4>
             <div id="filtersubnm2" class="col-md-12 col-xs-12 filter-label" >  
                    
-                    <span class="col-md-12 col-xs-12 label label-info pull-right small-label"  style="border-radius:0px;" >
-                        <small> Year</small>
+                    <span class="col-md-12 col-xs-12 label   pull-right small-label"  style="border-radius:0px;" >
+                        <small class="pull-right"> Year</small>
                     </span> 
                     <tm1-ui-subnm 
                     tm1-instance="dev"  

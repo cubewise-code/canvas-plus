@@ -1,26 +1,18 @@
 {
-  "category-one": {
-    "url": "/category-one",
+  "planning": {
+    "url": "/planning",
     "templateUrl": "html/category-one.html"
   },
-  "category-two": {
-    "url": "/category-two",
+  "reports": {
+    "url": "/reports",
     "templateUrl": "html/category-two.html"
   },
-  "category-two/category-test-page-one": {
-    "url": "/category-two/category-test-page-one",
+  "planning/sign-off": {
+    "url": "/planning/sign-off",
     "templateUrl": "html/category-test-page-one.html"
   },
-  "category-two/category-test-page-two": {
-    "url": "/category-two/category-test-page-two",
-    "templateUrl": "html/Category-test-page-two.html"
-  },
-  "category-one/category-test-page-one": {
-    "url": "/category-one/category-test-page-one",
-    "templateUrl": "html/category-test-page-one.html"
-  },
-  "category-one/category-test-page-two": {
-    "url": "/category-one/category-test-page-two",
+  "planning/reports": {
+    "url": "/planning/reports",
     "templateUrl": "html/Category-test-page-two.html"
   }
 }
