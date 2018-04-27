@@ -15,7 +15,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
      $rootScope.subPathBoolean = false;
       $rootScope.innerHeight = window.innerHeight/2;
       $rootScope.innerWidth = window.innerWidth;
-      $rootScope.defaultOffSet = 70;
+      $rootScope.defaultOffSet = 10;
      $rootScope.topOffSet = $rootScope.defaultOffSet;
      $rootScope.selectedsubParentPage = '';
       $rootScope.topOffSetPageView = $rootScope.topOffSet+60;
