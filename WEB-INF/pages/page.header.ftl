@@ -61,8 +61,8 @@
       
 <div   
     class="nav"    
-    style="vertical-align: bottom !important; transition-property:padding-top; position:absolute; z-index:999;  transition-duration: 1s; position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? 10+'px':'100%'}}; background-color:#06368b;">  
-       <div style="position:fixed; left:0px; top:0px; float:left; z-index:999;">
+    style=" transition-property:padding-top;  transition-delay: 0.5s;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#06368b;">  
+       <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:100%; padding-top:{{$root.user.FriendlyName ? '10px':'100%'}};">
     <a href="#">
         <img src="images/logo.svg" 
         title="Your Logo Here" 
@@ -71,16 +71,16 @@
   </div>
     
         <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; padding-left:170px; background-color:#06368b;" ng-mouseleave = "status.isopen = false;" >
-            <li ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
+          <li ng-if=" $root.subPathBoolean === true"  ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
             ng-mouseover="$root.activeTabOver = 'home'"  ng-mouseleave="$root.activeTabOver = ''" >
                 
                     <a href="#" data-toggle="tab"  > 
-                        <i ng-if=" $root.subPathBoolean === false" class="fa fa-home fa-1x"></i> 
-                        <i ng-if=" $root.subPathBoolean === true" 
-                        class="fa fa-caret-left fa-1x"></i>    <span class="hidden-xs"> {{ $root.subPathBoolean === true ? 'Home' : ''}}  </span> 
+                       
+                        <i  
+                        class="fa fa-caret-left fa-1x"></i>    <span class="hidden-xs">  </span> 
                     </a> 
                 
-            </li>
+            </li> 
             <li  id="level-one-{{((item.label)).split(' ').join('-').toLowerCase()}}"
                 ng-mouseover="$root.activeTabOver = item.label; "   ng-mouseleave="$root.activeTabOver = ''"
                 ng-repeat="item in $root.menuData[0].children track by $index"   
@@ -126,16 +126,12 @@
 
     </div>
     <!-- height:{{$root.topOffSet != $root.defaultOffSet ? ($root.topOffSet - 60):'0'}}px; -->
-<div class="col-md-12 col-xs-12" 
-    style=" height:0px; position:fixed;  top:0px; margin:0px; left:0px;color:#fff; padding:10px; margin-top:50px;z-index:6; transition-property:height;  transition-duration: 1s; overflow:{{$root.topOffSet != $root.defaultOffSet ? 'auto' :'hidden'}};"
->
  
-</div>
   
  
  
 <div class="right-hand-nav" 
-    style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-260':'0'}}px;  margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}}" 
+    style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-260':'0'}}px; transition-delay:  0.5s; margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}}" 
     >
              
             <div class=" btn btn-primary  " style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px; background-color:#06368b !important; margin-left:-45px;"  
@@ -171,7 +167,7 @@
                     ></tm1-ui-subnm>
             </div>   
  </div>
-<div  class="col-md-12 col-xs-12 nopadding" style="color:#555 !important;padding:1em; padding-left:1.3em; padding-right:60px;   transition-property:margin-left, margin-top;  transition-duration: 1s, 1s;  position:fixed; z-index:5; border-radius:0px;  border:none; left:0px;   top:{{$root.defaultOffSet+50}}px; background-color:#fff !important; margin-top:100%; margin-top:{{$root.user.FriendlyName ? '0px':'100%'}}"  
+<div  class="col-md-12 col-xs-12 nopadding" style="color:#555 !important;padding:1em; padding-left:1.3em; padding-right:60px;   transition-property:margin-left, margin-top; transition-delay:  0.5s; transition-duration: 1s, 1s;  position:fixed; z-index:5; border-radius:0px;  border:none; left:0px;   top:{{$root.defaultOffSet+45}}px; background-color:#fff !important; margin-top:100%; margin-top:{{$root.user.FriendlyName ? '0px':'100%'}}"  
                  
                  
                 >
