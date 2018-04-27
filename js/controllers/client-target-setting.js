@@ -13,7 +13,7 @@ function($scope, $rootScope, $log, $tm1Ui, $timeout) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "Admin";
+    $rootScope.pageTitle = "Client Target Setting";
      $timeout( function(){ 
         if(document.getElementById('level-one-client-target-setting')){
             document.getElementById('level-one-client-target-setting').setAttribute("class", "active");
