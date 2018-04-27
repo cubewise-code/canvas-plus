@@ -147,11 +147,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                         }else{
                              
                             for(var i = 0; i < $rootScope.menuData[0]['children'].length; i++){
-                            
+                              
                                 if($rootScope.menuData[0]['children'][i]['data'].page === $rootScope.pathToUse){
                                      if(!$rootScope.subPathBoolean){
                                         $rootScope.activeTab = parseInt(i);
-                                      //   document.getElementById(($rootScope.menuData[0]['children'][i]['data'].page).split("/")[0]).setAttribute("class", "active"); 
+                                         
                                     // 
                                      }
                                 }else{

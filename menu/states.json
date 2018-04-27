@@ -1,18 +1,30 @@
 {
-  "planning": {
-    "url": "/planning",
+  "client-target-setting/planning": {
+    "url": "/client-target-setting/planning",
     "templateUrl": "html/category-one.html"
   },
-  "reports": {
-    "url": "/reports",
-    "templateUrl": "html/category-two.html"
-  },
-  "planning/sign-off": {
-    "url": "/planning/sign-off",
+  "client-target-setting/sign-off": {
+    "url": "/client-target-setting/sign-off",
     "templateUrl": "html/category-test-page-one.html"
   },
-  "planning/reports": {
-    "url": "/planning/reports",
+  "client-target-setting/reports": {
+    "url": "/client-target-setting/reports",
     "templateUrl": "html/Category-test-page-two.html"
+  },
+  "guidance": {
+    "url": "/guidance",
+    "templateUrl": "html/guidance.html"
+  },
+  "guidance/reports": {
+    "url": "/guidance/reports",
+    "templateUrl": "html/category-two.html"
+  },
+  "client-target-setting": {
+    "url": "/client-target-setting",
+    "templateUrl": "html/client-target-setting.html"
+  },
+  "admin": {
+    "url": "/admin",
+    "templateUrl": "html/Admin.html"
   }
 }

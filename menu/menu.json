@@ -7,7 +7,7 @@
         "label": "Planning",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "planning"
+          "page": "client-target-setting/planning"
         },
         "expanded": false
       },
@@ -15,7 +15,7 @@
         "label": "Sign-Off",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "planning/sign-off"
+          "page": "client-target-setting/sign-off"
         },
         "expanded": false
       },
@@ -23,13 +23,13 @@
         "label": "Reports",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "planning/reports"
+          "page": "client-target-setting/reports"
         },
         "expanded": false
       }
     ],
     "data": {
-      "page": "planning"
+      "page": "client-target-setting"
     },
     "expanded": false
   },
@@ -41,14 +41,22 @@
         "label": "Reports",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page": "reports"
+          "page": "guidance/reports"
         },
         "expanded": false
       }
     ],
     "data": {
-      "page": "reports"
+      "page": "guidance"
     },
     "expanded": true
+  },
+  {
+    "label": "Admin",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "admin"
+    },
+    "expanded": false
   }
 ]

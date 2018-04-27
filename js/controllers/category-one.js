@@ -14,8 +14,8 @@ app.controller('categoryoneCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui','$ti
     $scope.values = {};
     $rootScope.pageTitle = "Planning";
     $timeout( function(){ 
-        if(document.getElementById('planning')){
-            document.getElementById('planning').setAttribute("class", "active");
+        if(document.getElementById('level-two-planning')){
+            document.getElementById('level-two-planning').setAttribute("class", "active");
         }
        
     }, 100); 
