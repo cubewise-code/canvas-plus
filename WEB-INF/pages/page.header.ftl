@@ -101,7 +101,7 @@
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu"  aria-labelledby="btn-append-to-to-body" ng-if="$root.menuData[0]['children'][$index].children.length > 0" 
                     style="  margin-top: 14px; margin-left: 0px;  position:fixed; border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: 0px; min-width:203px !important;"
                     >
-                        <li ng-repeat="subitem in $root.menuData[0]['children'][$index].children track by $index" role="menuitem"  style="margin:0px; ">
+                        <li ng-repeat="subitem in $root.menuData[0]['children'][$index].children track by $index" role="menuitem" ng-click="status.isopen = false;" style="margin:0px; ">
                             <a ng-href="#/{{findClickthrough(subitem.data.page)}}" style="margin:0px; padding-top:8px; padding-bottom:8px;">{{subitem.label}}</a>
                         </li>
                     </ul>
