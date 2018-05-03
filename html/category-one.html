@@ -1,10 +1,8 @@
 <div ng-controller="categoryoneCtrl" 
 	 style="padding-top:{{$root.defaultOffSet+60}}px; transition-property:padding-top;  transition-duration: 1s;" 
-  ng-click="$root.topOffSet = $root.defaultOffSet; "  >
+  ng-click="$root.topOffSet = $root.defaultOffSet; $root.indexOver = '';"  >
 
-  <h1>
-    <span style="float: left; width: 50px; "><i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i><i ng-if="!$root.isLoading" class="fa fa-file-text-o"></i></span> Planning
-  </h1>
+  
   
   <div class="row">
   	<div class="col-md-4">

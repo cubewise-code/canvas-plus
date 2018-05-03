@@ -1,5 +1,5 @@
-app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transitions','$location', '$timeout', 'globals', 
-function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, globals) {
+app.controller('headerCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$transitions','$location', '$timeout', 'globals','$window', 
+function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, globals, $window) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
     *     lists.* should be used to store any lists that are used with ng-repeat, i.e. tm1-ui-element-list
@@ -12,13 +12,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     // console.log("HEADER");
     
     $rootScope.activeSubTab = 0;
-     $rootScope.subPathBoolean = false;
-      $rootScope.innerHeight = window.innerHeight/2;
-      $rootScope.innerWidth = window.innerWidth;
-      $rootScope.defaultOffSet = 30;
-     $rootScope.topOffSet = $rootScope.defaultOffSet;
-     $rootScope.selectedsubParentPage = '';
-      $rootScope.topOffSetPageView = $rootScope.topOffSet+60;
+    $rootScope.subPathBoolean = false;
+    $rootScope.innerHeight = window.innerHeight/2;
+    $rootScope.innerWidth = window.innerWidth ;
+    $rootScope.defaultOffSet = 70;
+    $rootScope.topOffSet = $rootScope.defaultOffSet ;
+    $rootScope.selectedsubParentPage = '';
+    $rootScope.topOffSetPageView = $rootScope.topOffSet+60;
       
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
@@ -50,6 +50,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         year:''
     };
     
+    $rootScope.logout = function(sessionname){
+        console.log(sessionname);
+
+    }
 
     //Initialize all variables
     /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
@@ -59,7 +63,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                    //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department);
                     globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default"});
                    
-                   console.log($scope.defaults.year  );
+                   console.log($scope.defaults.year);
                 });   
             }
 
@@ -74,8 +78,29 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             //Run Initialization
           
         
+  $scope.getLeftMargin = function(idname){
+    if(document.getElementById(idname) ){
+        console.log(document.getElementById(idname).getBoundingClientRect().left  );
+        if(document.getElementById("pop-over-body")){
+            document.getElementById("pop-over-body").style.left = document.getElementById(idname).getBoundingClientRect().left +"px";
+        }
+        
+    }
+  }
   
-  
+   $window.onscroll = function(){
+
+            $scope.scrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0;
+             
+              if( document.getElementById('dropdownbtns')){
+                  
+                document.getElementById('dropdownbtns').style.top=  ((document.getElementById('dropdownbtns').style.top) -$scope.scrollPos) +"px"
+                   console.log(document.getElementById('dropdownbtns').style.top);
+              }
+               
+            $scope.$digest();
+        };
+
   
   $transitions.onSuccess({}, function ($transitions) {
        $scope.initializeVariables();

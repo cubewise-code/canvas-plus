@@ -9,7 +9,7 @@ display:none !important;
     position: fixed;
     min-height: 65px;
     color: #FFF;
-    background-color: #06368b;
+    background-color: #c02626;
     margin-bottom: 0px !important;
     border: 0px solid transparent;
 }
@@ -25,13 +25,15 @@ display:none !important;
     position: fixed;
     min-height: 50px;
     color:#FFF;
-    background-color: #06368b;
+    background-color: #201c1a;
     margin-bottom: 0px !important;
     border: 1px solid transparent;
 }
 
-
-
+html{
+    overflow:auto;
+}
+ 
 
 /* tab system */
 
@@ -72,11 +74,17 @@ display:none !important;
         color:#666;
 
     }
-     
     .navbuttons a{
         font-size:1em;
         padding:1.5em;
         color: #666;
+         
+        text-decoration: none;
+    } 
+    .navbuttons .active a{
+        font-size:1em;
+        padding:1.5em;
+        color: #fff;
          
         text-decoration: none;
     }
@@ -103,7 +111,8 @@ display:none !important;
         color: #fff;
     }
     .tm1-login-modal{
-        background-color:#06368b
+        background-color:#201c1a;
+         
     }
 
     @media (min-width: 768px){
@@ -148,11 +157,23 @@ display:none !important;
 }
 .tm1-login-modal .panel-default > .panel-heading {
     color: #fff;
-    /* background-color: #f5f5f5; */
+    padding-top: 40px;
+    padding-bottom: 20px;
+    background-image: url(../images/logo-griffith-reverse.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
     border-color: transparent;
-     background-color: transparent !important;
+    background-color: #c02626 !important;
 }
-
+.tm1-login-modal button.close {
+    color: #fff !important;
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    display: none;
+    background: transparent;
+    border: 0;
+}
 #page-header .nav > li > a:hover, .nav > li > a:focus {
     color:#fff !important;
     text-decoration: none;
@@ -202,7 +223,7 @@ div.tm1-subnm-hierarchy-style ul {
     left:100%;
     height:100%;
     width:300px;
-    background-color: #06368b;
+    background-color: #c02626;
     top:0px;
 
 }
@@ -214,15 +235,45 @@ div.tm1-subnm-hierarchy-style ul {
     margin-top: 119px;
     width: 260px;
     padding-top: 10px;
-    background-color: #06368b;
+    background-color: #c02626;
     top: 0px;
     z-index: 6;
     transition-property:margin-left, margin-top;  
     transition-duration: 1s, 1s; 
 }
 .tm1-login-modal{
-    pointer-events:none;
+    pointer-events:none; 
+    background-image: url("../images/image-bg.png"); 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top center; 
+     
 }
 .modal-content{
      pointer-events:all;
+}
+ 
+ #tm1-login-button {
+    color: #fff;
+    background-color: transparent !important;
+    border-color: #fff !important;
+}
+.navbuttons .active {
+    display: inline-block;
+    vertical-align: top;
+    background-color: #c02626;
+    border: 0px solid #ddd;
+    color: #fff !important;
+}
+.printpageformat{
+    width: 289px;
+    margin:0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.printdropdown {
+    width: 289px;
+    margin:0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
