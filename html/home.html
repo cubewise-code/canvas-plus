@@ -2,7 +2,243 @@
   style="padding-top:{{$root.defaultOffSet+60}}px; transition-property:padding-top;  transition-duration: 1s;" 
   ng-click="$root.topOffSet = $root.defaultOffSet; $root.indexOver = '';"  >
    
-  <div style="background-color:#555; height:600px; width:100%;"></div>
+  <style>
+	.panel-group .panel-title>a:before {
+		content: "\f107";
+		display: none;
+		font-family: FontAwesome;
+		font-size: 13px;
+		margin-right: 5px;
+		text-align: right;
+		float: right;
+		vertical-align: 0;
+		width: 8px;
+	}
+	
+		element.style {
+			padding: 0px !important;
+			right: 0px;
+		}
+		#right-nav-section {
+			display: block;
+		}
+		#subcontainer > div {
+		display: inline-block;
+		border: solid 0px #fff; 
+		background-color: #fff;
+	}
+	.subcontainer .nvd3 .nv-legend{
+		display:none;
+
+	} 
+	.kpi .nvd3 .nv-legend{
+		display:none;
+
+	} 
+	.kpi .tick{
+		fill-opacity: 0 !important;
+			stroke-opacity: 0 !important;
+	}
+	.kpi  .domain{
+		display:none;
+		fill-opacity: 0 !important;
+		stroke-opacity: 0 !important;
+	}
+	.kpi .nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
+			fill-opacity: 0 !important;
+			stroke-opacity: 0 !important;
+		}
+		.kpi .nv-series-0{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.kpi 	.nv-series-1{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.kpi 	.nv-series-2{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.kpi .nv-series-3{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.kpi 	.nv-series-4{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		
+		}
+		.kpi .nv-series-5{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.kpi 	.nv-series-6{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.kpi 	.nv-series-7{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.kpi .nv-series-8{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important; 
+		}
+		.kpi 	.nv-series-9{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.nv-series-10{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.kpi 	.nv-series-11{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+
+
+
+
+		.line-chart .nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
+			fill-opacity: 0 !important;
+			stroke-opacity: 0 !important;
+		}
+		.line-chart .nv-series-0, .modal-body .nv-series-0{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.line-chart 	.nv-series-1, .modal-body .nv-series-1{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.line-chart 	.nv-series-2, .modal-body .nv-series-2{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.line-chart .nv-series-3, .modal-body .nv-series-3{
+		stroke-width: 3 !important;
+		fill-opacity: 0.2 !important;
+		}
+		.line-chart 	.nv-series-4, .modal-body .nv-series-4{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		
+		}
+		.line-chart .nv-series-5, .modal-body .nv-series-5{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.line-chart 	.nv-series-6, .modal-body .nv-series-6{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.line-chart 	.nv-series-7, .modal-body .nv-series-7{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.line-chart .nv-series-8, .modal-body .nv-series-8
+		stroke-width: 3 !important; fill-opacity: 0.2 !important; 
+		}
+		.line-chart 	.nv-series-9, .modal-body .nv-series-9{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.line-chart .nv-series-10, .modal-body .nv-series-10{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.line-chart 	.nv-series-11, .modal-body .nv-series-11{
+		stroke-width: 3 !important; fill-opacity: 0.2 !important;
+		}
+		.kpi{
+			color:#fff;
+			padding:0px;
+		}
+			.kpi-container{
+			background-color: transparent;
+		}
+
+		.dashboard-panel {
+			width: 100%;
+			float: left;
+			min-height:250px;
+			margin: 0px;
+			border: 0px solid transparent;
+			border-color: transparent;
+			margin-bottom: 0px !important;
+			cursor: pointer;
+			background-color: #555;
+			color: #fff;
+
+		}
+		.dashboard-panel-title-section {
+			background-color: #fff;
+			color: #555;
+			margin-bottom: 0px;
+			margin: 0px;
+			padding: 10px;
+			display: inline-block;
+			width: 100%;
+		}
+		
+		/* Uncomment this if you would like the circles on the chart but note !!!! resizing issue exists if page is resized 
+		.nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
+			fill-opacity: 1 !important;
+			stroke-opacity: 1 !important;
+		}*/
+		.panel-group .panel-default .panel-heading {
+			background-image: transparent;
+			background-repeat: repeat-x;
+			border-top: thin solid #fff;
+		}
+		.panel-heading {
+			padding: 10px 15px;
+			border-bottom: 1px solid transparent;
+			border-top-right-radius: 0;
+			border-top-left-radius: 0;
+		}
+		@media print {
+			.panel-default>.panel-heading {
+				color: #555;
+				background-color: #fff;
+				border-color: #fff;
+			}
+			.dashboard-panel-title-section {
+				background-color: #fff;
+				color: #555;
+				margin-bottom: 10px;
+			}
+		}
+            
+		.main-chart-container {
+			background-color: transparent;
+			height: auto;
+			padding: 10px;
+			padding-top: 0px;
+				
+		}
+		.reverse {
+			-moz-transform: scaleX(-1);
+			-webkit-transform: scaleX(-1);
+			-o-transform: scaleX(-1);
+			transform: scaleX(-1);
+		}
+			
+	</style>
+		<tm1-ui-element-list tm1-instance="dev" tm1-dimension="Account" tm1-subset="Finance Analytics" ng-model="selections.subsetRevenue"></tm1-ui-element-list>
+		<div class="col-md-12 col-xs-12 " style="padding:13px;">
+			<div class="col-md-4 col-xs-12" ng-repeat="item in selections.subsetRevenue" style="padding: 10px;display: inline-block;margin: 0px;cursor: pointer;"   >
+				  <div 
+					ng-click=" " 
+					class="panel panel-default dashboard-panel"
+					ng-class="{'dashboard-active' : defaults.homeSubset == 'Finance Analytics'}">
+					<kpi-chart   
+									
+						tm1-instance="dev"  
+						cube-name="General Ledger"
+						driver="item"
+						dimension-name="Account"
+					    version-position="versionPosition"
+						kpi-attribute="Description"  
+						color-array="defaults.lineColorArray" 
+					 
+						tm1-elements="Actual,{{$root.selections.year}},xAxisMonth,Local,Total Europe,Corporate,{{item.key}},Amount"
+						> 
+					</kpi-chart> 
+				</div>
+			</div>
+		</div>
+
+
+  
  
   
 </div>

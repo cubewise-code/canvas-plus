@@ -1,0 +1,199 @@
+ 
+
+ <style>
+.kpi .table>thead:first-child>tr:first-child>th{
+	background-color:transparent !important;
+	color:#fff;
+}
+.kpi .table>thead {
+    background-clip: padding-box;
+    background-color: transparent !important;  
+     background-image: none; 
+    background-repeat: repeat-x;
+}
+.kpi .table {
+    width: 100%;
+    max-width: 100%;
+    margin-left:0px;
+	 
+    position: absolute;
+    top: 100%;
+    background-color: #555;
+    z-index: 999;
+}
+.dashboard-panel-value {
+    font-size: 1.6vmax !important;
+    font-family: inherit;
+    font-weight: 500;
+    margin: 0px;
+ 
+    padding: 0px;
+    overflow: visible;
+	
+}
+small{
+	font-size:15px;
+}
+ 
+  
+ </style>
+ 
+    
+        <div class="kpi" ng-mouseleave="removeTollTip" ng-mouseenter="addTollTip">
+	 
+						<span ng-show="false"><tm1-ui-dbra 
+											tm1-instance="dev" 
+											tm1-dimension="{{dimensionToUse}}" 
+											tm1-element="{{driver.key}}" 
+											tm1-read-only = "true" 
+											tm1-attribute="{{attributeToUse}}"
+											ng-model="driver.itemName"
+											>
+											</tm1-ui-dbra>
+											</span>
+						 <div id="kpi" class="kpi-holder" ng-if="driver.itemName"  >
+							 
+							<div class="col-xs-12 col-xs-12 nopadding" style="padding-left:6px; padding-right:6px;">
+								$
+								<tm1-ui-dbr-read-only tm1-instance="dev" tm1-Netdata-decimal="0" tm1-cube="{{cubeName}}" tm1-elements="{{elementArrayToUse[0]}}"  ng-model="revenueFirstMonthValue"
+                                 tm1-hide-reference="true"tm1-hide-reference="true" tm1-hide-comment="true" tm1-hide-spread="true" tm1-hide-drill="true"
+                                 >
+								</tm1-ui-dbr-read-only>
+								<div class="inline-block">
+									$
+									<tm1-ui-dbr-read-only tm1-instance="dev" tm1-Netdata-decimal="0" tm1-cube="{{cubeName}}" tm1-elements="{{elementArrayToUse[1]}}" ng-model="revenueLastMonthValue" tm1-hide-reference="true" tm1-hide-comment="true" tm1-hide-spread="true" tm1-hide-drill="true">
+									</tm1-ui-dbr-read-only>
+								</div>
+
+							</div>
+							<div class="col-md-12 col-xs-12 ">
+                                     
+  	
+										 
+
+
+								<div   class="chart-pf-sparkline nopadding"  >
+                                    
+                                    <tm1-ui-chart  
+										tm1-on-chart-element-select="onChartElementClick(chartElement)"
+                                        tm1-chart-type="line" 
+                                        tm1-height="90" 
+                                        tm1-axis-label-x="" 
+                                        tm1-axis-label-y="" 
+                                        tm1-margin="{top:5,bottom:2,left:2, right:2}" 
+                                        tm1-duration="1000" 
+                                      
+                                        tm1-color-scheme="colorArray"
+                                         >
+                                         <tm1-ui-chart-dbr  
+										 ng-repeat="item in defaults.months track by $index" 
+										 tm1-color="#{{colorArray[0]}}" 
+										 tm1-series="{{driver.itemName}}" 
+										 tm1-label="{{defaults.months[$index]}}" 
+										 tm1-instance="dev" 
+										 tm1-cube="{{cubeName}}" 
+										 tm1-elements="{{elementArrayToUseMonth[$index]}}" 
+										 ng-model="trendValue[$index]"></tm1-ui-chart-dbr> 
+                                    </tm1-ui-chart>
+                                     
+
+                                </div>
+							</div>
+							<div class="col-xs-12 col-xs-12 nopadding" style="padding-top:10px; padding-left:6px; padding-right:12px; ">
+								<div ng-if="defaults.months" class="month-icon " style="padding-left:6px;">
+									<span>{{defaults.months[0]}}</span>
+								</div>
+								<div ng-if="defaults.months" class="month-icon inline-block" style="padding-right:0px;">
+									<span>{{defaults.months[11]}}</span>
+								</div>
+
+							</div>
+						</div> 
+						 <div ng-if="driver.itemName" class="row dashboard-panel-title-section" style="margin-top:10px; min-height:100px;">
+							<div class="dashboard-panel-label text-left ">
+                                <h4 style="margin-top:0px; ">  
+										<span >	
+										  {{driver.itemName}}   
+								 	:</span>
+                                    <div class="inline-block" ng-if=" revenueLastYearPercentage  && revenueBudgetPercentage && ((elementArrayToUse[0]).split(',')[0]) != versionObjectAlias['Actual']">
+                                         
+                                        <i class="fa " ng-if="(elementArrayToUse[0]).split(',')[0] === versionObjectAlias['Last Year']" 
+                                        ng-class="revenueLastYearPercentage < 0 ? 'fa-chevron-circle-down fa-1x':'fa-chevron-circle-up fa-1x'"
+                                        aria-hidden="true"></i>
+                                        <i class="fa " ng-if="(elementArrayToUse[0]).split(',')[0] === versionObjectAlias['Budget']" 
+                                        ng-class="revenueBudgetPercentage < 0 ? 'fa-chevron-circle-down fa-1x':'fa-chevron-circle-up fa-1x'"
+                                        aria-hidden="true"></i>
+                                        <span ng-if="(elementArrayToUse[0]).split(',')[0] === versionObjectAlias['Last Year']">{{(((revenueLastYearPercentage) * (100))) | number:0}}% {{versionName}} vs Actual</span>
+                                        <span ng-if="(elementArrayToUse[0]).split(',')[0] === versionObjectAlias['Budget']">{{(((revenueBudgetPercentage) * (100))) | number:0}}% {{versionName}} vs Actual</span> 
+                                    </div>
+                                </h4>
+								 
+							</div>
+
+							<div  class="col-xs-12 large dashboard-panel-value text-right" ng-init = "dataView = []; dataView[driver.key] = false;" >
+							
+							<span class="text-left text-right"> 
+									<i   
+									class="fa fa-ellipsis-h fa-1x"
+									style="font-size:15px; position:absolute; bottom:0px; left:0px; padding:10px;"   
+									ng-click="dataView[driver.key] = !dataView[driver.key]"  >
+									</i>
+							</span>	
+							$
+								<tm1-ui-dbr-read-only tm1-instance="dev" tm1-Netdata-decimal="0" tm1-cube="{{cubeName}}" tm1-elements="{{elementArrayToUse[2]}}" 
+								 ng-model="revenueTotal" tm1-hide-reference="true"   tm1-hide-comment="true" tm1-hide-spread="true" tm1-hide-drill="true">
+								</tm1-ui-dbr-read-only>
+								
+								<table class="table" id="af1-{{(driver.alias).split(' ').join('-')}}"  style="font-size:13px; color:#fff;" ng-show="dataView[driver.key]" >
+
+										<thead  style="background-color:rgba(0,0,0,0.3)" >
+											<tr  style="background-color:rgba(0,0,0,0.3)" >
+											<th colspan="2"  class="text-left">
+												 <small><tm1-ui-export tm1-target-id="af1-{{(driver.alias).split(' ').join('-')}}" ng-show="dataView[driver.key] " tm1-output-name="{{driver.key}}-table" tm1-field-separator="" tm1-field-qualifier=""></tm1-ui-export></small>
+												<span class="inline-block-right" style="position:absolute; top:5px; right:5px;"><i  ng-click="dataView[driver.key] = !dataView[driver.key]" class="fa fa-times fa-1x"></i>	</span></th>
+											 
+										</tr>
+								 
+										</thead>
+										<tbody>
+										 
+										<tr ng-repeat="item in defaults.months track by $index" >
+											<td class="text-left" >{{item}}</td>  
+											<td   class="text-right" >
+												<tm1-ui-dbr  
+													 tm1-data-decimal="0" 
+													tm1-instance="dev" 
+													tm1-cube="{{cubeName}}" 
+													tm1-elements="{{elementArrayToUseMonth[$index]}}" 
+													ng-model="trendValueTable[$index]">
+												</tm1-ui-dbr>
+											</td>   
+										</tr>
+										<tr  style="background-color:rgba(0,0,0,0.3)" >
+											<td class="text-left" >Year</td>  
+											<td  class="text-right" >
+												<tm1-ui-dbr   
+													tm1-data-decimal="0" 
+													tm1-instance="dev" 
+													tm1-cube="{{cubeName}}" 
+													tm1-elements="{{elementArrayToUse[2]}}" 
+													ng-model="trendValueTotal[$index]">
+												</tm1-ui-dbr>
+											</td>   
+										</tr>
+										</tbody> 
+									</table> 
+								<tm1-ui-dbr-hidden tm1-instance="dev" tm1-cube="{{cubeName}}" tm1-elements="{{elementArrayToUse[3]}}"
+								 ng-model="revenueLastYearPercentage">
+								</tm1-ui-dbr-hidden>
+
+								<tm1-ui-dbr-hidden tm1-instance="dev" tm1-cube="{{cubeName}}" tm1-elements="{{elementArrayToUse[4]}}"
+								 ng-model="revenueBudgetPercentage">
+								</tm1-ui-dbr-hidden>
+							</div>
+						</div> 
+						 
+						 
+					</div>
+   
+ 

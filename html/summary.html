@@ -1,0 +1,260 @@
+<div ng-controller="summaryCtrl">
+<style>
+  .fixedTable .table {
+  background-color: white;
+  width: 100% !important;
+}
+
+.fixedTable .table tr td,
+.fixedTable .table tr th {
+  min-width: 100px;
+  width: 100px;
+}
+
+.fixedTable-body {
+  overflow: scroll;
+  width: 65%;
+  height: 35vh;
+  float: left;
+}
+
+.fixedTable-sidebar tr td {
+  min-width: 33.33% !important;
+  width: 33.33% !important
+}
+
+.fixedTable-sidebar {
+  width: 35%;
+  height: 35vh;
+  float: left;
+  overflow: hidden;
+}
+
+.fixedTable-header {
+  width: calc(65% - 17px) !important;
+  height: 38px;
+  margin-left: 35%;
+  overflow: hidden;
+}
+
+.fixedTable-sidebar-header {
+  width: 35%;
+  height: 38px;
+  float:left;
+  overflow: hidden;
+}
+
+.fixedTable-sidebar-header th {
+  min-width: 33.33% !important;
+  width: 33.33% !important;
+}
+</style>
+ <div ng-hide="true">
+    <tm1-ui-element-list tm1-instance="dev" tm1-dimension="Account" tm1-subset="Net Income" tm1-attributes="Description" ng-model="page.accounts"></tm1-ui-element-list>
+  </div>
+<div class="col-md-12 col-xs-12 " style="padding-top:160px;">
+
+
+</div>
+  <div class="row">
+    <div class="col-lg-4">
+      <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Year" tm1-subset="All Years" tm1-default-element="2016" tm1-select-only="true" ng-model="page.year"></tm1-ui-subnm>
+    </div>
+    <div class="col-lg-4">
+      <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Region" tm1-subset="Default" tm1-select-only="true" ng-model="page.region"></tm1-ui-subnm>
+    </div>
+    <div class="col-lg-4">
+      <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Department" tm1-subset="Default" tm1-select-only="true" ng-model="page.department"></tm1-ui-subnm>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <input type="text" ng-model="page.filter" class="form-control" placeholder="Search Account..." ng-change="table.refresh()"></input>
+    </div>
+    <div class="col-md-4 col-xs-12">
+      <tm1-ui-export tm1-target-id="af1" tm1-output-name="MyExportFile" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="alert alert-info">Displaying <strong>{{filtered.length}}</strong> of <strong>{{page.accounts.length}}</strong> accounts.</div>
+    </div>
+  </div>
+
+  <div class="row" id="table" >
+    <div class="col-lg-12">
+
+
+
+
+
+
+      <div id="tablescroll" class="fixedTable"  >
+        
+        
+        <header class="fixedTable-sidebar-header">
+          <table class="table table-striped"  >
+            <thead>
+              <tr>
+                 
+                <th style="width:250px !important; min-width:250px; !important; overflow:hidden;" class="tm1-ui-sortable" ng-class="table.sortClass('key')" ng-click="table.sort('key')">Account</th>
+                <th>All Months</th>
+              </tr>
+            </thead>
+          </table>
+        </header>
+
+
+
+
+
+
+        <header class="fixedTable-header">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                
+                <th>Jan</th>
+                <th>Feb</th>
+                <th>Mar</th>
+                <th>Apr</th>
+                <th>May</th>
+                <th>Jun</th>
+                <th>Jul</th>
+                <th>Aug</th>
+                <th>Sep</th>
+                <th>Oct</th>
+                <th>Nov</th>
+                <th>Dec</th>
+              </tr>
+            </thead>
+          </table>
+        </header>
+
+
+
+
+
+
+
+        <aside class="fixedTable-sidebar" style="height:{{getHeight()}}px;">
+          <table class="table table-striped">
+            <tbody>
+              <tr   ng-repeat="row in filtered = (table.data())">
+                
+                <td style="width:400px !important; min-width:400px; !important; overflow:hidden;">{{row.alias}}</td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},All Months,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+
+
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+
+
+
+
+
+
+				<div class="fixedTable-body" style="height:{{getHeight()}}px;">
+          <table class="table table-striped" style="height:{{getHeight()}}px;" id="af1" >
+            <tbody>
+              <thead ng-show="false">
+                <tr >
+                   <th ng-show="false" class="tm1-ui-sortable" ng-class="table.sortClass('key')" ng-click="table.sort('key')" >Account </th>
+                <th ng-show="false">All Months</th>
+                  <th>Jan</th>
+                  <th>Feb</th>
+                  <th>Mar</th>
+                  <th>Apr</th>
+                  <th>May</th>
+                  <th>Jun</th>
+                  <th>Jul</th>
+                  <th>Aug</th>
+                  <th>Sep</th>
+                  <th>Oct</th>
+                  <th>Nov</th>
+                  <th>Dec</th>
+                </tr>
+              </thead>
+              <tr   ng-repeat="row in filtered = (table.data())">
+                 
+                <td   ng-show="false">{{row.alias}}</td>
+                
+                  <td ng-show="false">
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},All Months,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+              
+
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Jan,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Feb,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Mar,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Apr,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},May,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Jun,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Jul,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Aug,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Sep,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Oct,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Nov,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+                <td>
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
+                  tm1-elements="Actual,{{page.year}},Dec,Local,{{page.region}},{{page.department}},{{row.key}},Amount"></tm1-ui-dbr-read-only>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   
+</div>
+
+
+
+
+
+    
+
+</div>

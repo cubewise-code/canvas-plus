@@ -1,9 +1,9 @@
 [
   {
-    "label": "Admin",
+    "label": "Summary",
     "icon_class": "fa-file-text-o",
     "data": {
-      "page": "admin"
+      "page": "summary"
     },
     "expanded": false
   }

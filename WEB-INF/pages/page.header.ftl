@@ -159,7 +159,7 @@
                     tm1-default-element="{{$root.defaults.year}}"  
                     tm1-attribute="Caption_Default" 
                     tm1-select-only="false" 
-                    ng-model="filter.year"
+                    ng-model="$root.selections.year"
                     tm1-change='updateSettings($root.values, $root.defaults, $root.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default", "value":data})'
                     ></tm1-ui-subnm>
             </div>   
