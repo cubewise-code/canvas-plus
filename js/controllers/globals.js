@@ -1,6 +1,7 @@
 app.service('globals', ['$tm1Ui', '$location', function($tm1Ui, $location) {
     this.updateSettings = function (values, defaults, selections, parameter, options) {
     //Get user settings value from Settings cube
+    if(values.user){
         $tm1Ui.cellGet(defaults.settingsInstance, defaults.settingsCube, values.user.Name, parameter, defaults.settingsMeasure).then(function (data) {
             if(data){
                 if(!data.failed){
@@ -47,5 +48,7 @@ app.service('globals', ['$tm1Ui', '$location', function($tm1Ui, $location) {
             }
              
         });
+    }
+         
     }
 }]);

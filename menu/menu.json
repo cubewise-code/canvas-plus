@@ -6,5 +6,21 @@
       "page": "summary"
     },
     "expanded": false
+  },
+  {
+    "label": "PnL",
+    "icon_class": "fa-circle",
+    "data": {
+      "page": "pnl"
+    },
+    "expanded": false
+  },
+  {
+    "label": "infinite freeze pane",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "infinite-freeze-pane"
+    },
+    "expanded": false
   }
 ]

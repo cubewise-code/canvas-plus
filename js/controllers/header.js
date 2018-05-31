@@ -42,12 +42,16 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }; 
     $rootScope.defaults={
             year:"",
+            region:"",
+            department:"",
             settingsInstance: 'dev',
             settingsCube: 'System User Settings',
             settingsMeasure: 'String'
     };
     $rootScope.selections={
-        year:''
+        year:'',
+        region:'',
+        Department:''
     };
     
     $rootScope.logout = function(sessionname){
@@ -62,6 +66,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                     $rootScope.values.user = data;
                    //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department);
                     globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default"});
+                    globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "region", {"tm1Dimension":"Region", "tm1Alias":"Description"});
+                    globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Description"});
                    
                    console.log($scope.defaults.year);
                 });   

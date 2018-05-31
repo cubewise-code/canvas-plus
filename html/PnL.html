@@ -1,0 +1,351 @@
+<div ng-controller="PnLCtrl" id="contrl" style="padding:0px !important; ">
+<style>
+  .fixedTable .table {
+  background-color: white;
+  width: 100% !important;
+}
+
+.fixedTable .table tr td,
+.fixedTable .table tr th {
+  min-width: 100px;
+  width: 100px;
+}
+
+.fixedTable-body {
+  overflow: scroll;
+  width: 65%;
+  height: 35vh;
+  float: left;
+}
+
+.fixedTable-sidebar tr td {
+  min-width: 33.33% !important;
+  width: 33.33% !important
+}
+
+.fixedTable-sidebar {
+  width: 35%;
+  height: 35vh;
+  float: left;
+  overflow: hidden;
+}
+
+.fixedTable-header {
+  width: calc(65% - 17px) !important;
+  height: 38px;
+  margin-left: 35%;
+  overflow: hidden;
+}
+
+.fixedTable-sidebar-header {
+  width: 35%;
+  height: 38px;
+  float:left;
+  overflow: hidden;
+}
+
+.fixedTable-sidebar-header th {
+  min-width: 33.33% !important;
+  width: 33.33% !important;
+}
+</style>
+  <style>
+    .tm1-ui-dbr {
+      text-align: right;
+    }
+    .tm1-ui-dbr input {
+      text-align: right;
+    }   
+    .criteria {
+      margin-top: 10px;
+    }
+    .consol {
+      font-weight: bold;
+    }
+    .table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-x: visible; 
+   overflow-y: visible; 
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 0px solid #ddd;
+}
+    @media screen and (min-width: 768px){
+      .table-responsive {
+          width: 100%;
+          margin-bottom: 15px;
+          overflow-x: visible; 
+        overflow-y: visible; 
+          -webkit-overflow-scrolling: touch;
+          -ms-overflow-style: -ms-autohiding-scrollbar;
+          border: 0px solid #ddd;
+      }
+  } 
+  .min-cell-width{
+    min-width:100px  !important;
+    width:100px !important;
+    max-width:100px  !important;
+    
+    
+
+  }
+  .min-row-height{
+     min-height:55.1px !important;
+      max-height:55.1px !important;
+    height:55.1px !important;
+  }
+
+  </style>
+
+  <h1  style="float: left; width: 50px; height:160px;">
+   
+  </h1>
+  
+ 
+ <div ng-show="false">
+  <div class="row">
+    <div class="col-md-3">     
+     Year
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Year" tm1-select-only="true" tm1-default-element="2012" ng-model="page.titles['Year']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">     
+     General Ledger Measure
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="General Ledger Measure" tm1-select-only="true" tm1-default-element="Amount" ng-model="page.titles['General Ledger Measure']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">     
+     Currency
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Currency" tm1-select-only="true" tm1-subset="Default" tm1-default-element="Local" ng-model="page.titles['Currency']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">     
+     Region
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Region" tm1-select-only="true" tm1-default-element="3" ng-model="page.titles['Region']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">     
+     Department
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Department" tm1-select-only="true"   tm1-default-element="2" ng-model="page.titles['Department']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3">
+      Suppress Zeroes
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" ng-change="dataRefresh('Group 1')" ng-init="page.suppressZero = 'none'" ng-model="page.suppressZero"    >
+        <option value="none"   >Do not Suppress Zeroes</option>
+        <option value="row"   > Suppress Zero on Rows</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+ </div>
+ 
+ 
+  <div class="table-responsive" ng-init="page.size = 10">
+    <tm1-ui-rpt-view tm1-instance="dev" tm1-cube="General Ledger" ng-model="data" tm1-suppress-zero="{{page.suppressZero}}" tm1-page-size="{{page.size}}">
+      <tm1-ui-rpt-config>
+        <tm1-ui-rpt-title tm1-dimension="Year" tm1-element="{{page.titles['Year']}}"></tm1-ui-rpt-title>
+        <tm1-ui-rpt-title tm1-dimension="General Ledger Measure" tm1-element="{{page.titles['General Ledger Measure']}}"></tm1-ui-rpt-title>
+        <tm1-ui-rpt-title tm1-dimension="Currency" tm1-element="{{page.titles['Currency']}}"></tm1-ui-rpt-title>
+        <tm1-ui-rpt-title tm1-dimension="Region" tm1-element="{{page.titles['Region']}}"></tm1-ui-rpt-title>
+        <tm1-ui-rpt-title tm1-dimension="Department" tm1-element="{{page.titles['Department']}}"></tm1-ui-rpt-title>
+          
+        <tm1-ui-rpt-row tm1-dimension="Account" tm1-subset="Net Income"></tm1-ui-rpt-row>
+          
+        <tm1-ui-rpt-column tm1-dimension="Period" tm1-subset="Default"></tm1-ui-rpt-column>
+        <tm1-ui-rpt-column tm1-dimension="Version" tm1-mdx="{[Version].[Actual],[Version].[Budget]}"></tm1-ui-rpt-column>
+                    
+      </tm1-ui-rpt-config>
+      
+      <tm1-ui-rpt-template>
+        <div id="dynamic-table"  style="  width:auto" ng-if="data"   ng-init="loadFirst(data.rows);"  scroll>
+        <table id="af1" class="table  " infinite-scroll='loadMore(data.rows)' infinite-scroll-distance='2'>
+         
+           <thead id="header-content-fixed"  style=" background-color:#ccc; z-index:2; position:fixed; top:160px; left:0px; width:100px; height:72px;">
+             <tr>
+               <th class="text-left min-cell-width  " rowspan="2"><i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i> Account</th>
+             </tr>
+               
+           </thead>
+         
+          <thead id="header-content"  style=" background-color:#ccc; z-index:1; position:fixed; top:160px; left:0px; width:auto; height:auto;">
+            
+              <tr>
+                 
+              <th class="text-left min-cell-width" rowspan="2" > </th>
+                <th class="text-center  min-cell-width" colspan="2">Year</th>
+                <th class="text-center  min-cell-width"  colspan="2">Jan</th>
+                <th class="text-center  min-cell-width"  colspan="2">Feb</th>
+                <th class="text-center  min-cell-width"  colspan="2">Mar</th>
+                <th class="text-center  min-cell-width"  colspan="2">Apr</th>
+                <th class="text-center  min-cell-width"  colspan="2">May</th>
+                <th class="text-center  min-cell-width"  colspan="2">Jun</th>
+                <th class="text-center  min-cell-width"  colspan="2">Jul</th>
+                <th class="text-center  min-cell-width"  colspan="2">Aug</th>
+                <th class="text-center  min-cell-width"  colspan="2">Sep</th>
+                <th class="text-center  min-cell-width"  colspan="2">Oct</th>
+                <th class="text-center  min-cell-width"  colspan="2">Nov</th>
+                <th class="text-center  min-cell-width"  colspan="2">Dec</th>
+              </tr>
+              <tr>
+              
+               
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+                <th ng-repeat="item in ['Act','Bud']" class="text-center min-cell-width">{{item}}</th> 
+               
+              </tr>
+              
+            
+          </thead>
+
+          <tbody id="fixed-side-content" style="background-color:#ccc; z-index:1; position:fixed; top:241px; left:0px; width:100px; height:auto;">
+             <tr ng-repeat="rowData in images | limitTo:config.itemsDisplayedInList track by $index" post-repeat >
+              <td class="text-left min-cell-width min-row-height" ng-repeat="el in rowData.elements track by $index">
+              {{el.element['attributes'].Description}}</td>
+             </tr>
+          </tbody>
+          <tbody  id="fixed-content">
+            
+            <tr ng-repeat="rowData in images | limitTo:config.itemsDisplayedInList track by $index" post-repeat >
+              <td class="text-left min-cell-width min-row-height" ng-repeat="el in rowData.elements track by $index">
+              {{el.element['attributes'].Description}}</td>
+            
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1- tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Year,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Year,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('01,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('01,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('02,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('02,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('03,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('03,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('04,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('04,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('05,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('05,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('06,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('06,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('07,1')"></tm1-ui-dbr>
+              </td> 
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('07,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1"  tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('08,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-refresh-group="Group 1"  tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('08,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('09,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('09,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('10,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('10,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('11,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('11,2')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('12,1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right min-cell-width">
+                <tm1-ui-dbr tm1-refresh-group="Group 1" tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('12,2')"></tm1-ui-dbr>
+              </td>
+            
+            </tr>
+
+
+          </tbody>
+          </table>
+        </div>
+          
+          
+      </tm1-ui-rpt-template>
+    </tm1-ui-rpt-view> 
+  </div>   
+
+ 
+</div>

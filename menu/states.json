@@ -1,6 +1,14 @@
-{  
+{
   "summary": {
     "url": "/summary",
     "templateUrl": "html/summary.html"
+  },
+  "pnl": {
+    "url": "/pnl",
+    "templateUrl": "html/PnL.html"
+  },
+  "infinite-freeze-pane": {
+    "url": "/infinite-freeze-pane",
+    "templateUrl": "html/infinite freeze pane.html"
   }
 }
