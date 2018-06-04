@@ -164,9 +164,7 @@
                     tm1-on-change='updateSettings($root.values, $root.defaults, $root.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default", "value":data})'
                     ></tm1-ui-subnm>
             </div>   
-            <div class="col-lg-12 col-xs-12">
-
-             
+            <div class="col-lg-12 col-xs-12"> 
                 <tm1-ui-subnm 
                 ng-if="$root.defaults.region != ''"
                 tm1-instance="dev" 
@@ -192,12 +190,19 @@
 
 
  </div>
-<div  class="col-md-12 col-xs-12 nopadding" style="color:#555 !important;padding:1em; padding-left:1.3em; padding-right:60px;   transition-property:margin-left, margin-top;  transition-duration: 1s, 1s;  position:fixed; z-index:5; border-radius:0px;  border:none; left:0px;   top:{{$root.defaultOffSet+45}}px; background-color:#fff !important; margin-top:100%; margin-top:{{$root.user.FriendlyName ? '0px':'100%'}}"  
+<div  class="col-md-12 col-xs-12 nopadding" style="color:#555 !important; padding:1em; padding-left:1.3em; padding-right:60px; transition-property:margin-left, margin-top;  transition-duration: 1s, 1s;  position:fixed; z-index:5; border-radius:0px;  border:none; left:0px;   top:{{$root.defaultOffSet+45}}px; background-color:#fff !important; margin-top:100%; margin-top:{{$root.user.FriendlyName ? '0px':'100%'}}"  
                  
                  
                 >
                 <h4 class="text-left pull-left">{{($root.subPathBoolean ? ($root.selectedsubParentPage  ):'') | capitalize }}{{$root.pageTitle}} </h4>
-                 <span class="pull-right" ng-show="$root.topOffSet === $root.defaultOffSet"> {{$root.defaults.year}} </span>
+                 <span class="hidden-xs pull-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
+                     
+
+                    {{$root.defaults.year}} | 
+                    <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
+                    <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> 
+                    
+                </span>
             </div>
 </div>
 <style>

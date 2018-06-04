@@ -108,6 +108,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         };
 
   
+  $rootScope.onChartElementClick = function(element){
+      console.log("element:", element);
+  }
   $transitions.onSuccess({}, function ($transitions) {
        $scope.initializeVariables();
     $rootScope.pathToUse = $transitions._targetState._identifier.name;
