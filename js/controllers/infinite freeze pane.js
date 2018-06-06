@@ -45,7 +45,8 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
          $scope.config.itemsDisplayedInList = 0;
         $timeout( function(){
             
-    
+            $scope.columnEdit = false;
+     
             $scope.rowEdit = false;
      
             $tm1Ui.dataRefresh();
@@ -84,6 +85,7 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
                 
               //  $scope.page.columnDimension = $scope.config.months;
             } 
+            $scope.rowEdit = false;
             $scope.columnEdit = false;
      
             $tm1Ui.dataRefresh();

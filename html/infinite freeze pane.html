@@ -174,8 +174,8 @@ html, body{
                 <input type="text" style="height:42px; padding-left:18px;" ng-model="page.filter" class="form-control" placeholder="Search {{$root.rowDriver}}..." ng-change="table.refresh()"/>
                  <div 
                       style="position:absolute; top:8px; left:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
-                      ng-mouseleave="closeRowElement($event)" 
-                      ng-click="openRowElement($event)">
+                      
+                      ng-click="rowEdit === true ? closeRowElement($event) : openRowElement($event)">
                      <span style="pointer-events:none;   padding:4px;  "> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
                         <table ng-show="rowEdit === true" class="table table-striped"    >
                           <tbody  >
@@ -199,8 +199,8 @@ html, body{
 
                   <div 
                       style="position:absolute; top:8px; right:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
-                      ng-mouseleave="closeColumnElement($event)" 
-                      ng-click="openColumnElement($event)">
+                      ng-mouseleave=" " 
+                      ng-click="columnEdit === true ? closeColumnElement($event) : openColumnElement($event)">
                      <span style="pointer-events:none;   padding:4px;  "> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
                         <table ng-show="columnEdit === true" class="table table-striped"    >
                           <tbody  >
@@ -344,7 +344,7 @@ html, body{
                  
 
                 </td>
-                <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[returnedName] < 0 ? 'negative':''" >
+                <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[returnedName] < 0 ? 'negative':''"   ng-init="returnedName = createModel(row, column.key, column.alias);" >
                   <!--<tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true"  
                    ng-if="cubeUsed === 'Retail'"
                   
