@@ -173,7 +173,7 @@ html, body{
 							 
                 <input type="text" style="height:42px; padding-left:18px;" ng-model="page.filter" class="form-control" placeholder="Search {{$root.rowDriver}}..." ng-change="table.refresh()"/>
                  <div 
-                      style="position:absolute; top:8px; left:15px; width:20px; height:41px; overflow:hidden; z-index:999; background-color:#555;" 
+                      style="position:absolute; top:8px; left:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
                       ng-mouseleave="closeRowElement($event)" 
                       ng-click="openRowElement($event)">
                      <span style="pointer-events:none;   padding:4px;  "> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
@@ -185,17 +185,20 @@ html, body{
                             </tr>-->
 
                             <tr>
-                              <td ng-click=" dataRefresh('Region')" ng-if="rowEdit === true"  >Region</td> 
+                              <td ng-click=" dataRefresh('Region')" ng-show="'Region' != $root.rowDriver" ng-if="rowEdit === true"  >Region</td> 
                             </tr>
                             <tr >
-                              <td ng-click=" dataRefresh('Department')" ng-if="rowEdit === true"  >Department</td> 
+                              <td ng-click=" dataRefresh('Department')"  ng-show="'Department' != $root.rowDriver" ng-if="rowEdit === true"  >Department</td> 
+                            </tr>
+                             <tr >
+                              <td ng-click=" dataRefresh('Account')"  ng-show="'Account' != $root.rowDriver" ng-if="rowEdit === true"  >Account</td> 
                             </tr>
                           </tbody> 
                         </table>
                   </div>
 
                   <div 
-                      style="position:absolute; top:8px; right:15px; width:20px; height:41px; overflow:hidden; z-index:999; background-color:#555;" 
+                      style="position:absolute; top:8px; right:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
                       ng-mouseleave="closeColumnElement($event)" 
                       ng-click="openColumnElement($event)">
                      <span style="pointer-events:none;   padding:4px;  "> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
@@ -327,7 +330,7 @@ html, body{
                  
 
                 </td>
-                <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[month] < 0 ? 'negative':''" >
+                <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[column.key] < 0 ? 'negative':''" >
                   <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
                    
                    

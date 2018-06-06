@@ -37,6 +37,7 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
       
         $rootScope.rowDriver = driver ;
         $scope.loading = true ;
+         $scope.config.itemsDisplayedInList = 0;
         $timeout( function(){
             
     
@@ -48,8 +49,8 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
     
      
     }
-    $scope.percentageDecider = [];
-    $scope.decideIfColumnIsPercentage = function(col, indexx){
+$scope.percentageDecider = [];
+$scope.decideIfColumnIsPercentage = function(col, indexx){
       var columnNameHasPercentage = (col.alias).split('%');
       if($root.columnDriver === 'Version'){
           if(columnNameHasPercentage.length > 0){
@@ -65,11 +66,12 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
        
        console.log("length of %", $scope.percentageDecider);
   }
-     $scope.dataRefreshColumn = function(driver){
+  $scope.dataRefreshColumn = function(driver){
         
         $scope.loading = true ;
         $rootScope.columnDriver = driver ;
         $scope.page.columnDimension = [];
+        $scope.config.itemsDisplayedInList = 0;
         $timeout( function(){
          
         console.log('column selected', driver)
