@@ -58,7 +58,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         console.log(sessionname);
 
     }
-
+    $rootScope.date = new Date() ;
+    $rootScope.date  = ((($rootScope.date+"").split(":")[0]).split(',').join('')).split(' ').join('')
+    console.log($rootScope.date, "date");
     //Initialize all variables
     /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
     $scope.initializeVariables = function(){

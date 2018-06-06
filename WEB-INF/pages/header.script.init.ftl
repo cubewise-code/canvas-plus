@@ -8,3 +8,4 @@ ssoSlaves = {
 // i.e. for adding the module of ngFileUpload to make it available on your Canvas application
 // customAngularModules.push('ngFileUpload');
 customAngularModules.push('infinite-scroll');
+customAngularModules.push('angular-js-xlsx');

@@ -22,5 +22,13 @@
       "page": "test-modal"
     },
     "expanded": false
+  },
+  {
+    "label": "Excel Upload",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "excel-upload"
+    },
+    "expanded": false
   }
 ]

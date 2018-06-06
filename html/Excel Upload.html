@@ -1,0 +1,331 @@
+<div ng-controller="ExcelUploadCtrl">
+
+  <style>
+    input[type='file'] {
+      opacity: 0;
+      position: absolute;
+      top: 0px;
+      z-index: 99;
+      width: 100%;
+      cursor: pointer;
+    }
+    .tooltip-class-red .tooltip-arrow{
+     border-top-color: red !important;
+      }
+    .popover-class-danger{
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+      }
+
+    .popover-class-warning{
+      color: #8a6d3b;
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+      }
+    
+
+
+  </style>
+
+  <tm1-ui-element-list tm1-instance="dev" tm1-dimension="Period" tm1-subset="Default" ng-model="lists.periods">
+  </tm1-ui-element-list>
+	 <tm1-ui-element-list tm1-instance="dev" tm1-dimension="Product" tm1-subset="All Elements" tm1-attributes="Code&Description" ng-model="lists.tm1ProductList">
+  </tm1-ui-element-list>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+        <span style="float: left; width: 50px; ">
+          <i ng-if="$root.isLoading" class="fa fa-cog fa-spin"></i>
+          <i ng-if="!$root.isLoading" class="fa fa-cloud-upload"></i>
+        </span> Upload Sales by Product
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-12">
+        <div class="well" style="margin-bottom:0px;">
+          <p>This page is utilizing an optional Canvas library -
+            <a href="https://github.com/SheetJS/js-xlsx" target="_blank">SheetJS</a>.</p>
+          <p>In order to use it on your own application, you will have to enable it. Check out
+            <a href="https://code.cubewise.com/canvas-docs/configuring-sheet-js"
+              target="_blank">this article</a>.</p>
+        </div>
+      </div>
+    </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-12 panel">
+      <button class="btn btn-primary" style="width:100%">
+        <a href="files/Template.xlsx" target="_blank" style="color:white">
+          <i class="fa fa-download  fa-fw"></i> Download Template
+        </a>
+      </button>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 panel">
+      <button class="btn btn-primary" style="width:100%">
+        <i class="fa fa-upload fa-fw"></i> Upload Template
+        <js-xls style="cursor: pointer" type='file' onread="read" onerror="error"></js-xls>
+      </button>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 panel">
+      <button class="btn btn-primary" ng-disabled="!values.sheetName" style="width:100%" title="Search Products" data-toggle="modal" data-target="#productSearch">
+        <i class="fa fa-search fa-fw"></i> Search Products
+      </button>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 panel">
+      <button class="btn btn-primary" ng-disabled="!values.sheetName" style="width:100%" data-toggle="modal" data-target="#modalSave" ng-click="countProjectsToBeUploaded()">
+        <i ng-if="$root.isLoading" class="fa fa-cog fa-spin fa-fw"></i>
+        <i ng-if="!$root.isLoading" class="fa fa-floppy-o fa-fw"></i>
+        Save
+      </button>
+    </div>
+  </div>
+
+  <!--=========================================-->
+  <!--                 Data in TM1             -->
+
+  <div class="row" ng-if="values.sheetName">
+
+    <div class="col-md-12">
+
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <span style="padding:0px;margin:0px;cursor:pointer" ng-click="functions.refreshGroup('Group 1');">
+              <i class="fa fa-cubes"></i>
+            </span>
+            Current Data in TM1
+          </h3>
+        </div>
+        <div class="panel-body">
+
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table">
+                <thead>
+                  <tr class="alert alert-primary">
+                    <th class="text-center" style="width:350px"></th>
+                    <th class="text-center" ng-repeat="month in lists.periods">{{month.alias}}</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-center"> All Products</td>
+                    <td class="text-center" ng-repeat="month in lists.periods">
+                      <tm1-ui-dbr tm1-instance="dev" tm1-cube="Retail" tm1-elements='{{selections.version}},{{selections.year}},{{month.key}},{{selections.currency}},{{selections.region}},"All Products by Category",{{selections.measure}}'
+                        tm1-data-decimal="0" tm1-refresh-group="Group 1">
+                      </tm1-ui-dbr>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--=========================================-->
+  <!--          Display Excel file             -->
+
+  <div class="row" ng-if="values.sheetName">
+
+    <div class="col-md-12">
+
+      <div class="panel {{selections.panelClass}}">
+        <div class="panel-heading">
+          <h3 class="panel-title" ng-if="$root.isLoading && selections.messageUpload === 'false'">
+            <i class="fa fa-file-excel-o"></i> {{selections.panelTitle}}Uploading the file</h3>
+          <h3 class="panel-title" ng-if="!$root.isLoading">
+            <i class="fa fa-file-excel-o"></i> {{selections.panelTitle}}
+            <span ng-if="values.sheetName">(Budget {{$root.selections.year}} 
+							<!--{{$root.selections.region}}-->
+							)</span>
+            <span ng-if="values.valuesSentToTM1">{{values.projectUploaded}} Projects uploaded</span>
+          </h3>
+          <h3 class="panel-title" ng-if="$root.isLoading && selections.messageUpload === 'true'">
+            <i class="fa fa-cog fa-spin"></i> Uploading data into TM1...</h3>
+          <span class="pull-right">
+            <i class="fa fa-spinner fa-spin fa-fw" ng-if="item.saving"></i>
+          </span>
+        </div>
+        <div class="panel-body">
+
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table">
+                <thead>
+                  <tr class="alert alert-primary">
+                    <th class="text-center">#</th>
+                    <th class="text-center" style="width:270px">Product</th>
+                    <th class="text-center" style="font-weight:bold;">Year</th>
+                    <th class="text-center" ng-repeat="month in lists.months">{{month.description}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in lists.records">
+                    <td class="text-center">{{item.row}}
+                      <input type="checkbox" ng-model="item.selected" ng-click="countProjectsToBeUploaded()"> </td>
+                    <td class="text-left" ng-class="item.error.length?'alert-danger':''" uib-popover="{{item.error}}" popover-append-to-body="true"
+                    popover-enable="item.error.length>0" popover-trigger="'mouseenter'" popover-class="popover-class-danger">{{item.product}}</td>
+                    <td class="text-right" style="font-weight:bold;">{{item.year | number:0}}</td>
+                    <td class="text-right" ng-class="item.m01<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m01<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m01 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m02<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m02<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m02 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m03<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m03<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m03 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m04<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m04<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m04 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m05<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m05<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m05 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m06<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m06<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m06 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m07<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m07<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m07 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m08<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m08<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m08 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m09<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m09<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m09 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m10<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m10<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m10 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m11<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m11<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m11 | number:0}}</td>
+                    <td class="text-right" ng-class="item.m12<=0?'alert-warning':''" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.m12<=0" popover-trigger="'mouseenter'" popover-class="popover-class-warning">{{item.m12 | number:0}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--=========================================-->
+  <!--        Modal for the search button      -->
+
+  <div id="productSearch" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Product Search</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Product" tm1-mdx="{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Product] )}, 0)}, ASC)}"
+                tm1-attribute="Code&Description" tm1-server-mode="true" ng-model="productSearch"></tm1-ui-subnm>
+              <tm1-ui-dbra ng-hide="true" tm1-instance="dev" tm1-dimension="Product" tm1-element="{{productSearch}}" tm1-attribute="Code&Description"
+                ng-model="projectDescription"></tm1-ui-dbra>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <button class="btn btn-primary" title="Copy Product" ng-disabled="!projectDescription" ng-class="{'btn-success': isProductCopied}"
+                ngclipboard data-clipboard-text="{{projectDescription}}" ngclipboard-success="copyProductSuccess(e);">
+                <i ng-if="!isProductCopied" class="fa fa-clipboard fa-fw" style="margin-right: 5px;"></i>
+                <i ng-if="isProductCopied" class="fa fa-check fa-fw" style="margin-right: 5px;"></i>
+                <span>Copy Product</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--=========================================-->
+  <!--        Modal for the save button      -->
+
+  <div id="modalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Are you sure you want to save?</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row" ng-if="!values.valuesSentToTM1 && values.errorCount>0">
+            <div class="col-md-12">
+              <uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-danger" is-open="status.open">
+                  <uib-accordion-heading>
+                      Errors: {{values.errorCount}} (Data will not be uploaded in to TM1) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                  </uib-accordion-heading>
+                  <div ng-repeat="item in lists.records">
+                      <span ng-if="item.error"> {{item.error}}</span>
+                  </div>
+                </div>
+              </uib-accordion>
+            </div>
+          </div>
+          <div class="row" ng-if="!values.valuesSentToTM1 && values.warningCount>0">
+            <div class="col-md-12">
+              <uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-warning" is-open="status.open">
+                  <uib-accordion-heading>
+                      Warnings: {{values.warningCount}} (Data will be uploaded in to TM1) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                  </uib-accordion-heading>
+                  <div ng-repeat="item in lists.records">
+                      <span ng-if="item.warning"> {{item.product}} - {{item.warning}}</span>
+                  </div>
+                </div>
+              </uib-accordion>
+            </div>
+          </div>
+          <div class="row" ng-if="!values.valuesSentToTM1">
+            <div class="col-md-12">
+              <uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-info" is-open="status.open">
+                  <uib-accordion-heading>
+                      {{values.projectsToBeUploaded}} products will be uploaded into Budget {{selections.year}} {{selections.region}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                  </uib-accordion-heading>
+                  <div ng-repeat="item in lists.records">
+                      <span ng-if="item.selected"> {{item.product}}</span>
+                      <i ng-if="item.warning" class="fa fa-exclamation-circle alert-warning" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                      popover-enable="item.warning" popover-trigger="'mouseenter'" popover-class="popover-class-warning"></i>
+                  </div>
+                </div>
+              </uib-accordion>
+            </div>
+          </div>
+          <div class="row" ng-if="values.valuesSentToTM1">
+            <div class="col-md-12">
+              <uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-success" is-open="status.open">
+                  <uib-accordion-heading>
+                      Success: {{values.projectUploaded}} products uploaded into Budget {{selections.year}} {{selections.region}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                  </uib-accordion-heading>
+                  <div ng-repeat="item in lists.records">
+                      <span ng-if="item.selected"> {{item.product}}</span>
+                  </div>
+                </div>
+              </uib-accordion>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <button class="btn btn-primary" ng-class="{'btn-success': values.valuesSentToTM1}" ng-click="saveAll()" ng-disabled="values.valuesSentToTM1">
+                <i ng-if="$root.isLoading" class="fa fa-cog fa-spin fa-fw"></i>
+                <i ng-if="!$root.isLoading" class="fa fa-floppy-o fa-fw"></i>
+                <span ng-if="!values.valuesSentToTM1" >Save</span>
+                <span ng-if="values.valuesSentToTM1" >Sent</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

@@ -14,5 +14,9 @@
   "test-modal": {
     "url": "/test-modal",
     "templateUrl": "html/Test-Modal.html"
+  },
+  "excel-upload": {
+    "url": "/excel-upload",
+    "templateUrl": "html/Excel Upload.html"
   }
 }
