@@ -13,25 +13,30 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    
+    $scope.cubeUsed = 'General Ledger';
     $rootScope.rowDriver = 'Account';
      
     $rootScope.rowDriverIndex = 6;
     $scope.config = {
 
-        columns:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-        months:[{"key":"Jan"},{"key":"Feb"},{"key":"Mar"},{"key":"Apr"},{"key":"May"},{"key":"Jun"},{"key":"Jul"},{"key":"Aug"},{"key":"Sep"},{"key":"Oct"},{"key":"Nov"},{"key":"Dec"}], 
+       
+         
         itemsDisplayedInList:10
     };
     
-    $rootScope.columnDriver = 'Month';
-    $scope.page = {accounts: [], columnDimension :$scope.config.months};
+    $rootScope.columnDriver = 'Period';
+    $scope.tmpcolAttribute = 'Short Description';
+    $scope.page = {accounts: [] };
     $scope.rowHeightArray = [];
     $scope.images = [];
     $rootScope.pageTitle = 'Infinite Freeze Pane';
     $scope.loading = false;
     
-     
+     $scope.decideonAttributeName = function(){
+         console.log("decide");
+         $scope.tmpcolAttribute = 'Short Description';
+          
+     }
     
     $scope.dataRefresh = function(driver){
       
@@ -75,14 +80,10 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
         $timeout( function(){
          
         console.log('column selected', driver)
-            if(driver === 'Year' || driver === 'Version'){
-                for(item in $scope.page.columnDimension){
-                    console.log(item, $scope.page.columnDimension[item]);
-                }
-            }else{
-                $rootScope.columnDriver = 'Month'; 
-                $scope.page.columnDimension = $scope.config.months;
-            }
+            if(driver === 'Period' ){
+                
+              //  $scope.page.columnDimension = $scope.config.months;
+            } 
             $scope.columnEdit = false;
      
             $tm1Ui.dataRefresh();
@@ -116,9 +117,14 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
   $scope.columnEdit = false;
   $scope.createModel = function(row, columnName, columnalias){
         console.log(row, columnName);
-
-      var tmpName = (columnName + "").split(' ').join('');
-      var retempName = (tmpName + "").split('%').join('');
+        if($rootScope.columnDriver === 'Period' && columnName.indexOf('0') !== -1){
+            var retempName = (columnalias)
+        }else{
+             var tmpName = (columnName + "").split(' ').join('');
+        var retempName = (tmpName + "").split('%').join('');
+        }
+         
+        
       
       return retempName;
   }
@@ -170,7 +176,7 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
 
 
 $scope.cubeDimensions = {};
-    $tm1Ui.cubeDimensions("dev", "General Ledger").then(function(data){
+    $tm1Ui.cubeDimensions("dev", $scope.cubeUsed).then(function(data){
   		console.info('Returned by this function - %o', data);
           $scope.cubeDimensions = data
 	 });
