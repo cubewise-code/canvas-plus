@@ -205,7 +205,7 @@ html, body{
                         <table ng-show="columnEdit === true" class="table table-striped"    >
                           <tbody  >
                              
-                          <tr ng-repeat="item in cubeDimensions" ng-show="item != $root.columnDriver || item === 'Year' || item === 'Version' " ng-if="$index < 2 ">
+                            <tr ng-repeat="item in cubeDimensions" ng-show="item != $root.columnDriver && $index < 3 " >
                               <td ng-click=" dataRefreshColumn(item)" ng-if="columnEdit === true"  >{{item}}</td> 
                             </tr> 
                             <!--<tr>
@@ -339,10 +339,7 @@ html, body{
                  <!-- <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true" ng-if="cubeUsed === 'Retail'"
                   tm1-elements="Actual,{{$root.rowDriver === 'Year' ? row.key: $root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 1}},Sales Amount"
                   ></tm1-ui-dbr-read-only>-->
-                  
-                    
-                 
-
+                   
                 </td>
                 <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[returnedName] < 0 ? 'negative':''"   ng-init="returnedName = createModel(row, column.key, column.alias);" >
                   <!--<tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true"  
