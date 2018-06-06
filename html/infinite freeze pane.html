@@ -239,17 +239,18 @@ html, body{
             <thead>
               <tr>
                 
-                <th ng-repeat="month in page.columnDimension track by $index" class="text-center tm1-ui-sortable" ng-class="table.sortClass(month.key)" style="cursor:pointer;"   >
+                <th ng-init="returnedName = createModel(column, column.key)" ng-repeat="column in page.columnDimension track by $index" class="text-center tm1-ui-sortable"  ng-class="table.sortClass(returnedName)" style="cursor:pointer;"   >
                   
-                  <span  ng-click="table.sort(month.key);   "  >{{month.key}}</span>
+                  <span  ng-click="table.sort(returnedName);   "  >{{$root.columnDriver != 'Version' ? column.key : (column.alias === '' ?column.key : column.alias) }}</span>
                       
                    
                    
-                     <span ng-if="table.isSorted() === month.key"   class="inline-block-right"> 
+                     <span ng-if="table.isSorted() === returnedName "   class="inline-block-right"> 
                     <i ng-click="clearSort();" class="fa fa-times"></i>
                     </span>
 
                 </th>
+                  
                  
               </tr>
             </thead>
@@ -330,15 +331,16 @@ html, body{
                  
 
                 </td>
-                <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[column.key] < 0 ? 'negative':''" >
+                <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[returnedName] < 0 ? 'negative':''" >
                   <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="General Ledger" tm1-data-decimal="0" tm1-read-only="true"
                    
-                   
+                  
                   tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Month' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
+                  tm1-format-percentage="returnedFormat"
+                  ng-init="returnedName = createModel(row, column.key, column.alias); returnedFormat = isColumnPercentage(column.key)"
+                  ng-model="row[returnedName]"
                   
-                  ng-model="row[column.key]"
-                  
-                  ></tm1-ui-dbr-read-only>
+                  ></tm1-ui-dbr-read-only>  
                 </td>
                  
               </tr>

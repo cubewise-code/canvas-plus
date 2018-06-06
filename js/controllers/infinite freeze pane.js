@@ -114,6 +114,24 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
     }
 
   $scope.columnEdit = false;
+  $scope.createModel = function(row, columnName, columnalias){
+        console.log(row, columnName);
+
+      var tmpName = (columnName + "").split(' ').join('');
+      var retempName = (tmpName + "").split('%').join('');
+      
+      return retempName;
+  }
+  $scope.isColumnPercentage = function(col){
+      if(col.indexOf('%') !== -1){
+        console.log('column is percentage', col);
+        return true;
+      }else{
+          return false;
+      }
+       
+
+  }
   $scope.openColumnElement = function(e){
       console.log("open column", e.target);
       $scope.columnEdit = true;
