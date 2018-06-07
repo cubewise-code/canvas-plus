@@ -176,7 +176,7 @@ html, body{
                       style="position:absolute; top:8px; left:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
                       
                       ng-click="rowEdit === true ? closeRowElement($event) : openRowElement($event)">
-                     <span style="pointer-events:none;   padding:4px;  "> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
+                     <span style="pointer-events:none;   padding:4px;  float: right;"> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
                         <table ng-show="rowEdit === true" class="table table-striped"    >
                           <tbody  >
                              
@@ -286,13 +286,15 @@ html, body{
                 </td>
                 <td class="text-right" ng-class="row['AllMonths'] < 0 ? 'negative':''">
                   <tm1-ui-dbr 
-									tm1-instance="dev"  ng-if="cubeUsed === 'General Ledger'"
+									tm1-instance="dev"  
+                  ng-if="cubeUsed === 'General Ledger'"
 									tm1-cube="{{cubeUsed}}" 
 									tm1-data-decimal="0" 
 									tm1-read-only="true"
-                  tm1-elements="Actual,{{$root.rowDriver === 'Year' ? row.key : $root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key : $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount"  
-                  ng-model="row['AllMonths']"></tm1-ui-dbr >
-
+                  tm1-elements="Actual,{{$root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
+                   
+                  ng-model="row['AllMonths']"></tm1-ui-dbr  
+                 >
                   <!--  <tm1-ui-dbr  ng-if="cubeUsed === 'Retail'"
 									tm1-instance="dev" 
 									tm1-cube="{{cubeUsed}}" 
@@ -319,22 +321,28 @@ html, body{
 											class="tm1-ui-sortable" 
 											ng-class="table.sortClass('key')" 
 											ng-click="table.sort('key')" >
-											Account 
+                      {{$root.rowDriver}} 
 										</th>
 										<th ng-show="false">All Months</th>
-										<th ng-repeat="month in page.columnDimension">{{month.key}}</th> 
+										<th ng-repeat="item in page.columnDimension">{{(item.alias === '' ? item.key : item.alias) }}</th> 
                 </tr>
               </thead>
               <tr ng-if="rowHeightArray.length"  
 							style="height:{{rowHeightArray[$index]}}px !important; max-height:{{rowHeightArray[$index]}}px !important; min-height:{{rowHeightArray[$index]}}px !important; "  
 							ng-repeat="row in  (table.data()  | filter:page.filter)  | limitTo:config.itemsDisplayedInList track by $index">
                  
-                <td    ng-show="false">{{row.alias}}</td>
+                <td  ng-show="false">{{row.alias}}</td>
                 
                 <td ng-show="false">
-                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true" ng-if="cubeUsed === 'General Ledger'"
-                  tm1-elements="Actual,{{$root.rowDriver === 'Year' ? row.key: $root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount"
-                  ></tm1-ui-dbr-read-only>
+                  
+                    <tm1-ui-dbr 
+									tm1-instance="dev"  
+                  ng-if="cubeUsed === 'General Ledger'"
+									tm1-cube="{{cubeUsed}}" 
+									tm1-data-decimal="0" 
+									tm1-read-only="true"
+                  tm1-elements="Actual,{{$root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
+                    ></tm1-ui-dbr>
                   
                  <!-- <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true" ng-if="cubeUsed === 'Retail'"
                   tm1-elements="Actual,{{$root.rowDriver === 'Year' ? row.key: $root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 1}},Sales Amount"
@@ -352,7 +360,7 @@ html, body{
                   
                   ></tm1-ui-dbr-read-only> -->
                   <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" ng-if="cubeUsed === 'General Ledger'" tm1-data-decimal="0" tm1-read-only="true"  
-                   
+                   ng-if="cubeUsed === 'General Ledger'"
                   
                   tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Period' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
                   tm1-format-percentage="returnedFormat"
