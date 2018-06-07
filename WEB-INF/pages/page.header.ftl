@@ -61,7 +61,7 @@
     style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#201c1a;" ng-mouseover="$root.top = 65"   >  
        <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:100%; padding-top:{{$root.user.FriendlyName ? '10px':'100%'}};">
     <a href="#">
-        <img src="images/logo.png" 
+        <img src="images/logo.svg" 
         title="Your Logo Here" 
         style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999;" /> 
     </a>
@@ -153,8 +153,9 @@
                         <small class="pull-right"> Year</small>
                     </span> 
                     <tm1-ui-subnm 
+                    ng-show="$root.rowDriver != 'Year' && $root.columnDriver != 'Year' "
                     tm1-instance="dev"  
-                    ng-if="$root.defaults.year != ''" 
+                    ng-if="$root.defaults.year != '' " 
                     tm1-dimension="Year" 
                     tm1-subset="All Years" 
                     tm1-default-element="{{$root.defaults.year}}"  
@@ -166,6 +167,7 @@
             </div>   
             <div class="col-lg-12 col-xs-12"> 
                 <tm1-ui-subnm 
+                ng-show="$root.rowDriver != 'Region' && $root.columnDriver != 'Region' "
                 ng-if="$root.defaults.region != ''"
                 tm1-instance="dev" 
                 tm1-dimension="Region" 
@@ -179,6 +181,7 @@
             <div class="col-lg-12 col-xs-12">
              
                 <tm1-ui-subnm 
+                ng-show="$root.rowDriver != 'Department' && $root.columnDriver != 'Department' "
                     ng-if="$root.defaults.department != ''"
                     tm1-instance="dev"
                     tm1-default-element="{{$root.defaults.department}}"  
