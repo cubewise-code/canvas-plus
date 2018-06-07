@@ -13,30 +13,29 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $scope.cubeUsed = 'General Ledger';
+    $scope.cubeUsed = 'Retail';
     $rootScope.rowDriver = 'Account';
-     
+    $scope.defaults.account = '4';
+    $scope.cellArrayString = [] ;
+    $scope.defaults.product = 'All Products by Category';
     $rootScope.rowDriverIndex = 6;
-    $scope.config = {
-
-       
-         
+    $scope.config = { 
         itemsDisplayedInList:10
     };
+    if($scope.cubeUsed === 'Retail'){
+         $rootScope.rowDriver = 'Product'; 
+          
+    }
     
     $rootScope.columnDriver = 'Period';
     $scope.tmpcolAttribute = 'Short Description';
-    $scope.page = {accounts: [] };
+    $scope.page = {rowDimensions: []};
     $scope.rowHeightArray = [];
     $scope.images = [];
-    $rootScope.pageTitle = 'Infinite Freeze Pane';
+    $rootScope.pageTitle = 'Infinite Freeze Pane Table';
     $scope.loading = false;
     
-     $scope.decideonAttributeName = function(){
-         console.log("decide");
-         $scope.tmpcolAttribute = 'Short Description';
-          
-     }
+     
     
     $scope.dataRefresh = function(driver){
       
@@ -52,6 +51,20 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
             $tm1Ui.dataRefresh();
             $scope.loading = false ;
         }, 1000)
+    
+     
+    }
+
+     $scope.dataRefreshAllMonth = function(driver){
+      
+        
+           
+      $timeout( function(){
+         $tm1Ui.dataRefresh();
+      });
+         
+            
+            
     
      
     }
@@ -80,11 +93,7 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
         $scope.config.itemsDisplayedInList = 0;
         $timeout( function(){
          
-        console.log('column selected', driver)
-            if(driver === 'Period' ){
-                
-              //  $scope.page.columnDimension = $scope.config.months;
-            } 
+         
             $scope.rowEdit = false;
             $scope.columnEdit = false;
      
@@ -117,18 +126,29 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
     }
 
   $scope.columnEdit = false;
+    $scope.cellArrayString = [];
   $scope.createModel = function(row, columnName, columnalias){
-        console.log(row, columnName);
+         
         if($rootScope.columnDriver === 'Period' && columnName.indexOf('0') !== -1){
             var retempName = (columnalias)
         }else{
              var tmpName = (columnName + "").split(' ').join('');
         var retempName = (tmpName + "").split('%').join('');
-        }
-         
-        
-      
+        } 
+           
+     
       return retempName;
+  }
+  $rootScope.createArray = function(row){
+       $scope.cellArrayString = [];
+         console.log(row, $rootScope.rowDriver, "#########");
+      
+       
+             //$scope.cellArrayString[item]  = "Actual,"+($rootScope.selections.year)+",All Months,Local,"+ ($rootScope.rowDriver === 'Region' ? row.key : $rootScope.selections.region) +","+ ($rootScope.rowDriver === 'Department' ? row.key : $rootScope.selections.department) +","+ ($rootScope.rowDriver === 'Account' ?  row.key: 4) +",Amount" ;
+          
+         
+          
+      
   }
   $scope.isColumnPercentage = function(col){
       if(col.indexOf('%') !== -1){
@@ -227,13 +247,24 @@ $scope.cubeDimensions = {};
     if(value){
         if($scope.page.filter && $scope.page.filter != ""){
        
-            $scope.page.filterlower= $scope.page.filter.toLowerCase();
-            if(value["Description"].toLowerCase().indexOf($scope.page.filterlower) == -1){
-                return false;
+            $scope.page.filterlower = $scope.page.filter.toLowerCase();
+            if($rootScope.rowDriver === 'Product'){
+                if(value["key"].toLowerCase().indexOf($scope.page.filterlower) == -1){
+                    return false;
+                }else{
+                    console.log("###", value);
+                }
+            }else{
+                if(value["Description"].toLowerCase().indexOf($scope.page.filterlower) == -1){
+                    return false;
+                }else{
+                    console.log("###", value);
+                }
             }
+            
         }
 
-    return true;
+        return true;
     }
      
  
@@ -398,16 +429,16 @@ $scope.getHeight= function() {
     });
   $scope.firstPage = function(){
     var recordsPerPage = $scope.table._pageSize;
-    $scope.table = $tm1UiTable.create($scope, $scope.page.accounts, {index: 1000, pageSize: recordsPerPage, preload: false, filter: $scope.filter});
+    $scope.table = $tm1UiTable.create($scope, $scope.page.rowDimensions, {index: 1000, pageSize: recordsPerPage, preload: false, filter: $scope.filter});
   };
 
   $scope.lastPage = function(){
     var totalRecords = $scope.table._pages;
     var recordsPerPage = $scope.table._pageSize;
     var newIndex = Math.floor(totalRecords - recordsPerPage);
-    $scope.table = $tm1UiTable.create($scope, $scope.page.accounts, {index: newIndex, pageSize: recordsPerPage, preload: false, filter: $scope.filter});
+    $scope.table = $tm1UiTable.create($scope, $scope.page.rowDimensions, {index: newIndex, pageSize: recordsPerPage, preload: false, filter: $scope.filter});
   };
 
-  $scope.table = $tm1UiTable.create($scope, $scope.page.accounts, {pageSize: 1000, preload: false, filter: $scope.filter});
+  $scope.table = $tm1UiTable.create($scope, $scope.page.rowDimensions, {pageSize: 1000, preload: false, filter: $scope.filter});
 }]);
  

@@ -61,9 +61,9 @@
     style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#201c1a;" ng-mouseover="$root.top = 65"   >  
        <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:100%; padding-top:{{$root.user.FriendlyName ? '10px':'100%'}};">
     <a href="#">
-        <img src="//online.griffith.edu.au/wp-content/themes/griffith/images/logo-griffith-reverse.png" 
+        <img src="images/logo.png" 
         title="Your Logo Here" 
-        style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999;" />
+        style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999;" /> 
     </a>
   </div>
     

@@ -144,10 +144,11 @@ html, body{
 }
 </style>
   
-    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver != 'Year' || $root.rowDriver != 'Version'" tm1-dimension="{{$root.rowDriver}}" tm1-subset="Default" tm1-attributes="Description" ng-model="page.accounts"></tm1-ui-element-list>
-    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver === 'Year' || $root.rowDriver === 'Version'"tm1-dimension="{{$root.rowDriver}}"  tm1-subset="Default" tm1-attributes="Caption_Default" ng-model="page.accounts"></tm1-ui-element-list>
+    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver != 'Year' || $root.rowDriver != 'Version'" tm1-dimension="{{$root.rowDriver}}" tm1-subset="Default" tm1-attributes="Description" ng-model="page.rowDimensions"></tm1-ui-element-list>
+    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver === 'Product'" tm1-dimension="{{$root.rowDriver}}"  tm1-subset="Default" tm1-attributes="Description" ng-model="page.rowDimensions"></tm1-ui-element-list>
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Year' || $root.columnDriver === 'Version'  " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default" tm1-attributes="Caption_Default" ng-model="page.columnDimension"></tm1-ui-element-list>
    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Period' " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default" tm1-attributes="Short Description" ng-model="page.columnDimension"></tm1-ui-element-list>
+   
 
  
   <div class="row" id="table"style="padding-top:130px;" >
@@ -162,7 +163,7 @@ html, body{
     
     <div class="col-lg-12 col-xs-12">
          
-      <div id="tablescroll" ng-if="!loading && page.accounts && $root.selections.year && page.columnDimension" class="fixedTable" ng-init="loadFirst(table.data());"  >
+      <div id="tablescroll" ng-if="!loading && page.rowDimensions && $root.selections.year && page.columnDimension " class="fixedTable" ng-init="loadFirst(table.data());"  >
        
         <header class="fixedTable-sidebar-header">
           <table class="table table-striped"  >
@@ -172,33 +173,35 @@ html, body{
                 <th style=" min-width:250px; !important; overflow:hidden; background-color:#fff;"  >
 							 
                 <input type="text" style="height:42px; padding-left:18px;" ng-model="page.filter" class="form-control" placeholder="Search {{$root.rowDriver}}..." ng-change="table.refresh()"/>
-                 <div 
-                      style="position:absolute; top:8px; left:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
-                      
-                      ng-click="rowEdit === true ? closeRowElement($event) : openRowElement($event)">
-                     <span style="pointer-events:none;   padding:4px;  float: right;"> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
-                        <table ng-show="rowEdit === true" class="table table-striped"    >
-                          <tbody  >
-                             
-                             <tr ng-repeat="item in cubeDimensions" ng-if="$index > 3 &&  $index < 7" ng-show="item != $root.rowDriver && item != 'Period' && item != 'Year' && item != 'Version'  ">
-                              <td ng-click=" dataRefresh(item)" ng-if="rowEdit === true"  >{{item}}</td> 
-                            </tr>
+                 
+                 
+                 
+                  <div  style="position:absolute; top:8px; left:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
+                        
+                        ng-click="rowEdit === true ? closeRowElement($event) : openRowElement($event)">
+                      <span style="pointer-events:none;   padding:4px;  float: right;"> 
+                        <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
+                          <table ng-show="rowEdit === true" class="table table-striped"    >
+                            <tbody  >
+                              
+                              <tr ng-repeat="item in cubeDimensions" ng-if="$index > 3 &&  $index < 7" ng-show="item != $root.rowDriver && item != 'Period' && item != 'Year' && item != 'Version'  ">
+                                <td ng-click=" dataRefresh(item)" ng-if="rowEdit === true"  >{{item}}</td> 
+                              </tr>
 
-                            <!--<tr>
-                              <td ng-click=" dataRefresh('Region')" ng-show="'Region' != $root.rowDriver" ng-if="rowEdit === true"  >Region</td> 
-                            </tr>
-                            <tr >
-                              <td ng-click=" dataRefresh('Department')"  ng-show="'Department' != $root.rowDriver" ng-if="rowEdit === true"  >Department</td> 
-                            </tr>
-                             <tr >
-                              <td ng-click=" dataRefresh('Account')"  ng-show="'Account' != $root.rowDriver" ng-if="rowEdit === true"  >Account</td> 
-                            </tr>-->
-                          </tbody> 
-                        </table>
-                  </div>
+                              <!--<tr>
+                                <td ng-click=" dataRefresh('Region')" ng-show="'Region' != $root.rowDriver" ng-if="rowEdit === true"  >Region</td> 
+                              </tr>
+                              <tr >
+                                <td ng-click=" dataRefresh('Department')"  ng-show="'Department' != $root.rowDriver" ng-if="rowEdit === true"  >Department</td> 
+                              </tr>
+                              <tr >
+                                <td ng-click=" dataRefresh('Account')"  ng-show="'Account' != $root.rowDriver" ng-if="rowEdit === true"  >Account</td> 
+                              </tr>-->
+                            </tbody> 
+                          </table>
+                    </div>
 
-                  <div 
-                      style="position:absolute; top:8px; right:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
+                  <div  style="position:absolute; top:8px; right:15px; width:20px; height:41px; overflow:hidden; z-index:1; background-color:#555;" 
                       ng-mouseleave=" " 
                       ng-click="columnEdit === true ? closeColumnElement($event) : openColumnElement($event)">
                      <span style="pointer-events:none;   padding:4px;  "> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
@@ -241,11 +244,9 @@ html, body{
                 
                 <th ng-init="returnedName = createModel(item, item.key, item.alias)" ng-repeat="item in page.columnDimension track by $index" class="text-center tm1-ui-sortable"  ng-class="table.sortClass(returnedName)" style="cursor:pointer;"   >
                   
-                  <span  ng-click="table.sort(returnedName);   "  >
+                  <span  ng-click="table.sort(returnedName); "  >
                     {{(item.alias === '' ? item.key : item.alias) }}</span>
-                      
-                   
-                   
+                     
                      <span ng-if="table.isSorted() === returnedName "   class="inline-block-right"> 
                     <i ng-click="clearSort();" class="fa fa-times"></i>
                     </span>
@@ -262,7 +263,7 @@ html, body{
            	 
           <table class="table table-striped"  >
             <tbody>
-              <tr   ng-repeat="row in  (table.data()  | filter:page.filter)   | limitTo:config.itemsDisplayedInList track by $index">
+              <tr   ng-repeat="row in  (table.data() | filter:page.filter) | limitTo:config.itemsDisplayedInList track by $index">
                 
                 <td class="row-height-ind">{{row.alias ==='' ? row.key : row.alias}} 
                 <!--<div id="pop-up-{{$index}}" class="inline-block-right"
@@ -284,24 +285,24 @@ html, body{
               </div>-->
 
                 </td>
-                <td class="text-right" ng-class="row['AllMonths'] < 0 ? 'negative':''">
-                  <tm1-ui-dbr 
+              <td class="text-right" ng-class="row['AllMonths'] < 0 ? 'negative':''">
+                    <tm1-ui-dbr 
 									tm1-instance="dev"  
                   ng-if="cubeUsed === 'General Ledger'"
 									tm1-cube="{{cubeUsed}}" 
 									tm1-data-decimal="0" 
 									tm1-read-only="true"
-                  tm1-elements="Actual,{{$root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
+                  tm1-elements="Actual,{{$root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key:  defaults.account}},Amount" 
                    
-                  ng-model="row['AllMonths']"></tm1-ui-dbr  
-                 >
-                  <!--  <tm1-ui-dbr  ng-if="cubeUsed === 'Retail'"
+                  ng-model="row['AllMonths']"></tm1-ui-dbr > 
+
+                   <tm1-ui-dbr  ng-if="cubeUsed === 'Retail'"
 									tm1-instance="dev" 
 									tm1-cube="{{cubeUsed}}" 
 									tm1-data-decimal="0" 
 									tm1-read-only="true"
-                  tm1-elements="Actual,{{$root.rowDriver === 'Year' ? row.key : $root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key : $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 1}},Sales Amount"  
-                  ng-model="row['AllMonths']"></tm1-ui-dbr >-->
+                  tm1-elements="Actual,{{$root.rowDriver === 'Year' ? row.key : $root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key : $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: defaults.product}},Sales Amount"  
+                  ng-model="row['AllMonths']"></tm1-ui-dbr > 
                    
                 </td> 
                 
@@ -335,39 +336,44 @@ html, body{
                 
                 <td ng-show="false">
                   
-                    <tm1-ui-dbr 
+                  <tm1-ui-dbr 
 									tm1-instance="dev"  
                   ng-if="cubeUsed === 'General Ledger'"
 									tm1-cube="{{cubeUsed}}" 
 									tm1-data-decimal="0" 
 									tm1-read-only="true"
                   tm1-elements="Actual,{{$root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
-                    ></tm1-ui-dbr>
+                    ></tm1-ui-dbr> 
                   
-                 <!-- <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true" ng-if="cubeUsed === 'Retail'"
-                  tm1-elements="Actual,{{$root.rowDriver === 'Year' ? row.key: $root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 1}},Sales Amount"
-                  ></tm1-ui-dbr-read-only>-->
+                   <tm1-ui-dbr 
+									tm1-instance="dev"  
+                  ng-if="cubeUsed === 'Retail'"
+									tm1-cube="{{cubeUsed}}" 
+									tm1-data-decimal="0" 
+									tm1-read-only="true"
+                  tm1-elements="Actual,{{$root.selections.year}},All Months,Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 'All Products by Category'}},Sales Amount" 
+                    ></tm1-ui-dbr> 
                    
                 </td>
                 <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[returnedName] < 0 ? 'negative':''"   ng-init="returnedName = createModel(row, column.key, column.alias);" >
-                  <!--<tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true"  
-                   ng-if="cubeUsed === 'Retail'"
                   
-                  tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Period' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 1}},Sales Amount" 
-                  tm1-format-percentage="returnedFormat"
-                  ng-init="returnedName = createModel(row, column.key, column.alias); returnedFormat = isColumnPercentage(column.key)"
-                  ng-model="row[returnedName]"
-                  
-                  ></tm1-ui-dbr-read-only> -->
-                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" ng-if="cubeUsed === 'General Ledger'" tm1-data-decimal="0" tm1-read-only="true"  
-                   ng-if="cubeUsed === 'General Ledger'"
-                  
-                  tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Period' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
+                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true"  
+                   ng-if="cubeUsed === 'Retail'" 
+                  tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Period' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 'All Products by Category'}},Sales Amount" 
                   tm1-format-percentage="returnedFormat"
                   ng-init="returnedName = createModel(row, column.key, column.alias); returnedFormat = isColumnPercentage(column.key)"
                   ng-model="row[returnedName]"
                   
                   ></tm1-ui-dbr-read-only> 
+
+                   <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" ng-if="cubeUsed === 'General Ledger'" tm1-data-decimal="0" tm1-read-only="true"  
+                   
+                  tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Period' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
+                  tm1-format-percentage="returnedFormat"
+                  ng-init="returnedName = createModel(row, column.key, column.alias); returnedFormat = isColumnPercentage(column.key)"
+                  ng-model="row[returnedName]"
+                  
+                  ></tm1-ui-dbr-read-only>  
                 </td>
                  
               </tr>
