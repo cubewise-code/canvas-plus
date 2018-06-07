@@ -159,9 +159,10 @@ html{
     color: #fff;
     padding-top: 40px;
     padding-bottom: 20px;
-    background-image: url(../images/logo-griffith-reverse.png);
+    background-image: url(../images/icon.png);
     background-repeat: no-repeat;
     background-position: 50% 50%;
+   
     border-color: transparent;
     background-color: #c02626 !important;
 }
