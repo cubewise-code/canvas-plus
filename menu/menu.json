@@ -1,7 +1,7 @@
 [
   {
     "label": "Summary",
-    "icon_class": "fa-file-text-o",
+    "icon_class": "fa-black-tie",
     "data": {
       "page": "summary"
     },
@@ -9,7 +9,7 @@
   },
   {
     "label": "infinite freeze pane",
-    "icon_class": "fa-file-text-o",
+    "icon_class": "fa-pencil",
     "data": {
       "page": "infinite-freeze-pane"
     },
@@ -17,7 +17,7 @@
   },
   {
     "label": "Test-Modal",
-    "icon_class": "fa-file-text-o",
+    "icon_class": "fa-bell",
     "data": {
       "page": "test-modal"
     },
@@ -25,7 +25,7 @@
   },
   {
     "label": "Excel Upload",
-    "icon_class": "fa-file-text-o",
+    "icon_class": "fa-bookmark",
     "data": {
       "page": "excel-upload"
     },
