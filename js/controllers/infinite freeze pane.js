@@ -13,7 +13,8 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $scope.cubeUsed = 'Retail';
+    $scope.listOfCubes = ['General Ledger','Retail'];
+    $scope.cubeUsed = $scope.listOfCubes[0];
     $rootScope.rowDriver = 'Account';
     $scope.defaults.account = '4';
     $scope.cellArrayString = [] ;
