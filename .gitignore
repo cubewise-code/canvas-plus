@@ -5,9 +5,7 @@ html/samples/**
 js/controllers/samples/**
 lang/**
 WEB-INF/classes/**
-WEB-INF/lib/**
-WEB-INF/pages/system/**
-WEB-INF/classes/**
+WEB-INF/lib/** 
 node_modules
 files/**
 WEB-INF/logs/application.log
