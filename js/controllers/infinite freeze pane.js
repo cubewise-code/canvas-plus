@@ -39,7 +39,14 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
      
     
     $scope.dataRefresh = function(driver){
-      
+        if($scope.cubeUsed === 'Retail'){
+            $rootScope.rowDriver = 'Product'; 
+            
+        }else{
+            if($scope.cubeUsed === 'General Ledger'){
+                $rootScope.rowDriver = 'Account'; 
+            }
+        }
         $rootScope.rowDriver = driver ;
         $scope.loading = true ;
          $scope.config.itemsDisplayedInList = 0;
@@ -56,13 +63,35 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
      
     }
 
-     $scope.dataRefreshAllMonth = function(driver){
+     $scope.dataRefreshAllMonth = function(){
       
-        
+         if($scope.cubeUsed === 'Retail'){
+            $rootScope.rowDriver = 'Product'; 
+            
+        }else{
+            if($scope.cubeUsed === 'General Ledger'){
+                $rootScope.rowDriver = 'Account'; 
+            }
+        }
            
-      $timeout( function(){
-         $tm1Ui.dataRefresh();
-      });
+        
+        $scope.cubeDimensions = {};
+        $tm1Ui.cubeDimensions("dev", $scope.cubeUsed).then(function(data){
+            console.info('Returned by this function - %o', data);
+            $scope.cubeDimensions = data;
+            $scope.config.itemsDisplayedInList = 0;
+        $timeout( function(){
+            $scope.loadFirst($scope.table.data());
+         
+            $scope.rowEdit = false;
+            $scope.columnEdit = false;
+     
+            $tm1Ui.dataRefresh();
+            
+        }, 1000)
+        });
+        
+         
          
             
             

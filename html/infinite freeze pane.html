@@ -143,24 +143,37 @@ html, body{
     border: 0;
 }
 </style>
-  
+  <span  ng-if="!loading">
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver != 'Year' || $root.rowDriver != 'Version'" tm1-dimension="{{$root.rowDriver}}" tm1-subset="Default" tm1-attributes="Description" ng-model="page.rowDimensions"></tm1-ui-element-list>
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver === 'Product'" tm1-dimension="{{$root.rowDriver}}"  tm1-subset="Default" tm1-attributes="Description" ng-model="page.rowDimensions"></tm1-ui-element-list>
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Year' || $root.columnDriver === 'Version'  " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default" tm1-attributes="Caption_Default" ng-model="page.columnDimension"></tm1-ui-element-list>
    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Period' " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default" tm1-attributes="Short Description" ng-model="page.columnDimension"></tm1-ui-element-list>
-   
+  </span>
 
  
   <div class="row" id="table"style="padding-top:130px;" >
       
-      <span style="position:relative; right:0px; float:left; padding:0px; padding-left:15px;"><tm1-ui-export 
+       
+
+        <span class="col-md-6 col-xs-6" style="padding:10px ; padding-right:20px;" >
+        Cube Used:
+        <select ng-model="cubeUsed" ng-change="  dataRefreshAllMonth()">
+          <option ng-repeat="item in listOfCubes" value="{{item}}">{{item}}</option> 
+      </select>
+     
+        
+        </span>
+    <span  class="col-md-6 col-xs-6">
+        <span style="float:right">
+        <tm1-ui-export 
           tm1-target-id="af1" 
           tm1-output-name="{{$root.rowDriver}}-{{$root.date}}" 
           tm1-field-separator="" 
           tm1-field-qualifier="" 
           tm1-locale="">
-        </tm1-ui-export></span>
-    
+        </tm1-ui-export>
+        </span>
+        </span>
     <div class="col-lg-12 col-xs-12">
          
       <div id="tablescroll" ng-if="!loading && page.rowDimensions && $root.selections.year && page.columnDimension " class="fixedTable" ng-init="loadFirst(table.data());"  >
@@ -357,23 +370,23 @@ html, body{
                 </td>
                 <td  ng-repeat="column in page.columnDimension" class="text-right" ng-class="row[returnedName] < 0 ? 'negative':''"   ng-init="returnedName = createModel(row, column.key, column.alias);" >
                   
-                  <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" tm1-read-only="true"  
+                  <tm1-ui-dbr tm1-instance="dev" tm1-cube="{{cubeUsed}}" tm1-data-decimal="0" 
                    ng-if="cubeUsed === 'Retail'" 
                   tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Period' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Product' ? row.key: 'All Products by Category'}},Sales Amount" 
                   tm1-format-percentage="returnedFormat"
                   ng-init="returnedName = createModel(row, column.key, column.alias); returnedFormat = isColumnPercentage(column.key)"
                   ng-model="row[returnedName]"
                   
-                  ></tm1-ui-dbr-read-only> 
+                  ></tm1-ui-dbr> 
 
-                   <tm1-ui-dbr-read-only tm1-instance="dev" tm1-cube="{{cubeUsed}}" ng-if="cubeUsed === 'General Ledger'" tm1-data-decimal="0" tm1-read-only="true"  
+                   <tm1-ui-dbr tm1-instance="dev" tm1-cube="{{cubeUsed}}" ng-if="cubeUsed === 'General Ledger'" tm1-data-decimal="0"   
                    
                   tm1-elements="{{$root.columnDriver === 'Version' ? column.key:'Actual'}},{{$root.columnDriver === 'Year' ? column.key : $root.selections.year}},{{$root.columnDriver === 'Period' ? column.key :'All Months'}},Local,{{$root.rowDriver === 'Region' ? row.key: $root.selections.region}},{{$root.rowDriver === 'Department' ? row.key: $root.selections.department}},{{$root.rowDriver === 'Account' ? row.key: 4}},Amount" 
                   tm1-format-percentage="returnedFormat"
                   ng-init="returnedName = createModel(row, column.key, column.alias); returnedFormat = isColumnPercentage(column.key)"
                   ng-model="row[returnedName]"
                   
-                  ></tm1-ui-dbr-read-only>  
+                  ></tm1-ui-dbr>  
                 </td>
                  
               </tr>
