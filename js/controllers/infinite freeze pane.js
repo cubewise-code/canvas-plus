@@ -9,7 +9,10 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
     *     For more information: https://github.com/cubewise-code/canvas-best-practice
     */
     
-    $scope.defaults = {};
+    $scope.defaults = {
+
+        product:'All Products by Category'
+    };
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
@@ -18,7 +21,7 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
     $rootScope.rowDriver = 'Account';
     $scope.defaults.account = '4';
     $scope.cellArrayString = [] ;
-    $scope.defaults.product = 'All Products by Category';
+  
     $rootScope.rowDriverIndex = 6;
     $scope.config = { 
         itemsDisplayedInList:10
@@ -143,6 +146,7 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
     }
     $scope.rowEdit = false;
     $scope.openRowElement = function(e){
+
         console.log("open row", e.target);
         $scope.rowEdit = true;
         e.target.style.height = "auto";
@@ -339,12 +343,79 @@ $rootScope.pageLoaded = function(){
     }
      
 }
- 
-$scope.getHeight= function() {
-        
+$scope.rowTreeArray = [];
+$scope.currentRowParent = '';
+$scope.finalrowParentArray = [];
+$rootScope.parentsArray = [];
+$rootScope.selectedParent = [];
+$scope.getRowParentElement = function(id , rowObj, index){
+    
+ $scope.rowTreeArray.push({'alias':rowObj.alias, 'topLevel': rowObj.topLevel });
+  
+}
+$scope.getMyParentsArray = function(row, index){
+     console.log(row)
+    var collectedArray = [];
+    for(var ww = 0 ; ww <= $scope.rowTreeArray.length; ww++){
+        if(ww < index){
+            if($scope.rowTreeArray[ww]['topLevel'] < row.topLevel){
+                 collectedArray.push($scope.rowTreeArray[ww]['alias']);
+            }else{
+                if( row.topLevel === $scope.rowTreeArray[ww]['topLevel'] && row.alias === $scope.rowTreeArray[ww]['alias']){
+                    collectedArray.push($scope.rowTreeArray[ww]['alias']);
+                }
+            }
+            
+        }
+         
+    }
+
+   $rootScope.parentsArray[index] = collectedArray;
+    
+}
+$scope.decideSelectedElement = function(rowObj, collapsed, index){
+    
+    if(collapsed){
+         
+        if( ($rootScope.selectedParent).indexOf(rowObj.alias) != -1){
+            var index = $rootScope.selectedParent.indexOf(rowObj.alias);
+            if (index > -1) {
+                $rootScope.selectedParent.splice(index, 1);
+            }
+             //$rootScope.selectedParent.pop(rowObj.alias);
+        }
+         
+         
+    }else{
+       $rootScope.selectedParent.push(rowObj.alias);
           
-
-
+      
+    }
+    rowObj.collapsed = !rowObj.collapsed;
+    //console.log(($rootScope.parentsArray[index]).indexOf($rootScope.selectedParent) );
+}
+$scope.showOrHide = function(row, index){
+    if($scope.table.isSorted()){
+        return false;
+    }else{
+        for(var tt = 0; tt < $rootScope.selectedParent.length; tt++){
+            
+        if( ($rootScope.parentsArray[index]).indexOf($rootScope.selectedParent[tt]) != -1 ) {
+             var indexx = ($rootScope.parentsArray[index]).indexOf($rootScope.selectedParent[tt]);
+                console.log($rootScope.selectedParent[tt], $rootScope.parentsArray[index], "collapse row");
+                return true;
+        }else{
+             
+        }
+    }
+    return false;
+    }
+     
+     
+     
+    
+}
+$scope.getHeight= function() { 
    var top = document.getElementById("tablescroll").getBoundingClientRect().top;
     $scope.rowHeightArray = [];
     if(document.getElementsByClassName('row-height-ind').length){ 
