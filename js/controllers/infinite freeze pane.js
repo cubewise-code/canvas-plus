@@ -42,6 +42,9 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
      
     
     $scope.dataRefresh = function(driver){
+        $scope.rowHierarchiesLevelArray = [];
+        $rootScope.selectedParent = [];
+        $scope.table = null;
         if($scope.cubeUsed === 'Retail'){
             $rootScope.rowDriver = 'Product'; 
             
@@ -55,10 +58,11 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
          $scope.config.itemsDisplayedInList = 0;
         $timeout( function(){
             
+            $scope.table = $tm1UiTable.create($scope, $scope.page.rowDimensions, {pageSize: 1000, preload: false, filter: $scope.filter});
             $scope.columnEdit = false;
      
             $scope.rowEdit = false;
-     
+            
             $tm1Ui.dataRefresh();
             $scope.loading = false ;
         }, 1000)
@@ -67,7 +71,8 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
     }
 
      $scope.dataRefreshAllMonth = function(){
-      
+         $scope.rowHierarchiesLevelArray = [];
+        $rootScope.selectedParent = [];
          if($scope.cubeUsed === 'Retail'){
             $rootScope.rowDriver = 'Product'; 
             
@@ -137,10 +142,11 @@ $scope.decideIfColumnIsPercentage = function(col, indexx){
      
     }
     $scope.clearSort = function(){ 
-        $timeout( function(){
-            console.log( $scope.table, $scope.table.isSorted(),  " $scope.table $scope.table $scope.table")
-            $scope.table.sortClear();
-            $scope.table.sort();
+          
+        $timeout( function(){ 
+            $scope.table.options['sortType']  = null; 
+            $scope.table.options['sortReverse'] = false;
+            $scope.table.sortClear(); 
             $tm1Ui.dataRefresh();
         })
     }
@@ -348,73 +354,7 @@ $scope.currentRowParent = '';
 $scope.finalrowParentArray = [];
 $rootScope.parentsArray = [];
 $rootScope.selectedParent = [];
-$scope.getRowParentElement = function(id , rowObj, index){
-    
- $scope.rowTreeArray.push({'alias':rowObj.alias, 'topLevel': rowObj.topLevel });
-  
-}
-$scope.getMyParentsArray = function(row, index){
-     console.log(row)
-    var collectedArray = [];
-    for(var ww = 0 ; ww <= $scope.rowTreeArray.length; ww++){
-        if(ww < index){
-            if($scope.rowTreeArray[ww]['topLevel'] < row.topLevel){
-                 collectedArray.push($scope.rowTreeArray[ww]['alias']);
-            }else{
-                if( row.topLevel === $scope.rowTreeArray[ww]['topLevel'] && row.alias === $scope.rowTreeArray[ww]['alias']){
-                    collectedArray.push($scope.rowTreeArray[ww]['alias']);
-                }
-            }
-            
-        }
-         
-    }
-
-   $rootScope.parentsArray[index] = collectedArray;
-    
-}
-$scope.decideSelectedElement = function(rowObj, collapsed, index){
-    
-    if(collapsed){
-         
-        if( ($rootScope.selectedParent).indexOf(rowObj.alias) != -1){
-            var index = $rootScope.selectedParent.indexOf(rowObj.alias);
-            if (index > -1) {
-                $rootScope.selectedParent.splice(index, 1);
-            }
-             //$rootScope.selectedParent.pop(rowObj.alias);
-        }
-         
-         
-    }else{
-       $rootScope.selectedParent.push(rowObj.alias);
-          
-      
-    }
-    rowObj.collapsed = !rowObj.collapsed;
-    //console.log(($rootScope.parentsArray[index]).indexOf($rootScope.selectedParent) );
-}
-$scope.showOrHide = function(row, index){
-    if($scope.table.isSorted()){
-        return false;
-    }else{
-        for(var tt = 0; tt < $rootScope.selectedParent.length; tt++){
-            
-        if( ($rootScope.parentsArray[index]).indexOf($rootScope.selectedParent[tt]) != -1 ) {
-             var indexx = ($rootScope.parentsArray[index]).indexOf($rootScope.selectedParent[tt]);
-                console.log($rootScope.selectedParent[tt], $rootScope.parentsArray[index], "collapse row");
-                return true;
-        }else{
-             
-        }
-    }
-    return false;
-    }
-     
-     
-     
-    
-}
+ 
 $scope.getHeight= function() { 
    var top = document.getElementById("tablescroll").getBoundingClientRect().top;
     $scope.rowHeightArray = [];
@@ -508,7 +448,176 @@ $scope.getHeight= function() {
              
        
 	};
+    $scope.password = '';
+    $scope.rowHierarchiesLevelArray = [];
+    $scope.getAnsestors = function(ddata, element){
+     
+
+     var settingsAnsestorsOne = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://localhost:8882/api/v1/Dimensions('"+$rootScope.rowDriver+"')/Hierarchies('"+$rootScope.rowDriver+"')/Levels/$count",
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json",
+             "Authorization":  buildBaseAuth($rootScope.user.FriendlyName,  $scope.password),
+            "Cache-Control": "no-cache"
+            
+        },
+        "processData": false,
+         error: function (xhr, ajaxOptions, thrownError) {
+          console.log("Error while trying to connect to the TM1 DATA source. Check if the correct port number, user name, password has been used.");
+          
+        }
+        }
+        $.ajax(settingsAnsestorsOne).done(function (data) {
+
+            console.log(data, "-----------------ANSESTORS");
+            var levelCount = data;
+             var string = '';
+            for(var gg = 0; gg < levelCount-1; gg++){
+                    if(gg === 0){
+                        string = '$expand=Parents'
+                    }else{
+                        string = '$expand=Parents('+string+')'
+                    }
+                      
+                
+                
+            }
+           // console.log("parent mdx query string:        ", string, "          mutch     " , "$expand=Parents($expand=Parents($expand=Parents($expand=Parents($expand=Parents))))" )
+            var settingsAnsestors = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://localhost:8882/api/v1/Dimensions('"+$rootScope.rowDriver+"')/Hierarchies('"+$rootScope.rowDriver+"')/Elements('"+element+"')?"+string+"",
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization":  buildBaseAuth($rootScope.user.FriendlyName,  $scope.password),
+                "Cache-Control": "no-cache"
+                
+            },
+            "processData": false,
+            error: function (xhr, ajaxOptions, thrownError) {
+            console.log("Error while trying to connect to the TM1 DATA source. Check if the correct port number, user name, password has been used.");
+            
+            }
+            }
+            $.ajax(settingsAnsestors).done(function (data) {
+                   //console.log(data, "-----------------ANSESTORS");
+                    var arrayToPassBack = [];
+                    arrayToPassBack.push(data['Attributes']['Caption']);
+                     
+                     if(data['Parents'] != null && data['Parents'].length){
+                        var Obg = data['Parents'][0];
+                        arrayToPassBack.push(data['Parents'][0].Name);
+                        console.log(Obg, "Obj");
+                        
+                        if( Obg['Parents'] != null &&  Obg['Parents'].length){
+                            
+                            arrayToPassBack.push(Obg['Parents'][0].Name);
+                            var ObgOne = Obg['Parents'][0];
+                            
+                            if(ObgOne['Parents'] != null && ObgOne['Parents'].length){
+                                arrayToPassBack.push(ObgOne['Parents'][0].Name);
+                                var ObgTwo = ObgOne['Parents'][0];
+
+                                if(ObgTwo['Parents'] != null && ObgTwo['Parents'].length){
+                                    arrayToPassBack.push(ObgTwo['Parents'][0].Name);
+                                    var ObgThree = ObgTwo['Parents'][0];
+                                }
+                            }
+                            
+                             
+                        }
+                     }
+                       var completeArray =[];
+                       var previousNameCaptured = '';
+                       var reversedArray = arrayToPassBack.reverse()
+                      for(var ty = 0; ty < (levelCount-1); ty++){
+                           var capturedName = reversedArray[ty];
+                           //console.log(capturedName, "capturedNamecapturedNamecapturedNamecapturedNamecapturedNamecapturedName");
+                         if(capturedName != undefined){
+                              previousNameCaptured = capturedName;
+                         }else{
+                              
+                         }
+                         completeArray.push(previousNameCaptured);
+                      }
+                      $scope.rowHierarchiesLevelArray.push(completeArray);
+                      
+                      console.log($scope.rowHierarchiesLevelArray , "-----------------ANSESTORS");
+                  
+            });
+        });
       
+
+    }
+
+    $scope.decideSelectedElement = function(rowObj, collapsed, index){
+        
+        if(collapsed){
+            
+            if( ($rootScope.selectedParent).indexOf(rowObj.key) != -1){
+                var index = $rootScope.selectedParent.indexOf(rowObj.key);
+                if (index > -1) {
+                    $rootScope.selectedParent.splice(index, 1);
+                }
+                //$rootScope.selectedParent.pop(rowObj.alias);
+            }
+            
+            
+        }else{
+           $rootScope.selectedParent.push(rowObj.key);
+            
+        
+        }
+        rowObj.collapsed = !rowObj.collapsed;
+         
+    }
+ 
+    $scope.showOrHide = function(row, index){
+        if($scope.table.isSorted()){
+            $rootScope.selectedParent = [];
+            //$scope.rowHierarchiesLevelArray = [];
+            return false;
+        }else{
+            for(var tt = 0; tt < $rootScope.selectedParent.length; tt++){
+            if(row.key === $rootScope.selectedParent[tt]){
+
+            }else{
+                if( ($scope.rowHierarchiesLevelArray[index]) ){
+                    if( ($scope.rowHierarchiesLevelArray[index]).indexOf($rootScope.selectedParent[tt]) != -1 ) {
+                        var indexx = ($scope.rowHierarchiesLevelArray[index]).indexOf($rootScope.selectedParent[tt]);
+                        console.log($rootScope.selectedParent[tt], $scope.rowHierarchiesLevelArray[index], "collapse row");
+                        return true;
+                    }else{
+                        
+                    }
+                }
+            }
+             
+        }
+        return false;
+        }
+        
+        
+        
+        
+    }
+
+    function buildBaseAuth( username, password) {
+    
+      var tok =  username + ':' + password;
+      var hash = btoa(tok);
+  
+      basicAuth = "Basic " + hash;
+      
+      return basicAuth;
+    }
+
+
+
      
     $(window).resize(function() {
       $scope.$apply(function() {
@@ -528,10 +637,21 @@ $scope.getHeight= function() {
         console.log($( window ).width(), "RESIZE       ######");
       });
     });
+
+
+
+
+
+
+
   $scope.firstPage = function(){
     var recordsPerPage = $scope.table._pageSize;
     $scope.table = $tm1UiTable.create($scope, $scope.page.rowDimensions, {index: 1000, pageSize: recordsPerPage, preload: false, filter: $scope.filter});
   };
+
+
+
+
 
   $scope.lastPage = function(){
     var totalRecords = $scope.table._pages;
@@ -541,5 +661,12 @@ $scope.getHeight= function() {
   };
 
   $scope.table = $tm1UiTable.create($scope, $scope.page.rowDimensions, {pageSize: 1000, preload: false, filter: $scope.filter});
+
+
+
+
+
+
 }]);
+ 
  

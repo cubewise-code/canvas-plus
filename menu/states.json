@@ -18,5 +18,9 @@
   "excel-upload": {
     "url": "/excel-upload",
     "templateUrl": "html/Excel Upload.html"
+  },
+  "excel-upload/starttest": {
+    "url": "/excel-upload/starttest",
+    "templateUrl": "html/starttest.html"
   }
 }

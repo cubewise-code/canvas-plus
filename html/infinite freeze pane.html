@@ -166,7 +166,7 @@ html, body{
 }
 </style>
   <span  ng-if="!loading">
-    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver != 'Year' || $root.rowDriver != 'Version'" tm1-dimension="{{$root.rowDriver}}" tm1-subset="Default" tm1-attributes="Description" tm1-calculate-top-level="true" ng-model="page.rowDimensions"></tm1-ui-element-list>
+    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver != 'Year' || $root.rowDriver != 'Version'" tm1-dimension="{{$root.rowDriver}}" tm1-mdx="{[{{$root.rowDriver}}].Members}" tm1-attributes="Description" tm1-calculate-top-level="true" ng-model="page.rowDimensions"></tm1-ui-element-list>
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver === 'Product'" tm1-dimension="{{$root.rowDriver}}"  tm1-subset="Default" tm1-attributes="Description" tm1-calculate-top-level="true" ng-model="page.rowDimensions"></tm1-ui-element-list>
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Year' || $root.columnDriver === 'Version'  " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default"  tm1-attributes="Caption_Default" tm1-calculate-top-level="true" ng-model="page.columnDimension"></tm1-ui-element-list>
    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Period' " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default" tm1-attributes="Short Description" tm1-calculate-top-level="true" ng-model="page.columnDimension"></tm1-ui-element-list>
@@ -177,7 +177,7 @@ html, body{
       
        
 
-      <span class="col-md-6 col-xs-6" style="padding:10px ; padding-left:20px;" >
+      <span class="col-md-6 col-xs-6" ng-show="false" style="padding:10px ; padding-left:20px;" >
         <i class="fa fa-cube"></i>
         <select id="cube-select"ng-model="cubeUsed" ng-change="  dataRefreshAllMonth()">
           <option ng-repeat="item in listOfCubes" value="{{item}}">{{item}}</option> 
@@ -185,7 +185,7 @@ html, body{
      
         
         </span>
-    <span  class="col-md-6 col-xs-6">
+    <span  class="col-md-12 col-xs-6">
         <span style="float:right">
         <tm1-ui-export 
           tm1-target-id="af1" 
@@ -219,7 +219,9 @@ html, body{
                           <table ng-show="rowEdit === true" class="table table-striped"    >
                             <tbody  >
                               
-                              <tr ng-repeat="item in cubeDimensions" ng-if="$index > 3 &&  $index < 7" ng-show="item != $root.rowDriver && item != 'Period' && item != 'Year' && item != 'Version'  ">
+                              <tr ng-repeat="item in cubeDimensions" 
+                                ng-if="$index > 3 &&  $index < 7" 
+                                ng-show="item != $root.rowDriver && item != 'Period' && item != 'Year' && item != 'Version'  ">
                                 <td ng-click=" dataRefresh(item)" ng-if="rowEdit === true"  style="padding:10px !important;">{{item}}</td> 
                               </tr>
 
@@ -298,12 +300,17 @@ html, body{
            	 
           <table class="table table-striped"  >
             <tbody>
-              <tr  id="{{row.key}}" ng-repeat="row in  (table.data() | filter:page.filter) | limitTo:config.itemsDisplayedInList track by $index" ng-init="  getRowParentElement(row.key, row, $index);  getMyParentsArray( row, $index) " ng-hide=" showOrHide(row, $index)" >
+              <tr id="{{row.key}}"  ng-if="table.data()"
+                  ng-init="getAnsestors(table.data(), row.alias)"  ng-hide=" showOrHide(row, $index)"
+                  ng-repeat="row in  (table.data() | filter:page.filter) | limitTo:config.itemsDisplayedInList track by $index"  >
                 
                 <td class="row-height-ind text-left" style="padding-left:{{!table.isSorted() ? (5 +(row.topLevel * 20) +'px'):'5px'}}">
                  <!-- <tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias ==='' ? row.key : row.alias}}"></tm1-ui-element-list-item>-->
-                <i ng-if="row.type === 'C' && !row.isLeaf && !table.isSorted() " ng-click="  decideSelectedElement(row, row.collapsed, $index); table.refresh();" class="fa fa-caret-down fa-fw " ng-class="!row.collapsed ? 'fa-caret-down':'fa-caret-right'" style="margin-right:5px; cursor: pointer;"></i>
-                 {{row.alias ==='' ? row.key : row.alias}} 
+                <i  ng-if="row.type === 'C' && !row.isLeaf && !table.isSorted() " 
+                    ng-click="  decideSelectedElement(row, row.collapsed, $index); table.refresh();" 
+                    class="fa fa-caret-down fa-fw " ng-class="!row.collapsed ? 'fa-caret-down':'fa-caret-right'" 
+                    style="margin-right:5px; cursor: pointer;"></i>
+                 {{row.alias ==='' ? row.key : row.alias}}   
                 <!--
                   {{$root.parentsArray[$index]}} {{row.collapsed}}
                   <div id="pop-up-{{$index}}" class="inline-block-right"

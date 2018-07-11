@@ -1,21 +1,26 @@
 <!-- This gets appended at the top for each page  -->
   
-<div id="page-header"  ng-controller="headerCtrl"  >
-<div ng-show='false'>
-    <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
-</div>
-<div id="mininavinternal"></div>
+<div id="page-header"  ng-controller="headerCtrl" >
+    <div ng-show='false'>
+        <tm1-ui-user ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
+    </div>
+    <div id="mininavinternal"></div>
  
 
    
  
- <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px; height:auto;"   >       
+    <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px; height:auto;"   >       
    
      
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
             <li class="dropdown " style="color:#fff !important; background-color:transparent !important;" >
-            <span id="opened" > <span class="inline-block-left" style="margin-right:5px;">{{$root.user.Name}}  </span> <span class="inline-block" ><tm1-ui-session></tm1-ui-session></span> </span>
+                <span id="opened" > 
+                    <span class="inline-block-left" style="margin-right:5px;">{{$root.user.Name}}  </span> 
+                    <span class="inline-block" >
+                        <tm1-ui-session></tm1-ui-session>
+                    </span>
+                </span>
             </li>
             <li class="dropdown hidden-xs hidden-print" style="color:#fff !important; background-color:transparent !important;">
                 <a class="dropdown-toggle" data-toggle="dropdown">
@@ -127,7 +132,7 @@
   
  
  
-<div class="right-hand-nav" 
+<div class="right-hand-nav"  ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined"
     style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-260':'0'}}px;   margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}}" 
     >
              

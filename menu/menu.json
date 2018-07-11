@@ -26,9 +26,19 @@
   {
     "label": "Excel Upload",
     "icon_class": "fa-bookmark",
+    "children": [
+      {
+        "label": "starttest",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "excel-upload/starttest"
+        },
+        "expanded": false
+      }
+    ],
     "data": {
       "page": "excel-upload"
     },
-    "expanded": false
+    "expanded": true
   }
 ]

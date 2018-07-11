@@ -221,16 +221,14 @@
 					ng-click=" " 
 					class="panel panel-default dashboard-panel"
 					ng-class="{'dashboard-active' : defaults.homeSubset == 'Finance Analytics'}">
-					<kpi-chart   
-									
+					<kpi-chart    		
 						tm1-instance="dev"  
 						cube-name="General Ledger"
 						driver="item"
 						dimension-name="Account"
 					    version-position="versionPosition"
 						kpi-attribute="Description"  
-						color-array="defaults.lineColorArray" 
-					 
+						color-array="defaults.lineColorArray"  
 						tm1-elements="Actual,{{$root.selections.year}},xAxisMonth,Local,Total Europe,Corporate,{{item.key}},Amount"
 						> 
 					</kpi-chart> 
