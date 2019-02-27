@@ -14,7 +14,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.lists = {};
     $scope.values = {};
     $rootScope.pageTitle = "Sticky Headers";
-    $scope.offsetFromTop = 300;
+    $scope.offsetFromTop = 330;
     $scope.chartLoading = false;
     $rootScope.headerOutOffView = false;
     $rootScope.selections.account = "4";
