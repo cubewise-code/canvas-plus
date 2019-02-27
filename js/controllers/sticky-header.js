@@ -62,8 +62,9 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             $body = $(el);  
             $stickyHeader = $(el).find('#sticky-header');
             $fixedHeader = $(el).find('.fixed-container');
-             $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
-            
+            $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
+            $sideContent = $(el).find('#sideContent');
+            $subsetDropdown = $(el).find('#subsetDropDown')
             return $($body).scroll(function() { 
                 
                 $scope.scrolling = true;
@@ -75,18 +76,20 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                         $($stickyHeader).css('pointer-events','auto'); 
                         $($fixedHeader).css('pointer-events','auto'); 
                         $($fixedHeader).css('z-index','2');  
-                        $($fixedFirstColHeader).css('display','block'); 
+                         $($fixedFirstColHeader).css('margin-top','-330px');
+                       // $($fixedFirstColHeader).css('display','block'); 
                     }else{
-                        
+                        $($fixedFirstColHeader).css('margin-top', -$($body).scrollTop());
                          
                         $rootScope.headerOutOffView = false;
                         $($stickyHeader).css('opacity','0'); 
                         $($stickyHeader).css('pointer-events','none'); 
                         $($fixedHeader).css('pointer-events','none'); 
                         $($fixedHeader).css('z-index','-1'); 
-                        $($fixedFirstColHeader).css('display','none'); 
+                       // $($fixedFirstColHeader).css('display','none'); 
                     } 
-                    $($fixedFirstColHeader).css('margin-left', -$($body).scrollLeft());
+                    $($sideContent).css('margin-top', -$($body).scrollTop());
+                    $($subsetDropdown).css('margin-top', -$($body).scrollTop());
                     $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                     //console.log("scroll inside the summary left , top : ",-$($body).scrollLeft(), -$($body).scrollTop()); 
             });
@@ -308,6 +311,86 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 );
     }
     //resize just for timeout the event so apply the changes in the html
+    $scope.countIdel = 0;
+    $scope.mouseMovedSetXY = function($event){
+        console.log(event.x, event.y);
+        $scope.mouseMovedXY = event.x+' '+event.y;
+        if($scope.idelTimePassed){
+            $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
+                if(result['IsActive']){
+                    console.log(result, "LOGIN INFO")
+                    $scope.idelTimePassed =false;
+                    $scope.runTimeout(); 
+                }else{
+                     if(document.getElementById('blockOut')    ){
+                     document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
+                     }
+                }
+                
+            });
+        }
+         
+
+        
+      
+        
+       
+    }
+     $scope.idelTimePassed =false;
+     $scope.alpha = 0;
+    $scope.runTimeout = function(){
+        //console.log("running timeout");
+        $timeout(
+            function(){
+
+                if($scope.countIdel >= 10){
+                    if($scope.mouseMovedXY === $scope.lastMovedXY){
+                        if($scope.aplha >= 0.9){
+                            $scope.idelTimePassed = true;
+                            $scope.countIdel = 10;
+                            $scope.alpha  = 0.9;
+                        }else{
+                              $scope.idelTimePassed = true;
+                              $scope.countIdel = 0;
+                              $scope.runTimeout();
+                        }
+                        
+                        
+                          
+                    }else{
+                        //console.log($scope.countIdel, $scope.mouseMovedXY,  $scope.lastMovedXY,  "mouse moved");
+                        $scope.lastMovedXY = $scope.mouseMovedXY;
+                        $scope.idelTimePassed = false;
+                        $scope.countIdel = 0;
+                        
+                        $scope.runTimeout();
+                    }
+                    
+
+                }else{
+                    if(document.getElementById('blockOut') && $scope.idelTimePassed  ){
+                     $timeout(
+                         function(){
+                             if($scope.alpha >= 0.8){
+                                  $scope.alpha = 0.9;
+                             }else{
+                                  $scope.alpha = $scope.alpha + ((1/5));
+                             }
+                            
+                            console.log("STARTED PAUSE HIDING INFO");
+                            document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,"+$scope.alpha+")";
+                         }
+                     )
+                        
+                    }
+                    $scope.countIdel++; 
+                    $scope.runTimeout();
+                }
+                
+            },100000
+        )
+    }
+    $scope.runTimeout();
     $(window).resize(function() {
          	 
             $timeout(

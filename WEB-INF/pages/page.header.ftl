@@ -9,7 +9,7 @@
 
    
  
-    <div style="position:fixed; top:0px; right:0px; z-index:9; padding:10px; height:auto;"   >       
+    <div style="position:fixed; top:0px; right:0px; z-index:9999; padding:10px; height:auto;"   >       
    
      
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
@@ -63,7 +63,7 @@
       
 <div   
     class="nav" id="header" ng-init="animatePadding($root.defaultOffSet);"   
-    style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;  z-index:5;  padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#201c1a;" ng-mouseover="$root.top = 65"   >  
+    style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;    padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#201c1a;" ng-mouseover="$root.top = 65"   >  
        <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:0px; padding-top:{{$root.user.FriendlyName ? '10px':'100%'}};">
     <a href="#">
         <img src="images/logo.svg" 

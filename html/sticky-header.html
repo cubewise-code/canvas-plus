@@ -1,4 +1,4 @@
-<div ng-controller="stickyheaderCtrl">
+<div ng-controller="stickyheaderCtrl" ng-mousemove="mouseMovedSetXY($event)">
 <style>
 	body,html{
 		overflow:hidden;
@@ -7,7 +7,7 @@
 		padding-top:0px;
 		position:fixed;
 		left:0px;
-		top:182px;
+		top:180px;
 		width:100%;
 		max-height:100%;
 		overflow:auto; 
@@ -21,11 +21,27 @@
 		pointer-events: none;
 		padding:0px;
 		position:fixed;
-		top:182px;
+		top:180px;
 		left:0px;
 		width:100%;
 		height:auto;
 		z-index:2;
+		display:block;
+		background-color: transparent;
+		color:#333;
+		 
+		overflow:hidden;
+	}
+	.fixed-container-side{
+	 
+		pointer-events: auto;
+		padding:0px;
+		position:fixed;
+		top:180px;
+		left:0px;
+		width:100%;
+		height:auto;
+		z-index:33;
 		display:block;
 		background-color: transparent;
 		color:#333;
@@ -40,13 +56,30 @@
 	.fixedFirstColHeader{
 		position:fixed;
 		left:0px;
-		z-index:33;
+		z-index:38;
 		background-color:#fff;
-		display: none;
+		display: block;
 	}
 	.selected-bg{
 		background-color: #4F81BD;
 		color:#fff;
+	}
+	.white-bg{
+		background-color: white;
+		color:#666;
+	}
+	.black-bg{
+		z-index:39;
+		pointer-events:none;
+		background-color: rgba(0,0,0,0);
+		width:100%;
+		height:100%;
+		top:0px;
+		left:0px;
+		display:block;
+		position:fixed;
+		color:#fff;
+		text-align: center;
 	}
 	 
 
@@ -78,12 +111,12 @@
 		  <div id="stickyContainer" 
 			class="stickyContainer" 
 			ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
+
 			<div class="fixedFirstColHeader" 
-			ng-style="{'top':getContainerTop('fixed-container')+'px', 'height':getContainerHeight('headContent')+'px'} " >
-					 
-								 
+			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))  )+'px' ,  'width':getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('headContent')+'px'} " >
+					 			 
 					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
-						style="display:inline-block; margin: 0 auto;  padding:5px; 	border: 1px solid #ddd;   float:left; ">
+						style="display:inline-block; margin: 0 auto;  padding:5px; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:left; ">
 						  		
 								  
 								<button 
@@ -97,7 +130,7 @@
 								 
 
 								<input class="form-control" 
-								style="background-color: #fff; width:79%; display:inline-block" 
+								style="background-color: #fff; width:80%; display:inline-block" 
 								type="text" ng-model="page.searchAccount"   
 								placeholder="Search {{mainData['rowDimension']['name']}}..."> 
 								  
@@ -109,19 +142,50 @@
 					class="sticky-header">
 					
 						<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
-						style="display:inline-block; margin: 0 auto;  padding:5px; 	border: 1px solid #ddd;   float:left; ">
-						 
+						style="background-color: #f8f8f8; display:inline-block; margin: 0 auto;  padding:5px; 	border: 1px solid #ddd;   float:left; ">
+						 	<button 
+									class="btn btn-primary" 
+									id="subsetSelect"  
+									ng-click="  subsetSelected = !subsetSelected"
+									 >
+									 <i ng-class="{'fa-times':subsetSelected,'fa-list':!subsetSelected }" class="fa " style="color:#fff"></i>
+									 
+								</button>
+								 
+
+								<input class="form-control" 
+								style="background-color: #fff; width:80%; display:inline-block" 
+								type="text" ng-model="page.searchAccount"   
+								placeholder="Search {{mainData['rowDimension']['name']}}..."> 
+								  
 						</div>
 						<div class="text-center" ng-style="{'width': getContainerWidth('columnWidth'+$index)+'px', 'height':getContainerHeight('columnWidth'+$index)+'px'} " 
 						ng-repeat="item in lists.months track by $index" 
-						style="background-color: #fff; 	border: 1px solid #ddd; display:inline-block; padding-top:0.5em;   margin: 0 auto; border-left:1px solid #ddd; float:left;">
+						style="background-color: #f8f8f8; 	border: 1px solid #ddd; display:inline-block; padding-top:1em;   margin: 0 auto; border-left:1px solid #ddd; float:left;">
 							 {{item.alias}} 
 						</div>
 					
 						
 				</div>
 			</div>
-			<tbody ng-if="lists.months ">
+			<div  id="sideContent" class="fixed-container-side" style="z-index:30; "
+				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headContent')) )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+			<table class="table">
+			<tbody   
+				ng-if="lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
+					
+					<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
+	            		<td style="cursor:pointer; border-right:2px solid #ddd;  " style="height:0px;" class="text-left min-width250" ng-style="{'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
+						ng-class="{'selected-bg':$root.selections.account === row.key, 'white-bg':$root.selections.account != row.key}" 
+						ng-click="$root.selections.account = row.key; refreshChart()">
+								<tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias}}"></tm1-ui-element-list-item>
+						</td>
+						 
+					</tr>
+			</tbody>
+			</table>
+			</div>
+			<div ng-if="lists.months ">
 				   
 						<div class="col-md-12 col-xs-12">
 									  
@@ -152,7 +216,27 @@
 							 
 						</div>
 					 
-			  </tbody>
+			</div>
+					  <div id="subsetDropDown" ng-mouseleave="subsetSelected = false" ng-show="subsetSelected  && !$root.headerOutOffView "
+							   style="  position:fixed; left:0px; z-index:34; min-height:250px;max-height:400px;  margin:0px; padding:0px; background-color: #f8f8f8; overflow:auto;   " 
+							   ng-style="{'top': ( (getContainerHeight('bulletChartContainerDrop0')) + (255) )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"
+							  >
+
+								<table class="table "  >
+									<tr>
+										<td>
+											<strong>Subset Used: </strong>
+										</td>
+									</tr>
+									<tr ng-repeat="item in lists.subsetList track by $index">
+										<td  ng-style="{'background-color': $root.selections.subset === item.Name ? 'steelblue':'white' ,'color': $root.selections.subset === item.Name ? 'white':'#666'  }" 
+										style="cursor:pointer; padding:10px;"  
+										ng-click="$root.selections.subset = item.Name"
+										  >{{item['Name']}}
+										</td>
+									</tr>
+								</table>
+								</div>
             <table  
               id="test-element-list-item-display" 
               class="table table-bordered">
@@ -202,7 +286,7 @@
 						</td>
 								
 					</tr>
-					<tr  >
+					<tr id="chartRow" >
 						 
 						<td class="text-left" ng-style="{'height':offsetFromTop+'px'}"    >
 							 
@@ -246,12 +330,12 @@
                           ></my-bullet-chart> 
 						  </td>
 					  </tr>
-				  </tbody>
-				   
+				</tbody>
+				
             	<tbody id="headContent">
             		<tr>
-            			<td id="columnWidthDim" class="text-left min-width250 colwidth" >
-							<button style="display:inline-block; width:19%; margin:0px; float:left; left:0px; "
+            			<td id="columnWidthDim" class="text-left min-width250 colwidth" style="background-color: #f8f8f8;">
+							<button 
 									class="btn btn-primary" 
 									id="subsetSelect"  
 									ng-click="subsetSelected = !subsetSelected; "
@@ -259,31 +343,12 @@
 									 <i ng-class="{'fa-times':subsetSelected,'fa-list':!subsetSelected }" class="fa " style="color:#fff"></i>
 									 
 							</button>
-							  <div ng-mouseleave="subsetSelected = false" ng-show="subsetSelected  && !$root.headerOutOffView "
-							   style="  position:absolute; left:0px; top:372px; min-height:250px;max-height:400px;  margin:0px; padding:0px; background-color:#fff; overflow:auto;   background-color: #fff;" 
-							   ng-style="{'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"
-							  >
-
-								<table class="table "  >
-									<tr>
-										<td>
-											<strong>Subset Used:</strong>
-										</td>
-									</tr>
-									<tr ng-repeat="item in lists.subsetList track by $index">
-										<td  ng-style="{'background-color': $root.selections.subset === item.Name ? 'steelblue':'white' ,'color': $root.selections.subset === item.Name ? 'white':'#666'  }" 
-										style="cursor:pointer; padding:10px;"  
-										ng-click="$root.selections.subset = item.Name"
-										  >{{item['Name']}}
-										</td>
-									</tr>
-								</table>
-								</div>
-							<input class="form-control" style="width: 79%; display: inline-block; margin:0 auto; float:left;" type="text" 
+					 
+							<input class="form-control" style="width: 80%; display: inline-block; margin:0 auto; float:right;" type="text" 
 							ng-change="page.searchAccountTwo = page.searchAccount"
 							ng-model="page.searchAccount" placeholder="Search {{mainData['rowDimension']['name']}}...">        
  						</td>
-            			<td class="text-center colwidth" id="columnWidth{{$index}}" ng-repeat="item in lists.months track by $index">
+            			<td style="background-color: #f8f8f8;"class="text-center colwidth" id="columnWidth{{$index}}" ng-repeat="item in lists.months track by $index">
 							{{item.alias}}
 						</td>          			
             		</tr>
@@ -292,8 +357,8 @@
 				ng-if="lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
 					
 					<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
-	            		<td style="cursor:pointer;" class="text-left min-width250" 
-						ng-class="{'selected-bg':$root.selections.account === row.key}" 
+	            		<td style="cursor:pointer; " id="rowHieghtElement{{$index}}" class="text-left min-width250" 
+						ng-class="{'selected-bg':$root.selections.account === row.key, 'white-bg':$root.selections.account != row.key}" 
 						ng-click="$root.selections.account = row.key; refreshChart()">
 								<tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias}}"></tm1-ui-element-list-item>
 						</td>
@@ -319,7 +384,7 @@
       
     </div>          
   <div ng-show="$root.headerOutOffView && subsetSelected" 
-  		style="   position:fixed; left:0px;   margin:0px; padding:10px;  background-color:#fff; overflow:auto; height:300px;  background-color: #fff;" 
+  		style=" position:fixed; left:0px;   margin:0px; padding:10px;  background-color:#fff; overflow:auto; height:300px;  background-color: #fff;" 
 		ng-mouseleave="subsetSelected = false"	
 		ng-style="{'top':(getContainerTop('fixedFirstColHeader')+(225))+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"		 >
 
@@ -338,5 +403,7 @@
 									</tr>
 								</table>
 								</div>
-								 
+	<div id="blockOut" ng-if="idelTimePassed" class="black-bg">
+
+	</div>							 
 </div>
