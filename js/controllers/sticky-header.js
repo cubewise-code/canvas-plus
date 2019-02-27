@@ -18,8 +18,10 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.chartLoading = false;
     $rootScope.headerOutOffView = false;
     $rootScope.selections.account = "4";
+    $scope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.mainData = {
+        "timeoutBlockout":true,
         "debug":false,
         "rowDimension":{"name":"Account", "subset":"dashboard","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
@@ -56,7 +58,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             }
         });
     }
-    
+     
     $rootScope.chartValues = [];
     var stickyContainer = function(el) {
             $body = $(el);  
@@ -66,9 +68,16 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             $sideContent = $(el).find('#sideContent');
             $subsetDropdown = $(el).find('#subsetDropDown')
             return $($body).scroll(function() { 
-                
+                if($scope.mainData['debug']){
+                    if(document.getElementById('debug')){
+                        $scope.offsetTop = document.getElementById('debug').getBoundingClientRect().height;
+                    }
+                    
+                }else{
+                    $scope.offsetTop = 0;
+                }
                 $scope.scrolling = true;
-                    if($($body).scrollTop() > $scope.offsetFromTop){
+                    if($($body).scrollTop() > ($scope.offsetFromTop+$scope.offsetTop)){
                         $rootScope.headerOutOffView = true;
                         
                         $($stickyHeader).css('display','block'); 
@@ -76,7 +85,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                         $($stickyHeader).css('pointer-events','auto'); 
                         $($fixedHeader).css('pointer-events','auto'); 
                         $($fixedHeader).css('z-index','2');  
-                         $($fixedFirstColHeader).css('margin-top','-330px');
+                         $($fixedFirstColHeader).css('margin-top','-'+(($scope.offsetFromTop+$scope.offsetTop))+'px');
                        // $($fixedFirstColHeader).css('display','block'); 
                     }else{
                         $($fixedFirstColHeader).css('margin-top', -$($body).scrollTop());
@@ -316,18 +325,24 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
        // console.log(event.x, event.y);
         $scope.mouseMovedXY = event.x+' '+event.y;
         if($scope.idelTimePassed){
-            $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
+            if(!$scope.loggedOut){
+                 $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
                 if(result['IsActive']){
                    // console.log(result, "LOGIN INFO")
+                    $scope.loggedOut = false;
                     $scope.idelTimePassed =false;
                     $scope.runTimeout(); 
                 }else{
+                     
                      if(document.getElementById('blockOut')    ){
+                          $scope.loggedOut = true;
                      document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
                      }
                 }
                 
             });
+            }
+            
         }
          
 
@@ -359,6 +374,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                           
                     }else{
                         //console.log($scope.countIdel, $scope.mouseMovedXY,  $scope.lastMovedXY,  "mouse moved");
+                        $scope.loggedOut = false;
                         $scope.lastMovedXY = $scope.mouseMovedXY;
                         $scope.idelTimePassed = false;
                         $scope.countIdel = 0;
@@ -387,7 +403,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                     $scope.runTimeout();
                 }
                 
-            },100000
+            },1000
         )
     }
     $scope.runTimeout();

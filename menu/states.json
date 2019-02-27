@@ -2,7 +2,7 @@
   "summary": {
     "url": "/summary",
     "templateUrl": "html/summary.html"
-  },  
+  },
   "test-modal": {
     "url": "/test-modal",
     "templateUrl": "html/Test-Modal.html"

@@ -16,15 +16,6 @@
     "expanded": false
   },
   {
-    "label": "Excel Upload",
-    "icon_class": "fa-bookmark",
-    "children": [],
-    "data": {
-      "page": "excel-upload"
-    },
-    "expanded": true
-  },
-  {
     "label": "t-test-upload-multi-sheet",
     "icon_class": "fa-file-text-o",
     "data": {

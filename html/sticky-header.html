@@ -113,7 +113,7 @@
 			ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
 
 			<div class="fixedFirstColHeader" 
-			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))  )+'px' ,  'width':getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('headContent')+'px'} " >
+			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) +getContainerHeight('debug')  )+'px' ,  'width':getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('headContent')+'px'} " >
 					 			 
 					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
 						style="display:inline-block; margin: 0 auto;  padding:5px; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:left; ">
@@ -169,7 +169,7 @@
 				</div>
 			</div>
 			<div  id="sideContent" class="fixed-container-side" style="z-index:30; "
-				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headContent')) )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headContent')) +getContainerHeight('debug')  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
 			<table class="table">
 			<tbody   
 				ng-if="lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
@@ -185,47 +185,17 @@
 			</tbody>
 			</table>
 			</div>
-			<div ng-if="lists.months ">
-				   
-						<div class="col-md-12 col-xs-12">
-									  
-
-							 
-							 <p class="pull-left" ng-style="{'height':getContainerHeight('bulletChartContainerDrop0')+'px'}" 
-							 style="position:absolute;  display:inline-block; padding:10px; left:0px; top:0px;  width:250px; "  
-							 >
-							  
-							 <!--<strong> 
-								 <tm1-ui-dbra tm1-instance="{{mainData['instance']}}" 
-								 tm1-dimension="{{mainData['rowDimension']['name']}}" 
-								 tm1-element="{{$root.selections.account}}" 
-								 tm1-attribute="Account Type" tm1-read-only="true"></tm1-ui-dbra> 
-							</strong> <br>-->
-							 <span ng-repeat="item in mainData['chart']['ledgend']">
-								 <i ng-style="{'color':item.color}"   
-								 class="fa fa-square fa-fw"></i> {{item.name}} <br>
-							 </span>
-							  <span style="position:absolute; width:80%; bottom:0px;  " ng-init="getSubsetList()">
-								<!--<label for="subsetSelect">{{mainData['rowDimension']['name']}} Subset:</label>
-								 <select class="btn btn-default" id="subsetSelect"  style="width:100%; border-radius:0px;" ng-if="lists.subsetList" ng-model="$root.selections.subset">
-									<option ng-repeat="item in lists.subsetList track by $index" value="{{item['Name']}}">{{item['Name']}}</option>
-								</select>-->
-																	
-							</span>
-							</p>
-							 
-						</div>
-					 
-			</div>
-					  <div id="subsetDropDown" ng-mouseleave="subsetSelected = false" ng-show="subsetSelected  && !$root.headerOutOffView "
+			 
+					  <div id="subsetDropDown" ng-mouseleave="subsetSelected = false" 
+					  ng-show="subsetSelected  && !$root.headerOutOffView "
 							   style="  position:fixed; left:0px; z-index:34; min-height:250px;max-height:400px;  margin:0px; padding:0px; background-color: #f8f8f8; overflow:auto;   " 
-							   ng-style="{'top': ( (getContainerHeight('bulletChartContainerDrop0')) + (255) )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"
+							   ng-style="{'top':  ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) + getContainerHeight('debug')+(getContainerHeight('columnWidthDim') )  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"
 							  >
 
 								<table class="table "  >
 									<tr>
 										<td>
-											<strong>Subset Used: </strong>
+											<strong>Change Subset Used: </strong>
 										</td>
 									</tr>
 									<tr ng-repeat="item in lists.subsetList track by $index">
@@ -244,7 +214,7 @@
 				<tbody ng-if="lists.months ">
 					
 					 
-					<tr ng-if="!chartLoading" ng-show="mainData['debug']">
+					<tr id="debug"  ng-if="!chartLoading" ng-show="mainData['debug']">
 						<td  class="text-left min-width250"></td>
 						<td ng-init="$root.chartValues[col.key] = [];" 
 							class="text-right"
@@ -289,8 +259,16 @@
 					<tr id="chartRow" >
 						 
 						<td class="text-left" ng-style="{'height':offsetFromTop+'px'}"    >
-							 
-							<div class="text-right" id="bulletChartContainerDrop0"   > 
+							<p class="pull-left" 
+							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
+							 > 
+								<span ng-repeat="item in mainData['chart']['ledgend']">
+									<i ng-style="{'color':item.color}"   
+									class="fa fa-square fa-fw"></i> {{item.name}} <br>
+								</span>
+								<span ng-init="getSubsetList()"> </span>
+							</p>
+							<div class="text-right" style="display:inline-block; width:50%; float:right; right:0px;" id="bulletChartContainerDrop0"   > 
 							</div>
 							<my-bullet-chart 
 									ng-if="$root.chartsDataLoaded && !chartLoading"
@@ -391,7 +369,7 @@
 								<table class="table "  >
 									<tr>
 										<td>
-											<strong>Subset Used</strong>
+											<strong>Change Subset Used:</strong>
 										</td>
 									</tr>
 									<tr ng-repeat="item in lists.subsetList track by $index">
@@ -403,7 +381,7 @@
 									</tr>
 								</table>
 								</div>
-	<div id="blockOut" ng-if="idelTimePassed" class="black-bg">
+	<div id="blockOut" ng-if="idelTimePassed && timeoutBlockout" class="black-bg">
 
 	</div>							 
 </div>

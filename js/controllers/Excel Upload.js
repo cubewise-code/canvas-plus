@@ -1,5 +1,5 @@
 app.controller('ExcelUploadCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$timeout', function($scope, $rootScope, $log, $tm1Ui, $timeout) {
-    
+    $rootScope.pageTitle = "Excel Upload";
     $scope.defaults = {
         cube: "Retail",
         version: "Budget",

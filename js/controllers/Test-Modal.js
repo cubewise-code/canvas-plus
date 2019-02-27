@@ -12,7 +12,7 @@ app.controller('TestModalCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', funct
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    
+    $rootScope.pageTitle = "Modal Chart";
 
 
 $rootScope.doMouseOver = function(e){

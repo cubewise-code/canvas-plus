@@ -39,7 +39,7 @@ function($scope, $rootScope, $log, $tm1Ui, $timeout, $sce, $ngBootbox) {
     $scope.validationColumnArray = [0];
     $scope.headerLetterArray=[];
     $scope.sheetsUploaded = [];
-    
+    $rootScope.pageTitle = "Workbook Upload";
     //DEFAULT CUBE ELEMENT ARRAY TO SAVE DATA AGAINST IF COLUMNS OR ROW DIMENSIONS ARE FOUND THEY WILL BE OVER WRITEN BEFORE SAVING//
     $scope.defaultElementArray = [{Version:"Budget"},{Year:"2015"},{Period:"Year"},{Currency:"Local"},{Region:"Total Europe"},{Product:"All Products by Category"},{'Retail Measure':"Sales Amount"}]
     //SHEETS TO READ SETTINGS//
