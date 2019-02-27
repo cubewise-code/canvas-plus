@@ -33,7 +33,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 "name": "Actual"
                 },
                 "1": {
-                "color": "#7F7F7F",
+                "color": "#bdbdbd",
                 "name": "Budget"
                 },
                 "2": {

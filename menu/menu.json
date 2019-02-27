@@ -8,14 +8,6 @@
     "expanded": false
   },
   {
-    "label": "infinite freeze pane",
-    "icon_class": "fa-pencil",
-    "data": {
-      "page": "infinite-freeze-pane"
-    },
-    "expanded": false
-  },
-  {
     "label": "Test-Modal",
     "icon_class": "fa-bell",
     "data": {
