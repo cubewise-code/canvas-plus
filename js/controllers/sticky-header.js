@@ -234,13 +234,13 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 
                 $timeout(
                 function(){
-            console.log("INIT SELECTIONS ACCOUNT CHOSEN");
+            //console.log("INIT SELECTIONS ACCOUNT CHOSEN");
             var arrayToKeep = [];
             for(var ttr = 0; ttr < $scope.lists.account.length; ttr++){
                 arrayToKeep.push($scope.lists.account[ttr]['key']);
             }
             if( (arrayToKeep).indexOf($rootScope.selections.account) === -1  ){
-                console.log("NO SELECTED ACCOUNT IN SUBSET - INITIALISE FIRST IN THE LIST");
+             //   console.log("NO SELECTED ACCOUNT IN SUBSET - INITIALISE FIRST IN THE LIST");
                 $rootScope.selections.account = $scope.lists.account['0']['key'];
                 
             }
@@ -313,12 +313,12 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     //resize just for timeout the event so apply the changes in the html
     $scope.countIdel = 0;
     $scope.mouseMovedSetXY = function($event){
-        console.log(event.x, event.y);
+       // console.log(event.x, event.y);
         $scope.mouseMovedXY = event.x+' '+event.y;
         if($scope.idelTimePassed){
             $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
                 if(result['IsActive']){
-                    console.log(result, "LOGIN INFO")
+                   // console.log(result, "LOGIN INFO")
                     $scope.idelTimePassed =false;
                     $scope.runTimeout(); 
                 }else{
@@ -377,7 +377,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                                   $scope.alpha = $scope.alpha + ((1/5));
                              }
                             
-                            console.log("STARTED PAUSE HIDING INFO");
+                           // console.log("STARTED PAUSE HIDING INFO");
                             document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,"+$scope.alpha+")";
                          }
                      )
