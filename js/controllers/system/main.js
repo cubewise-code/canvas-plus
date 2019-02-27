@@ -1,6 +1,6 @@
 
-app.controller('MainCtrl', ['$scope', '$rootScope', '$timeout', '$state', '$stateParams', '$location', '$ngBootbox', '$compile', '$tm1Ui',
-                            function($scope, $rootScope, $timeout, $state, $stateParams, $location, $ngBootbox, $compile, $tm1Ui) {
+app.controller('MainCtrl', ['$scope', '$rootScope', '$timeout', '$state', '$stateParams', '$location', '$ngBootbox', '$compile', '$tm1Ui', '$transitions', '$log',
+                            function($scope, $rootScope, $timeout, $state, $stateParams, $location, $ngBootbox, $compile, $tm1Ui, $transitions, $log) {
 	
 	// Contains the menu control
 	$scope.menu = {};

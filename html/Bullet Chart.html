@@ -1,0 +1,107 @@
+<div ng-controller="BulletChartCtrl">
+<style>
+	.bulletChart{
+		width:100%;
+		height:100px;
+		padding:15px;
+		background-color:#fff;
+		border-bottom:thin solid #333;
+	}
+	.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #000; stroke-width: 4px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: rgb(201, 220, 239)   }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+.bullet .measure.s0 { fill: steelblue; }
+.bullet .measure.sred { fill: red; }
+.bullet .measure.sgreen { fill: green; }
+.bullet .measure.sorange { fill: orange; }
+.bullet .measure.syellow { fill: #81c341 }
+.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .subtitle { fill: #999; }
+ 
+.s1 {
+    
+		fill: rgba(0,0,0,0.1) !important;
+}
+
+.sred {
+    
+	fill: red !important;
+}
+.sgreen {
+    
+	fill: green !important;
+}
+.sorange {
+    
+	fill: orange !important;
+}
+.syellow {
+    
+	fill: #81c341 !important;
+}
+.inlineblock{
+	display:inline-block;
+	float:right;
+
+}
+.borderbottom{
+	padding-bottom:10px !important;
+	border-bottom: thin solid #333;
+}
+.pointer{
+	cursor:pointer;
+}
+.bluebackground{
+	
+	background-color:lightblue;
+}
+.table thead tr th{
+			border-bottom: 1px solid #333;
+			background-color: #eee;
+		}
+		.border-bottom{
+			border-bottom: 1px solid #333;
+		}
+		.noborderradius{
+			border-radius: 0px;
+		}
+	</style>
+  <h1>
+    <span style="float: left; width: 50px; "><i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i><i ng-if="!$root.isLoading" class="fa fa-file-text-o"></i></span> Bullet Chart
+  </h1>
+  
+  <div class="row">
+  	<div class="col-md-4">
+	 
+							 
+						 
+							<my-bullet-chart 
+								
+								tm1-instance="dev"  
+								cube-name="DOR.MELB.Reporting HUB" 
+								title="Drop"
+								driver="{{$root.selections.areaSelected}} : {{item === '' ? 'Current Date':item}}"
+								id-name="{{'bulletChartContainerDrop'+$index}}" 
+								cell-set-get-array-actual = "Actual,Base - Load Date,{{$root.titles['Date']}} {{item}},Base,Thousands,Derived,Reporting Area-{{$root.selections.areaSelected}},{{selections.departmentArea}} Drop - {{$root.selections.areaSelected}}"
+								cell-set-get-array-vs = "Budget,Base - Load Date,{{$root.titles['Date']}} {{item}},Base,Thousands,Derived,Reporting Area-{{$root.selections.areaSelected}},{{selections.departmentArea}} Drop - {{$root.selections.areaSelected}}"
+								cell-set-get-array-against = "Actual,Latest Base,{{$root.lastYearEqu}} {{item}},Base,Thousands,Derived,Reporting Area-{{$root.selections.areaSelected}},{{selections.departmentArea}} Drop - {{$root.selections.areaSelected}}"
+							></my-bullet-chart>
+
+							
+							 
+						 
+		</div>
+   
+  	<div class="col-md-4">
+  	
+  	</div>
+  	<div class="col-md-4">
+  	
+  	</div>
+  </div>
+    
+
+</div>

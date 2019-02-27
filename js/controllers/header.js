@@ -164,6 +164,22 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         
     }, 100);
   })
+  $scope.animateSideBar = function(a, b, open){
+       if(open){
+           document.getElementById("righthandsidebar").style.marginLeft= (-260)+"px";
+       }else{
+           document.getElementById("righthandsidebar").style.marginLeft= (0)+"px";
+       }
+             
+       
+     
+  }
+  $scope.animatePaddingTopSideBar= function(number){
+      document.getElementById("righthandsidebar").style.marginTop = (number+46)+"px";
+  }
+  $scope.animatePadding = function(number){
+      document.getElementById("header").style.paddingTop = number+"px";
+  }
      $transitions.onStart({}, function ($transitions) {
          
            $timeout( function(){ 

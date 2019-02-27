@@ -227,6 +227,10 @@ div.tm1-subnm-hierarchy-style ul {
     width:300px;
     background-color: #c02626;
     top:0px;
+    -webkit-transition: margin-top 500ms ease-out ;
+    -moz-transition: margin-top 500ms ease-out ;
+    -o-transition: margin-top 500ms ease-out ;
+    transition: margin-top 500ms ease-out ;
 
 }
 .right-hand-nav{
@@ -242,6 +246,10 @@ div.tm1-subnm-hierarchy-style ul {
     z-index: 6;
     transition-property:margin-left, margin-top;  
     transition-duration: 1s, 1s; 
+    -webkit-transition: margin-top 500ms ease-out ;
+    -moz-transition: margin-top 500ms ease-out ;
+    -o-transition: margin-top 500ms ease-out ;
+    transition: margin-top 500ms ease-out ;
 }
 .tm1-login-modal{
     pointer-events:none; 

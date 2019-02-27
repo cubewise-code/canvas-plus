@@ -45,8 +45,11 @@
     
   </head>
   <body>
-
-    <div id="wrapper">    
+    <div id="wrapper-pending-sso" ng-if="!$root.applicationIsReady">    
+      <#include "../page.pending.sso.ftl">
+    </div>
+   
+    <div id="wrapper" ng-if="$root.applicationIsReady">    
       <div ng-controller="MainCtrl as mainCtrl" >
     
     	<!-- <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0; z-index: 6000;"> -->

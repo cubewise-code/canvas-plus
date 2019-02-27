@@ -1,37 +1,56 @@
 {
   "id": "example",
   "name": "Example",
-  "tasks":[
+  "tasks": [
     {
       "name": "Print Sample",
       "type": "report",
       "instance": "dev",
       "active": true,
       "threadCount": 5,
-      "email": {
-          "burstSend": false,
-          "subject": "This is a Test Email!",
-          "to": "addyouremailaddress@company.com",
-          "body": "Add an email body here..."
-      },
       "attachments": [
         {
           "instance": "dev",
           "name": "Attachment",
-          "url": "/sample/sample-print",
+          "url": "/Navigation/#/infinite-freeze-pane?department\u003d5\u0026region\u003d1\u0026year\u003d2017",
           "orientation": "LANDSCAPE",
           "pageSize": "A4"
         }
-      ]
+      ],
+      "email": {
+        "burstSend": false,
+        "subject": "This is a Test Email!",
+        "to": "ishapiro@cubewise.com",
+        "body": "Add an email body here..."
+      }
     }
-  ],  
+  ],
   "credentials": [
     {
       "instance": "dev",
       "userName": "admin",
-      "password": "",
+      "password": "@@CnCK0/a/Lnk\u003d",
       "encryptedCredential": "Basic YWRtaW46"
     }
   ],
-  "triggers": []
+  "triggers": [
+    {
+      "id": "becf3222-dda3-ef1d-6620-cc2bb7610e23---0",
+      "cron": "0 26 20 * * ? *",
+      "properCron": "0 26 20 * * ? *",
+      "customCron": "0 26 20 * * ? *",
+      "customCronTargetWorkdayCount": 0,
+      "name": "test",
+      "description": "Everyday At 8:26pm",
+      "cronHelperSelectionJson": "{\"type\":\"custom\",\"hour\":\"08\",\"minute\":\"26\",\"ampm\":\"pm\",\"weekdays\":[],\"parts\":[\"0\",26,20,\"*\",\"*\",\"?\",\"*\"],\"weekmonthorder\":[{\"key\":\"1\",\"desc\":\"1st\"},{\"key\":\"2\",\"desc\":\"2nd\"},{\"key\":\"3\",\"desc\":\"3rd\"},{\"key\":\"4\",\"desc\":\"4th\"},{\"key\":\"5\",\"desc\":\"5th\"}],\"weeknames\":[{\"key\":\"2\",\"desc\":\"Monday\",\"selected\":false},{\"key\":\"3\",\"desc\":\"Tuesday\",\"selected\":false},{\"key\":\"4\",\"desc\":\"Wednesday\",\"selected\":false},{\"key\":\"5\",\"desc\":\"Thursday\",\"selected\":false},{\"key\":\"6\",\"desc\":\"Friday\",\"selected\":false},{\"key\":\"7\",\"desc\":\"Saturday\",\"selected\":false},{\"key\":\"1\",\"desc\":\"Sunday\",\"selected\":false}],\"hours\":[\"01\",\"02\",\"03\",\"04\",\"05\",\"06\",\"07\",\"08\",\"09\",\"10\",\"11\",\"12\"],\"absoluteHours\":[\"00\",\"01\",\"02\",\"03\",\"04\",\"05\",\"06\",\"07\",\"08\",\"09\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\"],\"days\":[{\"key\":1,\"selected\":false},{\"key\":2,\"selected\":false},{\"key\":3,\"selected\":false},{\"key\":4,\"selected\":false},{\"key\":5,\"selected\":false},{\"key\":6,\"selected\":false},{\"key\":7,\"selected\":false},{\"key\":8,\"selected\":false},{\"key\":9,\"selected\":false},{\"key\":10,\"selected\":false},{\"key\":11,\"selected\":false},{\"key\":12,\"selected\":false},{\"key\":13,\"selected\":false},{\"key\":14,\"selected\":false},{\"key\":15,\"selected\":false},{\"key\":16,\"selected\":false},{\"key\":17,\"selected\":false},{\"key\":18,\"selected\":false},{\"key\":19,\"selected\":false},{\"key\":20,\"selected\":false},{\"key\":21,\"selected\":false},{\"key\":22,\"selected\":false},{\"key\":23,\"selected\":false},{\"key\":24,\"selected\":false},{\"key\":25,\"selected\":false},{\"key\":26,\"selected\":false},{\"key\":27,\"selected\":false},{\"key\":28,\"selected\":false},{\"key\":29,\"selected\":false},{\"key\":30,\"selected\":false},{\"key\":31,\"selected\":false}],\"monthlyOption\":\"specific day\",\"monthlyOptionsUpdated\":false,\"dailyOption\":\"specific time\",\"dailyOptionIncrement\":\"5\",\"nextRuns\":[],\"nextRunFlagError\":false,\"nextRunErrorMessage\":\"\",\"monthlyOccurence\":\"1\",\"monthlyWeekday\":\"2\"}"
+    }
+  ],
+  "appBaseUrl": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "8080"
+  },
+  "active": true,
+  "dateCreated": "2018-08-29T19:51:06+1000",
+  "dateUpdated": "2018-08-29T20:25:00+1000"
 }

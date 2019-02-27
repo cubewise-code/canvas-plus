@@ -9,3 +9,4 @@ ssoSlaves = {
 // customAngularModules.push('ngFileUpload');
 customAngularModules.push('infinite-scroll');
 customAngularModules.push('angular-js-xlsx');
+customAngularModules.push('ngPDFViewer');

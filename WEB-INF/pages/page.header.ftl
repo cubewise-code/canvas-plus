@@ -15,8 +15,8 @@
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
             <li class="dropdown " style="color:#fff !important; background-color:transparent !important;" >
-                <span id="opened" > 
-                    <span class="inline-block-left" style="margin-right:5px;">{{$root.user.Name}}  </span> 
+                <span id="opened" ng-if="$root.user.Name"> 
+                    <span class="inline-block-left" style="margin-right:5px;">{{$root.user.Name}} </span> 
                     <span class="inline-block" >
                         <tm1-ui-session></tm1-ui-session>
                     </span>
@@ -62,8 +62,8 @@
  
       
 <div   
-    class="nav"    
-    style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;  z-index:5; padding-top:100%; padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#201c1a;" ng-mouseover="$root.top = 65"   >  
+    class="nav" id="header" ng-init="animatePadding($root.defaultOffSet);"   
+    style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;  z-index:5;  padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#201c1a;" ng-mouseover="$root.top = 65"   >  
        <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:100%; padding-top:{{$root.user.FriendlyName ? '10px':'100%'}};">
     <a href="#">
         <img src="images/logo.svg" 
@@ -132,12 +132,15 @@
   
  
  
-<div class="right-hand-nav"  ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined"
+<div class="right-hand-nav" id="righthandsidebar" 
+ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" 
+ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
     style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-260':'0'}}px;   margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}}" 
     >
              
-            <div class=" btn btn-primary  " style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px; background-color:#c02626 !important; margin-left:-45px;"  
-                ng-click="$root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet);" 
+            <div class=" btn btn-primary  " 
+            style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px; background-color:#c02626 !important; margin-left:-45px;"  
+                ng-click="sideOpened = !sideOpened; $root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet); animateSideBar($root.topOffSet, $root.defaultOffSet, sideOpened);" 
                 ng-if="$root.topOffSet != $root.defaultOffSet"
                 >
                     <i class="fa fa-filter"></i>
@@ -145,7 +148,7 @@
             <div 
                 class="  btn btn-primary  " 
                 style="color:#fff !important; position:absolute; padding:1em; padding-left:1.3em; padding-right:1.3em; z-index:999; border-radius:0px;  border:none; left:0px; top:0px; background-color:#c02626 !important; margin-left:-45px;"  
-                ng-click="$root.topOffSet = 200;  $root.topOffSetPageView = ($root.topOffSet);" 
+                ng-click="sideOpened != sideOpened; $root.topOffSet = 200;  $root.topOffSetPageView = ($root.topOffSet); animateSideBar($root.topOffSet, $root.defaultOffSet, sideOpened);" 
                 ng-if="$root.topOffSet === $root.defaultOffSet"
                 >
                     <i class="fa fa-filter"></i>

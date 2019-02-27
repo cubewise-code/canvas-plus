@@ -52,7 +52,10 @@
     <script src="client-assets/sample.js?v=${canvasVersion}"></script>   
     
     <script src="js/lib/tm1ui.sparkline.js" ></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_SxCyFF-4FNJmu11vs2BTYjI_YI3oNwk&libraries=visualization"></script>
+    
+    <#if settings.enableDemoMapsAPI() >
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_SxCyFF-4FNJmu11vs2BTYjI_YI3oNwk&libraries=visualization"></script>
+    </#if>    
   </#if>
     <script src="client-assets/client.system.js?v=${canvasVersion}"></script>    
     
@@ -71,8 +74,11 @@
     
   </head>
   <body>
-
-   <div id="wrapper">    
+   <div id="wrapper-pending-sso" ng-if="!$root.applicationIsReady">    
+    <#include "../page.pending.sso.ftl">
+   </div>
+   
+   <div id="wrapper" ng-if="$root.applicationIsReady">    
       <div ng-controller="MainCtrl as mainCtrl" >
         <div id="page-status" ng-hide="true" ng-if="$root.isLoading">LOADING</div>
         <div id="page-status" ng-hide="true" ng-if="!$root.isLoading">READY</div>
@@ -130,8 +136,13 @@
                         <option>Tabloid</option>
                       </select>
                     </span>
+                    
+                    <#if settings.getPrinterVersion() == "1">
                     <a href="print.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
-                      <i class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
+                    <#else>
+                    <a href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
+                    </#if>
+                        <i class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
                     </a>
                   </li>
                   <li role="separator" class="divider"></li>

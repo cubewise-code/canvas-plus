@@ -33,16 +33,61 @@
 	 <tm1-ui-element-list tm1-instance="dev" tm1-dimension="Product" tm1-subset="All Elements" tm1-attributes="Code&Description" ng-model="lists.tm1ProductList">
   </tm1-ui-element-list>
 
-  <div class="row">
+  <div class="row" ng-init="info = false" style="padding-top:100px;">
     <div class="col-md-12">
       <h1>
         <span style="float: left; width: 50px; ">
           <i ng-if="$root.isLoading" class="fa fa-cog fa-spin"></i>
           <i ng-if="!$root.isLoading" class="fa fa-cloud-upload"></i>
-        </span> Upload Sales by Product
+        </span> Upload Sales by Product <i ng-click="info = !info" class="fa fa-exclamation-circle"></i>
       </h1>
     </div>
   </div>
+
+<div class="col-md-12 col-xs-12" ng-if="info">
+  Configuring SheetJS (Optional Library)<br/>
+HowTo<br/>
+Beginning with Canvas version 1.2.2, optional libraries will be included within assets folder but will need to be enabled before it can be used. This will involve:<br/><br/>
+
+Adding the link to the JS/CSS file in the header<br/>
+Pushing the Angular module of the library into your application<br/>
+Enable SheetJS<br/>
+SheetJS a library that helps working with spreadsheets on the web! Check their website for more info. <br/>
+<br/><br/>
+To enable the functionality in Canvas, do the following steps:<br/><br/>
+
+    1. Update WEB-INF/pages/header.library.ftl file with the following:<br/><br/>
+
+script src="assets/js/optional/libs.opt.sheetjs.js"> script 
+<br/><br/>
+    2. Update WEB-INF/pages/header.script.init.ftl file by adding below line of code:<br/><br/>
+<pre> customAngularModules.push('angular-js-xlsx');</pre>
+<br/><br/>
+It is now enabled!
+<br/>
+Create upload button<br/>
+To check it out, create a simple Canvas Blank page with the following HTML line of code:<br/><br/>
+
+js-xls onread="read" onerror="error"> js-xls
+<br/>
+And on the page's corresponding controller:<br/><br/>
+<pre>
+$scope.read = function (workbook) {
+      /* DO SOMETHING WITH workbook HERE */
+      console.log(workbook);
+};
+    
+$scope.error = function (e) {
+      /* DO SOMETHING WHEN ERROR IS THROWN */
+      console.log(e);
+};
+</pre>
+<br/>
+You should be able to see on your HTML page, something similar to:
+
+ 
+</div>
+
 
   <div class="row">
       <div class="col-md-12">

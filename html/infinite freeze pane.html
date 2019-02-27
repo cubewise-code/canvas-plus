@@ -164,9 +164,12 @@ html, body{
 .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > th, .table > caption + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > td, .table > thead:first-child > tr:first-child > td {
     border: 0;
 }
+.grey{
+  background-color:#eee;
+}
 </style>
   <span  ng-if="!loading">
-    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver != 'Year' || $root.rowDriver != 'Version'" tm1-dimension="{{$root.rowDriver}}" tm1-mdx="{[{{$root.rowDriver}}].Members}" tm1-attributes="Description" tm1-calculate-top-level="true" ng-model="page.rowDimensions"></tm1-ui-element-list>
+    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver != 'Year' || $root.rowDriver != 'Version'" tm1-dimension="{{$root.rowDriver}}" tm1-subset="Default" tm1-attributes="Description" tm1-calculate-top-level="true" ng-model="page.rowDimensions"></tm1-ui-element-list>
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.rowDriver === 'Product'" tm1-dimension="{{$root.rowDriver}}"  tm1-subset="Default" tm1-attributes="Description" tm1-calculate-top-level="true" ng-model="page.rowDimensions"></tm1-ui-element-list>
     <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Year' || $root.columnDriver === 'Version'  " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default"  tm1-attributes="Caption_Default" tm1-calculate-top-level="true" ng-model="page.columnDimension"></tm1-ui-element-list>
    <tm1-ui-element-list tm1-instance="dev" ng-if="$root.columnDriver === 'Period' " tm1-dimension="{{$root.columnDriver}}"  tm1-subset="Default" tm1-attributes="Short Description" tm1-calculate-top-level="true" ng-model="page.columnDimension"></tm1-ui-element-list>
@@ -175,7 +178,8 @@ html, body{
  
   <div class="row" id="table"style="padding-top:130px;" >
       
-       
+        
+                     
 
       <span class="col-md-6 col-xs-6" ng-show="false" style="padding:10px ; padding-left:20px;" >
         <i class="fa fa-cube"></i>
@@ -201,7 +205,7 @@ html, body{
       <div id="tablescroll" ng-if="!loading && page.rowDimensions && $root.selections.year && page.columnDimension " class="fixedTable" ng-init="loadFirst(table.data());"  >
        
         <header class="fixedTable-sidebar-header">
-          <table class="table table-striped"  >
+          <table class="table "  >
             <thead>
               <tr>
                  
@@ -216,7 +220,7 @@ html, body{
                         ng-click="rowEdit === true ? closeRowElement($event) : openRowElement($event)">
                       <span style="pointer-events:none;   padding:4px;  float: right;"> 
                         <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
-                          <table ng-show="rowEdit === true" class="table table-striped"    >
+                          <table ng-show="rowEdit === true" class="table"    >
                             <tbody  >
                               
                               <tr ng-repeat="item in cubeDimensions" 
@@ -242,7 +246,7 @@ html, body{
                       ng-mouseleave=" " 
                       ng-click="columnEdit === true ? closeColumnElement($event) : openColumnElement($event)">
                      <span style="pointer-events:none;   padding:4px;  "> <i class="fa fa-ellipsis-v" style="color:#fff"></i></span>
-                        <table ng-show="columnEdit === true" class="table table-striped"    >
+                        <table ng-show="columnEdit === true" class="table"    >
                           <tbody  >
                              
                             <tr ng-repeat="item in cubeDimensions" ng-show="item != $root.columnDriver && $index < 3 " >
@@ -262,7 +266,9 @@ html, body{
                   </div>
                 </th>
 								<th class="text-center" class="tm1-ui-sortable" ng-class="table.sortClass('AllMonths')" style="cursor:pointer;"  >
-                  
+                   <span ng-click="approveAll = !approveAll; doClick(approveAll);"> Click here
+                      <i  ng-class="{'fa-toggle-on':approveAll, 'fa-toggle-off':!approveAll}" class="fa fa-fw"></i>
+                    </span>
                   <span  ng-click="table.sort('AllMonths');   ">All Months </span>
 
                    <span ng-if="table.isSorted() === 'AllMonths'"   class="inline-block-right"> 
@@ -275,15 +281,15 @@ html, body{
         </header>
  
         <header class="fixedTable-header">
-          <table class="table table-striped">
+          <table class="table">
             <thead>
               <tr>
                 
                 <th ng-init="returnedName = createModel(item, item.key, item.alias)" ng-repeat="item in page.columnDimension track by $index" class="text-center tm1-ui-sortable"  ng-class="table.sortClass(returnedName)" style="cursor:pointer;"   >
                   
                   <span  ng-click="table.sort(returnedName); "  >
-                    {{(item.alias === '' ? item.key : item.alias) }}</span>
-                     
+                    {{(item.alias === '' ? item.key : item.alias) }} </span>
+                    
                      <span ng-if="table.isSorted() === returnedName "   class="inline-block-right"> 
                     <i ng-click="clearSort();" class="fa fa-times"></i>
                     </span>
@@ -298,20 +304,30 @@ html, body{
  
         <aside id="aside" class="fixedTable-sidebar" style="height:{{getHeight()}}px;"   >
            	 
-          <table class="table table-striped"  >
+          <table class="table"  >
             <tbody>
-              <tr id="{{row.key}}"  ng-if="table.data()"
-                  ng-init="getAnsestors(table.data(), row.alias)"  ng-hide=" showOrHide(row, $index)"
-                  ng-repeat="row in  (table.data() | filter:page.filter) | limitTo:config.itemsDisplayedInList track by $index"  >
-                
-                <td class="row-height-ind text-left" style="padding-left:{{!table.isSorted() ? (5 +(row.topLevel * 20) +'px'):'5px'}}">
-                 <!-- <tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias ==='' ? row.key : row.alias}}"></tm1-ui-element-list-item>-->
-                <i  ng-if="row.type === 'C' && !row.isLeaf && !table.isSorted() " 
-                    ng-click="  decideSelectedElement(row, row.collapsed, $index); table.refresh();" 
-                    class="fa fa-caret-down fa-fw " ng-class="!row.collapsed ? 'fa-caret-down':'fa-caret-right'" 
-                    style="margin-right:5px; cursor: pointer;"></i>
-                 {{row.alias ==='' ? row.key : row.alias}}   
-                <!--
+              <tr id="{{row.key}}"  
+                  ng-if="table.data()"
+                  ng-init="getAnsestorsfromElement(row, row.keys)"
+                  ng-hide=" showOrHide(row, $index)"
+                  ng-repeat="row in  (table.data() | filter:page.filter) | limitTo:config.itemsDisplayedInList track by $index" 
+                  ng-class="!row.isLeaf ? 'grey':''" >
+                <td class="row-height-ind text-left" 
+                    style="padding-left:{{!table.isSorted() ? (5 +(row.topLevel * 20) +'px'):'5px'}}">
+                 
+                    <i  ng-if="row.type === 'C' && !row.isLeaf && !table.isSorted() " 
+                        class="fa fa-caret-down fa-fw " 
+                        ng-class="!row.collapsed ? 'fa-caret-down':'fa-caret-right'" 
+                        style="margin-right:5px; cursor: pointer;">
+                    </i>
+                 {{row.alias ==='' ? row.key : row.alias}} 
+                 <br/> 
+                  <span ng-if="rowHierarchiesLevelArray[$index].length" ng-show="true">
+                   {{rowHierarchiesLevelArray[$index]}} | {{row.key}} | {{$root.selectedParent}}
+                  </span>
+
+
+                <!-- 
                   {{$root.parentsArray[$index]}} {{row.collapsed}}
                   <div id="pop-up-{{$index}}" class="inline-block-right"
                       style="position:relative;  width:20px; height:20px; overflow:hidden;  background-color:#555;" 
@@ -359,7 +375,8 @@ html, body{
         </aside>
  
 				<div id="dynamic-table" class="fixedTable-body" style="height:{{getHeight()}}px; ">
-          <table  class="table table-striped" style="height:{{getHeight()}}px;" id="af1" >
+         
+          <table  class="table" style="height:{{getHeight()}}px;" id="af1" >
             <tbody>
               <thead ng-show="false">
                 <tr >
@@ -371,13 +388,15 @@ html, body{
 											ng-click="table.sort('key')" >
                       {{$root.rowDriver}} 
 										</th>
-										<th ng-show="false">All Months</th>
+                    <th ng-show="false">All Months  </th>
 										<th ng-repeat="item in page.columnDimension">{{(item.alias === '' ? item.key : item.alias) }}</th> 
                 </tr>
               </thead>
               <tr ng-if="rowHeightArray.length"    ng-hide=" showOrHide(row, $index)"
 							style="height:{{rowHeightArray[$index]}}px !important; max-height:{{rowHeightArray[$index]}}px !important; min-height:{{rowHeightArray[$index]}}px !important; "  
-							ng-repeat="row in  (table.data()  | filter:page.filter)  | limitTo:config.itemsDisplayedInList track by $index">
+							ng-repeat="row in  (table.data()  | filter:page.filter)  | limitTo:config.itemsDisplayedInList track by $index"
+              ng-class="!row.isLeaf && row.Level != 0 ? 'grey':''"
+              >
                  
                 <td  ng-show="false">{{row.alias}}</td>
                 
@@ -430,8 +449,7 @@ html, body{
       </div>
     </div>
   </div>
-
-   
+ 
 </div>
 
 
@@ -446,7 +464,7 @@ html, body{
         </div>
         <div class="modal-body" id="chart"  >
          
-								<tm1-ui-chart  ng-mousemove="$root.doMouseOver($event)" ng-mouseleave="$root.doMouseOut($event)"  tm1-chart-type="lineWithFocus" tm1-height="300" tm1-margin="chart.margin" tm1-data-decimal="0" ng-model="values.data">
+							<!--	<tm1-ui-chart  ng-mousemove="$root.doMouseOver($event)" ng-mouseleave="$root.doMouseOut($event)"  tm1-chart-type="lineWithFocus" tm1-height="300" tm1-margin="chart.margin" tm1-data-decimal="0" ng-model="values.data">
                     
                     <tm1-ui-chart-dbr ng-repeat="month in ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']" 
 										tm1-label="{{month}}" tm1-series="Mountain Bikes" tm1-instance="dev" tm1-cube="Retail" 
@@ -460,7 +478,48 @@ html, body{
 										tm1-label="{{month}}" tm1-series="Road Bikes" tm1-instance="dev" tm1-cube="Retail" 
 										tm1-elements="Actual,{{$root.defaults.year}},{{month}},Local,{{$root.defaults.region}},Road Bikes,Sales Amount"></tm1-ui-chart-dbr>
                       
-								</tm1-ui-chart>
+								</tm1-ui-chart>-->
+
+    <tm1-ui-rpt-view tm1-instance="dev" tm1-cube="General Ledger" ng-model="data" tm1-suppress-zero="{{page.suppressZero}}" >
+      <tm1-ui-rpt-config>
+        <tm1-ui-rpt-title ng-repeat="title in activeFormTitles" tm1-dimension="{{title['Dimension']}}" tm1-element="{{title['Element']}}"></tm1-ui-rpt-title>
+       
+        <tm1-ui-rpt-row tm1-dimension="{{$root.rowDriver}}" tm1-subset="Default" tm1-attribute="Description"></tm1-ui-rpt-row>
+          
+        <tm1-ui-rpt-column tm1-dimension="{{$root.columnDriver}}" tm1-subset="Default" tm1-attribute="Description"></tm1-ui-rpt-column>
+                    
+      </tm1-ui-rpt-config>
+      
+      <tm1-ui-rpt-template>
+        <table id="af1" class="table table-condensed">
+          <thead>
+            
+              <tr>
+                <th>Account</th>
+              
+                <th class="text-center">Actual</th>
+                <th class="text-center">Last Year</th>
+              </tr>
+              
+            
+          </thead>
+          <tbody>
+            <tr ng-repeat="rowData in data.rows track by $index" >
+              <td tm1-ui-rpt-row-element="rowData" tm1-dimension="Account"></td>
+            
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('1')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Last Year')"></tm1-ui-dbr>
+              </td>
+            
+            </tr>
+          </tbody>
+          </table>
+          
+      </tm1-ui-rpt-template>
+    </tm1-ui-rpt-view> 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

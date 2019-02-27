@@ -34,11 +34,75 @@
           "page": "excel-upload/starttest"
         },
         "expanded": false
+      },
+      {
+        "label": "t-test-budget",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "t-test-budget"
+        },
+        "expanded": false
       }
     ],
     "data": {
       "page": "excel-upload"
     },
     "expanded": true
+  },
+  {
+    "label": "test-active-frm",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "test-active-frm"
+    },
+    "expanded": false
+  },
+  {
+    "label": "test-excel",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "test-excel"
+    },
+    "expanded": false
+  },
+  {
+    "label": "test-pdf-export-image",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "test-pdf-export-image"
+    },
+    "expanded": false
+  },
+  {
+    "label": "Bullet Chart",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "bullet-chart"
+    },
+    "expanded": false
+  },
+  {
+    "label": "Line and Bar Chart",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "line-and-bar-chart"
+    },
+    "expanded": false
+  },
+  {
+    "label": "t-test-upload-multi-sheet",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "t-test-upload-multi-sheet"
+    },
+    "expanded": false
+  },
+  {
+    "label": "sticky-header",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "sticky-header"
+    },
+    "expanded": false
   }
 ]

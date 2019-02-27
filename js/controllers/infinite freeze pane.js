@@ -31,7 +31,8 @@ function($scope, $rootScope, $log, $tm1Ui, $tm1UiTable, $timeout, $document) {
           
     }
     
-    $rootScope.columnDriver = 'Period';
+    
+    $rootScope.columnDriver = 'Version';
     $scope.tmpcolAttribute = 'Short Description';
     $scope.page = {rowDimensions: []};
     $scope.rowHeightArray = [];
@@ -265,7 +266,15 @@ $scope.cubeDimensions = {};
             }
         }
   }
-          
+
+$scope.doClick = function(approved){
+    console.log("do click", approved);
+      for(var jj in $scope.table.data()){ 
+             console.log("loading rows", jj, $scope.table.data()[jj]);
+             
+     
+    }
+}
   $scope.loadFirst = function(data) {
     
    tablescroll = new fixedTable($('#tablescroll'));
@@ -275,7 +284,7 @@ $scope.cubeDimensions = {};
      for(var i in $scope.table.data())
       if( parseInt(i) <= $scope.config.itemsDisplayedInList){
             
-             //console.log("loading rows", $scope.images.length, $scope.table.data());
+             console.log("loading rows", $scope.images.length, $scope.table.data()[i]);
               $scope.images.push(data[$scope.images.length]);
       } 
     }
@@ -328,6 +337,9 @@ $rootScope.doMouseOver = function(e){
 
 
 }
+///$("#myModal").modal();
+
+
 
 $rootScope.doMouseOut = function(e){ 
     if(document.getElementsByClassName("nvtooltip xy-tooltip").length){
@@ -448,19 +460,37 @@ $scope.getHeight= function() {
              
        
 	};
+    
     $scope.password = '';
     $scope.rowHierarchiesLevelArray = [];
+    $scope.getAnsestorsfromElement = function(row, element){
+       if($scope.mdxQuery == undefined){
+				$scope.mdxQuery = 'SELECT  Descendants  ([Account].['+element+'] ,0  ) ON 0  FROM [General Ledger]      ';
+				 
+			}
+			
+               // $tm1Ui.cubeExecuteMdx("dev", $scope.mdxQuery).then(function(data){
+                //    console.info('Returned by this function - %o', data);
+                
+              //  });
+          
+        
+        
+         
+    }
+   
     $scope.getAnsestors = function(ddata, element){
      
+      
 
      var settingsAnsestorsOne = {
         "async": true,
         "crossDomain": true,
-        "url": "http://localhost:8882/api/v1/Dimensions('"+$rootScope.rowDriver+"')/Hierarchies('"+$rootScope.rowDriver+"')/Levels/$count",
+        "url": "https://localhost:8882/api/v1/Dimensions%28%27Account%27%29/Hierarchies%28%27Account%27%29/Levels/$count",
         "method": "GET",
         "headers": {
             "Content-Type": "application/json",
-             "Authorization":  buildBaseAuth($rootScope.user.FriendlyName,  $scope.password),
+            "Authorization":  buildBaseAuth($rootScope.user.FriendlyName,  $scope.password),
             "Cache-Control": "no-cache"
             
         },
@@ -489,11 +519,11 @@ $scope.getHeight= function() {
             var settingsAnsestors = {
             "async": true,
             "crossDomain": true,
-            "url": "http://localhost:8882/api/v1/Dimensions('"+$rootScope.rowDriver+"')/Hierarchies('"+$rootScope.rowDriver+"')/Elements('"+element+"')?"+string+"",
+            "url": $rootScope.instances[0]['restUri']+"/api/v1/Dimensions('"+$rootScope.rowDriver+"')/Hierarchies('"+$rootScope.rowDriver+"')/Elements('"+element+"')?"+string+"",
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization":  buildBaseAuth($rootScope.user.FriendlyName,  $scope.password),
+                "Authorization":  buildBaseAuth($rootScope.user.FriendlyName,  $scope.password), 
                 "Cache-Control": "no-cache"
                 
             },
@@ -525,28 +555,35 @@ $scope.getHeight= function() {
                                 if(ObgTwo['Parents'] != null && ObgTwo['Parents'].length){
                                     arrayToPassBack.push(ObgTwo['Parents'][0].Name);
                                     var ObgThree = ObgTwo['Parents'][0];
+                                     
+
+                                    if(ObgThree['Parents'] != null && ObgThree['Parents'].length){
+                                        arrayToPassBack.push(ObgThree['Parents'][0].Name);
+                                        var ObgFour = ObgThree['Parents'][0];
+                                    }
                                 }
                             }
                             
                              
                         }
                      }
+                     var reversedArray = []
                        var completeArray =[];
                        var previousNameCaptured = '';
                        var reversedArray = arrayToPassBack.reverse()
-                      for(var ty = 0; ty < (levelCount-1); ty++){
+                      for(var ty = 0; ty < (levelCount); ty++){
                            var capturedName = reversedArray[ty];
                            //console.log(capturedName, "capturedNamecapturedNamecapturedNamecapturedNamecapturedNamecapturedName");
                          if(capturedName != undefined){
-                              previousNameCaptured = capturedName;
+                             // previousNameCaptured = capturedName;
                          }else{
                               
                          }
                          completeArray.push(previousNameCaptured);
                       }
-                      $scope.rowHierarchiesLevelArray.push(completeArray);
+                      $scope.rowHierarchiesLevelArray.push(reversedArray);
                       
-                      console.log($scope.rowHierarchiesLevelArray , "-----------------ANSESTORS");
+                      console.log($scope.rowHierarchiesLevelArray , $rootScope, "-----------------ANSESTORS");
                   
             });
         });

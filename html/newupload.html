@@ -1,0 +1,191 @@
+<div class="row " style="padding:0px;  " ng-show="uploadActive">
+           <div class="col-md-12 col-xs-12" style="  margin-top:20px;">
+            <div class="panel panel-default" style="margin-top:0px;">
+              <div class="panel-heading">
+                <span>Batch <strong>Upload</strong> Presentations</span>
+              </div>
+              
+              <div class="panel-body"> 
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-12 panel">
+                    <button class="btn btn-primary" style="width:100%">
+                      <a href="files/Template.xlsx" target="_blank" style="color:white">
+                        <i class="fa fa-download  fa-fw"></i> Download Template
+                      </a>
+                    </button>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-12 panel">
+                    <button class="btn btn-primary" style="width:100%; color:#fff">
+                     
+                        <tm1-ui-export tm1-target-id="af1" tm1-output-name="Presentations-{{$root.currentConference}}-{{$root.timeStamp}}"tm1-field-separator='' tm1-field-qualifier='' ></tm1-ui-export>
+                         
+                     
+                    </button>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-12 panel">
+                    <button class="btn btn-primary" style="width:100%">
+                      <i class="fa fa-upload fa-fw"></i> Upload 
+                      <js-xls type='file' onread="read" onerror="error"></js-xls>
+                    </button>
+                  </div> 
+                  <div class="col-lg-12 col-md-12 col-12 panel">
+                    <button class="btn btn-primary" ng-disabled="!values.sheetName || !lists.records.length" style="width:100%" data-toggle="modal" data-target="#modalSave" >
+                      <i ng-if="$root.isLoading" class="fa fa-cog fa-spin fa-fw"></i>
+                      <i ng-if="!$root.isLoading" class="fa fa-floppy-o fa-fw"></i>
+                      Save
+                    </button>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-12 panel"> 
+                    <!--=========================================-->
+                    <!--          Display Excel file             -->
+
+                    <div class="row"  >
+
+                      <div class="col-md-12 col-xs-12" ng-if="lists.records.length" >
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h3 class="panel-title" ng-if="$root.isLoading && selections.messageUpload === 'false'">
+                              <i class="fa fa-file-excel-o"></i> {{selections.panelTitle}}Uploading the file</h3>
+                            <h3 class="panel-title" ng-if="!$root.isLoading">
+                              <i class="fa fa-file-excel-o"></i> {{selections.panelTitle}}
+                              <span ng-if="values.sheetName">({{page.titles['Conference']}})</span>
+                              <span ng-if="values.valuesSentToTM1">{{values.projectUploaded}} User uploaded</span>
+                            </h3>
+                            <h3 class="panel-title" ng-if="$root.isLoading && selections.messageUpload === 'true'">
+                              <i class="fa fa-cog fa-spin"></i> Uploading data into TM1...</h3>
+                            <span class="pull-right">
+                              <i class="fa fa-spinner fa-spin fa-fw" ng-if="item.saving"></i>
+                            </span>
+                            <span class="pull-right text-right"  style="display:inline-block; float:right; top:10px; padding:10px; position:absolute; right:20px; ">
+                                   <i ng-click="lists.records = [];" class="fa fa-times "></i>
+                              </span>
+                          </div>
+                          <div class="panel-body">
+
+                            <div class="row" >
+                              <div class="col-md-12 col-xs-12  ">
+                                 <table class="table " >
+                                  <thead>
+                                    <tr   class="alert alert-primary">
+                                      <th   class="text-center">#</th>
+                                       
+                                      <th ng-repeat="col in columnsLoaded track by $index " ng-class="((cubeDimensionArrayForValidation).toString()).indexOf(columnsLoaded[$index]) == -1 &&  ((validateColumnArray).toString()).indexOf($index) > -1 ? 'alert-danger':''" 
+                                        uib-popover="{{columnsLoaded[$index]}} element is not part of Dimensions. Check the spelling." popover-append-to-body="true"
+                                          popover-enable="( ((cubeDimensionArrayForValidation).toString()).indexOf(columnsLoaded[$index]) == -1 && ((validateColumnArray).toString()).indexOf($index) > -1 )" popover-trigger="'mouseenter'" popover-class="popover-class-danger"
+                                        class="text-center" >{{columnsLoaded[$index]}} </th>
+                                       
+                                    </tr>
+                                  </thead>
+                                  <tbody    >
+                                    <tr ng-repeat="record in lists.records track by $index" ng-hide="headerValidationError" >
+                                      <td class="text-center">{{record.row}} 
+                                        <input ng-if="record.validationResultArray.length ===  validateColumnArray.length" 
+                                        type="checkbox" ng-init="record.selected = (record.validationResultArray).indexOf('false') > -1 ? false:true;   values.presentationsToBeUploaded =  values.presentationsToBeUploaded + ((record.validationResultArray).indexOf('false') > -1 ? 0:1);" 
+                                        ng-model="record.selected" ng-click="countPresentationsToBeUploaded()"> 
+                                      </td>
+                                      <td  ng-repeat="cell in columnsLoaded  track by $index" class="text-left" ng-class="record.error.length?'alert-danger':''" 
+                                          uib-popover="{{record.error}}" popover-append-to-body="true"
+                                          popover-enable="record.error.length>0" popover-trigger="'mouseenter'" popover-class="popover-class-danger">
+                                          {{record[columnsLoaded[$index]]}}
+                                      </td>
+                                      
+                                      
+                                    </tr>
+                                  </tbody>
+                                </table> 
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div> 
+            </div>
+        </div> 
+          </div>
+
+
+              
+  <div id="modalSave" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Are you sure you want to save?</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row" ng-if="!values.valuesSentToTM1 && values.errorCount>0">
+              <div class="col-md-12">
+                <uib-accordion close-others="oneAtATime">
+                  <div uib-accordion-group class="panel-danger" is-open="status.open">
+                    <uib-accordion-heading>
+                        Errors: {{values.errorCount}} (Data will not be uploaded in to TM1) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <div ng-repeat="item in lists.records track by $index">
+                        <span ng-if="item.error"> {{item.error}}</span>
+                    </div>
+                  </div>
+                </uib-accordion>
+              </div>
+            </div>
+            <div class="row" ng-if="!values.valuesSentToTM1 && values.warningCount>0">
+              <div class="col-md-12">
+                <uib-accordion close-others="oneAtATime">
+                  <div uib-accordion-group class="panel-warning" is-open="status.open">
+                    <uib-accordion-heading>
+                        Warnings: {{values.warningCount}} (Data will be uploaded in to TM1) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <div ng-repeat="item in lists.records track by $index">
+                        <span ng-if="item.warning"> {{item['data'][0]}} - {{item.warning}}</span>
+                    </div>
+                  </div>
+                </uib-accordion>
+              </div>
+            </div>
+            <div class="row" ng-if="!values.valuesSentToTM1">
+              <div class="col-md-12">
+                <uib-accordion close-others="oneAtATime">
+                  <div uib-accordion-group class="panel-info" is-open="status.open">
+                    <uib-accordion-heading>
+                        {{values.presentationsToBeUploaded}} presentations will be uploaded into Conference Presentation Cube for ({{$root.currentConference}} conference)  <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <div ng-repeat="item in lists.records track by $index">
+                        <span ng-if="item.selected"> {{item['data'][0]}}</span>
+                        <i ng-if="item.warning" class="fa fa-exclamation-circle alert-warning" uib-popover="{{item.warning}}" popover-append-to-body="true"
+                        popover-enable="item.warning" popover-trigger="'mouseenter'" popover-class="popover-class-warning"></i>
+                    </div>
+                  </div>
+                </uib-accordion>
+              </div>
+            </div>
+            <div class="row" ng-if="values.valuesSentToTM1">
+              <div class="col-md-12">
+                <uib-accordion close-others="oneAtATime">
+                  <div uib-accordion-group class="panel-success" is-open="status.open">
+                    <uib-accordion-heading>
+                        Success: {{values.presentationsUploaded}} presentations uploaded into Conference Presentation Cube for ({{$root.currentConference}} conference) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <div ng-repeat="item in lists.records">
+                        <span ng-if="item.selected">{{item['data'][0]}}</span>
+                    </div>
+                  </div>
+                </uib-accordion>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <button class="btn btn-primary" ng-class="{'btn-success': values.valuesSentToTM1}" ng-click="saveAll()" ng-disabled="values.valuesSentToTM1">
+                  <i ng-if="$root.isLoading" class="fa fa-cog fa-spin fa-fw"></i>
+                  <i ng-if="!$root.isLoading" class="fa fa-floppy-o fa-fw"></i>
+                  <span ng-if="!values.valuesSentToTM1" >Save</span>
+                  <span ng-if="values.valuesSentToTM1" >Sent</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

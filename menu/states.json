@@ -22,5 +22,37 @@
   "excel-upload/starttest": {
     "url": "/excel-upload/starttest",
     "templateUrl": "html/starttest.html"
+  },
+  "test-active-frm": {
+    "url": "/test-active-frm",
+    "templateUrl": "html/test-active-frm.html"
+  },
+  "t-test-budget": {
+    "url": "/t-test-budget",
+    "templateUrl": "html/t-test-budget.html"
+  },
+  "test-excel": {
+    "url": "/test-excel",
+    "templateUrl": "html/test-excel.html"
+  },
+  "test-pdf-export-image": {
+    "url": "/test-pdf-export-image",
+    "templateUrl": "html/test-pdf-export-image.html"
+  },
+  "bullet-chart": {
+    "url": "/bullet-chart",
+    "templateUrl": "html/Bullet Chart.html"
+  },
+  "line-and-bar-chart": {
+    "url": "/line-and-bar-chart",
+    "templateUrl": "html/Line and Bar Chart.html"
+  },
+  "t-test-upload-multi-sheet": {
+    "url": "/t-test-upload-multi-sheet",
+    "templateUrl": "html/t-test-upload-multi-sheet.html"
+  },
+  "sticky-header": {
+    "url": "/sticky-header",
+    "templateUrl": "html/sticky-header.html"
   }
 }
