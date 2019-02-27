@@ -22,7 +22,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.subsetSelected = false;	
     $scope.mainData = {
         "timeoutBlockout":true,
-        "debug":false,
+        "debug":true,
         "rowDimension":{"name":"Account", "subset":"dashboard","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
         "instance":"dev",
@@ -50,11 +50,8 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.getSubsetList  = function(){
         $tm1Ui.dimensionSubsets($scope.mainData['instance'],$scope.mainData['rowDimension']['name']).then(function(result){
              //console.log(result, "!!!!!!!!!!!!!");
-            if(result){
-               
-                    
-                    $scope.lists.subsetList = result;
-                
+            if(result){ 
+                    $scope.lists.subsetList = result; 
             }
         });
     }
@@ -78,26 +75,45 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 }
                 $scope.scrolling = true;
                     if($($body).scrollTop() > ($scope.offsetFromTop+$scope.offsetTop)){
+
                         $rootScope.headerOutOffView = true;
                         
                         $($stickyHeader).css('display','block'); 
                         $($stickyHeader).css('opacity','1'); 
                         $($stickyHeader).css('pointer-events','auto'); 
                         $($fixedHeader).css('pointer-events','auto'); 
-                        $($fixedHeader).css('z-index','2');  
-                         $($fixedFirstColHeader).css('margin-top','-'+(($scope.offsetFromTop+$scope.offsetTop))+'px');
+                        
+                        if($($body).scrollLeft() != 0){ 
+                            $($fixedFirstColHeader).css('display','block');
+                             $($fixedFirstColHeader).css('margin-top','-'+(($scope.offsetFromTop+$scope.offsetTop))+'px');
+                        }else{
+                            $($fixedFirstColHeader).css('display','none');
+                        }
+                        
                        // $($fixedFirstColHeader).css('display','block'); 
                     }else{
-                        $($fixedFirstColHeader).css('margin-top', -$($body).scrollTop());
+                        if($($body).scrollLeft() != 0){
+                             $($fixedFirstColHeader).css('display','block');
+                            $($fixedFirstColHeader).css('margin-top', -$($body).scrollTop());
+                        }else{
+                             $($fixedFirstColHeader).css('display','none');
+                        }
                          
                         $rootScope.headerOutOffView = false;
                         $($stickyHeader).css('opacity','0'); 
                         $($stickyHeader).css('pointer-events','none'); 
                         $($fixedHeader).css('pointer-events','none'); 
-                        $($fixedHeader).css('z-index','-1'); 
+                         
                        // $($fixedFirstColHeader).css('display','none'); 
                     } 
-                    $($sideContent).css('margin-top', -$($body).scrollTop());
+                    if($($body).scrollLeft() != 0){
+                         
+                          $($sideContent).css('display', 'block');
+                        $($sideContent).css('margin-top', -$($body).scrollTop());
+                    }else{
+                        $($sideContent).css('display', 'none');
+                    }
+                     
                     $($subsetDropdown).css('margin-top', -$($body).scrollTop());
                     $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                     //console.log("scroll inside the summary left , top : ",-$($body).scrollLeft(), -$($body).scrollTop()); 
@@ -308,15 +324,15 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             
            
         }); 
+        $scope.chartLoadingNow = false; 
     $scope.refreshChart = function(){
-         $scope.chartLoading = true;
-                 $scope.removeTooltips();
+                $scope.removeTooltips();
+                $scope.chartLoading = true;
+                 
                 $timeout(
                     function(){
-                    $scope.chartLoading = false;
-                        
-
-                    } ,1000
+                    $scope.chartLoading = false; 
+                    } 
                 );
     }
     //resize just for timeout the event so apply the changes in the html
