@@ -253,11 +253,13 @@
 							 	<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 > 
-								<span 	style="cursor:pointer" ng-click="chartselections[$index] = !chartselections[$index]" ng-repeat="item in mainData['chart']['ledgend']">
+								<span 	style="cursor:pointer" 
+								ng-click=" chartselections[$index] = !chartselections[$index]; refreshChart(); " 
+								ng-repeat="item in mainData['chart']['ledgend']">
 									<button  
 									class="btn" 
 									style="padding:0px; background-color:transparent !important " 
-									ng-class="{'disabled':chartselections[$index] }">
+									ng-class="{'disabled':!chartselections[$index] }">
 
 										<i ng-style="{'color':item.color}"  class="fa fa-square fa-fw"></i>  
 										{{item.name}}  
@@ -404,12 +406,12 @@
 							<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
-							 	<span 	style="cursor:pointer" ng-click="chartselections[$index] = !chartselections[$index]"   
+							 	<span 	style="cursor:pointer" ng-click="chartselections[$index] = !chartselections[$index]; refreshChart()"   
 								ng-repeat="item in mainData['chart']['ledgend'] track by $index">
 									<button  
 									class="btn" 
 									style="padding:0px; background-color:transparent !important " 
-									ng-class="{'disabled':chartselections[$index] }">
+									ng-class="{'disabled':!chartselections[$index] }">
 
 										<i ng-style="{'color':item.color}"  class="fa fa-square fa-fw"></i>  
 										{{item.name}}  
@@ -420,7 +422,7 @@
 							<div class="text-right" style="display:inline-block; width:50%; float:right; right:0px;" id="bulletChartContainerDrop0"   > 
 							</div>
 							<my-bullet-chart 
-									ng-if="$root.chartsDataLoaded && !chartLoading"
+									ng-if="$root.chartsDataLoaded && !chartLoading "
 									tm1-instance="{{mainData['instance']}}"  
 									cube-name="{{mainData['cube']}}" 
 									title="0"
@@ -443,7 +445,7 @@
                           
                       	</div>
 						 <my-bullet-chart 
-                                      ng-if="$root.chartsDataLoaded && $root.chartValues[item.key].length "
+                                      ng-if="$root.chartsDataLoaded && $root.chartValues[item.key].length && chartselections[0] && chartselections[1] && chartselections[2] "
                                       tm1-instance="{{mainData['instance']}}"  
                                       cube-name="{{mainData['cube']}}" 
                                       title="{{item.alias}}"
@@ -452,6 +454,45 @@
                                       ledgend="{{mainData['chart']['ledgend']}}"
                                       cell-set-get-array-val-one = "{{$root.chartValues[item.key][0]}}"
                                       cell-set-get-array-val-two = "{{$root.chartValues[item.key][1]}}"
+                                      cell-set-get-array-val-three = "{{$root.chartValues[item.key][2]}}"
+                                    
+                          ></my-bullet-chart> 
+						   <my-bullet-chart 
+                                      ng-if="$root.chartsDataLoaded && $root.chartValues[item.key].length &&  chartselections[1] && !chartselections[2] "
+                                      tm1-instance="{{mainData['instance']}}"  
+                                      cube-name="{{mainData['cube']}}" 
+                                      title="{{item.alias}}"
+                                      driver="Total:{{$root.selections.accountChosen}}" 
+                                      id-name="{{$index+1}}" 
+                                      ledgend="{{mainData['chart']['ledgend']}}"
+                                      cell-set-get-array-val-one = "{{$root.chartValues[item.key][0]}}"
+                                      cell-set-get-array-val-two = "{{$root.chartValues[item.key][1]}}"
+                                      cell-set-get-array-val-three = "0"
+                                    
+                          ></my-bullet-chart> 
+						  <my-bullet-chart 
+                                      ng-if="$root.chartsDataLoaded && $root.chartValues[item.key].length  && !chartselections[1] && !chartselections[2] "
+                                      tm1-instance="{{mainData['instance']}}"  
+                                      cube-name="{{mainData['cube']}}" 
+                                      title="{{item.alias}}"
+                                      driver="Total:{{$root.selections.accountChosen}}" 
+                                      id-name="{{$index+1}}" 
+                                      ledgend="{{mainData['chart']['ledgend']}}"
+                                      cell-set-get-array-val-one = "{{$root.chartValues[item.key][0]}}"
+                                      cell-set-get-array-val-two = "0"
+                                      cell-set-get-array-val-three = "0"
+                                    
+                          ></my-bullet-chart> 
+						  <my-bullet-chart 
+                                      ng-if="$root.chartsDataLoaded && $root.chartValues[item.key].length  && !chartselections[1] && chartselections[2] "
+                                      tm1-instance="{{mainData['instance']}}"  
+                                      cube-name="{{mainData['cube']}}" 
+                                      title="{{item.alias}}"
+                                      driver="Total:{{$root.selections.accountChosen}}" 
+                                      id-name="{{$index+1}}" 
+                                      ledgend="{{mainData['chart']['ledgend']}}"
+                                      cell-set-get-array-val-one = "{{$root.chartValues[item.key][0]}}"
+                                      cell-set-get-array-val-two = "0"
                                       cell-set-get-array-val-three = "{{$root.chartValues[item.key][2]}}"
                                     
                           ></my-bullet-chart> 

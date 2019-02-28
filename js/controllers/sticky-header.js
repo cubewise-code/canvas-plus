@@ -20,7 +20,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $rootScope.selections.account = "4";
     $scope.loggedOut = false;
     $scope.subsetSelected = false;	
-    $scope.chartselections = [];
+    $scope.chartselections = [true,true,true];
     $scope.mainData = {
         "timeoutBlockout":true,
         "visualiseChartValues":true,
@@ -204,13 +204,21 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                         three = 0;
                    } 
                    
-                    $rootScope.valuesCapturedForChart.push((one) );
+                   if($scope.chartselections[0]){
+                        $rootScope.valuesCapturedForChart.push((one) );
+                         $rootScope.valuesminCapturedForChart.push((one) );
+                   }
+                    if($scope.chartselections[1]){
                         $rootScope.valuesCapturedForChart.push((two) );
-                        $rootScope.valuesCapturedForChart.push((three) );
-                        
-                        $rootScope.valuesminCapturedForChart.push((one) );
                         $rootScope.valuesminCapturedForChart.push((two) );
-                        $rootScope.valuesminCapturedForChart.push((three) );
+                   }
+
+                        if($scope.chartselections[2]){
+                                $rootScope.valuesCapturedForChart.push((three) ); 
+                                $rootScope.valuesminCapturedForChart.push((three) );
+                       } 
+                         
+                     
                         
                         $rootScope.maxValToUse = Math.max.apply(null, $rootScope.valuesCapturedForChart);
                          $rootScope.minValToUse = Math.min.apply(null, $rootScope.valuesminCapturedForChart);
