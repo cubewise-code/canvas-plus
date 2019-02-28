@@ -188,6 +188,11 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $rootScope.valuesCapturedForChart = [];
     $rootScope.chartsDataLoaded = false;
     $rootScope.valuesminCapturedForChart = [];
+
+    $scope.doClickLedgend = function(num){
+        $scope.chartselections[num] = !$scope.chartselections[num]; 
+        $scope.refreshChart();
+    }
     $scope.loadChartValues = function(one,two,three){
 
       //console.log(one,two,three)
@@ -367,15 +372,17 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             if(!$scope.loggedOut){
                  $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
                 if(result['IsActive']){
-                   // console.log(result, "LOGIN INFO")
+                   // console.log(result, "LOGIN INFO");
+                    $scope.alpha = 0;
+                         
                     $scope.loggedOut = false;
                     $scope.idelTimePassed =false;
                     $scope.runTimeout(); 
                 }else{
                      
                      if(document.getElementById('blockOut')    ){
-                          $scope.loggedOut = true;
-                     document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
+                        $scope.loggedOut = true;
+                        document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
                      }
                 }
                 
@@ -393,13 +400,15 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
      $scope.idelTimePassed =false;
      $scope.alpha = 0;
     $scope.runTimeout = function(){
-        //console.log("running timeout");
+        
         $timeout(
             function(){
-
+ 
                 if($scope.countIdel >= 10){
+                      
                     if($scope.mouseMovedXY === $scope.lastMovedXY){
-                        if($scope.aplha >= 0.9){
+                        console.log("running timeout",$scope.alpha, $scope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
+                        if($scope.alpha >= 0.9){
                             $scope.idelTimePassed = true;
                             $scope.countIdel = 10;
                             $scope.alpha  = 0.9;
@@ -414,18 +423,18 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                     }else{
                         //console.log($scope.countIdel, $scope.mouseMovedXY,  $scope.lastMovedXY,  "mouse moved");
                         $scope.loggedOut = false;
-                        $scope.lastMovedXY = $scope.mouseMovedXY;
+                         
                         $scope.idelTimePassed = false;
                         $scope.countIdel = 0;
                         
                         $scope.runTimeout();
                     }
-                    
+                    $scope.lastMovedXY = $scope.mouseMovedXY;
 
                 }else{
-                    if(document.getElementById('blockOut') && $scope.idelTimePassed  ){
-                     $timeout(
-                         function(){
+                     $scope.lastMovedXY = $scope.mouseMovedXY;
+                    if( $scope.idelTimePassed  ){
+                     
                              if($scope.alpha >= 0.8){
                                   $scope.alpha = 0.9;
                              }else{
@@ -434,15 +443,16 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                             
                            // console.log("STARTED PAUSE HIDING INFO");
                             document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,"+$scope.alpha+")";
-                         }
-                     )
+                         
+                        
+                    }else{
                         
                     }
                     $scope.countIdel++; 
                     $scope.runTimeout();
                 }
                 
-            },1000
+            },50000
         )
     }
     $scope.runTimeout();

@@ -254,7 +254,7 @@
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 > 
 								<span 	style="cursor:pointer" 
-								ng-click=" chartselections[$index] = !chartselections[$index]; refreshChart(); " 
+								ng-click=" $index != 0 ?  doClickLedgend($index):'' " 
 								ng-repeat="item in mainData['chart']['ledgend']">
 									<button  
 									class="btn" 
@@ -406,7 +406,8 @@
 							<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
-							 	<span 	style="cursor:pointer" ng-click="chartselections[$index] = !chartselections[$index]; refreshChart()"   
+							 	<span 	style="cursor:pointer"
+								  	ng-click=" $index != 0 ?  doClickLedgend($index):'' "    
 								ng-repeat="item in mainData['chart']['ledgend'] track by $index">
 									<button  
 									class="btn" 
@@ -572,7 +573,7 @@
 			 
 		</table>
 	</div>
-	<div id="blockOut" ng-if="idelTimePassed && timeoutBlockout" class="black-bg">
+	<div id="blockOut" ng-if="idelTimePassed " class="black-bg">
 
 	</div>							 
 </div>
