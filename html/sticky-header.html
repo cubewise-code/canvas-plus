@@ -153,7 +153,7 @@
 	<div id="stickyContainer" class="stickyContainer"  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
 
 			<div class="fixedFirstColHeader" 
-			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) +getContainerHeight('debug')  )+'px' ,  'width':getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " >
+			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')  )+'px' ,  'width':getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " >
 					 			 
 					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
 						style="display:inline-block; margin: 0 auto;  padding:5px; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:left; ">
@@ -211,12 +211,12 @@
 			</div>
 			<div  id="sideDebugContent" class="fixed-container-debug" 
 				style="z-index:33; background-color:#fff;  "  
-				ng-style="{'top': (  (getContainerTop('stickyContainer'))    )+'px' , 'height':getContainerHeight('debug')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				ng-style="{'top': (  (getContainerTop('stickyContainer'))    )+'px' , 'height':getContainerHeight('visualiseChartValues')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
 				<table class="table">
 					<tbody  >
 							<tr>
 								<td>
-							 <p class="pull-left" ng-if="mainData['debug']"
+							 <p class="pull-left" ng-if="mainData['visualiseChartValues']"
 							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
 							 <h5>
@@ -225,11 +225,13 @@
 								tm1-dimension="{{mainData['rowDimension']['name']}}" 
 								tm1-element="{{$root.selections.account}}" 
 								tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
+								ng-model="$root.selections.accountChosen"
 								tm1-read-only="true">
 							 </tm1-ui-dbra> 
 							<br>
 							 </h5>
-								<h5 style="width:100%; " ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
+								<h5 style="width:100%; " 
+								ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
 									  {{item.name}} <br>
 								</h5>
 								<span ng-init="getSubsetList()"> </span>
@@ -243,7 +245,7 @@
 			</div>
 			<div  id="sideChartContent" class="fixed-container-chart" 
 				style="z-index:33; background-color:#fff;  "  
-				ng-style="{'top': (  (getContainerTop('stickyContainer')) +getContainerHeight('debug')  )+'px' , 'height':getContainerHeight('chartRow')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				ng-style="{'top': (  (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')  )+'px' , 'height':getContainerHeight('chartRow')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
 				<table class="table">
 					<tbody  >
 							<tr>
@@ -251,9 +253,15 @@
 							 	<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 > 
-								<span ng-repeat="item in mainData['chart']['ledgend']">
-									<i ng-style="{'color':item.color}"   
-									class="fa fa-square fa-fw"></i> {{item.name}}  <br>
+								<span 	style="cursor:pointer" ng-click="chartselections[$index] = !chartselections[$index]" ng-repeat="item in mainData['chart']['ledgend']">
+									<button  
+									class="btn" 
+									style="padding:0px; background-color:transparent !important " 
+									ng-class="{'disabled':chartselections[$index] }">
+
+										<i ng-style="{'color':item.color}"  class="fa fa-square fa-fw"></i>  
+										{{item.name}}  
+									</button> 
 								</span>
 								<span ng-init="getSubsetList()"> </span>
 							</p>
@@ -265,7 +273,7 @@
 									tm1-instance="{{mainData['instance']}}"  
 									cube-name="{{mainData['cube']}}" 
 									title="0"
-									driver="Allocated Hrs" 
+									driver="Total:{{$root.selections.accountChosen}}" 
 									id-name="" 
 									ledgend="{{mainData['chart']['ledgend']}}"
 									cell-set-get-array-val-one = "0"
@@ -279,7 +287,7 @@
 				</table>
 			</div>
 			<div  id="sideContent" class="fixed-container-side" style="z-index:30; " style="height:37px"
-				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headerContent')) +getContainerHeight('debug')  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headerContent')) +getContainerHeight('visualiseChartValues')  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
 				<table class="table">
 					<tbody  >
 							
@@ -298,7 +306,7 @@
 			<div id="subsetDropDown" ng-mouseleave="subsetSelected = false" 
 					  ng-show="subsetSelected  && !$root.headerOutOffView "
 							   style="  position:fixed; left:0px; z-index:34; min-height:250px;max-height:400px;  margin:0px; padding:0px; background-color: #f8f8f8; overflow:auto;   " 
-							   ng-style="{'top':  ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) + getContainerHeight('debug')+(getContainerHeight('columnWidthDim') )  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"
+							   ng-style="{'top':  ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) + getContainerHeight('visualiseChartValues')+(getContainerHeight('columnWidthDim') )  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"
 							  >
 
 								<table class="table "  >
@@ -322,10 +330,10 @@
 			   
 				<tbody ng-if="lists.months ">
 					 
-					<tr id="debug"  ng-show="mainData['debug']">
+					<tr id="visualiseChartValues"  ng-show="mainData['visualiseChartValues']">
 						 
 						<td     class="text-left min-width250">
-							<p class="pull-left" ng-if="mainData['debug']"
+							<p class="pull-left" ng-if="mainData['visualiseChartValues']"
 							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
 							 <h5>
@@ -395,11 +403,17 @@
 						<td  class="text-left"      >
 							<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
-							 > 
-							 
-								<span ng-repeat="item in mainData['chart']['ledgend']">
-									<i ng-style="{'color':item.color}"   
-									class="fa fa-square fa-fw"></i> {{item.name}}  <br>
+							 >  
+							 	<span 	style="cursor:pointer" ng-click="chartselections[$index] = !chartselections[$index]"   
+								ng-repeat="item in mainData['chart']['ledgend'] track by $index">
+									<button  
+									class="btn" 
+									style="padding:0px; background-color:transparent !important " 
+									ng-class="{'disabled':chartselections[$index] }">
+
+										<i ng-style="{'color':item.color}"  class="fa fa-square fa-fw"></i>  
+										{{item.name}}  
+									</button> 
 								</span>
 								<span ng-init="getSubsetList()"> </span>
 							</p>
@@ -410,7 +424,7 @@
 									tm1-instance="{{mainData['instance']}}"  
 									cube-name="{{mainData['cube']}}" 
 									title="0"
-									driver="Allocated Hrs" 
+									driver="Total:{{$root.selections.accountChosen}}" 
 									id-name="0" 
 									ledgend="{{mainData['chart']['ledgend']}}"
 									cell-set-get-array-val-one = "0"
@@ -433,7 +447,7 @@
                                       tm1-instance="{{mainData['instance']}}"  
                                       cube-name="{{mainData['cube']}}" 
                                       title="{{item.alias}}"
-                                      driver="Allocated Hrs" 
+                                      driver="Total:{{$root.selections.accountChosen}}" 
                                       id-name="{{$index+1}}" 
                                       ledgend="{{mainData['chart']['ledgend']}}"
                                       cell-set-get-array-val-one = "{{$root.chartValues[item.key][0]}}"

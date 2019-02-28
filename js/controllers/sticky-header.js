@@ -20,10 +20,11 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $rootScope.selections.account = "4";
     $scope.loggedOut = false;
     $scope.subsetSelected = false;	
+    $scope.chartselections = [];
     $scope.mainData = {
         "timeoutBlockout":true,
-        "debug":true,
-        "debugJson":true,
+        "visualiseChartValues":true,
+        "debugJson":false,
         "rowDimension":{"name":"Account", "subset":"dashboard","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
         "instance":"dev",
@@ -69,9 +70,9 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             $sideDebugContent = $(el).find('#sideDebugContent');
 
             return $($body).scroll(function() { 
-                if($scope.mainData['debug']){
-                    if(document.getElementById('debug')){
-                        $scope.offsetTop = document.getElementById('debug').getBoundingClientRect().height;
+                if($scope.mainData['visualiseChartValues']){
+                    if(document.getElementById('visualiseChartValues')){
+                        $scope.offsetTop = document.getElementById('visualiseChartValues').getBoundingClientRect().height;
                     }
                     
                 }else{
@@ -319,26 +320,26 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             
             
            
-        }); 
+    }); 
 
-         $scope.$watch('$root.selections.region', function (newValue, oldValue, scope) {
+    $scope.$watch('$root.selections.region', function (newValue, oldValue, scope) {
+    
+        if(newValue != oldValue){
+            $scope.chartLoading = true;
+                $scope.removeTooltips();
+            $timeout(
+                function(){
+                $scope.chartLoading = false;
+                    
+
+                } ,1000
+            );
+        }
         
-            if(newValue != oldValue){
-                $scope.chartLoading = true;
-                 $scope.removeTooltips();
-                $timeout(
-                    function(){
-                    $scope.chartLoading = false;
-                        
-
-                    } ,1000
-                );
-            }
-            
-            
-           
-        }); 
-        $scope.chartLoadingNow = false; 
+        
+        
+    }); 
+    $scope.chartLoadingNow = false; 
     $scope.refreshChart = function(){
                 $scope.removeTooltips();
                 $scope.chartLoading = true;
