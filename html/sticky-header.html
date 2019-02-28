@@ -32,6 +32,37 @@
 			
 			overflow:hidden;
 		}
+		.fixed-container-chart{
+		
+			pointer-events: auto;
+			padding:0px;
+			position:fixed;
+			top:180px;
+			left:0px;
+			width:100%;
+			height:auto;
+			z-index:2;
+			display:block;
+			background-color: transparent;
+			color:#333;
+			
+			overflow:hidden;
+		}
+		.fixed-container-debug{
+			pointer-events: auto;
+			padding:0px;
+			position:fixed;
+			top:180px;
+			left:0px;
+			width:100%;
+			height:auto;
+			z-index:2;
+			display:block;
+			background-color: transparent;
+			color:#333;
+			
+			overflow:hidden;
+		}
 		.fixed-container-side{
 		
 			pointer-events: auto;
@@ -178,7 +209,68 @@
 						
 				</div>
 			</div>
+			<div  id="sideDebugContent" class="fixed-container-debug" 
+				style="z-index:33; background-color:#fff;  "  
+				ng-style="{'top': (  (getContainerTop('stickyContainer'))    )+'px' , 'height':getContainerHeight('debug')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				<table class="table">
+					<tbody  >
+							<tr>
+								<td>
+							 <p class="pull-left" ng-if="mainData['debug']"
+							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
+							 >  
+							 <h5>
+							 <tm1-ui-dbra tm1-instance="{{mainData['instance']}}" tm1-dimension="{{mainData['rowDimension']['name']}}" tm1-element="{{$root.selections.account}}" tm1-attribute="{{mainData['rowDimension']['attributes']}}" tm1-read-only="true"></tm1-ui-dbra> <br>
+							 </h5>
+								<h5 style="width:100%; " ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
+									  {{item.name}} <br>
+								</h5>
+								<span ng-init="getSubsetList()"> </span>
+							</p>
 
+							 
+								</td>
+							</tr>
+					</tbody>
+				</table>
+			</div>
+			<div  id="sideChartContent" class="fixed-container-chart" 
+				style="z-index:33; background-color:#fff;  "  
+				ng-style="{'top': (  (getContainerTop('stickyContainer')) +getContainerHeight('debug')  )+'px' , 'height':getContainerHeight('chartRow')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				<table class="table">
+					<tbody  >
+							<tr>
+								<td>
+							 	<p class="pull-left" 
+							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
+							 > 
+								<span ng-repeat="item in mainData['chart']['ledgend']">
+									<i ng-style="{'color':item.color}"   
+									class="fa fa-square fa-fw"></i> {{item.name}}  <br>
+								</span>
+								<span ng-init="getSubsetList()"> </span>
+							</p>
+
+							<div class="text-right" style="display:inline-block; width:50%; float:right; right:0px;" id="bulletChartContainerDrop"   > 
+							</div>
+							<my-bullet-chart 
+									ng-if="$root.chartsDataLoaded && !chartLoading"
+									tm1-instance="{{mainData['instance']}}"  
+									cube-name="{{mainData['cube']}}" 
+									title="0"
+									driver="Allocated Hrs" 
+									id-name="" 
+									ledgend="{{mainData['chart']['ledgend']}}"
+									cell-set-get-array-val-one = "0"
+									cell-set-get-array-val-two = "0"
+									cell-set-get-array-val-three = "0"
+									
+							></my-bullet-chart> 
+								</td>
+							</tr>
+					</tbody>
+				</table>
+			</div>
 			<div  id="sideContent" class="fixed-container-side" style="z-index:30; " style="height:37px"
 				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headerContent')) +getContainerHeight('debug')  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
 				<table class="table">
@@ -224,26 +316,43 @@
 					
 					 
 					<tr id="debug"  ng-show="mainData['debug']">
-						<td  class="text-left min-width250"></td>
+						<td     class="text-left min-width250">
+							<p class="pull-left" ng-if="mainData['debug']"
+							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
+							 >  
+							 <h5>
+							 <tm1-ui-dbra tm1-instance="{{mainData['instance']}}" tm1-dimension="{{mainData['rowDimension']['name']}}" tm1-element="{{$root.selections.account}}" tm1-attribute="{{mainData['rowDimension']['attributes']}}" tm1-read-only="true"></tm1-ui-dbra> <br>
+							 </h5>
+								<h5 style="width:100%; " ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
+									  {{item.name}} <br>
+								</h5>
+								<span ng-init="getSubsetList()"> </span>
+							</p>
+						</td>
 						<td ng-init="$root.chartValues[col.key] = [];" 
 							class="text-right"
 							ng-if="!chartLoading && lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department"
 							ng-repeat="col in lists.months track by $index">
-
+							<h5>
+								{{col.alias}} &nbsp;
+							</h5>
+							<h5 ng-style="{  'color':mainData['chart']['ledgend'][0]['color']}">
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
 								tm1-elements="Actual,{{$root.selections.year}},{{col.key}},Local,{{$root.selections.region}},{{$root.selections.department}},{{$root.selections.account}},Amount"
 								ng-model="$root.chartValues[col.key][0]"
 								> 
-							</tm1-ui-dbr>
+							</tm1-ui-dbr></h5>
+							<h5  ng-style="{  'color':mainData['chart']['ledgend'][1]['color']}">
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
 								tm1-elements="Budget,{{$root.selections.year}},{{col.key}},Local,{{$root.selections.region}},{{$root.selections.department}},{{$root.selections.account}},Amount"
 								ng-model="$root.chartValues[col.key][1]"
 									> 
-							</tm1-ui-dbr>
+							</tm1-ui-dbr></h5>
+							<h5 ng-style="{  'color':mainData['chart']['ledgend'][2]['color']}">
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
@@ -251,6 +360,7 @@
 								ng-model="$root.chartValues[col.key][2]"
 								> 
 							</tm1-ui-dbr> 
+							</h5>
 
 							
 							
@@ -273,7 +383,7 @@
 							 > 
 								<span ng-repeat="item in mainData['chart']['ledgend']">
 									<i ng-style="{'color':item.color}"   
-									class="fa fa-square fa-fw"></i> {{item.name}} <br>
+									class="fa fa-square fa-fw"></i> {{item.name}}  <br>
 								</span>
 								<span ng-init="getSubsetList()"> </span>
 							</p>

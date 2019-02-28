@@ -63,7 +63,10 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             $fixedHeader = $(el).find('.fixed-container');
             $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
             $sideContent = $(el).find('#sideContent');
-            $subsetDropdown = $(el).find('#subsetDropDown')
+            $subsetDropdown = $(el).find('#subsetDropDown');
+            $sideChartContent = $(el).find('#sideChartContent');
+            $sideDebugContent = $(el).find('#sideDebugContent');
+
             return $($body).scroll(function() { 
                 if($scope.mainData['debug']){
                     if(document.getElementById('debug')){
@@ -107,11 +110,18 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                        // $($fixedFirstColHeader).css('display','none'); 
                     } 
                     if($($body).scrollLeft() != 0){
-                         
+                         $(sideChartContent).css('display', 'block');
+                           $($sideChartContent).css('margin-top', -$($body).scrollTop());
+                           $(sideDebugContent).css('display', 'block');
+                           $($sideDebugContent).css('margin-top', -$($body).scrollTop());
+
+                           
                           $($sideContent).css('display', 'block');
                         $($sideContent).css('margin-top', -$($body).scrollTop());
                     }else{
                         $($sideContent).css('display', 'none');
+                        $(sideChartContent).css('display', 'none');
+                        $(sideDebugContent).css('display', 'none');
                     }
                      
                     $($subsetDropdown).css('margin-top', -$($body).scrollTop());

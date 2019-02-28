@@ -162,7 +162,7 @@ d3.bullet = function(index, minVal, maxVal, showAxis) {
         //    .text(function(d, i) { console.log(this.getAttribute("x")); var sety = this.getAttribute("y"); this.setAttribute("y", (sety)-5 );  var measureVal = measurez[i];  if(i === 0){ measureVal =  measurez[0]- measurez[1] }else{ }  if(measureVal > 999){ measureVal = Math.round(measureVal/1000)+'k' }else{} if(measureVal === 0){}else{ return measureVal;}  });
 
 
-      if(index === '0'){
+      if(index === '0' || index === '' || !index){
          // console.log("index", index);
            var axis = g.selectAll("g.axis").data([0]);
             axis.enter().append("g").attr("class", "axis");

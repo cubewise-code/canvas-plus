@@ -136,7 +136,8 @@
         scope.exampleData = json;
        
         var margin = {top: 5, right: 0, bottom: 20, left: 70};
-        if(scope.idName === '0'){
+        if(scope.idName === '0' || scope.idName === ''){
+            console.log("axis load");
             var width = 70  ;
         }else{
             if(scope.idName > 6){ 
@@ -163,7 +164,7 @@
             .attr("width", width)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("transform", "translate(" + (scope.idName  === '0'? (70):-5) + "," + margin.top + ")")
+            .attr("transform", "translate(" + (scope.idName  === '0' || scope.idName  === '' ? (70):-5) + "," + margin.top + ")")
             .call(chart)
             .on("mouseover", function(d){tooltip.html(
                 '<h5 class="col-md-12 col-xs-12" style="color:#333; font-weight:600;margin:0px; padding:10px; background-color:lightgrey; border-bottom:thin solid #333;">'+scope.driver+' : '+d['title']+
