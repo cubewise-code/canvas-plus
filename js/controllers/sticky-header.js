@@ -23,6 +23,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.mainData = {
         "timeoutBlockout":true,
         "debug":true,
+        "debugJson":true,
         "rowDimension":{"name":"Account", "subset":"dashboard","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
         "instance":"dev",
@@ -276,7 +277,10 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             }
             if( (arrayToKeep).indexOf($rootScope.selections.account) === -1  ){
              //   console.log("NO SELECTED ACCOUNT IN SUBSET - INITIALISE FIRST IN THE LIST");
-                $rootScope.selections.account = $scope.lists.account['0']['key'];
+                if($scope.lists.account.length){
+                           $rootScope.selections.account = $scope.lists.account['0']['key'];
+                }
+          
                 
             }
                  },1000 )

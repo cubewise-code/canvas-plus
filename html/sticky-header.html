@@ -220,7 +220,14 @@
 							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
 							 <h5>
-							 <tm1-ui-dbra tm1-instance="{{mainData['instance']}}" tm1-dimension="{{mainData['rowDimension']['name']}}" tm1-element="{{$root.selections.account}}" tm1-attribute="{{mainData['rowDimension']['attributes']}}" tm1-read-only="true"></tm1-ui-dbra> <br>
+							 <tm1-ui-dbra 
+								tm1-instance="{{mainData['instance']}}" 
+								tm1-dimension="{{mainData['rowDimension']['name']}}" 
+								tm1-element="{{$root.selections.account}}" 
+								tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
+								tm1-read-only="true">
+							 </tm1-ui-dbra> 
+							<br>
 							 </h5>
 								<h5 style="width:100%; " ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
 									  {{item.name}} <br>
@@ -307,21 +314,29 @@
 										  >{{item['Name']}}
 										</td>
 									</tr>
+									 
 								</table>
 			</div>
 
             <table id="test-element-list-item-display"  class="table table-bordered">
 			   
 				<tbody ng-if="lists.months ">
-					
 					 
 					<tr id="debug"  ng-show="mainData['debug']">
+						 
 						<td     class="text-left min-width250">
 							<p class="pull-left" ng-if="mainData['debug']"
 							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
 							 <h5>
-							 <tm1-ui-dbra tm1-instance="{{mainData['instance']}}" tm1-dimension="{{mainData['rowDimension']['name']}}" tm1-element="{{$root.selections.account}}" tm1-attribute="{{mainData['rowDimension']['attributes']}}" tm1-read-only="true"></tm1-ui-dbra> <br>
+							 <tm1-ui-dbra 
+								tm1-instance="{{mainData['instance']}}" 
+								tm1-dimension="{{mainData['rowDimension']['name']}}" 
+								tm1-element="{{$root.selections.account}}" 
+								tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
+								tm1-read-only="true">
+							 </tm1-ui-dbra> 
+							<br> 
 							 </h5>
 								<h5 style="width:100%; " ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
 									  {{item.name}} <br>
@@ -381,6 +396,7 @@
 							<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 > 
+							 
 								<span ng-repeat="item in mainData['chart']['ledgend']">
 									<i ng-style="{'color':item.color}"   
 									class="fa fa-square fa-fw"></i> {{item.name}}  <br>
@@ -471,6 +487,11 @@
 										
 						</td>
 	            	</tr>
+					<tr ng-if="mainData['debugJson']">
+										<td colspan="{{lists.months.length + 1}}">
+											{{mainData | json}}
+										</td>
+									</tr>
             	</tbody>
             	
             </table> 
@@ -493,6 +514,7 @@
 					>{{item['Name']}}
 				</td>
 			</tr>
+			 
 		</table>
 	</div>
 	<div id="blockOut" ng-if="idelTimePassed && timeoutBlockout" class="black-bg">
