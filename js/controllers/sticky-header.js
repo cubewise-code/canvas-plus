@@ -404,7 +404,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         $timeout(
             function(){
  
-                if($scope.countIdel >= 10){
+                if($scope.countIdel > 0){
                       
                     if($scope.mouseMovedXY === $scope.lastMovedXY){
                         console.log("running timeout",$scope.alpha, $scope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
@@ -435,24 +435,21 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                      $scope.lastMovedXY = $scope.mouseMovedXY;
                     if( $scope.idelTimePassed  ){
                      
-                             if($scope.alpha >= 0.8){
+                             
                                   $scope.alpha = 0.9;
-                             }else{
-                                  $scope.alpha = $scope.alpha + ((1/5));
-                             }
+                             
                             
                            // console.log("STARTED PAUSE HIDING INFO");
                             document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,"+$scope.alpha+")";
                          
                         
-                    }else{
-                        
-                    }
+                    } 
+                   // console.log("count", $scope.countIdel);
                     $scope.countIdel++; 
                     $scope.runTimeout();
                 }
                 
-            },50000
+            },300000
         )
     }
     $scope.runTimeout();
