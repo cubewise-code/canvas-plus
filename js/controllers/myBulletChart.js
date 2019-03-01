@@ -167,7 +167,7 @@
             .attr("transform", "translate(" + (scope.idName  === '0' || scope.idName  === '' ? (70):-5) + "," + margin.top + ")")
             .call(chart)
             .on("mouseover", function(d){tooltip.html(
-                '<h5 class="col-md-12 col-xs-12" style="color:#333; font-weight:600;margin:0px; padding:10px; background-color:lightgrey; border-bottom:thin solid #333;">'+scope.driver+' : '+d['title']+
+                '<h5 class="col-md-12 col-xs-12" style="color:#333; font-weight:600;margin:0px; padding:10px; background-color:white; border-bottom:thin solid #333;">'+scope.driver+' : '+d['title']+
                   ' </h5> '+''+
                   ' </p> <p class="col-md-12 col-xs-12" style="color:#fff; padding:5px; padding-left:10px; padding-right:10px; border-bottom:1px solid #ccc;  margin:0px;  background-color:'+d.ledgend['1'].color+'"> '+d.ledgend['1'].name+': <span class="pull-right text-right">'+ $filter('number')((Math.round( d['measures'] )), 0) + ' </span>'+
                   ' <p class="col-md-12 col-xs-12" style="  padding:5px; padding-left:10px;  padding-right:10px; border-bottom:1px solid #ccc;  margin:0px;   color:#fff;  background-color:'+d.ledgend['0'].color+'"> '+d.ledgend['0'].name+':  <span class="pull-right text-right">'+ $filter('number')(Math.round( d['actuals'] ), 0)  + '</span>'+ 

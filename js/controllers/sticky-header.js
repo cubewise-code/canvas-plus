@@ -31,6 +31,8 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "instance":"dev",
         "cube":"General Ledger",
         "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
+        "dbrPercentageFormat":false,
+        "dbrDataDecimal":0,
         "chart":{
              "dimensionComparison":"Version",
              "size":3,
