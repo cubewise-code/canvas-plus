@@ -150,6 +150,25 @@
 	</tm1-ui-element-list>           	
  
 
+ <tm1-ui-element-list 
+		ng-if="mainData['rowDimension']['mdx']"
+		tm1-instance="{{mainData['instance']}}"   
+		tm1-dimension="{{mainData['rowDimension']['name']}}" 
+		tm1-mdx="{{mainData['rowDimension']['mdx']}}" 
+		ng-model="lists.account" 
+		tm1-attributes="{{mainData['rowDimension']['attributes']}}">
+	</tm1-ui-element-list>        
+
+	<tm1-ui-element-list
+		ng-if="mainData['colDimension']['mdx']" 
+		tm1-instance="{{mainData['instance']}}" 
+		tm1-dimension="{{mainData['colDimension']['name']}}" 
+		tm1-mdx="{{mainData['colDimension']['mdx']}}" 
+		ng-model="lists.months" 
+		tm1-attributes="{{mainData['colDimension']['attributes']}}">
+	</tm1-ui-element-list>           	
+ 
+
 	  
       	
 	<div id="stickyContainer" class="stickyContainer"  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
@@ -162,6 +181,7 @@
 						  		
 								  
 								<button 
+									ng-if="mainData['rowDimension']['subset']"
 									class="btn btn-primary" 
 									id="subsetSelect"  
 									ng-click="  subsetSelected = !subsetSelected"
@@ -187,6 +207,7 @@
 						<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
 						style="background-color: #f8f8f8; display:inline-block; margin: 0 auto;  padding:5px; 	border: 1px solid #ddd;   float:left; ">
 						 	    <button 
+								 	ng-if="mainData['rowDimension']['subset']"
 									class="btn btn-primary" 
 									id="subsetSelect"  
 									ng-click="  subsetSelected = !subsetSelected"
@@ -361,7 +382,7 @@
 							ng-if="!chartLoading && lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department"
 							ng-repeat="col in lists.months track by $index">
 							<h5>
-								 {{item.name}} <br>
+								 {{col.alias}} <br>
 							</h5>
 							<h5  ng-style="{  'color':mainData['chart']['ledgend'][0]['color']}">
 							<tm1-ui-dbr
@@ -396,7 +417,7 @@
 					</tr>
 					<tr ng-if="lists.months" ng-show="false">
 						<td  class="text-left min-width250"></td>
-						<td ng-if="$root.chartValues[monthz.key].length === 3" 
+						<td ng-if="$root.chartValues[monthz.key].length === mainData['chart']['size']" 
 						ng-init="loadChartValues($root.chartValues[monthz.key][0], $root.chartValues[monthz.key][1], $root.chartValues[monthz.key][2])" 
 						ng-repeat="monthz in lists.months track by $index" >  
 						</td>

@@ -21,19 +21,21 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
-    
-    $scope.mainData = {
+    $scope.refreshMainData = function(){
+         $scope.mainData = {
         "timeoutBlockout":true,
         "visualiseChartValues":true,
         "debugJson":false,
-        "rowDimension":{"name":"Account", "subset":"dashboard","attributes":"Description"},
+        "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
         "instance":"dev",
         "cube":"General Ledger",
         "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
         "chart":{
-            "dimensionComparison":"Version",
+             "dimensionComparison":"Version",
+             "size":3,
              "ledgend": {
+                 
                 "0": {
                 "color": "#4F81BD",
                 "name": "Actual"
@@ -48,9 +50,14 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 }
             }
         }
+          
 
     };
+    
+    }
+    $scope.refreshMainData();
     $rootScope.selections.subset = $scope.mainData['rowDimension']['subset'];
+
     $scope.getSubsetList  = function(){
         $tm1Ui.dimensionSubsets($scope.mainData['instance'],$scope.mainData['rowDimension']['name']).then(function(result){
              //console.log(result, "!!!!!!!!!!!!!");
@@ -92,36 +99,8 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
  
         
     }
-    $scope.refreshMainData = function(){
-         $scope.mainData = {
-        "timeoutBlockout":true,
-        "visualiseChartValues":true,
-        "debugJson":false,
-        "rowDimension":{"name":"Account", "subset":"dashboard","attributes":"Description"},
-        "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
-        "instance":"dev",
-        "cube":"General Ledger",
-        "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
-        "chart":{
-             "dimensionComparison":"Version",
-             "ledgend": {
-                "0": {
-                "color": "#4F81BD",
-                "name": "Actual"
-                },
-                "1": {
-                "color": "#bdbdbd",
-                "name": "Budget"
-                },
-                "2": {
-                "color": "darkred",
-                "name": "Last Year"
-                }
-            }
-        }
 
-    };
-    }
+     
     $rootScope.chartValues = [];
     var stickyContainer = function(el) {
             $body = $(el);  
