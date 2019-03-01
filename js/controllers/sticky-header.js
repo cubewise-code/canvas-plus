@@ -24,7 +24,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.refreshMainData = function(){
          $scope.mainData = {
         "timeoutBlockout":true,
-        "visualiseChartValues":true,
+        "visualiseChartValues":false,
         "debugJson":false,
         "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
@@ -39,15 +39,15 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
              "ledgend": {
                  
                 "0": {
-                "color": "#4F81BD",
+                "color": $rootScope.applicationHeaderColorSelect,
                 "name": "Actual"
                 },
                 "1": {
-                "color": "#bdbdbd",
+                "color": $rootScope.applicationHeaderColorBudget,
                 "name": "Budget"
                 },
                 "2": {
-                "color": "darkred",
+                "color":  $rootScope.applicationHeaderColorSecondary,
                 "name": "Last Year"
                 }
             }
@@ -59,7 +59,8 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     }
     $scope.refreshMainData();
     $rootScope.selections.subset = $scope.mainData['rowDimension']['subset'];
-
+    $rootScope.selections.version = $scope.mainData['chart']['ledgend'][0]['name'];
+ 
     $scope.getSubsetList  = function(){
         $tm1Ui.dimensionSubsets($scope.mainData['instance'],$scope.mainData['rowDimension']['name']).then(function(result){
              //console.log(result, "!!!!!!!!!!!!!");

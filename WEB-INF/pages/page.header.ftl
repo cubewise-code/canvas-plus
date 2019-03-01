@@ -63,8 +63,11 @@
       
 <div   
     class="nav" id="header" ng-init="animatePadding($root.defaultOffSet);"   
-    style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;    padding-top:{{$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}}; background-color:#201c1a;" ng-mouseover="$root.top = 65"   >  
-       <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:0px; padding-top:{{$root.user.FriendlyName ? '10px':'100%'}};">
+    ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}" 
+    style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   >  
+       <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:0px;  "
+       ng-style="{'padding-top':$root.user.FriendlyName ? '10px':'100%'}"
+       >
     <a href="#">
         <img src="images/logo.svg" 
         title="Your Logo Here" 
@@ -72,14 +75,14 @@
     </a>
   </div>
     
-        <ul class="navbuttons" style="vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:#201c1a;" ng-mouseleave = "status.isopen = false;" >
+        <ul class="navbuttons"   style="vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " ng-mouseleave = "status.isopen = false;" >
           <li   ng-click="$root.activeTab = -1;  "   id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
             ng-mouseover="$root.activeTabOver = 'home'"  ng-mouseleave="$root.activeTabOver = ''" >
                 
                     <a href="#" data-toggle="tab"  > 
                        
                         <i  
-                        class="fa fa-caret-left fa-1x"></i>    <span class="hidden-xs"> Home </span> 
+                        class="fa fa-home fa-1x"></i>    <span class="hidden-xs"> Home </span> 
                     </a> 
                 
             </li> 
@@ -93,7 +96,8 @@
                
                 <div class="btn-group" uib-dropdown dropdown-append-to-body outsideClick is-open="status.isopen"  >
                    
-                    <a ng-href="#/{{findClickthrough(item.data.page)}}"   style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " ng-click="$root.indexOver = $index;"   >
+                    <a ng-href="#/{{findClickthrough(item.data.page)}}"  
+                     style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " ng-click="$root.indexOver = $index;"   >
                             <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i>   
                             <span class="hidden-xs"> 
                             {{item.label}}   
@@ -101,10 +105,12 @@
                             <span ng-if="$root.menuData[0]['children'][$index].children.length > 0" class="caret"></span>
                     </a>
                    <!-- <ul  ng-mousemove="$root.top = 65" class="dropdown-menu" uib-dropdown-menu role="menu"  aria-labelledby="btn-append-to-to-body" ng-if="$root.menuData[0]['children'][$index].children.length > 0" 
+                   ng-style="'top':$root.top+'px !important'"
                     style="  margin-top: 14px; margin-left: 0px;  position:absolute; border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: 0px; min-width:203px !important; top:{{$root.top}}px !important;"
                     >
                         <li ng-repeat="subitem in $root.menuData[0]['children'][$index].children track by $index" role="menuitem" ng-click="status.isopen = false;" style="margin:0px; ">
-                            <a ng-href="#/{{findClickthrough(subitem.data.page)}}" style="margin:0px; padding-top:8px; padding-bottom:8px;">{{subitem.label}}</a>
+                            <a ng-href="#/{{findClickthrough(subitem.data.page)}}" 
+                            style="margin:0px; padding-top:8px; padding-bottom:8px;">{{subitem.label}}</a>
                         </li>
                     </ul>-->
                 </div>
@@ -132,14 +138,15 @@
   
  
  
-<div class="right-hand-nav" id="righthandsidebar" 
-ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" 
+<div class="right-hand-nav" id="righthandsidebar"  
+ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" style="z-index:100;"
 ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
-    style="margin-left:{{$root.topOffSet != $root.defaultOffSet ? '-260':'0'}}px;   margin-top:100%; margin-top:{{$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}}" 
+    ng-style="{'margin-left':$root.topOffSet != $root.defaultOffSet ? '-300px':'0px', 'margin-top':$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}"  
     >
              
             <div class=" btn btn-primary  " 
-            style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px; background-color:#c02626 !important; margin-left:-45px;"  
+            style="color:#fff !important;padding:1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px;   margin-left:-45px;"  
+                ng-style="{'background-color':$root.applicationHeaderColorSecondary }"
                 ng-click="sideOpened = !sideOpened; $root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet); animateSideBar($root.topOffSet, $root.defaultOffSet, sideOpened);" 
                 ng-if="$root.topOffSet != $root.defaultOffSet"
                 >
@@ -147,7 +154,8 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
             </div>
             <div 
                 class="  btn btn-primary  " 
-                style="color:#fff !important; position:absolute; padding:1em; padding-left:1.3em; padding-right:1.3em; z-index:999; border-radius:0px;  border:none; left:0px; top:0px; background-color:#c02626 !important; margin-left:-45px;"  
+                ng-style="{'background-color':$root.applicationHeaderColorSecondary }"
+                style="color:#fff !important; position:absolute; padding:1em; padding-left:1.3em; padding-right:1.3em; z-index:999; border-radius:0px;  border:none; left:0px; top:0px;  margin-left:-45px;"  
                 ng-click="sideOpened != sideOpened; $root.topOffSet = 200;  $root.topOffSetPageView = ($root.topOffSet); animateSideBar($root.topOffSet, $root.defaultOffSet, sideOpened);" 
                 ng-if="$root.topOffSet === $root.defaultOffSet"
                 >
@@ -174,6 +182,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                     ></tm1-ui-subnm>
             </div>   
             <div class="col-lg-12 col-xs-12"> 
+             <small class="pull-right" style="color:#fff;"> Region</small><br>
                 <tm1-ui-subnm 
                 ng-show="$root.rowDriver != 'Region' && $root.columnDriver != 'Region' "
                 ng-if="$root.defaults.region != ''"
@@ -187,7 +196,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                 ></tm1-ui-subnm>
             </div>
             <div class="col-lg-12 col-xs-12">
-             
+             <small class="pull-right" style="color:#fff;"> Department</small><br>
                 <tm1-ui-subnm 
                 ng-show="$root.rowDriver != 'Department' && $root.columnDriver != 'Department' "
                     ng-if="$root.defaults.department != ''"
@@ -201,20 +210,23 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
 
  </div>
-<div  class="col-md-12 col-xs-12 nopadding" style="color:#555 !important; padding:1em; padding-left:1.3em; padding-right:60px; transition-property:margin-left, margin-top;  transition-duration: 1s, 1s;  position:fixed; z-index:5; border-radius:0px;  border:none; left:0px;   top:{{$root.defaultOffSet+45}}px; background-color:#fff !important; margin-top:100%; margin-top:{{$root.user.FriendlyName ? '0px':'100%'}}"  
-                 
-                 
-                >
-                <h4 class="text-left pull-left">{{($root.subPathBoolean ? ($root.selectedsubParentPage  ):'') | capitalize }}{{$root.pageTitle}} </h4>
-                 <span class="hidden-xs pull-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
-                     
+<div  class="col-md-12 col-xs-12 nopadding titleArea" 
+    
+    ng-style="{'top':(($root.defaultOffSet)+(45))+'px', 'margin-top':$root.user.FriendlyName ? '0px':'100%'}" 
+>
+    <h4 style="   width:100%; " 
+    class="text-left pull-left">
+        {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}}  
+        <span class="hidden-xs pull-right text-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
+            
 
-                    {{$root.defaults.year}} | 
-                    <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
-                    <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
-                    
-                </span>
-            </div>
+        {{$root.defaults.year}} | 
+        <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
+        <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
+        
+    </span>
+    </h4>
+</div>
 </div>
 <style>
   a:hover, a:focus {
@@ -222,10 +234,11 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
     text-decoration: none !important;
 }
 </style>
-   <ul  ng-mouseleave = "$root.indexOver = '';  " id="pop-over-body" ng-if="$root.menuData[0]['children'][$root.indexOver].children.length > 0" 
-                    style="   text-decorations:none;  list-style: none; margin-top: 14px; margin-left: 0px;  position:fixed; border-top-left-radius: 0px; z-index:99999; background-color:#fff; border-top-right-radius: 0px; border-top: 0px; min-width:203px !important; top:{{$root.defaultOffSet + 34}}px !important; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
-                    >
-                        <li ng-repeat="subitem in $root.menuData[0]['children'][$root.indexOver].children track by $index" role="menuitem" ng-click="status.isopen = false; $root.indexOver = '';  " style="cursor:pointer; margin:0px; text-decorations:none; padding:0px; padding:1em; border-bottom:thin solid #777; ">
-                            <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  
-                        </li>
-                    </ul>
+<ul ng-mouseleave = "$root.indexOver = '';  " 
+    id="pop-over-body" 
+    ng-if="$root.menuData[0]['children'][$root.indexOver].children.length > 0" 
+    ng-style="{'top':(($root.defaultOffSet) + (34))+'px !important'}"  class="popOverContainer" >
+    <li ng-repeat="subitem in $root.menuData[0]['children'][$root.indexOver].children track by $index" role="menuitem" ng-click="status.isopen = false; $root.indexOver = '';  " style="cursor:pointer; margin:0px; text-decorations:none; padding:0px; padding:1em; border-bottom:thin solid #777; ">
+        <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  
+    </li>
+</ul>

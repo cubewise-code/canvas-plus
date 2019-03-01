@@ -9,7 +9,7 @@
 			padding-top:0px;
 			position:fixed;
 			left:0px;
-			top:180px;
+			top:165px;
 			width:100%;
 			max-height:100%;
 			overflow:auto; 
@@ -23,7 +23,7 @@
 			pointer-events: none;
 			padding:0px;
 			position:fixed;
-			top:180px;
+			top:166px;
 			left:0px;
 			width:100%;
 			height:auto;
@@ -39,7 +39,7 @@
 			pointer-events: auto;
 			padding:0px;
 			position:fixed;
-			top:180px;
+			top:169px;
 			left:0px;
 			width:100%;
 			height:auto;
@@ -54,7 +54,7 @@
 			pointer-events: auto;
 			padding:0px;
 			position:fixed;
-			top:180px;
+			top:169px;
 			left:0px;
 			width:100%;
 			height:auto;
@@ -70,7 +70,7 @@
 			pointer-events: auto;
 			padding:0px;
 			position:fixed;
-			top:180px;
+			top:169px;
 			left:0px;
 			width:100%;
 			height:auto;
@@ -93,12 +93,13 @@
 			background-color:#fff;
 			display: none;
 		}
-		.selected-bg{
-			background-color: #4F81BD;
-			color:#fff;
-		}
+		 
 		.white-bg{
 			background-color: white;
+			color:#666;
+		}
+		.grey-bg{
+			background-color: #f8f8f8;
 			color:#666;
 		}
 		.black-bg{
@@ -117,14 +118,14 @@
 		
 
 		.bullet { font: 10px sans-serif; }
-		.bullet .marker { stroke: darkred; stroke-width: 2px; }
+		/*.bullet .marker { stroke: darkred; stroke-width: 2px; }*/
 		.bullet .axis line, .bullet .axis path { stroke: #666; stroke-width: .5px; fill: none; }
 		.bullet .range.s0 { fill: rgba(70, 130, 180, 0); }
 		.bullet .range.s1 { fill: rgba(70, 130, 180, 0);   }
 		.bullet .range.s2 { fill: rgba(255,255,255,0);   }
 		.bullet .measure.d0 { fill:  #bdbdbd }
 		
-		.bullet .actual.a { fill:  #4F81BD }
+		/*.bullet .actual.a { fill:  #4F81BD }*/
 		
 		.bullet .title { font-size: 14px; font-weight: bold; }
 		.bullet .subtitle { fill: #999; }
@@ -174,9 +175,10 @@
 	<div id="stickyContainer"  class="stickyContainer"  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
 
 			<div class="fixedFirstColHeader" 
-			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')  )+'px' ,  'width':getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " >
+			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('columnWidthDim')+getContainerWidth('columnWidth') )+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " >
 					 			 
-					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
+					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " 
+						class="text-left min-width250" 
 						style="display:inline-block; margin: 0 auto;  padding:10px; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:left; ">
 						  		
 								  
@@ -197,6 +199,11 @@
 								type="text" ng-model="page.searchAccount"   
 								placeholder="Search {{mainData['rowDimension']['name']}}..."> 
 								  
+						</div>
+						<div ng-style="{'width': getContainerWidth('columnWidth')+'px', 'height':( getContainerHeight('columnWidth'))+'px'} " 
+						class="text-center " 
+						style="display:inline-block; margin: 0 auto;  padding-top:1em; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:right; ">
+							All Months
 						</div>
 			</div>
 
@@ -225,6 +232,13 @@
 								placeholder="Search {{mainData['rowDimension']['name']}}..."> 
 								  
 						</div>
+						<div  class="text-center"
+						ng-style="{'width': getContainerWidth('columnWidth')+'px', 'height':getContainerHeight('columnWidth')+'px'} " 
+						style="background-color: #f8f8f8; 	border: 1px solid #ddd; display:inline-block; padding-top:1em;   margin: 0 auto; border-left:1px solid #ddd; float:left;">
+						 
+							All Months
+						  
+						</div>
 						<div class="text-center" ng-style="{'width': getContainerWidth('columnWidth'+$index)+'px', 'height':getContainerHeight('columnWidth'+$index)+'px'} " 
 						ng-repeat="item in lists.months track by $index" 
 						style="background-color: #f8f8f8; 	border: 1px solid #ddd; display:inline-block; padding-top:1em;   margin: 0 auto; border-left:1px solid #ddd; float:left;">
@@ -236,31 +250,51 @@
 			</div>
 			<div  id="sideDebugContent" class="fixed-container-debug" 
 				style="z-index:33; background-color:#fff;  "  
-				ng-style="{'top': (  (getContainerTop('stickyContainer'))    )+'px' , 'height':getContainerHeight('visualiseChartValues')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				ng-style="{'top': (  (getContainerTop('stickyContainer'))    )+'px' , 'height':getContainerHeight('visualiseChartValues')+'px', 'width':(getContainerWidth('columnWidthDim')+getContainerWidth('columnWidth'))+'px'}">
 				<table class="table">
 					<tbody  >
 							<tr>
-								<td>
-							 <p class="pull-left" ng-if="mainData['visualiseChartValues']"
-							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
-							 >  
-							 <h5>
-								<tm1-ui-dbra 
-									tm1-instance="{{mainData['instance']}}" 
-									tm1-dimension="{{mainData['rowDimension']['name']}}" 
-									tm1-element="{{$root.selections.account}}" 
-									tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
-									ng-model="$root.selections.accountChosen"
-									tm1-read-only="true">
-								</tm1-ui-dbra> 
-								<br>
-							 </h5>
-								<h5 style="width:100%; " 
-								ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
-									  {{item.name}} <br>
-								</h5>
-								<span ng-init="getSubsetList()"> </span>
-							</p>
+								<td colspan="2" style="padding:10px;">
+									<p class="pull-left" ng-if="mainData['visualiseChartValues']"
+									style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
+									>  
+									<h5>
+										<tm1-ui-dbra 
+											tm1-instance="{{mainData['instance']}}" 
+											tm1-dimension="{{mainData['rowDimension']['name']}}" 
+											tm1-element="{{$root.selections.account}}" 
+											tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
+											ng-model="$root.selections.accountChosen"
+											tm1-read-only="true">
+										</tm1-ui-dbra> 
+										<span class="pull-right text-right">
+											All Months
+										</span>
+										<br>
+									</h5>
+										<h5 style="width:100%; " 
+										ng-style="{'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
+											<span  style="cursor:pointer"  ng-click="$root.selections.version = item.name"  class="pull-left text-left"> 
+												<i style="font-size:0.8em" ng-if="$root.selections.version === item.name" 
+												ng-style="{'color':item.color}" 
+													class="fa fa-circle fa-1x fa-fw"></i>
+												{{item.name}}
+											</span>  
+											<span class="pull-right text-right">
+											<tm1-ui-dbr
+												ng-if="cubeDimensionalityArray.length"
+												tm1-instance="{{mainData['instance']}}"
+												tm1-cube="{{mainData['cube']}}"
+												tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],$root.selections.account)}}"
+											
+												tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
+												tm1-format-percentage="mainData['dbrPercentageFormat']"
+											> 
+											</tm1-ui-dbr>
+										</span> <br>
+										</h5>
+										<span ng-init="getSubsetList()"> </span>
+									</p>
 
 							 
 								</td>
@@ -270,11 +304,11 @@
 			</div>
 			<div  id="sideChartContent" class="fixed-container-chart" 
 				style="z-index:33; background-color:#fff;  "  
-				ng-style="{'top': (  (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')  )+'px' , 'height':getContainerHeight('chartRow')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				ng-style="{'top': (  (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')  )+'px' , 'height':getContainerHeight('chartRow')+'px', 'width':(getContainerWidth('columnWidthDim')+getContainerWidth('columnWidth'))+'px'}">
 				<table class="table">
 					<tbody  >
 						<tr>
-							<td style="padding:11px; padding-top:10px;">
+							<td colspan="2" style="padding:10px; padding-top:11px;">
 								<p class="pull-left" 
 									style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 									> 
@@ -314,15 +348,28 @@
 				</table>
 			</div>
 			<div  id="sideContent" class="fixed-container-side" style="z-index:30; " style="height:37px"
-				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headerContent')) +getContainerHeight('visualiseChartValues')  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
+				ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer'))+(getContainerHeight('headerContent')) +getContainerHeight('visualiseChartValues')  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':(getContainerWidth('columnWidthDim')+getContainerWidth('columnWidth'))+'px'}">
 				<table class="table">
 					<tbody  >
 							
 							<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
-								<td style="cursor:pointer; border-right:2px solid #ddd;  "  class="text-left min-width250" ng-style="{'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
-								ng-class="{'selected-bg':$root.selections.account === row.key, 'white-bg':$root.selections.account != row.key}" 
-								ng-click="$root.selections.account = row.key; refreshChart()">
+								<td style="cursor:pointer; border-right:2px solid #ddd;  "  
+									class="text-left min-width250" 
+									ng-style="{'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
+									ng-class="{'selected-bg':$root.selections.account === row.key, 'white-bg':$root.selections.account != row.key}" 
+									ng-click="$root.selections.account = row.key; refreshChart()">
 										<tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias}}"></tm1-ui-element-list-item>
+								</td>
+								<td ng-style="{'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
+									ng-class="{'selected-bg':$root.selections.account === row.key, 'grey-bg':$root.selections.account != row.key}" 
+									class="text-right " >
+									<tm1-ui-dbr 
+											tm1-instance="{{mainData['instance']}}" 
+											tm1-cube="{{mainData['cube']}}" 
+											tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
+											tm1-format-percentage="mainData['dbrPercentageFormat']"
+											tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],row.key)}}">
+									</tm1-ui-dbr>
 								</td>
 								
 							</tr>
@@ -343,7 +390,7 @@
 										</td>
 									</tr>
 									<tr ng-repeat="item in lists.subsetList track by $index">
-										<td  ng-style="{'background-color': $root.selections.subset === item.Name ? 'steelblue':'white' ,'color': $root.selections.subset === item.Name ? 'white':'#666'  }" 
+										<td  ng-style="{'background-color': $root.selections.subset === item.Name ? $root.applicationHeaderColorSecondary:'#f8f8f8' ,'color': $root.selections.subset === item.Name ? 'white':'#666'  }" 
 										style="cursor:pointer; padding:10px;"  
 										ng-click="$root.selections.subset = item.Name" >
 										  	{{item['Name']}}
@@ -353,13 +400,14 @@
 								</table>
 			</div>
 
-            <table ng-style="{'pointer-events':!chartLoading && $root.chartsDataLoaded ? 'auto':'none'}" id="test-element-list-item-display"  class="table table-bordered">
+            <table ng-style="{'pointer-events':!chartLoading && $root.chartsDataLoaded ? 'auto':'none'}" id="test-element-list-item-display"  
+			class="table table-bordered">
 			   
 				<tbody ng-if="lists.months ">
 					 
 					<tr id="visualiseChartValues"  ng-show="mainData['visualiseChartValues']">
 						 
-						<td     class="text-left min-width250">
+						<td  colspan="2" style="padding:10px; padding-top:11px;" class="text-left min-width250">
 							<p class="pull-left" ng-if="mainData['visualiseChartValues']"
 							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
@@ -371,10 +419,33 @@
 								tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
 								tm1-read-only="true">
 							 </tm1-ui-dbra> 
+							 <span class="pull-right text-right">
+								 All Months
+							 </span>
 							<br> 
 							 </h5>
-								<h5 style="width:100%; " ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
-									  {{item.name}} <br>
+								<h5 style="width:100%; " 
+								ng-style="{ 'color':item.color}"  
+								ng-repeat="item in mainData['chart']['ledgend'] track by $index">
+									<span style="cursor:pointer" 
+									ng-click="$root.selections.version = item.name" 
+									class="pull-left text-left"> 
+										<i style="font-size:0.8em" ng-if="$root.selections.version === item.name" ng-style="{'color':item.color}" 
+										class="fa fa-circle fa-1x fa-fw"></i>
+											{{item.name}}
+									</span>  
+									<span class="pull-right text-right">
+									<tm1-ui-dbr
+										ng-if="cubeDimensionalityArray.length"
+										tm1-instance="{{mainData['instance']}}"
+										tm1-cube="{{mainData['cube']}}"
+										tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],$root.selections.account)}}"
+									
+										tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
+										tm1-format-percentage="mainData['dbrPercentageFormat']"
+									> 
+									</tm1-ui-dbr>
+								 </span> <br>
 								</h5>
 								<span ng-init="getSubsetList()"> </span>
 							</p>
@@ -433,7 +504,7 @@
 					</tr>
 					<tr id="chartRow" >
 						 
-						<td  class="text-left" style="padding:10px"     >
+						<td  colspan="2" class="text-left" style="padding:10px"     >
 							<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
@@ -447,7 +518,7 @@
 
 										<i ng-style="{'color':item.color}"  class="fa fa-square fa-fw"></i>  
 										{{item.name}}  
-									</button> 
+									</button> <br>
 								</span>
 								<span ng-init="getSubsetList()"> </span>
 							</p>
@@ -536,7 +607,8 @@
 				
             	<tbody  id="headerContent">
             		<tr>
-            			<td id="columnWidthDim" class="text-left min-width250 colwidth" style="background-color: #f8f8f8;">
+            			<td colspan="1" id="columnWidthDim" class="text-left min-width250 colwidth" 
+							style="padding:10px; background-color: #f8f8f8;">
 							<button 
 									ng-if="mainData['rowDimension']['subset']"
 									class="btn btn-primary" 
@@ -557,7 +629,11 @@
 							placeholder="Search {{mainData['rowDimension']['name']}}...">
 
  						</td>
-            			<td style="background-color: #f8f8f8;"class="text-center colwidth" id="columnWidth{{$index}}" ng-repeat="item in lists.months track by $index">
+						 <td class="text-center colwidth" id="columnWidth" style="background-color: #f8f8f8;" >
+							All Months
+						 </td>
+            			<td style="background-color: #f8f8f8;" class="text-center colwidth" 
+						id="columnWidth{{$index}}" ng-repeat="item in lists.months track by $index">
 							{{item.alias}}
 						</td>          			
             		</tr>
@@ -566,19 +642,33 @@
 				ng-if="lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
 					
 					<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
-	            		<td style="cursor:pointer; " id="rowHieghtElement{{$index}}" class="text-left min-width250" 
+	            		<td  style="cursor:pointer; " 
+						id="rowHieghtElement{{$index}}" 
+						class="text-left min-width250" 
 						ng-class="{'selected-bg':$root.selections.account === row.key, 'white-bg':$root.selections.account != row.key}" 
 						ng-click="$root.selections.account = row.key; refreshChart()">
 								<tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias}}"></tm1-ui-element-list-item>
 						</td>
-                  		<td class="text-right" ng-repeat="item in lists.months track by $index">
-							<tm1-ui-dbr-read-only 
+						<td style="cursor:pointer; "   
+						class="text-right" 
+						ng-class="{'selected-bg':$root.selections.account === row.key, 'grey-bg':$root.selections.account != row.key}" >
+							<tm1-ui-dbr 
 								tm1-instance="{{mainData['instance']}}" 
 								tm1-cube="{{mainData['cube']}}" 
 								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 								tm1-format-percentage="mainData['dbrPercentageFormat']"
-                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][0]['name'], mainData['colDimension']['name'],item.key,mainData['rowDimension']['name'],row.key)}}">
-							</tm1-ui-dbr-read-only>
+                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],row.key)}}">
+							</tm1-ui-dbr>
+										
+						</td>
+                  		<td class="text-right" ng-repeat="item in lists.months track by $index">
+							<tm1-ui-dbr 
+								tm1-instance="{{mainData['instance']}}" 
+								tm1-cube="{{mainData['cube']}}" 
+								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
+								tm1-format-percentage="mainData['dbrPercentageFormat']"
+                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],item.key,mainData['rowDimension']['name'],row.key)}}">
+							</tm1-ui-dbr>
 										
 						</td>
 	            	</tr>
@@ -603,7 +693,7 @@
 				</td>
 			</tr>
 			<tr ng-repeat="item in lists.subsetList track by $index">
-				<td  ng-style="{'background-color': $root.selections.subset === item.Name ? 'steelblue':'white' ,'color': $root.selections.subset === item.Name ? 'white':'#666'  }" 
+				<td  ng-style="{'background-color': $root.selections.subset === item.Name ? $root.applicationHeaderColorSecondary:'white' ,'color': $root.selections.subset === item.Name ? 'white':'#666'  }" 
 					style="cursor:pointer;"  
 					ng-click="  $root.selections.subset = item.Name"
 					>{{item['Name']}}

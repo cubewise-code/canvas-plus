@@ -7,7 +7,7 @@ app.controller('summaryCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$tm1Ui
     * 
     *     For more information: https://github.com/cubewise-code/canvas-best-practice
     */
-    
+    $rootScope.pageTitle = "Summary";
     $scope.defaults = {};
     $scope.selections = {};
     $scope.lists = {};
