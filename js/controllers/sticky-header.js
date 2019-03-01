@@ -32,6 +32,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "cube":"General Ledger",
         "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
         "chart":{
+            "dimensionComparison":"Version",
              "ledgend": {
                 "0": {
                 "color": "#4F81BD",
@@ -102,6 +103,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "cube":"General Ledger",
         "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
         "chart":{
+             "dimensionComparison":"Version",
              "ledgend": {
                 "0": {
                 "color": "#4F81BD",
@@ -250,7 +252,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     }
     $scope.loadChartValues = function(one,two,three){
 
-      //console.log(one,two,three)
+      ////console.log(one,two,three)
                     var numone = one;
                       var numtwo = two;
                         var numthree = three;
@@ -465,7 +467,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 if($scope.countIdel > 0){
                       
                     if($scope.mouseMovedXY === $scope.lastMovedXY){
-                        console.log("running timeout",$scope.alpha, $scope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
+                        //console.log("running timeout",$scope.alpha, $scope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
                         if($scope.alpha >= 0.9){
                             $scope.idelTimePassed = true;
                             $scope.countIdel = 10;

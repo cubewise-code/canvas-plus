@@ -367,7 +367,7 @@
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
-								tm1-elements="{{getElementArray('Version','Actual', 'Period',col.key,'Account',$root.selections.account)}}"
+								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][0]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
 								ng-model="$root.chartValues[col.key][0]"
 								> 
 							</tm1-ui-dbr></h5>
@@ -375,7 +375,7 @@
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
-								tm1-elements="{{getElementArray('Version','Budget', 'Period',col.key,'Account',$root.selections.account)}}"
+								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][1]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
 								ng-model="$root.chartValues[col.key][1]"
 									> 
 							</tm1-ui-dbr></h5>
@@ -383,7 +383,7 @@
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
-								tm1-elements="{{getElementArray('Version','Last Year', 'Period',col.key,'Account',$root.selections.account)}}"
+								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][2]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
 								ng-model="$root.chartValues[col.key][2]"
 								> 
 							</tm1-ui-dbr> 
@@ -526,7 +526,7 @@
             		</tr>
             	</tbody>
             	<tbody  id="bodyContent" ng-init="setUpStickyHeader();" 
-				ng-if="!chartLoading && lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
+				ng-if="lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
 					
 					<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
 	            		<td style="cursor:pointer; " id="rowHieghtElement{{$index}}" class="text-left min-width250" 
@@ -536,11 +536,10 @@
 						</td>
                   		<td class="text-right" ng-repeat="item in lists.months track by $index">
 							<tm1-ui-dbr-read-only 
-								tm1-instance="dev" 
-								tm1-cube="General Ledger" 
-								tm1-data-decimal="0" 
-								tm1-read-only="true"
-                  				tm1-elements="{{getElementArray('Version','Actual', 'Period',item.key,'Account',row.key)}}">
+								tm1-instance="{{mainData['instance']}}" 
+								tm1-cube="{{mainData['cube']}}" 
+								tm1-data-decimal="0"  
+                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][0]['name'], mainData['colDimension']['name'],item.key,mainData['rowDimension']['name'],row.key)}}">
 							</tm1-ui-dbr-read-only>
 										
 						</td>
