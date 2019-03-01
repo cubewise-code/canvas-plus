@@ -1,4 +1,6 @@
-<div ng-controller="stickyheaderCtrl" ng-mousemove="mouseMovedSetXY($event)">
+<div ng-controller="stickyheaderCtrl" 
+	ng-if="$root.selections.year && $root.selections.region && $root.selections.department" 
+	ng-mousemove="mouseMovedSetXY($event)">
 	<style>
 		body,html{
 			overflow:hidden;
@@ -184,7 +186,7 @@
 					
 						<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
 						style="background-color: #f8f8f8; display:inline-block; margin: 0 auto;  padding:5px; 	border: 1px solid #ddd;   float:left; ">
-						 	<button 
+						 	    <button 
 									class="btn btn-primary" 
 									id="subsetSelect"  
 									ng-click="  subsetSelected = !subsetSelected"
@@ -220,15 +222,15 @@
 							 style=" width:100%;  display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
 							 <h5>
-							 <tm1-ui-dbra 
-								tm1-instance="{{mainData['instance']}}" 
-								tm1-dimension="{{mainData['rowDimension']['name']}}" 
-								tm1-element="{{$root.selections.account}}" 
-								tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
-								ng-model="$root.selections.accountChosen"
-								tm1-read-only="true">
-							 </tm1-ui-dbra> 
-							<br>
+								<tm1-ui-dbra 
+									tm1-instance="{{mainData['instance']}}" 
+									tm1-dimension="{{mainData['rowDimension']['name']}}" 
+									tm1-element="{{$root.selections.account}}" 
+									tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
+									ng-model="$root.selections.accountChosen"
+									tm1-read-only="true">
+								</tm1-ui-dbra> 
+								<br>
 							 </h5>
 								<h5 style="width:100%; " 
 								ng-style="{'border-bottom':'1px solid '+item.color, 'color':item.color}"  ng-repeat="item in mainData['chart']['ledgend']">
@@ -248,43 +250,43 @@
 				ng-style="{'top': (  (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')  )+'px' , 'height':getContainerHeight('chartRow')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}">
 				<table class="table">
 					<tbody  >
-							<tr>
-								<td>
-							 	<p class="pull-left" 
-							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
-							 > 
-								<span 	style="cursor:pointer" 
-								ng-click=" $index != 0 ?  doClickLedgend($index):'' " 
-								ng-repeat="item in mainData['chart']['ledgend']">
-									<button  
-									class="btn" 
-									style="padding:0px; background-color:transparent !important " 
-									ng-class="{'disabled':!chartselections[$index] }">
+						<tr>
+							<td>
+								<p class="pull-left" 
+									style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
+									> 
+									<span 	style="cursor:pointer" 
+									ng-click=" $index != 0 ?  doClickLedgend($index):'' " 
+									ng-repeat="item in mainData['chart']['ledgend']">
+										<button  
+										class="btn" 
+										style="padding:0px; background-color:transparent !important " 
+										ng-class="{'disabled':!chartselections[$index] }">
 
-										<i ng-style="{'color':item.color}"  class="fa fa-square fa-fw"></i>  
-										{{item.name}}  
-									</button> 
-								</span>
-								<span ng-init="getSubsetList()"> </span>
-							</p>
+											<i ng-style="{'color':item.color}"  class="fa fa-square fa-fw"></i>  
+											{{item.name}}  
+										</button> 
+									</span>
+									<span ng-init="getSubsetList()"> </span>
+								</p>
 
-							<div class="text-right" style="display:inline-block; width:50%; float:right; right:0px;" id="bulletChartContainerDrop"   > 
-							</div>
-							<my-bullet-chart 
-									ng-if="$root.chartsDataLoaded && !chartLoading"
-									tm1-instance="{{mainData['instance']}}"  
-									cube-name="{{mainData['cube']}}" 
-									title="0"
-									driver="Total:{{$root.selections.accountChosen}}" 
-									id-name="" 
-									ledgend="{{mainData['chart']['ledgend']}}"
-									cell-set-get-array-val-one = "0"
-									cell-set-get-array-val-two = "0"
-									cell-set-get-array-val-three = "0"
-									
-							></my-bullet-chart> 
-								</td>
-							</tr>
+								<div class="text-right" style="display:inline-block; width:50%; float:right; right:0px;" id="bulletChartContainerDrop"   > 
+								</div>
+								<my-bullet-chart 
+										ng-if="$root.chartsDataLoaded && !chartLoading"
+										tm1-instance="{{mainData['instance']}}"  
+										cube-name="{{mainData['cube']}}" 
+										title="0"
+										driver="Total:{{$root.selections.accountChosen}}" 
+										id-name="" 
+										ledgend="{{mainData['chart']['ledgend']}}"
+										cell-set-get-array-val-one = "0"
+										cell-set-get-array-val-two = "0"
+										cell-set-get-array-val-three = "0"
+										
+								></my-bullet-chart> 
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -320,8 +322,8 @@
 									<tr ng-repeat="item in lists.subsetList track by $index">
 										<td  ng-style="{'background-color': $root.selections.subset === item.Name ? 'steelblue':'white' ,'color': $root.selections.subset === item.Name ? 'white':'#666'  }" 
 										style="cursor:pointer; padding:10px;"  
-										ng-click="$root.selections.subset = item.Name"
-										  >{{item['Name']}}
+										ng-click="$root.selections.subset = item.Name" >
+										  	{{item['Name']}}
 										</td>
 									</tr>
 									 
@@ -359,29 +361,29 @@
 							ng-if="!chartLoading && lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department"
 							ng-repeat="col in lists.months track by $index">
 							<h5>
-								{{col.alias}} &nbsp;
+								 {{item.name}} <br>
 							</h5>
-							<h5 ng-style="{  'color':mainData['chart']['ledgend'][0]['color']}">
+							<h5  ng-style="{  'color':mainData['chart']['ledgend'][0]['color']}">
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
-								tm1-elements="Actual,{{$root.selections.year}},{{col.key}},Local,{{$root.selections.region}},{{$root.selections.department}},{{$root.selections.account}},Amount"
+								tm1-elements="{{getElementArray('Version','Actual', 'Period',col.key,'Account',$root.selections.account)}}"
 								ng-model="$root.chartValues[col.key][0]"
 								> 
 							</tm1-ui-dbr></h5>
-							<h5  ng-style="{  'color':mainData['chart']['ledgend'][1]['color']}">
+							<h5 ng-style="{  'color':mainData['chart']['ledgend'][1]['color']}">
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
-								tm1-elements="Budget,{{$root.selections.year}},{{col.key}},Local,{{$root.selections.region}},{{$root.selections.department}},{{$root.selections.account}},Amount"
+								tm1-elements="{{getElementArray('Version','Budget', 'Period',col.key,'Account',$root.selections.account)}}"
 								ng-model="$root.chartValues[col.key][1]"
 									> 
 							</tm1-ui-dbr></h5>
-							<h5 ng-style="{  'color':mainData['chart']['ledgend'][2]['color']}">
+							<h5   ng-style="{  'color':mainData['chart']['ledgend'][2]['color']}">
 							<tm1-ui-dbr
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
-								tm1-elements="Last Year,{{$root.selections.year}},{{col.key}},Local,{{$root.selections.region}},{{$root.selections.department}},{{$root.selections.account}},Amount"
+								tm1-elements="{{getElementArray('Version','Last Year', 'Period',col.key,'Account',$root.selections.account)}}"
 								ng-model="$root.chartValues[col.key][2]"
 								> 
 							</tm1-ui-dbr> 
@@ -524,7 +526,7 @@
             		</tr>
             	</tbody>
             	<tbody  id="bodyContent" ng-init="setUpStickyHeader();" 
-				ng-if="lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
+				ng-if="!chartLoading && lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
 					
 					<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
 	            		<td style="cursor:pointer; " id="rowHieghtElement{{$index}}" class="text-left min-width250" 
@@ -538,7 +540,7 @@
 								tm1-cube="General Ledger" 
 								tm1-data-decimal="0" 
 								tm1-read-only="true"
-                  				tm1-elements="Actual,{{$root.selections.year}},{{item.key}},Local,{{$root.selections.region}},{{$root.selections.department}},{{row.key}},Amount">
+                  				tm1-elements="{{getElementArray('Version','Actual', 'Period',item.key,'Account',row.key)}}">
 							</tm1-ui-dbr-read-only>
 										
 						</td>

@@ -264,7 +264,7 @@ function randomizer(d) {
             if(newValue != oldValue){
                 $timeout(
                     function(){
-                    
+                        
                         //console.log('period Changed to watched from inside bulletchart ', newValue);
                         scope.getChartValues();
                         

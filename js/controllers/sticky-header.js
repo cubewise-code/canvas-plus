@@ -21,6 +21,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
+    
     $scope.mainData = {
         "timeoutBlockout":true,
         "visualiseChartValues":true,
@@ -57,7 +58,68 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             }
         });
     }
-     
+     $tm1Ui.cubeDimensions($scope.mainData['instance'], $scope.mainData['cube']).then(function(result){
+         if(result){
+              $scope.cubeDimensionalityArray = result;
+         }
+         
+     });
+    $scope.getElementArray = function(rowDimName,rowVal,colDimName,colVal, driverDimName, driverValue){
+       
+
+          
+                var elementArrayToPassBack = $scope.mainData['defaultCubeArray'];
+                for(var ggd = 0 ; ggd < $scope.cubeDimensionalityArray.length; ggd++){
+                    var dimName = $scope.cubeDimensionalityArray[ggd];
+                    if(rowDimName && dimName === rowDimName){
+                        //console.log( rowDimName);
+                        elementArrayToPassBack[ggd] = rowVal+'';
+                    } 
+                      if(colDimName && dimName === colDimName){
+                        //console.log($scope.cubeDimensionalityArray[ggd], colDimName);
+                        elementArrayToPassBack[ggd] = colVal+'';
+                        }
+                          if(driverValue && dimName === driverDimName){
+                        //console.log($scope.cubeDimensionalityArray[ggd], colDimName);
+                        elementArrayToPassBack[ggd] = driverValue+'';
+                        }
+                     
+                     
+                }
+                //console.log(elementArrayToPassBack.toString())
+                return elementArrayToPassBack.toString();
+ 
+        
+    }
+    $scope.refreshMainData = function(){
+         $scope.mainData = {
+        "timeoutBlockout":true,
+        "visualiseChartValues":true,
+        "debugJson":false,
+        "rowDimension":{"name":"Account", "subset":"dashboard","attributes":"Description"},
+        "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
+        "instance":"dev",
+        "cube":"General Ledger",
+        "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
+        "chart":{
+             "ledgend": {
+                "0": {
+                "color": "#4F81BD",
+                "name": "Actual"
+                },
+                "1": {
+                "color": "#bdbdbd",
+                "name": "Budget"
+                },
+                "2": {
+                "color": "darkred",
+                "name": "Last Year"
+                }
+            }
+        }
+
+    };
+    }
     $rootScope.chartValues = [];
     var stickyContainer = function(el) {
             $body = $(el);  
@@ -140,14 +202,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     }
 
 
-    $scope.getElementArray = function(rowDimName, rowDimElement, colDimName, colDimElement){
-        var arrayConstracted = [];
-        _.forEach($scope.mainData['DefaultCubeArray'], function(value) {
-            //arrayConstracted.push(value);
-            //console.log(value, "@@@@#######");
-        });
-        return ['Actual',$rootScope.selections.year,col.key,'Local',$rootScope.selections.region,$rootScope.selections.department,row.key,'Amount']
-    }
+     
     $scope.getContainerWidth = function(idName){
         if(document.getElementById(idName)){
             var tempObj = document.getElementById(idName);
@@ -266,6 +321,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         $scope.$watch('$root.selections.year', function (newValue, oldValue, scope) {
         
             if(newValue != oldValue){
+                $scope.refreshMainData();
                 $scope.chartLoading = true;
                 $scope.removeTooltips();
                 $timeout(
@@ -302,7 +358,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         $scope.$watch('$root.selections.subset', function (newValue, oldValue, scope) {
             $scope.initSelectionAccount();
             if(newValue != oldValue){
-                
+                  $scope.refreshMainData();
                 $scope.chartLoading = true;
                 $scope.removeTooltips();
                 $timeout(
@@ -320,6 +376,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
          $scope.$watch('$root.selections.department', function (newValue, oldValue, scope) {
         
             if(newValue != oldValue){
+                  $scope.refreshMainData();
                  $scope.chartLoading = true;
                   $scope.removeTooltips();
                 $timeout(
@@ -338,12 +395,13 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.$watch('$root.selections.region', function (newValue, oldValue, scope) {
     
         if(newValue != oldValue){
+              $scope.refreshMainData();
             $scope.chartLoading = true;
                 $scope.removeTooltips();
             $timeout(
                 function(){
                 $scope.chartLoading = false;
-                    
+                
 
                 } ,1000
             );
