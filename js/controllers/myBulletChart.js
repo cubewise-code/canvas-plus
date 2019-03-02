@@ -137,7 +137,7 @@
        
         var margin = {top: 5, right: 0, bottom: 20, left: 70};
         if(scope.idName === '0' || scope.idName === ''){
-            console.log("axis load");
+            ///console.log("axis load");
             var width = 70  ;
         }else{
             if(scope.idName > 6){ 

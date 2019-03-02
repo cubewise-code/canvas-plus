@@ -80,7 +80,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
             //Initialize all variables
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
-            console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
+            //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
           globals.updateSettings(values, defaults, selections, parameter, options); 
         }
 

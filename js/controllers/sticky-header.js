@@ -14,17 +14,18 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.lists = {};
     $scope.values = {};
     $rootScope.pageTitle = "Sticky Headers";
-    $scope.offsetFromTop = 330;
+     
     $scope.chartLoading = false;
     $rootScope.headerOutOffView = false;
     $rootScope.selections.account = "4";
     $scope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
+     
     $scope.refreshMainData = function(){
          $scope.mainData = {
         "timeoutBlockout":true,
-        "visualiseChartValues":false,
+        "visualiseChartValues":true,
         "debugJson":false,
         "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
@@ -34,6 +35,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "dbrPercentageFormat":false,
         "dbrDataDecimal":0,
         "chart":{
+            "show":true,
              "dimensionComparison":"Version",
              "size":3,
              "ledgend": {
@@ -110,6 +112,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             $stickyHeader = $(el).find('#sticky-header');
             $fixedHeader = $(el).find('.fixed-container');
             $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
+            $headerContent = $(el).find('#headerContent');
             $sideContent = $(el).find('#sideContent');
             $subsetDropdown = $(el).find('#subsetDropDown');
             $sideChartContent = $(el).find('#sideChartContent');
@@ -125,7 +128,19 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                     $scope.offsetTop = 0;
                 }
                 $scope.scrolling = true;
-                    if($($body).scrollTop() > ($scope.offsetFromTop+$scope.offsetTop)){
+                if( $scope.mainData['chart']['show']){
+                    if(document.getElementById('chartRow')){
+                        $scope.offsetFromTop = document.getElementById('chartRow').getBoundingClientRect().height;
+                         var valuetoEval = (document.getElementById('chartRow').getBoundingClientRect().height)+$scope.offsetTop;
+                    }else{
+                         var valuetoEval = $scope.offsetTop;
+                    }
+                    
+                }else{
+                     var valuetoEval = $scope.offsetTop;
+                }
+                
+                    if($($body).scrollTop() > (valuetoEval)){
 
                         $rootScope.headerOutOffView = true;
                         
@@ -136,7 +151,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                         
                         if($($body).scrollLeft() != 0){ 
                             $($fixedFirstColHeader).css('display','block');
-                             $($fixedFirstColHeader).css('margin-top','-'+(($scope.offsetFromTop+$scope.offsetTop))+'px');
+                             $($fixedFirstColHeader).css('margin-top','-'+((valuetoEval))+'px');
                         }else{
                             $($fixedFirstColHeader).css('display','none');
                         }
@@ -321,7 +336,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
            
         }); 
         $scope.initSelectionAccount = function(){
-                
+               
                 $timeout(
                 function(){
             //console.log("INIT SELECTIONS ACCOUNT CHOSEN");
@@ -412,21 +427,28 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         $scope.mouseMovedXY = event.x+' '+event.y;
         if($scope.idelTimePassed){
             if(!$scope.loggedOut){
-                 $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
-                if(result['IsActive']){
+                $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
+                if(result){
+                    if(result['IsActive']){
                    // console.log(result, "LOGIN INFO");
-                    $scope.alpha = 0;
-                         
-                    $scope.loggedOut = false;
-                    $scope.idelTimePassed =false;
-                    $scope.runTimeout(); 
+                        $scope.alpha = 0; 
+                        $scope.loggedOut = false;
+                        $scope.idelTimePassed =false;
+                        $scope.runTimeout(); 
+                    }else{
+                        
+                        if(document.getElementById('blockOut')    ){
+                            $scope.loggedOut = true;
+                            document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
+                        }
+                    }
                 }else{
-                     
-                     if(document.getElementById('blockOut')    ){
-                        $scope.loggedOut = true;
-                        document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
-                     }
+                      if(document.getElementById('blockOut')    ){
+                            $scope.loggedOut = true;
+                            document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
+                        }
                 }
+                 
                 
             });
             }
@@ -482,8 +504,9 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                              
                             
                            // console.log("STARTED PAUSE HIDING INFO");
+                           if(document.getElementById('blockOut')    ){
                             document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,"+$scope.alpha+")";
-                         
+                           }
                         
                     } 
                    // console.log("count", $scope.countIdel);

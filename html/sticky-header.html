@@ -175,8 +175,8 @@
 	<div id="stickyContainer"  class="stickyContainer"  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
 
 			<div class="fixedFirstColHeader" 
-			ng-style="{'top': ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) +getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('columnWidthDim')+getContainerWidth('columnWidth') )+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " >
-					 			 
+			ng-style="{'top': ( (getContainerTop('stickyContainer') + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('columnWidthDim')+getContainerWidth('columnWidth') )+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " >
+					  
 					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " 
 						class="text-left min-width250" 
 						style="display:inline-block; margin: 0 auto;  padding:10px; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:left; ">
@@ -324,6 +324,13 @@
 											{{item.name}}  
 										</button> <br>
 									</span>
+									<!--<span>
+										<button ng-click="mainData['chart']['show'] = !mainData['chart']['show']" 
+										class="btn btn-primary">
+										<i ng-class="{'fa-eye':mainData['chart']['show'], 'fa-eye-slash': !mainData['chart']['show']}" 
+										class="fa "></i>
+										</button>
+									</span>-->
 									<span ng-init="getSubsetList()"> </span>
 								</p>
 
@@ -353,15 +360,15 @@
 					<tbody  >
 							
 							<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
-								<td style="cursor:pointer; border-right:2px solid #ddd;  "  
+								<td style="  border-right:2px solid #ddd;  "  
 									class="text-left min-width250" 
-									ng-style="{'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
-									ng-class="{'selected-bg':$root.selections.account === row.key, 'white-bg':$root.selections.account != row.key}" 
+									ng-style="{'cursor': mainData['chart']['show'] ? 'pointer':'default', 'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
+									ng-class="{'selected-bg': $root.selections.account === row.key && mainData['chart']['show'], 'white-bg':$root.selections.account != row.key || !mainData['chart']['show']}" 
 									ng-click="$root.selections.account = row.key; refreshChart()">
 										<tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias}}"></tm1-ui-element-list-item>
 								</td>
 								<td ng-style="{'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
-									ng-class="{'selected-bg':$root.selections.account === row.key, 'grey-bg':$root.selections.account != row.key}" 
+									ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':$root.selections.account != row.key || !mainData['chart']['show']}" 
 									class="text-right " >
 									<tm1-ui-dbr 
 											tm1-instance="{{mainData['instance']}}" 
@@ -504,7 +511,7 @@
 					</tr>
 					<tr id="chartRow" >
 						 
-						<td  colspan="2" class="text-left" style="padding:10px"     >
+						<td ng-show="mainData['chart']['show']"  colspan="2" class="text-left" style="padding:10px"     >
 							<p class="pull-left" 
 							 style="   display:inline-block; padding:0px; width:50%; left:0px; top:0px;    "  
 							 >  
@@ -540,7 +547,7 @@
 							 
 							  
 						</td>
-						<td class="text-center"   ng-style="{'height':offsetFromTop+'px'}" 
+						<td ng-show="mainData['chart']['show']" class="text-center"   ng-style="{'height':offsetFromTop+'px'}" 
 						ng-repeat="item in lists.months track by $index" >
 						 <div  id="bulletChartContainerDrop{{$index+1}}"   > 
    
@@ -629,7 +636,7 @@
 							placeholder="Search {{mainData['rowDimension']['name']}}...">
 
  						</td>
-						 <td class="text-center colwidth" id="columnWidth" style="background-color: #f8f8f8;" >
+						<td class="text-center colwidth" id="columnWidth" style="background-color: #f8f8f8;" >
 							All Months
 						 </td>
             			<td style="background-color: #f8f8f8;" class="text-center colwidth" 
@@ -642,16 +649,17 @@
 				ng-if="lists.account.length && lists.months.length && $root.selections.year && $root.selections.region && $root.selections.department">
 					
 					<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
-	            		<td  style="cursor:pointer; " 
+	            		<td   
 						id="rowHieghtElement{{$index}}" 
+						ng-style="{'cursor': mainData['chart']['show'] ? 'pointer':'default'}"
 						class="text-left min-width250" 
-						ng-class="{'selected-bg':$root.selections.account === row.key, 'white-bg':$root.selections.account != row.key}" 
+						ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'white-bg':$root.selections.account != row.key || !mainData['chart']['show']}" 
 						ng-click="$root.selections.account = row.key; refreshChart()">
 								<tm1-ui-element-list-item tm1-item="row" tm1-item-display="{{row.alias}}"></tm1-ui-element-list-item>
 						</td>
-						<td style="cursor:pointer; "   
+						<td 
 						class="text-right" 
-						ng-class="{'selected-bg':$root.selections.account === row.key, 'grey-bg':$root.selections.account != row.key}" >
+						ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':$root.selections.account != row.key || !mainData['chart']['show']}" >
 							<tm1-ui-dbr 
 								tm1-instance="{{mainData['instance']}}" 
 								tm1-cube="{{mainData['cube']}}" 
