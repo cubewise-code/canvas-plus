@@ -29,7 +29,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "debugJson":false,
         "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
-        "instance":"dev",
+        "instance":$rootScope.defaults.settingsInstance,
         "cube":"General Ledger",
         "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
         "dbrPercentageFormat":false,
@@ -49,7 +49,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 "name": "Budget"
                 },
                 "2": {
-                "color":  $rootScope.applicationHeaderColorSecondary,
+                "color":  $rootScope.applicationHeaderColorLastYear,
                 "name": "Last Year"
                 }
             }
@@ -417,7 +417,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 $timeout(
                     function(){
                     $scope.chartLoading = false; 
-                    } 
+                    },1000 
                 );
     }
     //resize just for timeout the event so apply the changes in the html
@@ -437,16 +437,14 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                         $scope.runTimeout(); 
                     }else{
                         
-                        if(document.getElementById('blockOut')    ){
+                         
                             $scope.loggedOut = true;
-                            document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
-                        }
+                             
                     }
                 }else{
-                      if(document.getElementById('blockOut')    ){
+                       
                             $scope.loggedOut = true;
-                            document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,0.9)";
-                        }
+                            
                 }
                  
                 
@@ -468,13 +466,13 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         $timeout(
             function(){
  
-                if($scope.countIdel > 0){
+                if($scope.countIdel > 250){
                       
                     if($scope.mouseMovedXY === $scope.lastMovedXY){
                         //console.log("running timeout",$scope.alpha, $scope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
                         if($scope.alpha >= 0.9){
                             $scope.idelTimePassed = true;
-                            $scope.countIdel = 10;
+                            $scope.countIdel = 251;
                             $scope.alpha  = 0.9;
                         }else{
                               $scope.idelTimePassed = true;
@@ -496,25 +494,27 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                     $scope.lastMovedXY = $scope.mouseMovedXY;
 
                 }else{
-                     $scope.lastMovedXY = $scope.mouseMovedXY;
-                    if( $scope.idelTimePassed  ){
-                     
-                             
-                                  $scope.alpha = 0.9;
-                             
-                            
+                    if($scope.countIdel === 0){
+                        $scope.lastMovedXY = $scope.mouseMovedXY;
+                    }
+                   
+                    if( $scope.idelTimePassed  ){ 
+                           
                            // console.log("STARTED PAUSE HIDING INFO");
-                           if(document.getElementById('blockOut')    ){
-                            document.getElementById('blockOut').style.backgroundColor = "rgba(32,28,26,"+$scope.alpha+")";
+                           if($scope.mouseMovedXY === $scope.lastMovedXY){
+                                $scope.alpha = 0.9; 
+                                $rootScope.closeApplication(false);
+                           //$rootScope.activeTab = -2;
                            }
                         
                     } 
                    // console.log("count", $scope.countIdel);
+                     
                     $scope.countIdel++; 
                     $scope.runTimeout();
                 }
                 
-            },300000
+            },3000
         )
     }
     $scope.runTimeout();

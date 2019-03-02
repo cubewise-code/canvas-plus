@@ -10,13 +10,15 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     */
     
     // console.log("HEADER");
-    $rootScope.applicationHeaderColor='#201c1a ';
-    $rootScope.applicationHeaderColorSecondary='#c02626';
+    $rootScope.applicationHeaderColor='#72a7e7';
+    $rootScope.applicationHeaderColorSecondary='#4F81BD';
     $rootScope.applicationHeaderColorSelect = '#4F81BD';
     $rootScope.applicationHeaderColorBudget = ' #bdbdbd';
+    $rootScope.applicationHeaderColorLastYear = '#e91042';
+    $rootScope.hideView = true;
     $rootScope.activeSubTab = 0;
     $rootScope.subPathBoolean = false;
-    $rootScope.innerHeight = window.innerHeight/2;
+    $rootScope.innerHeight = window.innerHeight;
     $rootScope.innerWidth = window.innerWidth ;
     $rootScope.defaultOffSet = 70;
     $rootScope.topOffSet = $rootScope.defaultOffSet ;
@@ -51,6 +53,30 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             settingsCube: 'System User Settings',
             settingsMeasure: 'String'
     };
+    $rootScope.applicationTriggerFindUser = function(){
+        $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
+            if(result['success']){
+               
+                    $rootScope.hideView = false; 
+                
+            }else{
+                $rootScope.hideView = true; 
+            }
+        });
+    }
+    $rootScope.closeApplication = function(view){
+        $tm1Ui.applicationLogout($rootScope.defaults.settingsInstance).then(function(result){
+            if(result['success']){
+                
+                     $rootScope.hideView = false;
+                
+                
+            }else{
+                     $rootScope.hideView = true;
+            }
+        });
+
+    }
     $rootScope.selections={
         year:'',
         region:'',
@@ -169,8 +195,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
   })
   $scope.animateSideBar = function(a, b, open){
        if(open){
+            
+           document.getElementById("stickyContainer").style.width= "100%";
            document.getElementById("righthandsidebar").style.marginLeft= (-300)+"px";
        }else{
+            
+            document.getElementById("stickyContainer").style.width= (window.innerWidth -300)+"px";
            document.getElementById("righthandsidebar").style.marginLeft= (0)+"px";
        }
              
@@ -302,14 +332,21 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         }
     }
 
-    $rootScope.createCSSSelector('.tm1-login-modal .panel-default > .panel-heading', 'color: #fff; padding-top: 40px; padding-bottom: 20px; background-repeat: no-repeat; background-position: 50% 50%; border-color: transparent; background-color: '+$rootScope.applicationHeaderColorSecondary+' !important;');
+    $rootScope.createCSSSelector('.tm1-login-modal','pointer-events:none; background-repeat: no-repeat; background-attachment: fixed; background-position: top center; background-color: '+$rootScope.applicationHeaderColor+';');
+    $rootScope.createCSSSelector('.tm1-login-modal .panel-default > .panel-heading', 'color: #fff; padding-top: 40px; padding-bottom: 20px; background-repeat: no-repeat; background-position: 50% 50%; border-color: transparent; background-color: '+$rootScope.applicationHeaderColor+' !important;');
     $rootScope.createCSSSelector('.right-hand-nav', 'position:fixed; left:100%; height:100%; width:300px; background-color: '+$rootScope.applicationHeaderColorSecondary+'; top:0px; -webkit-transition: margin-top 500ms ease-out ; -moz-transition: margin-top 500ms ease-out ; -o-transition: margin-top 500ms ease-out ; transition: margin-top 500ms ease-out ; ');
     $rootScope.createCSSSelector('.navbuttons .active', 'display: inline-block; vertical-align: top; background-color: '+$rootScope.applicationHeaderColorSecondary+'; border: 0px solid #ddd; color: #fff !important; ');
     $rootScope.createCSSSelector('.selected-bg',' background-color: '+$rootScope.applicationHeaderColorSelect+'; color:#fff; ');
     $rootScope.createCSSSelector('.bullet .actual.a','  fill:  '+$rootScope.applicationHeaderColorSelect+'; ');
     $rootScope.createCSSSelector('.bullet .measure.d0','  fill: '+$rootScope.applicationHeaderColorBudget+' ');
-    $rootScope.createCSSSelector('.bullet .marker','  stroke: '+$rootScope.applicationHeaderColorSecondary+'; stroke-width: 2px; ');
-
+    $rootScope.createCSSSelector('.bullet .marker','  stroke: '+$rootScope.applicationHeaderColorLastYear+'; stroke-width: 2px; ');
+     
+    
+    
+    $(window).resize(function() { 
+        $rootScope.innerHeight = window.innerHeight;
+        $rootScope.innerWidth = window.innerWidth ;
+    });
       
 
 }]);

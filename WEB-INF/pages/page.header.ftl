@@ -16,15 +16,25 @@
             
             <li class="dropdown " style="color:#fff !important; background-color:transparent !important;" >
                 <span id="opened" ng-if="$root.user.Name"> 
-                    <span class="inline-block-left" style="margin-right:5px;">{{$root.user.Name}} </span> 
-                    <span class="inline-block" >
+                    <span class="inline-block-left" style="margin-right:5px;">{{mouseOverUserClose ? 'Sign Out: '+$root.user.Name+'': 'User: '+$root.user.Name}} </span> 
+                        <span class="inline-block" >
+                            <a href="" style="color:#fff;" 
+                            ng-mouseleave="mouseOverUserClose = false" 
+                            ng-mouseover="mouseOverUserClose = true;" 
+                            ng-click=" closeApplication($root.hideView)" >
+                                <i class="fa fa-user" aria-hidden="true"></i><sup><i class="fa fa-times text-right"  aria-hidden="true"></i></sup>
+
+                            </a> 
+                        </span>
+                  <!--  <span class="inline-block" >
                         <tm1-ui-session></tm1-ui-session>
-                    </span>
+                    </span>-->
+                    
                 </span>
             </li>
             <li class="dropdown hidden-xs hidden-print" style="color:#fff !important; background-color:transparent !important;">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-share-alt fa-fw"></i>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
+                  <i class="fa fa-print fa-fw"></i>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu nav-dropdown" >
                   <li class="paddingtop10" >                    
@@ -56,6 +66,8 @@
                   </li>
                 </ul>                  
             </li>
+            
+
              
     </ul>
 </div>
@@ -63,10 +75,10 @@
       
 <div   
     class="nav" id="header" ng-init="animatePadding($root.defaultOffSet);"   
-    ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.user.FriendlyName ? $root.defaultOffSet +'px':'100%'}" 
+    ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.hideView && $root.user.FriendlyName ? '69px': (!$root.hideView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
     style=" transition-property:padding-top;  transition-duration: 1s; vertical-align: bottom !important; position:absolute; z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   >  
        <div style="transition-property:padding-top; transition-duration: 1s;  position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:0px;  "
-       ng-style="{'padding-top':$root.user.FriendlyName ? '10px':'100%'}"
+     
        >
     <a href="#">
         <img src="images/logo.svg" 
@@ -97,7 +109,8 @@
                 <div class="btn-group" uib-dropdown dropdown-append-to-body outsideClick is-open="status.isopen"  >
                    
                     <a ng-href="#/{{findClickthrough(item.data.page)}}"  
-                     style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " ng-click="$root.indexOver = $index;"   >
+                     style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " 
+                     ng-click="$root.indexOver = $index;  $root.applicationTriggerFindUser();"   >
                             <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i>   
                             <span class="hidden-xs"> 
                             {{item.label}}   
@@ -141,7 +154,7 @@
 <div class="right-hand-nav" id="righthandsidebar"  
 ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" style="z-index:100;"
 ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
-    ng-style="{'margin-left':$root.topOffSet != $root.defaultOffSet ? '-300px':'0px', 'margin-top':$root.user.FriendlyName ? ($root.defaultOffSet+48)+'px':'100%'}"  
+    ng-style="{'margin-left':$root.topOffSet != $root.defaultOffSet ? '-300px':'0px' }"  
     >
              
             <div class=" btn btn-primary  " 
@@ -161,7 +174,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                 >
                     <i class="fa fa-filter"></i>
             </div>
-            <h4 style="padding-left:10px; color:#fff;">Critiria</h4>
+            <h4 style="padding-left:10px; color:#fff;">User Settings</h4>
 
             <div id="filtersubnm2" class="col-md-12 col-xs-12 filter-label" >  
                    
@@ -212,7 +225,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
  </div>
 <div  class="col-md-12 col-xs-12 nopadding titleArea" 
     
-    ng-style="{'top':(($root.defaultOffSet)+(45))+'px', 'margin-top':$root.user.FriendlyName ? '0px':'100%'}" 
+    ng-style="{'top':(($root.defaultOffSet)+(45))+'px', 'margin-top':'0px'}" 
 >
     <h4 style="   width:100%; " 
     class="text-left pull-left">
