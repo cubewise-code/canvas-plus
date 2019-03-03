@@ -1,5 +1,6 @@
 <div ng-controller="HomeCtrl" 
-  style="padding-top:{{$root.defaultOffSet+60}}px; transition-property:padding-top;  transition-duration: 1s;" 
+	ng-style="{'padding-top': ($root.defaultOffSet+60)+'px'}"
+  style=" transition-property:padding-top;  transition-duration: 1s;" 
   ng-click="$root.topOffSet = $root.defaultOffSet; $root.indexOver = '';"  >
    
   <style>
@@ -211,7 +212,11 @@
 			-o-transform: scaleX(-1);
 			transform: scaleX(-1);
 		}
-			
+		
+
+ 
+/* finish animating birds */
+
 	</style>
 		<tm1-ui-element-list tm1-instance="dev" tm1-dimension="Account" tm1-subset="Finance Analytics" ng-model="selections.subsetRevenue"></tm1-ui-element-list>
 
@@ -240,11 +245,14 @@
 		</div>
 
 
-  
+ 
+	
  
   
 </div>
    
  
+ 
+
  
   

@@ -18,7 +18,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.chartLoading = false;
     $rootScope.headerOutOffView = false;
     $rootScope.selections.account = "4";
-    $scope.loggedOut = false;
+    $rootScope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
      
@@ -304,7 +304,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             $rootScope.valuesminCapturedForChart = [];
             $rootScope.maxValToUse = 1;
             $rootScope.minValToUse = 0;
-            for( var e = document.getElementsByClassName('ttip').length ; e > 0; e--){
+            for( var e = document.getElementsByClassName('ttip').length ; e >= 0; e--){
                 //console.log(document.getElementsByClassName('ttip')[e])
                     var elem = document.getElementsByClassName('ttip')[e]
                     if(elem){
@@ -421,103 +421,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 );
     }
     //resize just for timeout the event so apply the changes in the html
-    $scope.countIdel = 0;
-    $scope.mouseMovedSetXY = function($event){
-       // console.log(event.x, event.y);
-        $scope.mouseMovedXY = event.x+' '+event.y;
-        if($scope.idelTimePassed){
-            if(!$scope.loggedOut){
-                $tm1Ui.applicationUser($scope.mainData['instance']).then(function(result){
-                if(result){
-                    if(result['IsActive']){
-                   // console.log(result, "LOGIN INFO");
-                        $scope.alpha = 0; 
-                        $scope.loggedOut = false;
-                        $scope.idelTimePassed =false;
-                        $scope.runTimeout(); 
-                    }else{
-                        
-                         
-                            $scope.loggedOut = true;
-                             
-                    }
-                }else{
-                       
-                            $scope.loggedOut = true;
-                            
-                }
-                 
-                
-            });
-            }
-            
-        }
-         
-
-        
-      
-        
-       
-    }
-     $scope.idelTimePassed =false;
-     $scope.alpha = 0;
-    $scope.runTimeout = function(){
-        
-        $timeout(
-            function(){
- 
-                if($scope.countIdel > 100){
-                      
-                    if($scope.mouseMovedXY === $scope.lastMovedXY){
-                        //console.log("running timeout",$scope.alpha, $scope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
-                        if($scope.alpha >= 0.9){
-                            $scope.idelTimePassed = true;
-                            $scope.countIdel = 251;
-                            $scope.alpha  = 0.9;
-                        }else{
-                              $scope.idelTimePassed = true;
-                              $scope.countIdel = 0;
-                              $scope.runTimeout();
-                        }
-                        
-                        
-                          
-                    }else{
-                        //console.log($scope.countIdel, $scope.mouseMovedXY,  $scope.lastMovedXY,  "mouse moved");
-                        $scope.loggedOut = false;
-                         
-                        $scope.idelTimePassed = false;
-                        $scope.countIdel = 0;
-                        
-                        $scope.runTimeout();
-                    }
-                    $scope.lastMovedXY = $scope.mouseMovedXY;
-
-                }else{
-                    if($scope.countIdel === 0){
-                        $scope.lastMovedXY = $scope.mouseMovedXY;
-                    }
-                   
-                    if( $scope.idelTimePassed  ){ 
-                           
-                           // console.log("STARTED PAUSE HIDING INFO");
-                           if($scope.mouseMovedXY === $scope.lastMovedXY){
-                                $scope.alpha = 0.9; 
-                                $rootScope.closeApplication(false);
-                           //$rootScope.activeTab = -2;
-                           }
-                        
-                    } 
-                   // console.log("count", $scope.countIdel);
-                     
-                    $scope.countIdel++; 
-                    $scope.runTimeout();
-                }
-                
-            },1000
-        )
-    }
-    $scope.runTimeout();
+    
     $(window).resize(function() {
          	 
             $timeout(

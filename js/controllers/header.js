@@ -15,7 +15,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.applicationHeaderColorSelect = '#4F81BD';
     $rootScope.applicationHeaderColorBudget = ' #bdbdbd';
     $rootScope.applicationHeaderColorLastYear = '#e91042';
-    $rootScope.hideView = true;
+    $rootScope.showView = true;
     $rootScope.activeSubTab = 0;
     $rootScope.subPathBoolean = false;
     $rootScope.innerHeight = window.innerHeight;
@@ -28,6 +28,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";
+
 
     $rootScope.pageUrlEncoded = function() {
 		return encodeURIComponent($location.absUrl());
@@ -51,30 +52,64 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             department:"",
             settingsInstance: 'dev',
             settingsCube: 'System User Settings',
-            settingsMeasure: 'String'
+            settingsMeasure: 'String',
+             schedule:{
+            2015:{
+                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2015', dateEnd:'10/01/2015'},
+                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2015', dateEnd:'11/02/2015'},
+                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2015', dateEnd:'10/03/2015'},
+                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2015', dateEnd:'10/04/2015'},
+                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2015', dateEnd:'10/05/2015'},
+                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2015', dateEnd:'10/09/2015'},
+                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2015', dateEnd:'10/11/2015'},
+                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2015', dateEnd:'10/12/2015'}
+            },
+            2016:{
+                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2016', dateEnd:'10/01/2016'},
+                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2016', dateEnd:'11/02/2016'},
+                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2016', dateEnd:'10/03/2016'},
+                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2016', dateEnd:'10/04/2016'},
+                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2016', dateEnd:'10/05/2016'},
+                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2016', dateEnd:'10/09/2016'},
+                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2016', dateEnd:'10/11/2016'},
+                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2016', dateEnd:'10/12/2016'}
+            }
+        }
     };
     $rootScope.applicationTriggerFindUser = function(){
+        $rootScope.countIdel = 0;
+        $rootScope.idelTimePassed = false;
+        console.log("checking the user loged in ");
         $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
-            if(result['success']){
-               
-                    $rootScope.hideView = false; 
-                
-            }else{
-                $rootScope.hideView = true; 
-            }
+             
         });
+       
+            
+  
+            
+        
     }
+    $rootScope.userLoggedOut = false;
+     
     $rootScope.closeApplication = function(view){
-        $tm1Ui.applicationLogout($rootScope.defaults.settingsInstance).then(function(result){
-            if(result['success']){
-                
-                     $rootScope.hideView = false;
-                
-                
-            }else{
-                     $rootScope.hideView = true;
-            }
-        });
+      if(!$rootScope.calendarShow){
+           $tm1Ui.applicationLogout($rootScope.defaults.settingsInstance).then(function(result){
+                if(result['success']){
+                    console.log("USE LOGGED OUT", $rootScope.user);
+                    $rootScope.userLoggedOut = true;
+                    $rootScope.showView = false;
+                    
+
+                    
+                }else{
+                   
+                    $rootScope.showView = true;
+                }
+            });
+      }
+             
+         
+        
 
     }
     $rootScope.selections={
@@ -195,13 +230,15 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
   })
   $scope.animateSideBar = function(a, b, open){
        if(open){
-            
-           document.getElementById("stickyContainer").style.width= "100%";
-           document.getElementById("righthandsidebar").style.marginLeft= (-300)+"px";
+            if(document.getElementById("stickyContainer")){
+                 document.getElementById("stickyContainer").style.width = "100%";
+            } 
+           document.getElementById("righthandsidebar").style.marginLeft = (-300)+"px";
        }else{
-            
-            document.getElementById("stickyContainer").style.width= (window.innerWidth -300)+"px";
-           document.getElementById("righthandsidebar").style.marginLeft= (0)+"px";
+            if(document.getElementById("stickyContainer")){
+                document.getElementById("stickyContainer").style.width = (window.innerWidth -300)+"px";
+            }
+           document.getElementById("righthandsidebar").style.marginLeft = (0)+"px";
        }
              
        
@@ -341,15 +378,285 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.createCSSSelector('.bullet .measure.d0','  fill: '+$rootScope.applicationHeaderColorBudget+' ');
     $rootScope.createCSSSelector('.bullet .marker','  stroke: '+$rootScope.applicationHeaderColorLastYear+'; stroke-width: 2px; ');
      
+
+      $rootScope.countIdel = 0;
+    $rootScope.mouseMovedSetXY = function($event){
+       $rootScope.windowclientX = event.clientX;     // Get the horizontal coordinate
+        $rootScope.windowclientY = event.clientY; 
+       // console.log(event.x, event.y);
+        $scope.mouseMovedXY = event.x+' '+event.y;
+        if($rootScope.idelTimePassed){
+            if(!$rootScope.loggedOut){
+                $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
+                if(result){
+                    if(result['IsActive']){
+                   // console.log(result, "LOGIN INFO");
+                        $rootScope.alpha = 0; 
+                        $rootScope.loggedOut = false;
+                        $rootScope.idelTimePassed =false;
+                        $rootScope.runTimeout(); 
+                    }else{
+                        
+                         
+                            $rootScope.loggedOut = true;
+                             
+                    }
+                }else{
+                        
+                       $rootScope.loggedOut = true;
+                            
+                }
+                 
+                
+            });
+            }
+            
+        }
+         
+
+        
+      
+        
+       
+    }
+    $rootScope.idelTimePassed =false;
+    $rootScope.alpha = 0;
+    $rootScope.runTimeout = function(){
+        if(!$rootScope.calendarShow){
+            $timeout(
+            function(){
+ 
+                if($rootScope.countIdel > 10){
+                      
+                    if($scope.mouseMovedXY === $scope.lastMovedXY){
+                         //console.log("running timeout",$rootScope.alpha, $rootScope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
+                        if($rootScope.alpha >= 0.9){
+                            $rootScope.idelTimePassed = true;
+                            $rootScope.countIdel = 251;
+                            $rootScope.alpha  = 0.9;
+                        }else{
+                              $rootScope.idelTimePassed = true;
+                              $rootScope.countIdel = 0;
+                              $rootScope.runTimeout();
+                        }
+                        
+                        
+                          
+                    }else{
+                        //console.log($rootScope.countIdel, $scope.mouseMovedXY,  $scope.lastMovedXY,  "mouse moved");
+                        $rootScope.loggedOut = false;
+                         
+                        $rootScope.idelTimePassed = false;
+                        $rootScope.countIdel = 0;
+                        
+                        $rootScope.runTimeout();
+                    }
+                    $scope.lastMovedXY = $scope.mouseMovedXY;
+
+                }else{
+                    if($rootScope.countIdel === 0){
+                        $scope.lastMovedXY = $scope.mouseMovedXY;
+                    }
+                   
+                    if( $rootScope.idelTimePassed  ){ 
+                           
+                           // console.log("STARTED PAUSE HIDING INFO");
+                           if($scope.mouseMovedXY === $scope.lastMovedXY){
+                                $rootScope.alpha = 0.9; 
+                               // $rootScope.closeApplication(false);
+                                 $rootScope.showView = false;
+                           //$rootScope.activeTab = -2;
+                           }
+                        
+                    } 
+                   // console.log("count", $rootScope.countIdel,$scope.lastMovedXY, $scope.mouseMovedXY); 
+                    $rootScope.countIdel++; 
+                    $rootScope.runTimeout();
+                }
+                
+            },1000
+        )
+        }
+    }
+    $rootScope.runTimeout();
+    $rootScope.birdsKilled = 0;
+    $rootScope.birdKilledArray = [];
+   $rootScope.birdsCapturedCount = 0;
+    $rootScope.doBirdKill = function(bird){
+        $rootScope.birdsKilled = $rootScope.birdsKilled +1;
+        //console.log("kill bird ",bird );
+    }
+     $rootScope.getRandomArbitrary = function(min, max) {
+        return Math.abs( Math.random() * (max - min) + min);
+    }
     
+
+    $rootScope.overRideDate = '02/10/2016';
+    $rootScope.setYear = '2016';
+    if($rootScope.overRideDate != ''){
+        $rootScope.dateNow = new Date($rootScope.overRideDate) ;
+    }else{
+        $rootScope.dateNow = new Date() ;
+    }
+    //console.log(" $rootScope.dateNow",  $rootScope.dateNow, (($rootScope.dateNow+"").split(":")[0]).split(' ')[2]);
+    $rootScope.dateNumber =(($rootScope.dateNow+"").split(":")[0]).split(' ')[2];
+    $rootScope.date  = ((($rootScope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
+        
+    if($rootScope.overRideDate && $rootScope.overRideDate != ''){
+         var d = new Date($rootScope.overRideDate);
+    }else{
+        var d = new Date();
+    }
+    $scope.hasNum = [];
+    var n = d.getMonth();
+    var p = d.getDay();
+    var y = d.getFullYear();
+    $rootScope.date = n;
+    $rootScope.monthNow = n;
+    $rootScope.dayNow = p;
+    $rootScope.yearNow =  y;
+     
+   // console.log($rootScope.dayNow,$rootScope.monthNow,$rootScope.yearNow)
+    $rootScope.daysRemainingValue = [];
+    $rootScope.daysRemaining = function(datetoset, month) {
+        $rootScope.daysRemainingValue[month] = [];
+        var splitdatetoset = (datetoset).split('/');
+        var eventdate = moment(splitdatetoset[2]+"-"+splitdatetoset[1]+"-"+splitdatetoset[0]);
+        if($rootScope.overRideDate != ''){
+             var todaysdate = moment($rootScope.overRideDate);
+        }else{
+              var todaysdate = moment();
+        }
+        
+        $rootScope.daysRemainingValue[month] = eventdate.diff(todaysdate, 'days');
+       // console.log($rootScope.daysRemainingValue[month]);
+    }
     
+
+
+ $scope.days = [];
+    $scope.firstDayPosition = [];
+      
+
+    function timenow(){
+        var now= new Date(), 
+        ampm= 'am', 
+        h= now.getHours(), 
+        m= now.getMinutes(), 
+        s= now.getSeconds();
+        if(h>= 12){
+            if(h>12) h -= 12;
+            ampm= 'pm';
+        }
+
+        if(m<10) m= '0'+m;
+        if(s<10) s= '0'+s;
+        return now.toLocaleDateString()+ ' ' + h + ':' + m + ':' + s + ' ' + ampm;
+    }
+    $scope.loading = false;
+    $scope.doUpdate = function(){
+        $scope.loading = true;
+        $scope.hasNum = [];
+        $scope.days = [];
+        
+        $timeout( function(){ 
+        
+        $scope.loading = false;
+       
+    },1000); 
+    }
+    $scope.editEvent = function(date){
+        console.log("Add event, ",date);
+        $timeout(
+
+            function(){
+                $('#editEventModal').modal();
+            },100
+        )
+    }
+    $scope.createNewEvent = function(date){
+        console.log("create New Event",date);
+        $timeout(
+
+            function(){
+                $('#createEventModal').modal();
+            },100
+        )
+    }
+    $scope.parseToDateFormat = function(val){
+        var tempval = val;    
+        if(val < 10){
+            tempval = '0'+val;
+        }
+        return tempval;
+    }
+    $scope.seeDetails = function(date){ 
+        var arraytemp = (date+'').split('/');
+        var daytemp = $scope.parseToDateFormat(arraytemp[0]);
+        var monthtemp = $scope.parseToDateFormat(arraytemp[1]);
+        var yeartemp = arraytemp[2];
+
+
+        $rootScope.calendarDate = moment(yeartemp+'-'+monthtemp+'-'+daytemp).format("dddd, MMMM Do YYYY");
+        ;
+        $timeout(
+
+            function(){
+                $('#detailsModal').modal();
+            },100
+        )
+        
+        console.log("See Event Details",date);
+    }
+    $rootScope.openModal = function(item){
+        console.log(item);
+        $rootScope.showView = true;
+        $rootScope.calendarShow = false;
+        //$scope.goToNewPage('#/sticky-header');
+
+    }
+    $scope.getDaysInMonth = function(month,year) {
+        // Here January is 1 based
+        //Day 0 is the last day in the previous month
+        $scope.firstDayPosition[month] =  [];
+        var firstDayPositionArray = [];
+        var firstDayPosition =new Date(year, month, 0).getDay();
+        
+        for(var yh = 0; yh < firstDayPosition;yh++){
+            firstDayPositionArray.push(yh);
+        }
+        $scope.firstDayPosition[month] = firstDayPositionArray;
+       // console.log("first day position", firstDayPosition, $scope.firstDayPosition[month]);
+        var days  = new Date(year, month+1, 0).getDate();
+        var mypreArray = [];
+       // console.log(days);
+         for(var ttg = 0; ttg < days; ttg++){
+            mypreArray.push(ttg)
+         }
+        // console.log('days in month', month, days, mypreArray );
+         $scope.days[month] = mypreArray;
+       // retu$scorn mypreArray;
+        // Here January is 0 based
+        // return new Date(year, month+1, 0).getDate();
+    };
+ 
+    $scope.goToNewPage = function(url){
+        location.assign(url)
+    }
+
+
+
+
     $(window).resize(function() { 
         $rootScope.innerHeight = window.innerHeight;
         $rootScope.innerWidth = window.innerWidth ;
     });
       
+        
 
 }]);
+
+
 app.filter('capitalize', function() {
     return function(token) {
         var stringTotest = '';

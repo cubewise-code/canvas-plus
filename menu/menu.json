@@ -8,14 +8,6 @@
     "expanded": false
   },
   {
-    "label": "Test-Modal",
-    "icon_class": "fa-bell",
-    "data": {
-      "page": "test-modal"
-    },
-    "expanded": false
-  },
-  {
     "label": "t-test-upload-multi-sheet",
     "icon_class": "fa-file-text-o",
     "data": {

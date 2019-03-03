@@ -1,6 +1,8 @@
-<div ng-controller="stickyheaderCtrl" 
+<div ng-controller="stickyheaderCtrl" ng-mousemove="$root.mouseMovedSetXY($event); "
+	ng-style="{'padding-top': ($root.defaultOffSet+60)+'px'}"
+  style=" transition-property:padding-top;  transition-duration: 1s;" 
 	ng-if="$root.selections.year && $root.selections.region && $root.selections.department" 
-	ng-mousemove="mouseMovedSetXY($event)">
+	   >
 	<style>
 		body,html{
 			overflow:hidden;
@@ -171,7 +173,7 @@
 		tm1-attributes="{{mainData['colDimension']['attributes']}}">
 	</tm1-ui-element-list>           	
  
-
+<div ng-if="lists.account" ng-init="initSelectionAccount()"> </div>
 	  
       	
 	<div id="stickyContainer"  class="stickyContainer"  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
