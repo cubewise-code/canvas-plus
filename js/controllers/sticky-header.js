@@ -466,7 +466,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         $timeout(
             function(){
  
-                if($scope.countIdel > 250){
+                if($scope.countIdel > 100){
                       
                     if($scope.mouseMovedXY === $scope.lastMovedXY){
                         //console.log("running timeout",$scope.alpha, $scope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
@@ -514,7 +514,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                     $scope.runTimeout();
                 }
                 
-            },3000
+            },1000
         )
     }
     $scope.runTimeout();
