@@ -279,7 +279,7 @@ div.tm1-subnm-hierarchy-style ul {
 /* animating birds */
 	
 .container {
-	 z-index:9999;
+	 z-index:999;
 	position: fixed;
 	overflow: hidden;
 	display: block;
