@@ -6,6 +6,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$interval', '$timeout', '$s
         lineColorArray:["4181c3","40af9c","ffffff"],
         
      }
+      $rootScope.showView = false; 
+      //$rootScope.calendarShow = true ;
 
     $scope.versionPosition = {'position':0, 'alias':{'Actual':'Actual', 'Budget':'Budget', 'Last Year':'Last Year'}, 'elementVariance':{'Actual':'', 'Budget':'Var%','Last Year':'LY%' }};
 	
