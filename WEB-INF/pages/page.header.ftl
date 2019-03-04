@@ -323,7 +323,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
             </div>
         </div>
 
-        <div ng-style="{'height': $root.calendarShow ? 'calc(100% - 130px)':'0px'}" ng-if="!loading"  style="position:fixed; bottom:0px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:#fff;"  >	
+        <div ng-style="{'height':(($root.innerHeight)-230)+'px'}" ng-if="!loading && $root.calendarShow"  style="position:fixed; bottom:67px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(255,255,255,0.6);"  >	
 		
 					 
 			<div  ng-show="$root.calendarShow" 

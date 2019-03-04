@@ -11,3 +11,4 @@ Step 7: Start the Cubewise Application Server.
 Step 8: Test your new Application http://localhost:8080/NEWAPP
 
 <img src="images/screen-grab-application.png" style="width:100%; height:auto;"/>
+<img src="images/screen-shot-2.png"  style="width:100%; height:auto;"/>
