@@ -79,8 +79,8 @@
     class="nav" id="header" ng-init="animatePadding($root.defaultOffSet);"   
     ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '69px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
     style=" transition-property:padding-top;     background-image: url(images/clouds.png); background-size:   cover;  background-repeat: x-repeat; transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   >  
-         
-      <div class="cloud-container "  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(8,14);   " 
+        
+      <div class="cloud-container " ng-if="!$root.showView || $root.calendarShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(33,55);   " 
         ng-repeat="bird in $root.defaults.schedule[$root.selections.year] track by $index"  
         ng-style="{'top':($root.myCloudrandomAnim[$index])+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudrandomAnim[$index]))+'s'}"   >
             <div ng-init="$root.myRCloudRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
