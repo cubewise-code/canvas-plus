@@ -28,8 +28,19 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";
+    $rootScope.desktop = false;
+     
+        var ua = navigator.userAgent;
 
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)){
+        $rootScope.desktop = false;
 
+         } else if (/Chrome/i.test(ua)){
+        $rootScope.desktop = false;
+
+         }else{
+        $rootScope.desktop = true;
+         }
     $rootScope.pageUrlEncoded = function() {
 		return encodeURIComponent($location.absUrl());
 	};
@@ -422,7 +433,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.idelTimePassed =false;
     $rootScope.alpha = 0;
     $rootScope.runTimeout = function(){
-        if(!$rootScope.calendarShow){
+        if(!$rootScope.calendarShow ){
             $timeout(
             function(){
  
@@ -469,12 +480,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                            }
                         
                     } 
-                   // console.log("count", $rootScope.countIdel,$scope.lastMovedXY, $scope.mouseMovedXY); 
+                   console.log("count",  $rootScope.desktop, $rootScope.countIdel,$scope.lastMovedXY, $scope.mouseMovedXY); 
                     $rootScope.countIdel++; 
                     $rootScope.runTimeout();
                 }
                 
-            },1000
+            },10000
         )
         }
     }

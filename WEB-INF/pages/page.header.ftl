@@ -1,6 +1,7 @@
 <!-- This gets appended at the top for each page  -->
   
 <div id="page-header"  ng-controller="headerCtrl"  >
+ 
     <div ng-show='false'>
         <tm1-ui-user  ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
     </div>
@@ -10,8 +11,8 @@
    
  
     <div style="position:fixed; top:0px; right:0px; z-index:9999; padding:10px; height:auto;"   >       
-   
-     
+    
+      
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
             <li class="dropdown " style="color:#fff !important; background-color:transparent !important;" >
@@ -79,17 +80,24 @@
     ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '69px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
     style=" transition-property:padding-top;     background-image: url(images/clouds.png); background-size:   cover;  background-repeat: x-repeat; transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   >  
          
-     
-    <div style="transition-property:padding-top; transition-duration: 1s; width:100%; position:fixed; left:0px; top:0px; float:left; z-index:999; padding-top:0px;  ">
+      <div class="cloud-container "  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(8,14);   " 
+        ng-repeat="bird in $root.defaults.schedule[$root.selections.year] track by $index"  
+        ng-style="{'top':($root.myCloudrandomAnim[$index])+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudrandomAnim[$index]))+'s'}"   >
+            <div ng-init="$root.myRCloudRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
+                      id="cloud{{$index}}" class="cloud " 
+                    ng-style="{'animation-delay':($index+1)+'s', 'animation-duration':(($root.myRCloudRandomAnim[$index]))+'s'}">
+            </div>
+        </div>
+    <div style="transition-property:padding-top; transition-duration: 1s; width:100%; position:fixed; left:0px; top:0px; float:left; z-index:999999; padding-top:0px;  ">
         <a href="#">
             <img src="images/logo.svg" 
             title="Your Logo Here" 
-            style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999;" /> 
+            style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999999;" /> 
         </a>
     </div>
     
     <ul class="navbuttons"   
-        style="vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " 
+        style="z-index:99999999; vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " 
         ng-mouseleave = "status.isopen = false;" >
         <li   ng-click="  $root.showView = false; $root.calendarShow = false;  $root.applicationTriggerFindUser();  "   
             id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
@@ -262,11 +270,13 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
         <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  
     </li>
 </ul>
- <div ng-if="!$root.showView" > 
+ <div ng-if="!$root.showView"> 
     <div ng-mousemove="mouseMovedSetXY($event); "  class="container" 
-        ng-style="{'height':($root.innerHeight/2)-120+'px'}" 
+        ng-style="{'height':($root.innerHeight)-180+'px'}" 
         style="top:120px;"  >
-    
+        
+         
+
         <div  ng-mouseover="$root.mouseOverBird = true" ng-mouseleave="$root.mouseOverBird = false" ng-mouseleave="$root.mouseOverBird = false" ng-mouseover="$root.mouseOverBird = true" 
             ng-mousedown="$root.birdsCapturedCount = $root.birdsCapturedCount+1; $root.birdKilledArray[$index] = true;" 
             ng-repeat="bird in $root.defaults.schedule[$root.selections.year] track by $index" 
@@ -298,11 +308,12 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
     style="opacity:0; position:fixed;left:0px; padding:15px;  color:#fff; transition-property:opacity; transition-delay:2s; top:120px; transition-duration: 1s;  width:100%;   overflow:auto; " 
     >
     
-    <div style="position:absolute; top:50%; vertical-align:top; left:0px; width:100%;">
+    <div style="position:absolute; top:0px; vertical-align:top; left:0px; width:100%;">
  
         
         <div class="container-cards">
             <div class="row">
+               
             <div  class="col-md-12 col-xs-12" 
                     style="pointer-events:auto;padding:0px;  position:absolute; left:0px; top:0px;" >
                 

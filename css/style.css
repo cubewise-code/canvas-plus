@@ -30,7 +30,9 @@ html{
 /* tab system */
 
 
-   
+   .dropdown-menu{
+       z-index:99999;
+   }
 
      .navbuttons {
         
@@ -55,8 +57,7 @@ html{
         padding: 1em;
         padding-left:0px;
         padding-right:0px;
-        
-    
+        box-shadow: 5px 10px 18px rgba(0,0,0,0.5);
     }
     
     .navbuttons a{
@@ -295,7 +296,7 @@ div.tm1-subnm-hierarchy-style ul {
 }	
 	.bird {
 		pointer-events:auto;
-  background-image: url('../images/bird-cells.svg');
+  background-image: url('../images/bird-cells.png');
   background-size: auto 100%;
   width: 88px;
   
@@ -307,6 +308,18 @@ div.tm1-subnm-hierarchy-style ul {
 	animation-iteration-count: infinite;
 	animation-duration: 1s;
 	animation-delay: -0.5s
+}
+
+.cloud {
+		pointer-events:auto;
+  background-image: url('../images/cloud.png');
+  background-size: auto 100%;
+  width: 200px;
+  
+  height: 200px;
+  cursor:pointer;
+   
+   
 }
 
 .fa-skull {
@@ -346,6 +359,24 @@ div.tm1-subnm-hierarchy-style ul {
 	animation-name: fly-right-one;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
+    animation-duration: 10s;
+	animation-delay: -0.5s
+	
+
+}
+.cloud-container {
+	position: fixed;
+	top: -200px;
+	left: -30%;
+     padding: 0px;
+	 z-index:-1; 
+     
+    
+	    pointer-events:none;
+	    
+        animation: moveAcross 10s linear infinite;
+        animation-delay: 1s;
+        
 	
 
 }
@@ -392,38 +423,20 @@ div.tm1-subnm-hierarchy-style ul {
 	}
 }
 
-@keyframes fly-right-two {
-	0% {
-		transform: translateY(-2vh) translateX(-10vw) scale(0.5);
-	}
 
-	10% {
-		transform: translateY(0vh) translateX(10vw) scale(0.4);
-	}
-
-	20% {
-		transform: translateY(-4vh) translateX(30vw) scale(0.6);
-	}
-
-	30% {
-		transform: translateY(1vh) translateX(50vw) scale(0.45);
-	}
-
-	40% {
-		transform: translateY(-2.5vh) translateX(70vw) scale(0.5);
-	}
-
-	50% {
-		transform: translateY(0vh) translateX(90vw) scale(0.45);
-	}
-
-	51% {
-		transform: translateY(0vh) translateX(110vw) scale(0.45);
-	}
-
-	100% {
-		transform: translateY(0vh) translateX(110vw) scale(0.45);
-	}
+@keyframes moveAcross {
+    0% {
+   transform: translateY(-15vh) translateX(-30vw) scale(1.2);
+  }
+  1% {
+   transform: translateY(-15vh) translateX(0vw) scale(1.2);
+  }
+  99% {
+   transform: translateY(-15vh) translateX(130vw) scale(1.2);
+  }
+  100% {
+    transform: translateY(-15vh) translateX(130vw) scale(1.2);
+  }
 }
 
 
