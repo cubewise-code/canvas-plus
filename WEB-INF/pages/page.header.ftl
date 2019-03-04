@@ -10,14 +10,15 @@
 
    
  
-    <div style="position:fixed; top:0px; right:0px; z-index:9999; padding:10px; height:auto;"   >       
+    <div ng-init="$root.findIfLoggedIn();" style="position:fixed; top:0px; right:0px; z-index:9999; padding:10px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
     
       
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
-            <li class="dropdown " style="color:#fff !important; background-color:transparent !important;" >
-                <span id="opened" ng-if="$root.user.Name"> 
-                    <span class="inline-block-left" style="margin-right:5px;">{{mouseOverUserClose ? 'Sign Out: '+$root.user.Name+'': 'User: '+$root.user.Name}} </span> 
+            <li class="dropdown "  style="color:#fff !important; background-color:transparent !important;" >
+                <span id="opened"  > 
+                    <span class="inline-block-left" style="margin-right:5px;">
+                    {{mouseOverUserClose && !$root.userLoggedOut ? 'Sign Out: '+($root.user.Name)+'': (!$root.userLoggedOut ? 'User: '+$root.user.Name+'' : '')}} </span> 
                          <span class="inline-block" >
                             <a href="" style="color:#fff;" 
                             ng-mouseleave="mouseOverUserClose = false" 
@@ -78,10 +79,10 @@
 <div   
     class="nav" id="header" ng-init="animatePadding($root.defaultOffSet);"   
     ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '69px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
-    style=" transition-property:padding-top;     background-image: url(images/clouds.png); background-size:   cover;  background-repeat: x-repeat; transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   >  
+    style=" transition-property:padding-top;     background-image: url(images/clouds.png); background-size: cover,  cover;  background-repeat: x-repeat; transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   >  
         
-      <div class="cloud-container " ng-if="!$root.showView || $root.calendarShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(33,55);   " 
-        ng-repeat="bird in $root.defaults.schedule[$root.selections.year] track by $index"  
+      <div class="cloud-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(14,55);   " 
+        ng-repeat="bird in  ['','','','','','','','','','','','','','','','', '', '', '', '','','','','','','','','','','',''] track by $index"  
         ng-style="{'top':($root.myCloudrandomAnim[$index])+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudrandomAnim[$index]))+'s'}"   >
             <div ng-init="$root.myRCloudRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
                       id="cloud{{$index}}" class="cloud " 
@@ -99,7 +100,7 @@
     <ul class="navbuttons"   
         style="z-index:99999999; vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " 
         ng-mouseleave = "status.isopen = false;" >
-        <li   ng-click="  $root.showView = false; $root.calendarShow = false;  $root.applicationTriggerFindUser();  "   
+        <li   ng-click="  $root.showView = false; $root.scheduleShow = false;  $root.applicationTriggerFindUser();  "   
             id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
             ng-mouseover="$root.activeTabOver = 'home'"  ng-mouseleave="$root.activeTabOver = ''" >
                 
@@ -120,7 +121,7 @@
                    
                     <a ng-href="#/{{findClickthrough(item.data.page)}}"  
                      style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " 
-                     ng-click="  $root.indexOver = $index; $root.showView = true; $root.calendarShow  = false; $root.applicationTriggerFindUser();"   >
+                     ng-click="  $root.indexOver = $index; $root.showView = true; $root.scheduleShow  = false; $root.applicationTriggerFindUser();"   >
                             <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i>   
                             <span class="hidden-xs"> 
                             {{item.label}}   
@@ -146,17 +147,24 @@
           
             </li> 
         </ul>
-       <!-- <div  ng-click="$root.calendarShow  = true; $root.runTimeout()"
-            ng-style="{'background-color':$root.applicationHeaderColorSecondary, 'top':$root.showView || $root.calendarShow && $root.user.FriendlyName ? '67px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}"     
+       <!-- <div  ng-click="$root.scheduleShow  = true; $root.runTimeout()"
+            ng-style="{'background-color':$root.applicationHeaderColorSecondary, 'top':$root.showView || $root.scheduleShow && $root.user.FriendlyName ? '67px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}"     
             class=" pull-right text-center " 
             style="transition-property:top; transition-duration: 1s;  position:fixed; top:67px; padding-top:1em; cursor:pointer;right:0px; color:#fff;z-index:999; width:45px; height:50px;">
         <i class="fa fa-calendar" area-hidden="true"></i>
         </div> -->
-         <div ng-click="$root.showView = false; $root.calendarShow = true; "
-            ng-style="{'background-color':$root.applicationHeaderColorSecondary}"     
+         <div ng-click="$root.showView = false; $root.scheduleShow = !$root.scheduleShow; $root.calendarShow = false;  "
+            ng-style="{'background-color': $root.scheduleShow ? $root.applicationHeaderColorSecondary : '#fff' ,  'color':$root.scheduleShow ?   '#fff': $root.applicationHeaderColorSecondary}"     
             class=" pull-right text-center " 
-            style="transition-property:top; transition-duration: 1s;    position:fixed; top:67px; padding-top:1em; cursor:pointer;right:0px; color:#fff;z-index:999; width:45px; height:50px;">
-        <i class="fa fa-skull" area-hidden="true"> </i> 
+            style="transition-property:top; transition-duration: 1s;    position:fixed; top:67px; padding-top:1em; cursor:pointer;right:0px;  z-index:999; width:45px; height:50px;">
+        <i class="fa fa-ellipsis-v" area-hidden="true"> </i> 
+        </div> 
+
+        <div ng-click="$root.showView = false; $root.calendarShow = !$root.calendarShow; $root.scheduleShow = false;"
+            ng-style="{'background-color': $root.calendarShow ? $root.applicationHeaderColorSecondary : '#fff' ,  'color':$root.calendarShow ?   '#fff': $root.applicationHeaderColorSecondary}"     
+            class=" pull-right text-center " 
+            style="transition-property:top; transition-duration: 1s;    position:fixed; top:67px; padding-top:1em; cursor:pointer;right:50px;  z-index:999; width:45px; height:50px;">
+        <i   class="fa fa-calendar" area-hidden="true"> </i> 
         </div> 
    
 
@@ -294,17 +302,70 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
     </div>
         
-          <!-- <div ng-style="{'background-color':$root.applicationHeaderColorSecondary, 'top':$root.showView || $root.calendarShow && $root.user.FriendlyName ? '67px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}"     
+          <!-- <div ng-style="{'background-color':$root.applicationHeaderColorSecondary, 'top':$root.showView || $root.scheduleShow && $root.user.FriendlyName ? '67px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}"     
             class=" pull-right text-center "
-            ng-click="$root.showView = true; $root.calendarShow = false;" 
+            ng-click="$root.showView = true; $root.scheduleShow = false;" 
             style="transition-property:top; transition-duration: 1s; color:#fff; position:fixed; top:67px; padding-top:1em; cursor:pointer;right:0px; color:#fff;z-index:999; width:50px; height:50px;">
             <i class="fa fa-skull" area-hidden="true"> </i> 
            {{$root.birdsCapturedCount}}  
         </div>-->
 
+
+
+        <div ng-show="$root.calendarShow"
+            ng-style="{'height':(($root.innerHeight)-230)+'px', 'opacity':$root.scheduleShow ? '1':'0'}" 
+            style="opacity:0; position:fixed;left:0px; padding:15px;  color:#fff; transition-property:opacity; transition-delay:2s; top:120px; transition-duration: 1s;  width:100%;   overflow:auto; " 
+            >
+            
+            <div style="position:absolute; top:0px; vertical-align:top; left:0px; width:100%;">
+
+
+            </div>
+        </div>
+
+        <div ng-style="{'height': $root.calendarShow ? 'calc(100% - 130px)':'0px'}" ng-if="!loading"  style="position:fixed; bottom:0px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:#fff;"  >	
+		
+					 
+			<div  ng-show="$root.calendarShow" 
+            class="col-lg-2 col-md-3 col-xs-12" 
+             ng-init="$root.getDaysInMonth($index, $root.selections.year)"
+
+				ng-repeat="month in $root.defaults.months track by $index"  
+				style=" z-index:22; top:50px; margin:0 auto;  border-radius:0px; min-height:250px;"  >
+				<h4 ng-style="{'color':month === $root.currentMonth   && $root.selections.year == $root.setYear  ? 'steelblue':'#333'}"><strong  >{{month}}</strong></h4>
+				
+				<p   class="text-center" ng-repeat="dayOfTheWeek in ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] track by $index"  style="border-radius:0px; display:inline-block; min-width:14%; height:30px; width:14%; max-width:14%; margin:0 auto; border-bottom:1px solid #333;"><small>{{dayOfTheWeek}}</small></p>
+				
+				 
+				 
+				<div ng-id="days[$index]"  
+					ng-repeat="day in $root.days[$index] track by $index" 
+					class="text-center"  style="border-radius:0px; width:14%; color:#fff; max-width:14%; min-width:14%; padding:0px; display:inline-block;  cursor:pointer"
+					ng-style="{ 'margin-left':$index === 0 ? ((firstDayPosition[$parent.$index].length)*14)+'%':'0px'}"  
+					> 
+					
+					<span ng-repeat="item in defaults.schedule[$root.selections.year] track by $index" >
+						<div ng-init="hasNum[day][month][$root.selections.year] = true;" ng-show="false" 
+							ng-if="($parent.$index) === (((item.dateStart).split('/')[0])-1) && ($parent.$parent.$index) === (((item.dateStart).split('/')[1])-1) && $root.selections.year === (((item.dateStart).split('/')[2]))">
+							 
+						</div>
+						
+					</span>
+					<div style="padding:5px;"
+					 ng-click=" $root.adminAccess ? (hasNum[$index][month][$root.selections.year] ? editEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):createNewEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year))): ( hasNum[$index][month][$root.selections.year] ? seeDetails(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):'' )"  
+					ng-style="{'background-color':$index  === ($root.dateNumber-1)  && $parent.$index === $root.monthNow  && $root.selections.year == $root.setYear    ? 'orange':   hasNum[$index][month][$root.selections.year] ? $root.defaults.appColor:'#999'}"    >{{day+1}}</div>
+				 
+			</div> 
+			 
+				 
+				 
+		</div>
+		 
+	</div> 
+
           <div  
-          ng-show="$root.calendarShow"
-    ng-style="{'height':(($root.innerHeight)-230)+'px', 'opacity':$root.calendarShow ? '1':'0'}" 
+          ng-show="$root.scheduleShow"
+    ng-style="{'height':(($root.innerHeight)-230)+'px', 'opacity':$root.scheduleShow ? '1':'0'}" 
     style="opacity:0; position:fixed;left:0px; padding:15px;  color:#fff; transition-property:opacity; transition-delay:2s; top:120px; transition-duration: 1s;  width:100%;   overflow:auto; " 
     >
     
@@ -312,31 +373,27 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
  
         
         <div class="container-cards">
-            <div class="row">
+            <div  >
                
-            <div  class="col-md-12 col-xs-12" 
-                    style="pointer-events:auto;padding:0px;  position:absolute; left:0px; top:0px;" >
+            <div   
+                    style="pointer-events:auto; padding:0px;  position:absolute; left:0px; top:0px;" >
                 
-                    <div class="col-lg-2 col-md-2 col-xs-12" 
-                    ng-if="!loading" 
-                    ng-repeat="card in defaults.schedule[$root.selections.year] track by $index" 
-                        ng-style="{'background-color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'green':($root.daysRemainingValue[card.key] <= 5 && $root.daysRemainingValue[card.key] > 0 ? '#224160':($root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] < 0 ? '#999':'rgba(0,0,0,0.3)')), 'color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? '#fff':'#fff'}"
-                        ng-click=" $root.openModal(card)   "
-                        style="padding:10px; border:none; border-left:1px solid #fff; min-height:170px; min-width:340px;  height:170px; overflow:auto; overflow:hidden;  border-bottom:1px solid #fff;" 
+                    <div class="" 
+                        ng-if="!loading" 
+                        ng-repeat="card in defaults.schedule[$root.selections.year] track by $index" 
+                        ng-style="{'cursor':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'pointer':'unset','width':($root.innerWidth/defaults.schedule[$root.selections.year].length)+'px !important','background-color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'green':($root.daysRemainingValue[card.key] <= 5 && $root.daysRemainingValue[card.key] > 0 ? '#224160':($root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] < 0 ? '#999':'rgba(0,0,0,0.3)')), 'color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? '#fff':'#fff'}"
+                        ng-click="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ?  $root.openModal(card) : ''   "
+                        style=" padding:10px; border:none; display:inline-block; border-left:1px solid #fff; min-height:170px; min-width:340px;  height:170px; overflow:auto; overflow:hidden;  border-bottom:1px solid #fff;" 
                         ng-init="$root.daysRemaining(card.dateStart, card.key); $root.daysRemaining(card.dateEnd, (card.key+'end')); " >  
-                                <div style="position:absolute; left:0px; top:0px; margin-left:0px; width:50px; padding:10px;">
-                                    <i class="fa {{card.icon}} fa-2x" aria-hidden="true"></i>
-                            
+                                 
+                                <h5 >
+                                   <i class="fa {{card.icon}} fa-2x" aria-hidden="true"></i>
+                                    <strong style="margin-left:10px;">{{card.key}}</strong>
                                 
-                                </div>
-                                <div style="position:absolute; left:0px; top:0px; margin-left:50px; padding-top:15px; width:calc(100%-50px)">
-
-                                    <strong style="font-size:1.2em; line-height:1.3em;  padding-right:10px;">{{card.key}}</strong>
-                                
-                                </div>
+                                </h5>
                             
                             
-                                <p style="margin-top:60px;"> 		
+                                <p style="margin-top:0px;"> 		
                                     
                                         <span ng-show="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] > 0">
                                         {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +' days'}} <i  
@@ -355,8 +412,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                                 Description: Some text.
                                 <!--{{$root.daysRemainingValue[card.key] > 0 ? 'Begins in ':'Started '}}{{$root.daysRemainingValue[card.key]+'days'}}{{$root.daysRemainingValue[card.key] < 0 ? ' ago':''}}</br>
                                 {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +'days'}}</br>  -->
-                                <i ng-if="$root.daysRemainingValue[(card.key)] <= 0 && $root.daysRemainingValue[(card.key+'end')] > 0 " 
-                                style="position:absolute; padding-right:10px; padding-left:10px;right:10px; top:calc(45% - 10px); cursor:pointer "	class="fa fa-chevron-right fa-2x text-right pull-right" aria-hidden="true"></i>
+                                
                             </p>
                     </div>
                 </div>

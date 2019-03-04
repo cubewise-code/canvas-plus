@@ -64,6 +64,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             settingsInstance: 'dev',
             settingsCube: 'System User Settings',
             settingsMeasure: 'String',
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
+            monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
              schedule:{
             2015:{
                 0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2015', dateEnd:'10/01/2015'},
@@ -92,7 +94,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $rootScope.idelTimePassed = false;
         console.log("checking the user loged in ");
         $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
-             
+             $rootScope.userLoggedOut = false;
         });
        
             
@@ -102,8 +104,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
     $rootScope.userLoggedOut = false;
      
+    
+
     $rootScope.closeApplication = function(view){
-      if(!$rootScope.calendarShow){
+      if(!$rootScope.scheduleShow){
            $tm1Ui.applicationLogout($rootScope.defaults.settingsInstance).then(function(result){
                 if(result['success']){
                     console.log("USE LOGGED OUT", $rootScope.user);
@@ -433,7 +437,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.idelTimePassed =false;
     $rootScope.alpha = 0;
     $rootScope.runTimeout = function(){
-        if(!$rootScope.calendarShow ){
+        if(!$rootScope.scheduleShow ){
             $timeout(
             function(){
  
@@ -545,8 +549,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     
 
 
- $scope.days = [];
-    $scope.firstDayPosition = [];
+ $rootScope.days = [];
+    $rootScope.firstDayPosition = [];
       
 
     function timenow(){
@@ -568,7 +572,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.doUpdate = function(){
         $scope.loading = true;
         $scope.hasNum = [];
-        $scope.days = [];
+        $rootScope.days = [];
         
         $timeout( function(){ 
         
@@ -622,14 +626,14 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.openModal = function(item){
         console.log(item);
         $rootScope.showView = true;
-        $rootScope.calendarShow = false;
+        $rootScope.scheduleShow = false;
         //$scope.goToNewPage('#/sticky-header');
 
     }
-    $scope.getDaysInMonth = function(month,year) {
+    $rootScope.getDaysInMonth = function(month,year) {
         // Here January is 1 based
         //Day 0 is the last day in the previous month
-        $scope.firstDayPosition[month] =  [];
+        $rootScope.firstDayPosition[month] =  [];
         var firstDayPositionArray = [];
         var firstDayPosition =new Date(year, month, 0).getDay();
         
@@ -645,7 +649,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             mypreArray.push(ttg)
          }
         // console.log('days in month', month, days, mypreArray );
-         $scope.days[month] = mypreArray;
+         $rootScope.days[month] = mypreArray;
        // retu$scorn mypreArray;
         // Here January is 0 based
         // return new Date(year, month+1, 0).getDate();
