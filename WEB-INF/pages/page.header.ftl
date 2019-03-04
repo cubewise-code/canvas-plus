@@ -100,7 +100,7 @@
     <ul class="navbuttons"   
         style="z-index:99999999; vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " 
         ng-mouseleave = "status.isopen = false;" >
-        <li   ng-click="  $root.showView = false; $root.scheduleShow = false;  $root.applicationTriggerFindUser();  "   
+        <li   ng-click="  $root.showView = false; $root.scheduleShow = false; $root.calendarShow = false;  $root.applicationTriggerFindUser();  "   
             id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
             ng-mouseover="$root.activeTabOver = 'home'"  ng-mouseleave="$root.activeTabOver = ''" >
                 
@@ -153,14 +153,14 @@
             style="transition-property:top; transition-duration: 1s;  position:fixed; top:67px; padding-top:1em; cursor:pointer;right:0px; color:#fff;z-index:999; width:45px; height:50px;">
         <i class="fa fa-calendar" area-hidden="true"></i>
         </div> -->
-         <div ng-click="$root.showView = false; $root.scheduleShow = !$root.scheduleShow; $root.calendarShow = false;  "
+         <div ng-click="  $root.scheduleShow = !$root.scheduleShow;  $root.showView =   $root.activeTab != '-1' && !$root.scheduleShow && !$root.calendarShow ? true : false; $root.calendarShow = false;  "
             ng-style="{'background-color': $root.scheduleShow ? $root.applicationHeaderColorSecondary : '#fff' ,  'color':$root.scheduleShow ?   '#fff': $root.applicationHeaderColorSecondary}"     
             class=" pull-right text-center " 
             style="transition-property:top; transition-duration: 1s;    position:fixed; top:67px; padding-top:1em; cursor:pointer;right:0px;  z-index:999; width:45px; height:50px;">
         <i class="fa fa-ellipsis-v" area-hidden="true"> </i> 
         </div> 
 
-        <div ng-click="$root.showView = false; $root.calendarShow = !$root.calendarShow; $root.scheduleShow = false;"
+        <div ng-click=" $root.calendarShow = !$root.calendarShow;  $root.scheduleShow = false; $root.showView =  $root.activeTab != '-1' && !$root.calendarShow ? true : false"
             ng-style="{'background-color': $root.calendarShow ? $root.applicationHeaderColorSecondary : '#fff' ,  'color':$root.calendarShow ?   '#fff': $root.applicationHeaderColorSecondary}"     
             class=" pull-right text-center " 
             style="transition-property:top; transition-duration: 1s;    position:fixed; top:67px; padding-top:1em; cursor:pointer;right:50px;  z-index:999; width:45px; height:50px;">
@@ -312,21 +312,13 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
 
 
-        <div ng-show="$root.calendarShow"
-            ng-style="{'height':(($root.innerHeight)-230)+'px', 'opacity':$root.scheduleShow ? '1':'0'}" 
-            style="opacity:0; position:fixed;left:0px; padding:15px;  color:#fff; transition-property:opacity; transition-delay:2s; top:120px; transition-duration: 1s;  width:100%;   overflow:auto; " 
-            >
-            
-            <div style="position:absolute; top:0px; vertical-align:top; left:0px; width:100%;">
+         
 
-
-            </div>
-        </div>
-
-        <div ng-style="{'height':(($root.innerHeight)-230)+'px'}" ng-if="!loading && $root.calendarShow"  style="position:fixed; bottom:67px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(255,255,255,0.6);"  >	
+        <div ng-if="$root.calendarShow" ng-style="{'height':(($root.innerHeight)-230)+'px','opacity':$root.calendarShow ? '1':'0', }"    style="position:fixed; bottom:67px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(255,255,255,0.6); opacity:0;  transition-property:opacity; transition-delay:2s; "  >	
+			
 		
 					 
-			<div  ng-show="$root.calendarShow" 
+			<div    
             class="col-lg-2 col-md-3 col-xs-12" 
              ng-init="$root.getDaysInMonth($index, $root.selections.year)"
 
@@ -364,7 +356,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 	</div> 
 
           <div  
-          ng-show="$root.scheduleShow"
+          ng-if="$root.scheduleShow"
     ng-style="{'height':(($root.innerHeight)-230)+'px', 'opacity':$root.scheduleShow ? '1':'0'}" 
     style="opacity:0; position:fixed;left:0px; padding:15px;  color:#fff; transition-property:opacity; transition-delay:2s; top:120px; transition-duration: 1s;  width:100%;   overflow:auto; " 
     >
