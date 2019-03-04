@@ -229,6 +229,7 @@ div.tm1-subnm-hierarchy-style ul {
     margin-bottom: 10px;
 }
 #righthandsidebar{
+    -webkit-transition: margin-left 0.5s, margin-top 1s;
      transition-property:margin-left, margin-top;  
     transition-duration: 0.5s, 1s;  
     -moz-box-shadow:     -5px 10px 18px rgba(0,0,0,0.2); 
@@ -244,6 +245,7 @@ div.tm1-subnm-hierarchy-style ul {
     padding:6px; 
     padding-left:1.3em; 
     padding-right:60px; 
+     -webkit-transition:margin-left 0.5s, margin-top 1s;
     transition-property:margin-left, margin-top;  
     transition-duration: 0.5s, 1s;  
     position:fixed; 
@@ -321,6 +323,17 @@ div.tm1-subnm-hierarchy-style ul {
    
    
 }
+.cloud-group {
+    pointer-events:auto;
+  background-image: url('../images/clouds-group.png');
+  background-size: auto 100%;
+  width: 745px;
+  
+  height: 207px;
+  cursor:pointer;
+   
+   
+}
 
 .fa-skull {
 		pointer-events:auto;
@@ -351,7 +364,7 @@ div.tm1-subnm-hierarchy-style ul {
 .bird-container {
 	position: absolute;
 	top: 0%;
-	left: -10%;
+	left: -20%;
      padding: 50px;
 	transform: scale(0) translateX(-15vw);
 	will-change: transform;
@@ -367,7 +380,7 @@ div.tm1-subnm-hierarchy-style ul {
 .cloud-container {
 	position: fixed;
 	top: -200px;
-	left: -30%;
+	left: -100%;
      padding: 0px;
 	 z-index:-1; 
      
@@ -375,6 +388,22 @@ div.tm1-subnm-hierarchy-style ul {
 	    pointer-events:none;
 	    
         animation: moveAcross 10s linear infinite;
+        animation-delay: 1s;
+        
+	    
+
+}
+.cloud-group-container {
+	position: fixed;
+	top: -200px;
+	left: -900px;
+     padding: 0px;
+	 z-index:-1; 
+      
+    
+	    pointer-events:none;
+	    
+        animation: moveAcrossCloudsGroup 10s linear infinite;
         animation-delay: 1s;
         
 	
@@ -391,7 +420,7 @@ div.tm1-subnm-hierarchy-style ul {
 }
 @keyframes fly-right-one {
 	0% {
-		transform: scale(0.2) translateX(-10vw);
+		transform: scale(0.2) translateX(-50vw);
 	}
 
 	10% {
@@ -419,23 +448,36 @@ div.tm1-subnm-hierarchy-style ul {
 	}
 
 	100% {
-		transform: translateY(0vh) translateX(110vw) scale(0.3);
+		transform: translateY(0vh) translateX(170vw) scale(0.3);
 	}
 }
-
+@keyframes moveAcrossCloudsGroup{
+      0% {
+   transform: translateY(-15vh) translateX(-30vw) scale(1.0);
+  }
+  1% {
+   transform: translateY(-15vh) translateX(0vw) scale(1.0);
+  }
+  99% {
+   transform: translateY(-15vh) translateX(150vw) scale(1.0);
+  }
+  100% {
+    transform: translateY(-15vh) translateX(150vw) scale(1.0);
+  }
+}
 
 @keyframes moveAcross {
     0% {
-   transform: translateY(-15vh) translateX(-30vw) scale(1.2);
+   transform: translateY(-15vh) translateX(-30vw) scale(1.0);
   }
   1% {
-   transform: translateY(-15vh) translateX(0vw) scale(1.2);
+   transform: translateY(-15vh) translateX(0vw) scale(1.0);
   }
   99% {
-   transform: translateY(-15vh) translateX(130vw) scale(1.2);
+   transform: translateY(-15vh) translateX(200vw) scale(1.0);
   }
   100% {
-    transform: translateY(-15vh) translateX(130vw) scale(1.2);
+    transform: translateY(-15vh) translateX(200vw) scale(1.0);
   }
 }
 

@@ -441,7 +441,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             $timeout(
             function(){
  
-                if($rootScope.countIdel > 10){
+                if($rootScope.countIdel > 60){
                       
                     if($scope.mouseMovedXY === $scope.lastMovedXY){
                          //console.log("running timeout",$rootScope.alpha, $rootScope.countIdel,  $scope.lastMovedXY, $scope.mouseMovedXY);
@@ -489,7 +489,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                     $rootScope.runTimeout();
                 }
                 
-            },10000
+            },1000
         )
         }
     }
