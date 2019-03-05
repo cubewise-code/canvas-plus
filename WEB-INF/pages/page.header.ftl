@@ -84,7 +84,7 @@
 
     </div> 
       <div class="cloud-group-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudGrouprandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
-        ng-repeat-start="cloudGroup in  ['','','','','','','','','','','','',''] track by $index"  
+        ng-repeat-start="cloudGroup in  ['','','','',''] track by $index"  
         ng-style="{'top':($root.myCloudGrouprandomAnim[$index]/2)+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudGrouprandomAnim[$index]))+'s'}"   >
             <div ng-init="$root.myRCloudGroupRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
                       id="cloud{{$index}}" class="cloud-group " 
@@ -92,7 +92,7 @@
             </div>
         </div>  
       <div class="cloud-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
-        ng-repeat-end="cloud in  ['','','','','','','','','','','','',''] track by $index"  
+        ng-repeat-end="cloud in  ['','','','','','',''] track by $index"  
         ng-style="{'top':($root.myCloudrandomAnim[$index]/2)+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudrandomAnim[$index]))+'s'}"   >
             <div ng-init="$root.myRCloudRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
                       id="cloud{{$index}}" class="cloud " 
