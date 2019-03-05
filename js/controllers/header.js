@@ -674,11 +674,11 @@ if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
             var currentHour = parseFloat(m.format("HH"));
             
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
-                g = '#000000'+"f7";
+                g = "#000000"+"f7";
             } else if(currentHour >= split_evening) {
-                g = '#000000'+"c9";
+                g = "#000000"+"c9";
             } else {
-                g ="transparent";
+                g ="#000000"+"c9";
             }
             console.log(g )
             return g;

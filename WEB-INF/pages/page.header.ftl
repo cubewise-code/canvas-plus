@@ -80,7 +80,7 @@
     class="nav" id="header" ng-init="animatePadding($root.defaultOffSet); colortouse = $root.findColorByHr($root.applicationHeaderColor)"  
     ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '69px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
     style=" -webkit-transition:padding-top 1s; transition-property:padding-top;     background-image: url(images/clouds.png); background-size: cover,  cover;  background-repeat: x-repeat; transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   > 
-    <div ng-style="{'background-color':colortouse}" style="width:100%; height:100%; display:block; position:fixed; top:0px; left:0px; z-index:-1;">
+    <div ng-style="{'background-color':colortouse}" style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
 
     </div> 
       <div class="cloud-group-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudGrouprandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
