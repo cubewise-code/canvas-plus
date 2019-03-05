@@ -678,7 +678,7 @@ if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
             } else if(currentHour >= split_evening) {
                 g = "#000000"+"c9";
             } else {
-                g ="#000000"+"c9";
+                g ="transparent";
             }
             console.log(g )
             return g;
