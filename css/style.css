@@ -485,3 +485,31 @@ div.tm1-subnm-hierarchy-style ul {
 
  
  
+@media print {
+   .stickyContainer{
+       width:100%;
+       top:0px !important; 
+       height:auto !important;
+       overflow:visible !important;
+       position:relative !important;
+   }
+   .fixed-container-chart{
+		
+	display: none !important;
+		}
+		.fixed-container-debug{
+			display: none !important;
+		}
+		.fixed-container-side{
+		
+			display: none !important;
+		}
+		.sticky-header{ 
+			display: none !important;
+		}
+		.fixedFirstColHeader{
+			 
+			display: none !important;
+		}
+		 
+}

@@ -15,6 +15,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.applicationHeaderColorSelect = '#4F81BD';
     $rootScope.applicationHeaderColorBudget = ' #bdbdbd';
     $rootScope.applicationHeaderColorLastYear = '#e91042';
+    $rootScope.mainData = {"timeoutBlockout":false};
     $rootScope.showView = true;
     $rootScope.activeSubTab = 0;
     $rootScope.subPathBoolean = false;
@@ -24,7 +25,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.topOffSet = $rootScope.defaultOffSet ;
     $rootScope.selectedsubParentPage = '';
     $rootScope.topOffSetPageView = $rootScope.topOffSet+60;
-      
+    $ 
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";
@@ -33,13 +34,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         var ua = navigator.userAgent;
 
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)){
-        $rootScope.desktop = false;
+            $rootScope.desktop = false;
 
          } else if (/Chrome/i.test(ua)){
-        $rootScope.desktop = false;
+            $rootScope.desktop = false;
 
          }else{
-        $rootScope.desktop = true;
+            $rootScope.desktop = true;
          }
     $rootScope.pageUrlEncoded = function() {
 		return encodeURIComponent($location.absUrl());
@@ -92,7 +93,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.applicationTriggerFindUser = function(){
         $rootScope.countIdel = 0;
         $rootScope.idelTimePassed = false;
-        console.log("checking the user loged in ");
+        //console.log("checking the user loged in ");
         $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
              $rootScope.userLoggedOut = false;
         });
@@ -110,7 +111,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
       if(!$rootScope.scheduleShow){
            $tm1Ui.applicationLogout($rootScope.defaults.settingsInstance).then(function(result){
                 if(result['success']){
-                    console.log("USE LOGGED OUT", $rootScope.user);
+                   // console.log("USE LOGGED OUT", $rootScope.user);
                     $rootScope.userLoggedOut = true;
                     $rootScope.showView = false;
                     
@@ -134,12 +135,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     };
     
     $rootScope.logout = function(sessionname){
-        console.log(sessionname);
+       // console.log(sessionname);
 
     }
     $rootScope.date = new Date() ;
     $rootScope.date  = ((($rootScope.date+"").split(":")[0]).split(',').join('')).split(' ').join('')
-    console.log($rootScope.date, "date");
+  //  console.log($rootScope.date, "date");
     //Initialize all variables
     /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
     $scope.initializeVariables = function(){
@@ -167,7 +168,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         
   $scope.getLeftMargin = function(idname){
     if(document.getElementById(idname) ){
-        console.log(document.getElementById(idname).getBoundingClientRect().left  );
+      //  console.log(document.getElementById(idname).getBoundingClientRect().left  );
         if(document.getElementById("pop-over-body")){
             document.getElementById("pop-over-body").style.left = document.getElementById(idname).getBoundingClientRect().left +"px";
         }
@@ -437,7 +438,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.idelTimePassed =false;
     $rootScope.alpha = 0;
     $rootScope.runTimeout = function(){
-        if(!$rootScope.scheduleShow ){
+if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
             $timeout(
             function(){
  
@@ -493,6 +494,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         )
         }
     }
+     
     $rootScope.runTimeout();
     $rootScope.birdsKilled = 0;
     $rootScope.birdKilledArray = [];

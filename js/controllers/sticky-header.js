@@ -24,7 +24,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
      
     $scope.refreshMainData = function(){
          $scope.mainData = {
-        "timeoutBlockout":true,
+        "timeoutBlockout":$rootScope.mainData['timeoutBlockout'],
         "visualiseChartValues":true,
         "debugJson":false,
         "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},

@@ -283,7 +283,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
  <div ng-if="!$root.showView"> 
     <div ng-mousemove="mouseMovedSetXY($event); "  class="container" 
         ng-style="{'height':($root.innerHeight)-180+'px'}" 
-        style="top:120px;"  >
+        style="top:120px; pointer-events:none !important;"  >
         
          
 
@@ -316,7 +316,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
          
 
-        <div   ng-style="{'height':$root.calendarShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0.3); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s;  "  >	
+        <div   ng-style="{'height':$root.calendarShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0.3); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
 			
 		
 					 
