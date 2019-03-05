@@ -3,19 +3,29 @@
   style=" transition-property:padding-top;  transition-duration: 1s;" >
 
   <h1 style="padding-top:150px;">
-    <span style="float: left; width: 50px; "><i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i><i ng-if="!$root.isLoading" class="fa fa-file-text-o"></i></span> t-test-upload-multi-sheet
+    <span style="float: left; width: 50px; "><i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i> </span>  
   </h1>
    
   <div class="row">
-  	<div class="col-lg-3 col-md-6 col-12 panel">
+  	<div class="col-lg-4 col-md-12 col-xs-12 panel">
+      
+       <button class="btn btn-primary" style="width:100%">
+					<a href="files/Template-Multi-Upload.xlsx" target="_blank" style="color:white">
+						<i class="fa fa-download  fa-fw"></i> Download Template
+					</a>
+      </button>
+        
+       
+    </div>
+		<div class="col-lg-4 col-md-6 col-xs-12 panel">
       <label class="btn btn-primary btn-file" style="width:100%">
-        <i class="fa fa-upload fa-fw"></i> Upload Excel (XLSX) Workbook
+        <i class="fa fa-upload fa-fw"></i> Upload Workbook
         <js-xls type='file' onread="read" onerror="error" style="display: none;"></js-xls>
       </label>
     </div>
-		<div class="col-lg-3 col-md-6 col-12 panel">
-			<label class="btn btn-primary btn-file" ng-click="saveAll()" style="width:100%">
-        <i class="fa fa-floppy-o fa-fw"></i> Save All
+		<div class="col-lg-4 col-md-6 col-xs-12 panel" >
+			<label class="btn btn-primary btn-file "  ng-click="saveAll()" style="width:100%">
+        <i class="fa fa-floppy-o fa-fw"></i> Save
       </label>
 		</div>
   </div>
@@ -29,19 +39,24 @@
 	</div>
 	
 	<div class="panel panel-primary" 
-		ng-show="sheetsToReadIn[$index][0]"
+		  ng-show="sheetsToReadIn[$index][0]"
 			ng-if="(sheetsToLoad).indexOf(sheetsUploaded[$index]) > -1  "
-			ng-repeat="book in sheetsUploaded track by $index ">
-			<div class="panel-heading" ng-click="sheetsToReadIn[$index][0] = !sheetsToReadIn[$index][0]">
-				<span>	 <span class="pull-left"   >
+			ng-repeat="book in sheetsUploaded track by $index "
+			ng-init="sheetsToShowIn[$index][0] = true;">
+			<div class="panel-heading" ng-click="sheetsToShowIn[$index][0] = !sheetsToShowIn[$index][0]" 	>
+				<span>	 
+					<span class="pull-left"   >
 						 <i ng-class="{'fa-check':sheetsToReadIn[$index][0],'fa-times':!sheetsToReadIn[$index][0]}" class="fa fa-fw"></i></span>{{sheetsUploaded[$index]}} 
-					 <span ng-if="workbookUploadedSheetsData.length" class="pull-right">Total:{{values.itemsToBeUploaded[$index]}} items</span>
+					 <span ng-if="workbookUploadedSheetsData.length" class="pull-right">Total:{{values.itemsToBeUploaded[$index]}} items | <span style="cursor:pointer;" 	ng-click="sheetsToReadIn[$index][0] = !sheetsToReadIn[$index][0]"  class="text-right">
+						  Delete <i class="fa fa-times"></i>
+						 </span></span>
+					 
 				 
 				</span>
 			</div>
 				
-			<div class="panel-body" ng-if="workbookUploadedSheetsData.length">        
-				<table  ng-show="sheetsToReadIn[$index][0]"
+			<div class="panel-body" ng-if="workbookUploadedSheetsData.length" ng-show=" sheetsToShowIn[$index][0]">        
+				<table  ng-show="sheetsToReadIn[$index][0]  "
 			 id="test-element-list-subset-and-attribute"
 				class="table ">
  

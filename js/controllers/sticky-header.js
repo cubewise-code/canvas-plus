@@ -21,13 +21,14 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $rootScope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
-     
+     $scope.rowFormat = [] ;
     $scope.refreshMainData = function(){
          $scope.mainData = {
         "timeoutBlockout":$rootScope.mainData['timeoutBlockout'],
         "visualiseChartValues":true,
         "debugJson":false,
         "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},
+        "rowElementFormatAttributes":"}FormatType",
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
         "instance":$rootScope.defaults.settingsInstance,
         "cube":"General Ledger",
