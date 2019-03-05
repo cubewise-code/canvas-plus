@@ -27,6 +27,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "timeoutBlockout":$rootScope.mainData['timeoutBlockout'],
         "visualiseChartValues":true,
         "debugJson":false,
+        "totalColumnElement":"Year",
         "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},
         "rowElementFormatAttributes":"}FormatType",
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},

@@ -364,7 +364,7 @@
 												ng-if="  cubeDimensionalityArray.length"
 												tm1-instance="{{mainData['instance']}}"
 												tm1-cube="{{mainData['cube']}}"
-												tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],$root.selections.account)}}"
+												tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],$root.selections.account)}}"
 											
 												tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 												tm1-format-percentage="false"
@@ -455,7 +455,7 @@
 											tm1-cube="{{mainData['cube']}}" 
 											tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 											tm1-format-percentage="false"
-											tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],row.key)}}">
+											tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],row.key)}}">
 									</tm1-ui-dbr>
 									<tm1-ui-dbr 
 											ng-if=" rowFormat[row.key] &&cubeDimensionalityArray.length"
@@ -463,7 +463,7 @@
 											tm1-cube="{{mainData['cube']}}" 
 											tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 											tm1-format-percentage="true"
-											tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],row.key)}}">
+											tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],row.key)}}">
 									</tm1-ui-dbr>
 								</td>
 								
@@ -536,7 +536,7 @@
 										ng-if="  cubeDimensionalityArray.length"
 										tm1-instance="{{mainData['instance']}}"
 										tm1-cube="{{mainData['cube']}}"
-										tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],$root.selections.account)}}"
+										tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],$root.selections.account)}}"
 									
 										tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 										tm1-format-percentage="false"
@@ -772,7 +772,7 @@
 								tm1-cube="{{mainData['cube']}}" 
 								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 								tm1-format-percentage="false"
-                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],row.key)}}">
+                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],row.key)}}">
 							</tm1-ui-dbr>
 										
 
@@ -783,7 +783,7 @@
 								tm1-cube="{{mainData['cube']}}" 
 								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 								tm1-format-percentage="true"
-                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],'Year',mainData['rowDimension']['name'],row.key)}}">
+                  				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],row.key)}}">
 							</tm1-ui-dbr>
 						</td>
                   		<td ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':row['type'] === 'C' && $root.selections.account != row.key || !mainData['chart']['show'], 'white-bg': row['type'] != 'C' && $root.selections.account != row.key || !mainData['chart']['show']}"  class="text-right" ng-repeat="item in lists.months track by $index">
