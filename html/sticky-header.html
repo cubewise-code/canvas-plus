@@ -197,7 +197,7 @@
 		
 		.bullet .title { font-size: 14px; font-weight: bold; }
 		.bullet .subtitle { fill: #999; }
-		 
+		 .colwidth{  min-width:100px; }
 	</style>
 
 	<tm1-ui-element-list 
@@ -460,7 +460,7 @@
 								</td>
 								<td ng-style="{'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
 									ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':$root.selections.account != row.key || !mainData['chart']['show']}" 
-									class="text-right " >
+									class="text-right  colwidth" >
 									<tm1-ui-dbr 
 											ng-if=" !$root.rowFormat[row.key] && cubeDimensionalityArray.length"
 											tm1-instance="{{mainData['instance']}}" 
@@ -791,7 +791,7 @@
 							placeholder="Search {{mainData['rowDimension']['name']}}...">
 
  						</td>
-						<td class="text-center colwidth" id="columnWidth" style="background-color: #f8f8f8;" >
+						<td class="text-center colwidth" id="columnWidth" style="background-color: #f8f8f8; padding:8px;" >
 							All Months
 						 </td>
             			<td style="background-color: #f8f8f8;" class="text-center colwidth" 
