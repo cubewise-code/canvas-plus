@@ -764,7 +764,7 @@
 						</td>
 						<td 
 						class="text-right" 
-						ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':row['type'] === 'C' && $root.selections.account != row.key || !mainData['chart']['show'], 'white-bg': row['type'] != 'C' && $root.selections.account != row.key || !mainData['chart']['show']}" >
+						ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':$root.selections.account != row.key && mainData['chart']['show']}" >
 							<tm1-ui-dbr 
 							
 								ng-if=" !rowFormat[row.key] && cubeDimensionalityArray.length"
