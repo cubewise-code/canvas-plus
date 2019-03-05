@@ -25,7 +25,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.topOffSet = $rootScope.defaultOffSet ;
     $rootScope.selectedsubParentPage = '';
     $rootScope.topOffSetPageView = $rootScope.topOffSet+60;
-    $ 
+    $rootScope.hasNum = [];
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";
@@ -68,25 +68,25 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
             monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
              schedule:{
-            2015:{
-                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2015', dateEnd:'10/01/2015'},
-                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2015', dateEnd:'11/02/2015'},
-                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2015', dateEnd:'10/03/2015'},
-                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2015', dateEnd:'10/04/2015'},
-                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2015', dateEnd:'10/05/2015'},
-                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2015', dateEnd:'10/09/2015'},
-                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2015', dateEnd:'10/11/2015'},
-                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2015', dateEnd:'10/12/2015'}
+            2018:{
+                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2018', dateEnd:'10/01/2018'},
+                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2018', dateEnd:'11/02/2018'},
+                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2018', dateEnd:'10/03/2018'},
+                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2018', dateEnd:'10/04/2018'},
+                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2018', dateEnd:'10/05/2018'},
+                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2018', dateEnd:'10/09/2018'},
+                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2018', dateEnd:'10/11/2018'},
+                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2018', dateEnd:'10/12/2018'}
             },
-            2016:{
-                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2016', dateEnd:'10/01/2016'},
-                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2016', dateEnd:'11/02/2016'},
-                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2016', dateEnd:'10/03/2016'},
-                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2016', dateEnd:'10/04/2016'},
-                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2016', dateEnd:'10/05/2016'},
-                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2016', dateEnd:'10/09/2016'},
-                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2016', dateEnd:'10/11/2016'},
-                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2016', dateEnd:'10/12/2016'}
+            2019:{
+                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2019', dateEnd:'10/01/2019'},
+                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2019', dateEnd:'11/02/2019'},
+                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2019', dateEnd:'10/03/2019'},
+                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2019', dateEnd:'10/04/2019'},
+                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2019', dateEnd:'10/05/2019'},
+                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2019', dateEnd:'10/09/2019'},
+                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2019', dateEnd:'10/11/2019'},
+                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2019', dateEnd:'10/12/2019'}
             }
         }
     };
@@ -438,8 +438,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.idelTimePassed =false;
     $rootScope.alpha = 0;
     $rootScope.runTimeout = function(){
-if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
-            $timeout(
+    if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
+        $timeout(
             function(){
  
                 if($rootScope.countIdel > 60){
@@ -498,27 +498,28 @@ if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
     $rootScope.runTimeout();
     $rootScope.birdsKilled = 0;
     $rootScope.birdKilledArray = [];
-   $rootScope.birdsCapturedCount = 0;
+    $rootScope.birdsCapturedCount = 0;
     $rootScope.doBirdKill = function(bird){
         $rootScope.birdsKilled = $rootScope.birdsKilled +1;
         //console.log("kill bird ",bird );
     }
-     $rootScope.getRandomArbitrary = function(min, max) {
+    $rootScope.getRandomArbitrary = function(min, max) {
         return Math.abs( Math.random() * (max - min) + min);
     }
     
 
-    $rootScope.overRideDate = '02/10/2016';
-    $rootScope.setYear = '2016';
-    if($rootScope.overRideDate != ''){
+    //$rootScope.overRideDate = '02/10/2019';
+    $rootScope.setYear = '2019';
+    if($rootScope.overRideDate != '' && $rootScope.overRideDate){
         $rootScope.dateNow = new Date($rootScope.overRideDate) ;
     }else{
         $rootScope.dateNow = new Date() ;
     }
+    
     //console.log(" $rootScope.dateNow",  $rootScope.dateNow, (($rootScope.dateNow+"").split(":")[0]).split(' ')[2]);
     $rootScope.dateNumber =(($rootScope.dateNow+"").split(":")[0]).split(' ')[2];
     $rootScope.date  = ((($rootScope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
-        
+    //console.log($rootScope.dateNumber, $rootScope.dateNow,"$rootScope.dateNumber$rootScope.dateNumber");   
     if($rootScope.overRideDate && $rootScope.overRideDate != ''){
          var d = new Date($rootScope.overRideDate);
     }else{
@@ -672,7 +673,7 @@ if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
             var split_afternoon = 12 //24hr time to split the afternoon
             var split_evening = 17 //24hr time to split the evening
             var currentHour = parseFloat(m.format("HH"));
-            
+            console.log(currentHour)
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
                 g = "#000000"+"f7";
             } else if(currentHour >= split_evening) {

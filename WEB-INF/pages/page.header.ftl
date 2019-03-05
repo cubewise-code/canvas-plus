@@ -346,16 +346,21 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                         ng-style="{ 'margin-left':$index === 0 ? ((firstDayPosition[$parent.$index].length)*14)+'%':'0px'}"  
                         > 
                         
-                        <span ng-repeat="item in defaults.schedule[$root.selections.year] track by $index" >
-                            <div ng-init="hasNum[day][month][$root.selections.year] = true;" ng-show="false" 
-                                ng-if="($parent.$index) === (((item.dateStart).split('/')[0])-1) && ($parent.$parent.$index) === (((item.dateStart).split('/')[1])-1) && $root.selections.year === (((item.dateStart).split('/')[2]))">
-                                
+                        <span ng-repeat="item in $root.defaults.schedule[$root.selections.year] track by $index" >
+                            
+                            <div 
+                            ng-init="$root.hasNum[$root.selections.year][month][day]  = true;" 
+                            ng-show="true" 
+                                ng-if="day && month && $root.selections.year && (day) === (((item.dateStart).split('/')[0])-1) && ($parent.$parent.$index) === (((item.dateStart).split('/')[1])-1) && $root.selections.year === (((item.dateStart).split('/')[2]))">
+
+                             
                             </div>
                             
                         </span>
+                        
                         <div style="padding:5px;"
-                            ng-click=" $root.adminAccess ? (hasNum[$index][month][$root.selections.year] ? editEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):createNewEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year))): ( hasNum[$index][month][$root.selections.year] ? seeDetails(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):'' )"  
-                            ng-style="{'background-color':$index  === ($root.dateNumber-1)  && $parent.$index === $root.monthNow  && $root.selections.year == $root.setYear    ? 'orange':   hasNum[$index][month][$root.selections.year] ? $root.defaults.appColor:'rgba(0,0,0,0.3)'}"    >{{day+1}}
+                            ng-click=" $root.adminAccess ? ($root.hasNum[$root.selections.year][month][day] ? editEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):createNewEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year))): ($root.hasNum[$root.selections.year][month][day]  ? seeDetails(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):'' )"  
+                            ng-style="{'background-color':$index  === ($root.dateNumber-1)  && $parent.$index === $root.monthNow  && $root.selections.year == $root.setYear    ? 'orange':   $root.hasNum[$root.selections.year][month][day] ? $root.applicationHeaderColorSecondary:'rgba(0,0,0,0.3)'}"    >{{day+1}} 
                         </div>
                     
                 </div> 

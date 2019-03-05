@@ -244,7 +244,7 @@
 								tm1-instance="{{mainData['instance']}}" 
 								tm1-cube="}ElementAttributes_{{mainData['rowDimension']['name']}}"  
                   				tm1-elements="{{row.key}},{{mainData['rowElementFormatAttributes']}}"
-								 ng-model="rowFormat[row.key]"
+								 ng-model="$root.rowFormat[row.key]"
 								  >
 							</tm1-ui-dbr>
 		</span> </div>
@@ -343,8 +343,9 @@
 											tm1-element="{{$root.selections.account}}" 
 											tm1-attribute="{{mainData['rowDimension']['attributes']}}" 
 											ng-model="$root.selections.accountChosen"
-											tm1-read-only="true">
-										</tm1-ui-dbra> 
+											tm1-read-only="true"
+											 >
+										</tm1-ui-dbra>  
 										<span class="pull-right text-right">
 											All Months
 										</span>
@@ -361,7 +362,17 @@
 											<span class="pull-right text-right">
 											 
 											<tm1-ui-dbr
-												ng-if="  cubeDimensionalityArray.length"
+												ng-if="$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
+												tm1-instance="{{mainData['instance']}}"
+												tm1-cube="{{mainData['cube']}}"
+												tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],$root.selections.account)}}"
+											
+												tm1-data-decimal="2"
+												tm1-format-percentage="true"
+											> 
+											</tm1-ui-dbr>
+											<tm1-ui-dbr
+												ng-if="!$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
 												tm1-instance="{{mainData['instance']}}"
 												tm1-cube="{{mainData['cube']}}"
 												tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],$root.selections.account)}}"
@@ -370,6 +381,7 @@
 												tm1-format-percentage="false"
 											> 
 											</tm1-ui-dbr>
+
 										</span> <br>
 										</h5>
 										<span ng-init="getSubsetList()"> </span>
@@ -450,7 +462,7 @@
 									ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':$root.selections.account != row.key || !mainData['chart']['show']}" 
 									class="text-right " >
 									<tm1-ui-dbr 
-											ng-if=" !rowFormat[row.key] && cubeDimensionalityArray.length"
+											ng-if=" !$root.rowFormat[row.key] && cubeDimensionalityArray.length"
 											tm1-instance="{{mainData['instance']}}" 
 											tm1-cube="{{mainData['cube']}}" 
 											tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
@@ -458,10 +470,10 @@
 											tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],row.key)}}">
 									</tm1-ui-dbr>
 									<tm1-ui-dbr 
-											ng-if=" rowFormat[row.key] &&cubeDimensionalityArray.length"
+											ng-if=" $root.rowFormat[row.key] &&cubeDimensionalityArray.length"
 											tm1-instance="{{mainData['instance']}}" 
 											tm1-cube="{{mainData['cube']}}" 
-											tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
+											tm1-data-decimal="2"
 											tm1-format-percentage="true"
 											tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],row.key)}}">
 									</tm1-ui-dbr>
@@ -533,13 +545,21 @@
 									<span class="pull-right text-right">
 									 
 									<tm1-ui-dbr
-										ng-if="  cubeDimensionalityArray.length"
+										ng-if="!$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
 										tm1-instance="{{mainData['instance']}}"
 										tm1-cube="{{mainData['cube']}}"
-										tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],$root.selections.account)}}"
-									
+										tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],$root.selections.account)}}" 
 										tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 										tm1-format-percentage="false"
+									> 
+									</tm1-ui-dbr>
+									<tm1-ui-dbr
+										ng-if="$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
+										tm1-instance="{{mainData['instance']}}"
+										tm1-cube="{{mainData['cube']}}"
+										tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][$index]['name'], mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],$root.selections.account)}}" 
+										tm1-data-decimal="2"
+										tm1-format-percentage="true"
 									> 
 									</tm1-ui-dbr>
 								 </span> <br>
@@ -556,7 +576,7 @@
 							</h5>
 							<h5  ng-style="{  'color':mainData['chart']['ledgend'][0]['color']}">
 							<tm1-ui-dbr
-								ng-if=" cubeDimensionalityArray.length"
+								ng-if="!$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
 								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][0]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
@@ -566,12 +586,23 @@
 								tm1-on-change="refreshChart()"
 								> 
 							</tm1-ui-dbr>
+							<tm1-ui-dbr
+								ng-if="$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
+								tm1-instance="{{mainData['instance']}}"
+								tm1-cube="{{mainData['cube']}}"
+								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][0]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
+								ng-model="$root.chartValues[col.key][0]"
+								tm1-data-decimal="2"
+								tm1-format-percentage="true"
+								tm1-on-change="refreshChart()"
+								> 
+							</tm1-ui-dbr>
 							 
 							</h5>
 							<h5 ng-style="{  'color':mainData['chart']['ledgend'][1]['color']}">
 							 
 							<tm1-ui-dbr
-								ng-if="  cubeDimensionalityArray.length"
+								ng-if="!$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
 								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][1]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
@@ -580,16 +611,39 @@
 								tm1-format-percentage="false"
 								tm1-on-change="refreshChart()"
 									> 
-							</tm1-ui-dbr></h5>
+							</tm1-ui-dbr>
+							<tm1-ui-dbr
+								ng-if="$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
+								tm1-instance="{{mainData['instance']}}"
+								tm1-cube="{{mainData['cube']}}"
+								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][1]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
+								ng-model="$root.chartValues[col.key][1]"
+								tm1-data-decimal="2"
+								tm1-format-percentage="true"
+								tm1-on-change="refreshChart()"
+									> 
+							</tm1-ui-dbr>
+							</h5>
 							<h5   ng-style="{  'color':mainData['chart']['ledgend'][2]['color']}">
 							<tm1-ui-dbr
-								ng-if="  cubeDimensionalityArray.length"
+								ng-if="!$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
 								tm1-instance="{{mainData['instance']}}"
 								tm1-cube="{{mainData['cube']}}"
 								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][2]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
 								ng-model="$root.chartValues[col.key][2]"
 								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
 								tm1-format-percentage="false"
+								tm1-on-change="refreshChart()"
+								> 
+							</tm1-ui-dbr>
+							<tm1-ui-dbr
+								ng-if="$root.rowFormat[$root.selections.account] &&  cubeDimensionalityArray.length"
+								tm1-instance="{{mainData['instance']}}"
+								tm1-cube="{{mainData['cube']}}"
+								tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], mainData['chart']['ledgend'][2]['name'], mainData['colDimension']['name'],col.key,mainData['rowDimension']['name'],$root.selections.account)}}"
+								ng-model="$root.chartValues[col.key][2]"
+								tm1-data-decimal="2"
+								tm1-format-percentage="true"
 								tm1-on-change="refreshChart()"
 								> 
 							</tm1-ui-dbr>
@@ -767,7 +821,7 @@
 						ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':$root.selections.account != row.key && mainData['chart']['show']}" >
 							<tm1-ui-dbr 
 							
-								ng-if=" !rowFormat[row.key] && cubeDimensionalityArray.length"
+								ng-if=" !$root.rowFormat[row.key] && cubeDimensionalityArray.length"
 								tm1-instance="{{mainData['instance']}}" 
 								tm1-cube="{{mainData['cube']}}" 
 								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
@@ -778,17 +832,17 @@
 
 							<tm1-ui-dbr 
 							
-								ng-if=" rowFormat[row.key]  && cubeDimensionalityArray.length"
+								ng-if=" $root.rowFormat[row.key]  && cubeDimensionalityArray.length"
 								tm1-instance="{{mainData['instance']}}" 
 								tm1-cube="{{mainData['cube']}}" 
-								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
+								tm1-data-decimal="2"
 								tm1-format-percentage="true"
                   				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],mainData['totalColumnElement'],mainData['rowDimension']['name'],row.key)}}">
 							</tm1-ui-dbr>
 						</td>
                   		<td ng-class="{'selected-bg':$root.selections.account === row.key && mainData['chart']['show'], 'grey-bg':row['type'] === 'C' && $root.selections.account != row.key || !mainData['chart']['show'], 'white-bg': row['type'] != 'C' && $root.selections.account != row.key || !mainData['chart']['show']}"  class="text-right" ng-repeat="item in lists.months track by $index">
 							<tm1-ui-dbr 
-								ng-if=" !rowFormat[row.key]  && cubeDimensionalityArray.length"
+								ng-if=" !$root.rowFormat[row.key]  && cubeDimensionalityArray.length"
 								tm1-instance="{{mainData['instance']}}" 
 								tm1-cube="{{mainData['cube']}}" 
 								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
@@ -797,10 +851,10 @@
 							</tm1-ui-dbr>
 										
 							 	<tm1-ui-dbr 
-								ng-if=" rowFormat[row.key]  && cubeDimensionalityArray.length"
+								ng-if=" $root.rowFormat[row.key]  && cubeDimensionalityArray.length"
 								tm1-instance="{{mainData['instance']}}" 
 								tm1-cube="{{mainData['cube']}}" 
-								tm1-data-decimal="{{mainData['dbrDataDecimal']}}"
+								tm1-data-decimal="2"
 								tm1-format-percentage="true"
                   				tm1-elements="{{getElementArray(mainData['chart']['dimensionComparison'], $root.selections.version, mainData['colDimension']['name'],item.key,mainData['rowDimension']['name'],row.key)}}">
 							</tm1-ui-dbr>
