@@ -453,16 +453,19 @@ div.tm1-subnm-hierarchy-style ul {
 }
 @keyframes moveAcrossCloudsGroup{
       0% {
-   transform: translateY(-15vh) translateX(-30vw) scale(1.0);
+   transform: translateY(-15vh) translateX(-50vw) scale(1.0);
   }
   1% {
    transform: translateY(-15vh) translateX(0vw) scale(1.0);
   }
+  50% {
+   transform: translateY(-15vh) translateX(100vw) scale(1.0);
+  }
   99% {
-   transform: translateY(-15vh) translateX(150vw) scale(1.0);
+   transform: translateY(-15vh) translateX(200vw) scale(1.0);
   }
   100% {
-    transform: translateY(-15vh) translateX(150vw) scale(1.0);
+    transform: translateY(-15vh) translateX(220vw) scale(1.0);
   }
 }
 
@@ -476,6 +479,7 @@ div.tm1-subnm-hierarchy-style ul {
   99% {
    transform: translateY(-15vh) translateX(200vw) scale(1.0);
   }
+  
   100% {
     transform: translateY(-15vh) translateX(200vw) scale(1.0);
   }
@@ -513,3 +517,24 @@ div.tm1-subnm-hierarchy-style ul {
 		}
 		 
 }
+.center{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+

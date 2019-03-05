@@ -424,12 +424,9 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     
     $(window).resize(function() {
          	 
-            $timeout(
-                function(){
+            
                     //resize just timeout the event so applies the changes in the html
-                }
-            )
-             
+                 
 
         });
 }]);

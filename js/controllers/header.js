@@ -532,7 +532,7 @@ if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
     $rootScope.monthNow = n;
     $rootScope.dayNow = p;
     $rootScope.yearNow =  y;
-     
+    console.log($rootScope.date);
    // console.log($rootScope.dayNow,$rootScope.monthNow,$rootScope.yearNow)
     $rootScope.daysRemainingValue = [];
     $rootScope.daysRemaining = function(datetoset, month) {
@@ -660,17 +660,41 @@ if(!$rootScope.scheduleShow && $rootScope.mainData["timeoutBlockout"] ){
     $scope.goToNewPage = function(url){
         location.assign(url)
     }
-
-
-
+     
+   
+    $rootScope.findColorByHr = function(color){
+             var m = moment($rootScope.overRideDate);
+             console.log(m);
+            var g = null; //return g
+            
+            if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
+            
+            var split_afternoon = 12 //24hr time to split the afternoon
+            var split_evening = 17 //24hr time to split the evening
+            var currentHour = parseFloat(m.format("HH"));
+            
+            if(currentHour >= split_afternoon && currentHour <= split_evening) {
+                g = '#000000'+"f7";
+            } else if(currentHour >= split_evening) {
+                g = '#000000'+"c9";
+            } else {
+                g ="transparent";
+            }
+            console.log(g )
+            return g;
+        
+    }
 
     $(window).resize(function() { 
+        $timeout(
+            function(){
         $rootScope.innerHeight = window.innerHeight;
         $rootScope.innerWidth = window.innerWidth ;
+            }
+        )
     });
       
         
-
 }]);
 
 

@@ -19,10 +19,73 @@
 			transition-property:width, height;  
     		transition-duration: 0.5s, 0.5s;  
 		}
-		.min-width250{
-			min-width: 250px;
-			
-		}
+		 
+		/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  .min-width250{ min-width: 250px; }
+ 
+  
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+ .min-width250{ min-width: 250px; }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+ .min-width250{ min-width: 250px; }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+ .min-width250{ min-width: 250px; }
+  
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  .min-width250{ min-width: 150px; }
+  
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  .min-width250{ min-width: 100px; }
+  
+}
+
 		.fixed-container{
 		
 			pointer-events: none;
@@ -184,7 +247,7 @@
 					  
 					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " 
 						class="text-left min-width250" 
-						style="display:inline-block; margin: 0 auto;  padding:10px; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:left; ">
+						style="display:inline-block; margin: 0 auto;  padding:10px; background-color: #f8f8f8; 	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
 						  		
 								  
 								<button 
@@ -207,7 +270,7 @@
 						</div>
 						<div ng-style="{'width': getContainerWidth('columnWidth')+'px', 'height':( getContainerHeight('columnWidth'))+'px'} " 
 						class="text-center " 
-						style="display:inline-block; margin: 0 auto;  padding-top:1em; background-color: #f8f8f8; 	border: 1px solid #ddd;   float:right; ">
+						style="display:inline-block; margin: 0 auto; display:table-cell ;  vertical-align: middle;    background-color: #f8f8f8; padding:8px;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:right; ">
 							All Months
 						</div>
 			</div>
@@ -218,7 +281,7 @@
 					class="sticky-header">
 					
 						<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
-						style="background-color: #f8f8f8; display:inline-block; margin: 0 auto;  padding:10px; 	border: 1px solid #ddd;   float:left; ">
+						style="background-color: #f8f8f8; display:inline-block; margin: 0 auto;  padding:10px; 	border: 1px solid #ddd; border-right: 0px solid #ddd;   float:left; ">
 						 	    <button 
 								 	ng-if="mainData['rowDimension']['subset']"
 									class="btn btn-primary" 
@@ -237,16 +300,16 @@
 								placeholder="Search {{mainData['rowDimension']['name']}}..."> 
 								  
 						</div>
-						<div  class="text-center"
+						<div  class="text-center center"
 						ng-style="{'width': getContainerWidth('columnWidth')+'px', 'height':getContainerHeight('columnWidth')+'px'} " 
-						style="background-color: #f8f8f8; 	border: 1px solid #ddd; display:inline-block; padding-top:1em;   margin: 0 auto; border-left:1px solid #ddd; float:left;">
+						style="background-color: #f8f8f8; padding:8px;	border: 1px solid #ddd; border-right: 0px solid #ddd; margin: 0 auto; border-left:1px solid #ddd; float:left;">
 						 
 							All Months
 						  
 						</div>
-						<div class="text-center" ng-style="{'width': getContainerWidth('columnWidth'+$index)+'px', 'height':getContainerHeight('columnWidth'+$index)+'px'} " 
+						<div class="text-center center " ng-style="{'width': getContainerWidth('columnWidth'+$index)+'px', 'height':getContainerHeight('columnWidth'+$index)+'px'} " 
 						ng-repeat="item in lists.months track by $index" 
-						style="background-color: #f8f8f8; 	border: 1px solid #ddd; display:inline-block; padding-top:1em;   margin: 0 auto; border-left:1px solid #ddd; float:left;">
+						style="background-color: #f8f8f8;  	border: 1px solid #ddd;  border-right: 0px solid #ddd; margin: 0 auto; border-left:1px solid #ddd; float:left;">
 							 {{item.alias}} 
 						</div>
 					
@@ -365,7 +428,7 @@
 					<tbody  >
 							
 							<tr ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
-								<td style="  border-right:2px solid #ddd;  "  
+								<td style="  border-right:1.3px solid #ddd;  "  
 									class="text-left min-width250" 
 									ng-style="{'cursor': mainData['chart']['show'] ? 'pointer':'default', 'height':getContainerHeight('rowHieghtElement'+$index) + 'px'}" 
 									ng-class="{'selected-bg': $root.selections.account === row.key && mainData['chart']['show'], 'white-bg':$root.selections.account != row.key || !mainData['chart']['show']}" 

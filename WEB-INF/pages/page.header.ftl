@@ -1,6 +1,6 @@
 <!-- This gets appended at the top for each page  -->
   
-<div id="page-header"  ng-controller="headerCtrl"  >
+<div id="page-header"  ng-controller="headerCtrl"   >
  
     <div ng-show='false'>
         <tm1-ui-user  ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
@@ -77,9 +77,12 @@
 </div>
  
 <div   
-    class="nav" id="header" ng-init="animatePadding($root.defaultOffSet);"   
+    class="nav" id="header" ng-init="animatePadding($root.defaultOffSet); colortouse = $root.findColorByHr($root.applicationHeaderColor)"  
     ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '69px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
-    style=" -webkit-transition:padding-top 1s; transition-property:padding-top;     background-image: url(images/clouds.png); background-size: cover,  cover;  background-repeat: x-repeat; transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   >  
+    style=" -webkit-transition:padding-top 1s; transition-property:padding-top;     background-image: url(images/clouds.png); background-size: cover,  cover;  background-repeat: x-repeat; transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   > 
+    <div ng-style="{'background-color':colortouse}" style="width:100%; height:100%; display:block; position:fixed; top:0px; left:0px; z-index:-1;">
+
+    </div> 
       <div class="cloud-group-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudGrouprandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
         ng-repeat-start="cloudGroup in  ['','','','','','','','','','','','',''] track by $index"  
         ng-style="{'top':($root.myCloudGrouprandomAnim[$index]/2)+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudGrouprandomAnim[$index]))+'s'}"   >
@@ -96,12 +99,16 @@
                     ng-style="{'animation-delay':($index+1)+'s', 'animation-duration':(($root.myRCloudRandomAnim[$index]))+'s'}">
             </div>
         </div>
-    <div style="-webkit-transition:padding-top 1s; transition-property:padding-top; transition-duration: 1s; width:100%; position:fixed; left:0px; top:0px; float:left; z-index:999999; padding-top:0px;  ">
+    <div   style="-webkit-transition:padding-top 1s; transition-property:padding-top; transition-duration: 1s; width:100%; position:fixed; left:0px; top:0px; float:left; z-index:999999; padding-top:0px;  "  >
+        <div ng-click="$root.showView = false;"    style="position:fixed;top:0px;left:0px;cursor: pointer;width:100%;pointer-events: auto;height:67px;background-color:transparent;">
+
+        </div>
         <a href="#">
             <img src="images/logo.svg" 
             title="Your Logo Here" 
             style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999999;" /> 
         </a>
+
     </div>
     
     <ul class="navbuttons"   
@@ -128,7 +135,7 @@
                    
                     <a ng-href="#/{{findClickthrough(item.data.page)}}"  
                      style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " 
-                     ng-click="  $root.indexOver = $index; $root.showView = true; $root.scheduleShow  = false; $root.applicationTriggerFindUser();"   >
+                     ng-click="   $root.indexOver = $index; $root.showView = true; $root.calendarShow = false; $root.scheduleShow  = false; $root.applicationTriggerFindUser();"   >
                             <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i>   
                             <span class="hidden-xs"> 
                             {{item.label}}   
@@ -146,7 +153,7 @@
                 ng-repeat="subitem in $root.menuData[0]['children'][$root.activeTab].children track by $index"  data-toggle="tab">
                
                   
-                    <a  ng-href="#/{{findClickthrough(subitem.data.page)}}"  href="#">
+                    <a  ng-click="$root.showView = true; $root.calendarShow = false; $root.scheduleShow  = false; $root.applicationTriggerFindUser();" ng-href="#/{{findClickthrough(subitem.data.page)}}"  href="#">
                      <i class="fa fa-fw {{subitem.icon_class}} fa-1x" ></i> 
                        <span class="hidden-xs">   {{subitem.label}} </span>
                     </a> 
@@ -318,7 +325,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
         <div   ng-style="{'height':$root.calendarShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0.3); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
 			
-		
+		 
 					 
 			<div    
             class="col-lg-2 col-md-3 col-xs-12" 
