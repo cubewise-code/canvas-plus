@@ -323,7 +323,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
          
 
-        <div   ng-style="{'height':$root.calendarShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0.3); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
+        <div   ng-style="{'height':$root.calendarShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
 			
 		 
 					 
@@ -332,39 +332,41 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
              ng-init="$root.getDaysInMonth($index, $root.selections.year)"
 
 				ng-repeat="month in $root.defaults.months track by $index"  
-				style=" z-index:22; top:50px; margin:0 auto;  border-radius:0px; min-height:250px;"  >
-				<h4 ng-style="{'color':month === $root.currentMonth   && $root.selections.year == $root.setYear  ? 'steelblue':'#fff'}"><strong  >{{month}}</strong></h4>
-				
-				<p   class="text-center" ng-repeat="dayOfTheWeek in ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] track by $index"  style="color:#fff; border-radius:0px; display:inline-block; min-width:14%; height:30px; width:14%; max-width:14%; margin:0 auto; border-bottom:1px solid #333;"><small>{{dayOfTheWeek}}</small></p>
-				
+				style=" z-index:22; top:50px; margin:0 auto;    border-radius:0px; min-height:250px;"  >
+                <div class="col-xs-12 col-md-12" style="background-color:rgba(0,0,0,0.3)">
+                    <h4 ng-style="{'color':month === $root.currentMonth   && $root.selections.year == $root.setYear  ? 'steelblue':'#fff'}"><strong  >{{month}}</strong></h4>
+                    
+                    <p   class="text-center" ng-repeat="dayOfTheWeek in ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] track by $index"  style="color:#fff; border-radius:0px; display:inline-block; min-width:14%; height:30px; width:14%; max-width:14%; margin:0 auto; border-bottom:1px solid #333;"><small>{{dayOfTheWeek}}</small></p>
+                    
 				 
 				 
-				<div ng-id="days[$index]"  
-					ng-repeat="day in $root.days[$index] track by $index" 
-					class="text-center"  style="border-radius:0px; width:14%; color:#fff; max-width:14%; min-width:14%; padding:0px; display:inline-block;  cursor:pointer"
-					ng-style="{ 'margin-left':$index === 0 ? ((firstDayPosition[$parent.$index].length)*14)+'%':'0px'}"  
-					> 
-					
-					<span ng-repeat="item in defaults.schedule[$root.selections.year] track by $index" >
-						<div ng-init="hasNum[day][month][$root.selections.year] = true;" ng-show="false" 
-							ng-if="($parent.$index) === (((item.dateStart).split('/')[0])-1) && ($parent.$parent.$index) === (((item.dateStart).split('/')[1])-1) && $root.selections.year === (((item.dateStart).split('/')[2]))">
-							 
-						</div>
-						
-					</span>
-					<div style="padding:5px;"
-					 ng-click=" $root.adminAccess ? (hasNum[$index][month][$root.selections.year] ? editEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):createNewEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year))): ( hasNum[$index][month][$root.selections.year] ? seeDetails(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):'' )"  
-                    ng-style="{'background-color':$index  === ($root.dateNumber-1)  && $parent.$index === $root.monthNow  && $root.selections.year == $root.setYear    ? 'orange':   hasNum[$index][month][$root.selections.year] ? $root.defaults.appColor:'rgba(0,0,0,0.3)'}"    >{{day+1}}</div>
-				 
-			</div> 
-			 
+                    <div ng-id="days[$index]"  
+                        ng-repeat="day in $root.days[$index] track by $index" 
+                        class="text-center"  style="border-radius:0px; width:14%; color:#fff; max-width:14%; min-width:14%; padding:0px; display:inline-block;  cursor:pointer"
+                        ng-style="{ 'margin-left':$index === 0 ? ((firstDayPosition[$parent.$index].length)*14)+'%':'0px'}"  
+                        > 
+                        
+                        <span ng-repeat="item in defaults.schedule[$root.selections.year] track by $index" >
+                            <div ng-init="hasNum[day][month][$root.selections.year] = true;" ng-show="false" 
+                                ng-if="($parent.$index) === (((item.dateStart).split('/')[0])-1) && ($parent.$parent.$index) === (((item.dateStart).split('/')[1])-1) && $root.selections.year === (((item.dateStart).split('/')[2]))">
+                                
+                            </div>
+                            
+                        </span>
+                        <div style="padding:5px;"
+                            ng-click=" $root.adminAccess ? (hasNum[$index][month][$root.selections.year] ? editEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):createNewEvent(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year))): ( hasNum[$index][month][$root.selections.year] ? seeDetails(($index+1)+'/'+($parent.$index+1)+'/'+($root.selections.year)):'' )"  
+                            ng-style="{'background-color':$index  === ($root.dateNumber-1)  && $parent.$index === $root.monthNow  && $root.selections.year == $root.setYear    ? 'orange':   hasNum[$index][month][$root.selections.year] ? $root.defaults.appColor:'rgba(0,0,0,0.3)'}"    >{{day+1}}
+                        </div>
+                    
+                </div> 
+			 </div>
 				 
 				 
 		</div>
 		 
 	</div> 
 
-          <div   ng-style="{'height':$root.scheduleShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.scheduleShow ? '1':'0' , 'transition-delay':$root.scheduleShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0.3); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s;  " 
+          <div   ng-style="{'height':$root.scheduleShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.scheduleShow ? '1':'0' , 'transition-delay':$root.scheduleShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s;  " 
     >
     
     <div style="position:absolute; top:0px; vertical-align:top; left:0px; width:100%;">
