@@ -320,8 +320,9 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
         <div   ng-style="{'top':$root.getContainerTop('calendarBtn')+'px','width': (($root.innerWidth - ($root.defaultOffSet)))+'px','height':$root.calendarShow ? (($root.innerHeight)-($root.getContainerTop('righthandsidebar'))-5)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"   style="position:fixed;   padding:0px; margin-left:0px; left:0px;  overflow:auto;   background-color:rgba(0,0,0,0); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
 			
 		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
-                <h4 ng-style="{'height':$root.defaultOffSet+'px'}" style="position:absolute; padding-top:15px; top:0px; left:0px;   color:#fff;     background-color:rgba(0,0,0,0.3);width:100%;   ">
-                    <span style="  padding-left:15px; padding-right:15px;"> Chosen Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
+                <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
+                    style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%;   ">
+                        <span style="  padding-left:15px; padding-right:15px;"> Chosen Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
                 </h4>
                 <div class="container-cards" ng-style="{'padding-top':$root.defaultOffSet+'px'}" > 
                     <div  style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
