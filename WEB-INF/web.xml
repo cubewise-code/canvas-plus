@@ -24,6 +24,11 @@
   <filter>
       <filter-name>appClickFilter</filter-name>
       <filter-class>com.cubewise.servlets.ApplicationClickFilter</filter-class>
+      
+      <init-param>
+        <param-name>ignoredURLs</param-name>
+        <param-value>print.pdf,print-v2.pdf,print.png,print.jpeg</param-value>
+      </init-param>
   </filter>
   <filter-mapping>
       <filter-name>appClickFilter</filter-name>

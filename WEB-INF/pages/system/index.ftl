@@ -17,7 +17,8 @@
            useCustomNavigation: false,
            isDemo: ${settings.isDemo()?c},
            showWatchCounter: ${settings.showWatchCounter()?c},
-           isPopupLoginMode: ${settings.getEnablePopupOnLogin()?c}
+           isPopupLoginMode: ${settings.getEnablePopupOnLogin()?c},
+           showSystemDiagnostics: ${settings.showSystemDiagnostics()?c}
       };
       
       var ssoSlaves = {};
@@ -135,16 +136,23 @@
                         <option>Letter</option>
                         <option>Tabloid</option>
                       </select>
+                      
+                      <select ng-model="print.outputType" class="form-control printdropdown">
+                        <option value="pdf">PDF</option>
+                        <option value="png">PNG</option>
+                        <option value="jpeg">JPEG</option>
+                      </select>
                     </span>
                     
                     <#if settings.getPrinterVersion() == "1">
                     <a href="print.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
                     <#else>
-                    <a href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
+                    <a href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}&output-type={{print.outputType}}" target="_blank">
                     </#if>
                         <i class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
                     </a>
                   </li>
+                  
                   <li role="separator" class="divider"></li>
                   <li>
                       <a href="" ngclipboard data-clipboard-text="{{pageUrl()}}" ngclipboard-success="copySuccess(e);">

@@ -15,7 +15,8 @@ app.controller('MainCtrl', ['$scope', '$rootScope', '$timeout', '$state', '$stat
 	
 	$scope.print = {
 		pageOrientation: "Landscape",
-		pageSize: "A4"
+		pageSize: "A4",
+		outputType: "pdf"
 	};
 	
 	// this controller reference
