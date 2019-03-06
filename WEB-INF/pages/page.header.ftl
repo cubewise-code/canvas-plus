@@ -312,7 +312,8 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                     ng-style="{'animation-delay':($index+1)+'s', 'animation-duration':(($root.myRRandomAnim[$index]))+'s'}">
                 </div>
         </div>
-         
+        <div class="targetSVG" ng-show="$root.mouseOverBird" ng-style="{'height':$root.defaultOffSet+'px', 'width':$root.defaultOffSet+'px', 'top':($root.windowclientY-25)+'px', 'left':($root.windowclientX-25)+'px'}" style="position:fixed;  " 
+        >
 
     </div>
         
@@ -492,13 +493,13 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
          
   
-    <div ng-style="{'height':$root.defaultOffSet+'px', 'width':$root.defaultOffSet+'px', 'top':($root.windowclientY-25)+'px', 'left':($root.windowclientX-25)+'px'}" 
+    <!--<div ng-style="{'height':$root.defaultOffSet+'px', 'width':$root.defaultOffSet+'px', 'top':($root.windowclientY-25)+'px', 'left':($root.windowclientX-25)+'px'}" 
         class="targetSVG" 
         ng-if="$root.mouseOverBird" 
         style="position:fixed;   " 
          >
 
-    </div>
+    </div>-->
     
     
 </div>
