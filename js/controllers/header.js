@@ -560,8 +560,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
      if($rootScope.selections.dateToSee){
 
      }else{
-        $rootScope.calendarDaySelected = parseInt($rootScope.dateNumber);
-        $rootScope.calendarMonthSelected = $scope.filterDateToZero($rootScope.monthNow+1);
+        $rootScope.calendarDaySelected = parseInt($rootScope.dateNumber); 
+        $rootScope.calendarMonthSelected = $rootScope.includeZeroForNum($rootScope.monthNow+1);
         $rootScope.calendarYearSelected = $rootScope.defaults.year;
         $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.calendarYearSelected;
      }
@@ -571,7 +571,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
     }
    
-    $scope.filterDateToZero = function(num){
+    $rootScope.includeZeroForNum = function(num){
         if(parseInt(num) < 10){
             return '0'+ (num+'');
 
@@ -579,6 +579,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
              return  num;
         }
     }
+     
 
 
     $rootScope.daysRemaining = function(datetoset, month) {

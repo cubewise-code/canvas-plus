@@ -18,7 +18,7 @@
             <li class="dropdown "  style="color:#fff !important; background-color:transparent !important;" >
                 <span id="opened"  > 
                     <span class="inline-block-left" style="margin-right:5px;">
-                    <span ng-click="nightTime = ! nightTime; $root.colortouse  = nightTime ?  '#000000c9' : 'transparent' ">Day | Night <i ng-class="{'fa-toggle-on':nightTime, 'fa-toggle-off':!nightTime}"class="fa fa-toggle-on"></i></span>
+                    
                     {{mouseOverUserClose && !$root.userLoggedOut ? 'Sign Out: '+($root.user.Name)+'': (!$root.userLoggedOut ? 'User: '+$root.user.Name+'' : '')}} </span> 
                          <span class="inline-block" >
                             <a href="" style="color:#fff;" 
@@ -100,18 +100,23 @@
                     ng-style="{'animation-delay':($index+1)+'s', 'animation-duration':(($root.myRCloudRandomAnim[$index]))+'s'}">
             </div>
         </div>
+    
     <div   style="-webkit-transition:padding-top 1s; transition-property:padding-top; transition-duration: 1s; width:100%; position:fixed; left:0px; top:0px; float:left; z-index:999999; padding-top:0px;  "  >
+          
         <div ng-click="$root.showView = false;"    style="position:fixed;top:0px;left:0px;cursor: pointer;width:100%;pointer-events: auto;height:50px;background-color:transparent;">
 
         </div>
+        <div style="position:fixed; display:block; top:0px; left:0px; width:100%;">
         <a href="#">
             <img src="images/logo.svg" 
             title="Your Logo Here" 
-            style="background-size:contain; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999999;" /> 
+            style="background-size:contain;display:inline-block; float:left; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999999;" /> 
         </a>
-
+        <span class="pull-left"  ng-click="nightTime = ! nightTime; $root.colortouse  = nightTime ?  '#000000c9' : 'transparent' " style="color:#fff; display:inline-block; padding-top:10px;">Day | Night <i ng-class="{'fa-toggle-on':nightTime, 'fa-toggle-off':!nightTime}"class="fa fa-toggle-on"></i></span>
+        </div>
+        
     </div>
-    
+     
     <ul class="navbuttons"   
         style="z-index:99999999; vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " 
         ng-mouseleave = "status.isopen = false;" >
@@ -307,8 +312,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                     ng-style="{'animation-delay':($index+1)+'s', 'animation-duration':(($root.myRRandomAnim[$index]))+'s'}">
                 </div>
         </div>
-        <div class="targetSVG" ng-show="$root.mouseOverBird" ng-style="{'width':$root.defaultOffSet+'px', 'height':$root.defaultOffSet+'px'}" style="position:fixed;  top:0px; left:0px;  " 
-        ng-style="{'top':$root.windowclientY-25, 'left':$root.windowclientX-25}">
+         
 
     </div>
         
@@ -323,10 +327,10 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
                     style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%;   ">
-                        <span style="  padding-left:15px; padding-right:15px;"> Chosen Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
+                        <span style="  padding-left:15px; padding-right:15px;"> Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
                 </h4>
                 <div class="container-cards"  > 
-                    <div  style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
+                    <div ng-style="{'top':$root.defaultOffSet+'px'}"  style="pointer-events:auto; padding:0px;  position:relative; left:0px; " >
                 
                         <div ng-if="!$root.loading" 
                             ng-show="$root.selections.dateToSee && $root.calendarDateSelected ===  card.dateStart  "
@@ -373,21 +377,12 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                 </div>
             </div>
 
-            <div ng-if="$root.selections.dateCreateNew" style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
-           
-                    <div class="col-md-12 col-xs-12" style="margin-top:30px;">
-
-                        <button class="btn btn-success" style="box-shadow: 5px -5px 10px rgba(0,0,0,0.4) ;">Create New Event - {{$root.calendarDateSelected}}</button>
-                    </div>  
-
-
-                
-            </div>
+             
 
             <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
                 
                 <div class="container-cards" ng-style="{'padding-top':$root.defaultOffSet+'px'} "  > 
-                    <div  style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
+                    <div   style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
                 
                         <div ng-if="!$root.loading" 
                             ng-show="!$root.selections.dateToSee   "
@@ -441,8 +436,20 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
              ng-style="{'top':$root.defaultOffSet+'px'}"
 				ng-repeat="month in $root.defaults.months track by $index"  
 				style=" z-index:22;  margin:0 auto;    border-radius:0px; min-height:250px;"  >
+               
                 <div class="col-xs-12 col-md-12" style="background-color:rgba(0,0,0,0.4)">
-                    <h4 ng-style="{'color':month === $root.currentMonth   && $root.selections.year == $root.setYear  ? 'steelblue':'#fff'}"><strong  >{{month}}</strong></h4>
+                    <h4 ng-style="{'color':month === $root.currentMonth   && $root.selections.year == $root.setYear  ? 'steelblue':'#fff'}">
+                    <strong style="display:inline-block" >
+                    {{month}}
+                    
+                    </strong>
+                    <span class="pull-right" style="display:inline-block">
+                        <span ng-if=" $root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1)" style="position:absolute; top:0px; vertical-align:top; right:0px; width:auto;">
+                            <span class="btn btn-success" style="  border-radius:0px;">+ Event</span>
+                        </span>  
+                          
+                     </span>
+                    </h4>
                     
                     <p   class="text-center" ng-repeat="dayOfTheWeek in ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] track by $index"  style="color:#fff; border-radius:0px; display:inline-block; min-width:14%; height:30px; width:14%; max-width:14%; margin:0 auto; border-bottom:1px solid #333;"><small>{{dayOfTheWeek}}</small></p>
                     
@@ -485,8 +492,11 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
          
   
-    <div ng-style="{'height':$root.defaultOffSet+'px', 'width':$root.defaultOffSet+'px'}" class="targetSVG" ng-show="$root.mouseOverBird" style="position:fixed;  top:0px; left:0px;  " 
-        ng-style="{'top':$root.windowclientY-25, 'left':$root.windowclientX-25}">
+    <div ng-style="{'height':$root.defaultOffSet+'px', 'width':$root.defaultOffSet+'px', 'top':($root.windowclientY-25)+'px', 'left':($root.windowclientX-25)+'px'}" 
+        class="targetSVG" 
+        ng-if="$root.mouseOverBird" 
+        style="position:fixed;   " 
+         >
 
     </div>
     
