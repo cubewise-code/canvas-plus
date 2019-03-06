@@ -156,6 +156,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             }
             $rootScope.refreshCalendar = function(){
                 console.log("REFRESH CALENDAR");
+                
                 $rootScope.loading = true;
                 $timeout(function(){
                     $rootScope.loading = false;
@@ -546,13 +547,39 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     var n = d.getMonth();
     var p = d.getDay();
     var y = d.getFullYear();
-    $rootScope.date = n;
+    //$rootScope.date = d;
     $rootScope.monthNow = n;
     $rootScope.dayNow = p;
     $rootScope.yearNow =  y;
    // console.log($rootScope.date);
-    console.log($rootScope.dayNow,$rootScope.monthNow,$rootScope.yearNow)
-    $rootScope.daysRemainingValue = [];
+    console.log($rootScope.dayNow, parseInt($rootScope.dateNumber),$rootScope.date,$rootScope.monthNow,$rootScope.yearNow)
+    $rootScope.daysRemainingValue = []; 
+    $rootScope.selections.dateToSee = false;
+    $rootScope.loadcalendarYearIsHere = function(){
+     if($rootScope.selections.dateToSee){
+
+     }else{
+        $rootScope.calendarDaySelected = parseInt($rootScope.dateNumber);
+        $rootScope.calendarMonthSelected = $scope.filterDateToZero($rootScope.monthNow+1);
+        $rootScope.calendarYearSelected = $rootScope.defaults.year;
+        $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.calendarYearSelected;
+     }
+       
+
+
+
+    }
+   
+    $scope.filterDateToZero = function(num){
+        if(parseInt(num) < 10){
+            return '0'+ (num+'');
+
+        }else{
+             return  num;
+        }
+    }
+
+
     $rootScope.daysRemaining = function(datetoset, month) {
         $rootScope.daysRemainingValue[month] = [];
         var splitdatetoset = (datetoset).split('/');
@@ -600,10 +627,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
        
     },1000); 
     }
-    //$rootScope.calendarDaySelected = $rootScope.dateNow;
-    $rootScope.calendarMonthSelected = $rootScope.monthNow;
-    $rootScope.calendarYearSelected = $rootScope.selections.year;
+    
     $rootScope.showScheduleCard = function(y,m,d){
+        $rootScope.selections.dateToSee = true;
         $rootScope.calendarDaySelected = (d)+1;
         $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
          $rootScope.calendarYearSelected = y;

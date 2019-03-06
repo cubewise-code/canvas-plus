@@ -287,7 +287,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
         <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  
     </li>
 </ul>
- <div ng-if="!$root.showView"> 
+ <div ng-if="!$root.showView && $root.selections.year" ng-init="$root.loadcalendarYearIsHere()"> 
     <div ng-mousemove="mouseMovedSetXY($event); "  class="container" 
         ng-style="{'height':($root.innerHeight)-180+'px'}" 
         style="top:120px; pointer-events:none !important;"  >
@@ -325,26 +325,75 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
         <div   ng-style="{'top':$root.getContainerTop('calendarBtn')+'px','width': (($root.innerWidth - 50))+'px','height':$root.calendarShow ? (($root.innerHeight)-($root.getContainerTop('righthandsidebar')))+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"   style="position:fixed;   padding:0px; margin-left:0px; left:0px;  overflow:auto;   background-color:rgba(0,0,0,0); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
 			
-		  <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
-           <h4 style="position:absolute; padding-top:15px; top:0px; left:0px; height:50px; color:#fff; background-color:rgba(0,0,0,0.3);width:100%;   ">
-          <span style="  padding-left:15px; padding-right:15px;"> {{$root.selections.year}} | {{$root.calendarDateSelected}}</span>
-           </h4>
-        <div class="container-cards" style="padding-top:50px;"  >
-           
-               
-            <div  style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
+		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
+                <h4 style="position:absolute; padding-top:15px; top:0px; left:0px; height:50px; color:#fff;     background-color:rgba(0,0,0,0.3);width:100%;   ">
+                    <span style="  padding-left:15px; padding-right:15px;"> Chosen Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
+                </h4>
+                <div class="container-cards" style="padding-top:50px;"  > 
+                    <div  style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
                 
-                <div ng-if="!$root.loading" 
-                    ng-show="$root.calendarDateSelected ===  card.dateStart  "
-                    ng-repeat="card in $root.defaults['schedule'][$root.selections.year] track by $index" 
-                    class="card"
-                    ng-style="{   'cursor':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'pointer':'unset', 'background-color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'green':($root.daysRemainingValue[card.key] <= 5 && $root.daysRemainingValue[card.key] > 0 ? $root.applicationHeaderColorSecondary:($root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] < 0 ? 'rgba(0,0,0,0.3)':'rgba(0,0,0,0.3)')), 'color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? '#fff':'#fff', 'width':$root.innerWidth > 768 ? (($root.innerWidth-50)/(findLengthOfJsonObg($root.defaults['schedule'][$root.selections.year]))-23) +'px' : (($root.innerWidth) - (43))+'px',}"
-                    
-                    ng-click="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ?  $root.openModal(card) : ''   "
-                    
-                    style=" padding:10px; border:none;  vertical-align:top;display:inline-block; border:none height:auto;    margin:0px; overflow:auto; overflow:hidden; margin:10px;  " 
-                    
-                    ng-init="$root.daysRemaining(card.dateStart, card.key); $root.daysRemaining(card.dateEnd, (card.key+'end')); " >  
+                        <div ng-if="!$root.loading" 
+                            ng-show="$root.selections.dateToSee && $root.calendarDateSelected ===  card.dateStart  "
+                            ng-repeat="card in $root.defaults['schedule'][$root.selections.year] track by $index" 
+                            class="card"
+                            ng-style="{   'cursor':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'pointer':'unset', 'background-color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'green':($root.daysRemainingValue[card.key] <= 5 && $root.daysRemainingValue[card.key] > 0 ? $root.applicationHeaderColorSecondary:($root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] < 0 ? 'rgba(0,0,0,0.3)':'rgba(0,0,0,0.3)')), 'color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? '#fff':'#fff', 'width':$root.innerWidth > 768 ? (($root.innerWidth-50)/(findLengthOfJsonObg($root.defaults['schedule'][$root.selections.year]))-23) +'px' : (($root.innerWidth) - (43))+'px',}"
+                            
+                            ng-click="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ?  $root.openModal(card) : ''   "
+                            
+                            style=" padding:10px; border:none;  vertical-align:top;display:inline-block; border:none height:auto;    margin:0px; overflow:auto; overflow:hidden; margin:10px;  " 
+                            
+                            ng-init="$root.daysRemaining(card.dateStart, card.key); $root.daysRemaining(card.dateEnd, (card.key+'end')); " >  
+                                 
+                                <h5 >
+                                   <i class="fa {{card.icon}} fa-2x" aria-hidden="true"></i>
+                                    <strong style="margin-left:10px;">{{card.key}}</strong>
+                                
+                                </h5>
+                            
+                            
+                                <p style="margin-top:0px;"> 		
+                                    
+                                        <span ng-show="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] > 0">
+                                        {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +' days'}} <i  
+                                    class="fa fa-exclamation-circle blink"></i> <br/>
+                                    </span>
+                                    <span ng-show="$root.daysRemainingValue[card.key] > 0 && $root.daysRemainingValue[card.key] < 5 ">
+                                        Starts in {{$root.daysRemainingValue[(card.key)] +' days'}} <i  1
+                                        class="fa fa-exclamation-circle blink"></i><br/>
+                                    </span>
+                                    
+                                    
+                                
+                                
+                                Start Date:{{card.dateStart}}<br/>
+                                End Date:{{card.dateEnd}}<br>
+                                Description: Some text.
+                                <!--{{$root.daysRemainingValue[card.key] > 0 ? 'Begins in ':'Started '}}{{$root.daysRemainingValue[card.key]+'days'}}{{$root.daysRemainingValue[card.key] < 0 ? ' ago':''}}</br>
+                                {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +'days'}}</br>  -->
+                                
+                            </p>
+                        </div>
+                    </div>     
+                </div>
+            </div>
+
+
+            <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
+                
+                <div class="container-cards" style="padding-top:50px;"  > 
+                    <div  style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
+                
+                        <div ng-if="!$root.loading" 
+                            ng-show="!$root.selections.dateToSee   "
+                            ng-repeat="card in $root.defaults['schedule'][$root.selections.year] track by $index" 
+                            class="card"
+                            ng-style="{   'cursor':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'pointer':'unset', 'background-color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'green':($root.daysRemainingValue[card.key] <= 5 && $root.daysRemainingValue[card.key] > 0 ? $root.applicationHeaderColorSecondary:($root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] < 0 ? 'rgba(0,0,0,0.3)':'rgba(0,0,0,0.3)')), 'color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? '#fff':'#fff', 'width':$root.innerWidth > 768 ? (($root.innerWidth-50)/(findLengthOfJsonObg($root.defaults['schedule'][$root.selections.year]))-23) +'px' : (($root.innerWidth) - (43))+'px',}"
+                            
+                            ng-click="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ?  $root.openModal(card) : ''   "
+                            
+                            style=" padding:10px; border:none;  vertical-align:top;display:inline-block; border:none height:auto;    margin:0px; overflow:auto; overflow:hidden; margin:10px;  " 
+                            
+                            ng-init="$root.daysRemaining(card.dateStart, card.key); $root.daysRemaining(card.dateEnd, (card.key+'end')); " >  
                                  
                                 <h5 >
                                    <i class="fa {{card.icon}} fa-2x" aria-hidden="true"></i>
