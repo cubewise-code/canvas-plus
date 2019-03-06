@@ -152,6 +152,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                     globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Description"});
                    
                    console.log($scope.defaults.year);
+                   
                 });   
             }
             $rootScope.refreshCalendar = function(){
@@ -166,7 +167,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
             
              
-            
+            $rootScope.loadcalendarYearIsHere();
             globals.updateSettings(values, defaults, selections, parameter, options); 
             $timeout(function(){
                  $rootScope.refreshCalendar();
