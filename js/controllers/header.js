@@ -154,11 +154,25 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                    console.log($scope.defaults.year);
                 });   
             }
-
+            $rootScope.refreshCalendar = function(){
+                console.log("REFRESH CALENDAR");
+                $rootScope.loading = true;
+                $timeout(function(){
+                    $rootScope.loading = false;
+                }, 1000)
+            }
             //Initialize all variables
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
+            
+             
+            
+            globals.updateSettings(values, defaults, selections, parameter, options); 
+            $timeout(function(){
+                 $rootScope.refreshCalendar();
+            })
+             
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
-          globals.updateSettings(values, defaults, selections, parameter, options); 
+           
         }
 
              
@@ -394,6 +408,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.createCSSSelector('.bullet .measure.d0','  fill: '+$rootScope.applicationHeaderColorBudget+' ');
     $rootScope.createCSSSelector('.bullet .marker','  stroke: '+$rootScope.applicationHeaderColorLastYear+'; stroke-width: 2px; ');
      
+     $rootScope.createCSSSelector('.btn-primary' ,'color: #fff; background-color: '+$rootScope.applicationHeaderColorSecondary+' !important; border-color:' +$rootScope.applicationHeaderColorSecondary+'');
+ 
+  
 
       $rootScope.countIdel = 0;
     $rootScope.mouseMovedSetXY = function($event){
@@ -533,8 +550,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.monthNow = n;
     $rootScope.dayNow = p;
     $rootScope.yearNow =  y;
-    console.log($rootScope.date);
-   // console.log($rootScope.dayNow,$rootScope.monthNow,$rootScope.yearNow)
+   // console.log($rootScope.date);
+    console.log($rootScope.dayNow,$rootScope.monthNow,$rootScope.yearNow)
     $rootScope.daysRemainingValue = [];
     $rootScope.daysRemaining = function(datetoset, month) {
         $rootScope.daysRemainingValue[month] = [];
@@ -582,6 +599,20 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $scope.loading = false;
        
     },1000); 
+    }
+    //$rootScope.calendarDaySelected = $rootScope.dateNow;
+    $rootScope.calendarMonthSelected = $rootScope.monthNow;
+    $rootScope.calendarYearSelected = $rootScope.selections.year;
+    $rootScope.showScheduleCard = function(y,m,d){
+        $rootScope.calendarDaySelected = (d)+1;
+        $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
+         $rootScope.calendarYearSelected = y;
+        console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
+        $rootScope.calendarDateSelected = $rootScope.calendarDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
+       
+
+
+        console.log(y,m,d ,$rootScope.hasNum[y][m][d],"year month and day of the clicked day item")
     }
     $scope.editEvent = function(date){
         console.log("Add event, ",date);
@@ -675,7 +706,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             var currentHour = parseFloat(m.format("HH"));
             console.log(currentHour)
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
-                g = "#000000"+"f7";
+                g = "transparent";
             } else if(currentHour >= split_evening) {
                 g = "#000000"+"c9";
             } else {
@@ -686,6 +717,29 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         
     }
 
+    $rootScope.findLengthOfJsonObg=  function(data){
+        return _.keys(data).length
+    }
+    $rootScope.getContainerTop = function(id, bottomOffset){
+        
+        if(document.getElementById(id)){
+           //  console.log(id, bottomOffset, document.getElementById(id));
+            var tempObjToTrack = document.getElementById(id);
+            if(tempObjToTrack != null || tempObjToTrack != undefined ){
+                return tempObjToTrack.getBoundingClientRect().top;
+            }
+        }
+    }
+    
+    $rootScope.setContainerHeight = function(id, bottomOffset){
+        if(document.getElementById(id)){
+            var tempObjToTrack = document.getElementById(id);
+            if(tempObjToTrack != null || tempObjToTrack != undefined ){
+                return (( (window.innerHeight) - (tempObjToTrack.getBoundingClientRect().top)-bottomOffset ));
+            }
+        }
+    }
+    
     $(window).resize(function() { 
         $timeout(
             function(){

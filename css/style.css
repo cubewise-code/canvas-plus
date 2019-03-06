@@ -206,6 +206,9 @@ td > .form-control .input {
    
     border-radius: 0px;   
 }
+#bodyContent .tm1-ui-dbr-input-simple {
+    text-align:right;
+}
 div.tm1-subnm-hierarchy-style ul {
     list-style-type: none;
     padding-left: 0;
@@ -556,4 +559,16 @@ div.tm1-subnm-hierarchy-style ul {
     justify-content: center;
 }
 
-
+div.tm1-subnm-hierarchy-style {
+    margin-left: 0;
+    border-top-right-radius: 1px;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    border: 1px solid transparent;
+    padding: 1px;
+    padding-left: 1px;
+    background-color: White;
+    height: 247px;
+    overflow-y: scroll;
+}
+ 
