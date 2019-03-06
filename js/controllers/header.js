@@ -628,15 +628,28 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
        
     },1000); 
     }
-    
-    $rootScope.showScheduleCard = function(y,m,d){
-        $rootScope.selections.dateToSee = true;
-        $rootScope.calendarDaySelected = (d)+1;
-        $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
-         $rootScope.calendarYearSelected = y;
-        console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
-        $rootScope.calendarDateSelected = $rootScope.calendarDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
+    $rootScope.selections.dateCreateNew = false;
+    $rootScope.showScheduleCard = function(y,m,d, decider){
+        if(decider){
+            $rootScope.selections.dateToSee = true;
+            $rootScope.selections.dateCreateNew = false;
+            $rootScope.calendarDaySelected = (d)+1;
+            $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
+            $rootScope.calendarYearSelected = y;
+            console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
+            $rootScope.calendarDateSelected = $rootScope.calendarDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
        
+        }else{
+            $rootScope.selections.dateToSee = true;
+            $rootScope.selections.dateCreateNew = true;
+            
+            $rootScope.calendarDaySelected = (d)+1;
+            $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
+            $rootScope.calendarYearSelected = y;
+            console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
+            $rootScope.calendarDateSelected = $rootScope.calendarDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
+        }
+         
 
 
         console.log(y,m,d ,$rootScope.hasNum[y][m][d],"year month and day of the clicked day item")

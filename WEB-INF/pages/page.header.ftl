@@ -327,7 +327,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 			
 		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
                 <h4 style="position:absolute; padding-top:15px; top:0px; left:0px; height:50px; color:#fff;     background-color:rgba(0,0,0,0.3);width:100%;   ">
-                    <span style="  padding-left:15px; padding-right:15px;"> Chosen Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
+                    <span style="  padding-left:15px; padding-right:15px;"> Chosen Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
                 </h4>
                 <div class="container-cards" style="padding-top:50px;"  > 
                     <div  style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
@@ -336,7 +336,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                             ng-show="$root.selections.dateToSee && $root.calendarDateSelected ===  card.dateStart  "
                             ng-repeat="card in $root.defaults['schedule'][$root.selections.year] track by $index" 
                             class="card"
-                            ng-style="{   'cursor':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'pointer':'unset', 'background-color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'green':($root.daysRemainingValue[card.key] <= 5 && $root.daysRemainingValue[card.key] > 0 ? $root.applicationHeaderColorSecondary:($root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] < 0 ? 'rgba(0,0,0,0.3)':'rgba(0,0,0,0.3)')), 'color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? '#fff':'#fff', 'width': (($root.innerWidth) - (43))+'px'}"
+                            ng-style="{'cursor':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'pointer':'unset', 'background-color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? 'green':($root.daysRemainingValue[card.key] <= 5 && $root.daysRemainingValue[card.key] > 0 ? $root.applicationHeaderColorSecondary:($root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] < 0 ? 'rgba(0,0,0,0.3)':'rgba(0,0,0,0.3)')), 'color':$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ? '#fff':'#fff', 'width': (($root.innerWidth) - (43))+'px'}"
                             
                             ng-click="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ?  $root.openModal(card) : ''   "
                             
@@ -377,6 +377,16 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                 </div>
             </div>
 
+            <div ng-if="$root.selections.dateCreateNew" style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
+           
+                    <div class="col-md-12 col-xs-12" style="margin-top:30px;">
+
+                        <button class="btn btn-success" style="box-shadow: 5px -5px 10px rgba(0,0,0,0.3) ;">Create New Event - {{$root.calendarDateSelected}}</button>
+                    </div>  
+
+
+                
+            </div>
 
             <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
                 
@@ -460,7 +470,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                         </span>
                         
                         <div style="padding:5px;"
-                            ng-click="$root.showScheduleCard($root.selections.year,month,day)"
+                            ng-click="$root.showScheduleCard($root.selections.year,month,day,$root.hasNuM[$root.selections.year][month][day] )"
                              
                             ng-style="{'background-color':$index  === ($root.dateNumber-1)  && $parent.$index === $root.monthNow  && $root.selections.year == $root.setYear    ? 'orange':   $root.hasNum[$root.selections.year][month][day] ? $root.applicationHeaderColorSecondary:'rgba(0,0,0,0.3)'}"    >{{day+1}} 
                         </div> 
