@@ -1,5 +1,5 @@
 <div ng-controller="stickyheaderCtrl" ng-mousemove="$root.mouseMovedSetXY($event); "
-	ng-style="{'padding-top': ($root.defaultOffSet+60)+'px'}"
+	ng-style="{'padding-top': ($root.defaultOffSet*2)+'px'}"
   style=" transition-property:padding-top;  transition-duration: 1s;" 
 	ng-if="$root.selections.year && $root.selections.region && $root.selections.department" 
 	   >
@@ -11,7 +11,7 @@
 			padding-top:0px;
 			position:fixed;
 			left:0px;
-			top:165px;
+			top:146px;
 			width:100% ;
 			max-width:100%;
 			max-height:100%;
@@ -91,7 +91,7 @@
 			pointer-events: none;
 			padding:0px;
 			position:fixed;
-			top:166px;
+			top:146px;
 			left:0px;
 			width:100%;
 			height:auto;
