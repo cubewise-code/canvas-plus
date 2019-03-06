@@ -21,7 +21,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $rootScope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
-     $scope.rowFormat = [] ;
+    $scope.rowFormat = [] ;
     $scope.refreshMainData = function(){
          $scope.mainData = {
         "timeoutBlockout":$rootScope.mainData['timeoutBlockout'],
