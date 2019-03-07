@@ -93,7 +93,7 @@
 <div   
     class="nav" id="header" ng-init="animatePadding($root.defaultOffSet); $root.colortouse = $root.findColorByHr($root.applicationHeaderColor)"  
     ng-style="{'background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '50px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
-    style=" -webkit-transition:padding-top 1s; transition-property:padding-top;   no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;  background-image: url(images/clouds.png);  transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;    " ng-mouseover="$root.top = 65"   > 
+    style=" -webkit-transition:padding-top 1s; transition-property:padding-top;    background-image: url(images/clouds.png) ; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;   transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;      background-position: center;  " ng-mouseover="$root.top = 65"   > 
     <div ng-style="{'background-color':$root.colortouse}" style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
 
     </div> 
@@ -338,7 +338,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
          
  
-        <div   ng-style="{'top':($root.defaultOffSet*2)+'px','width': (($root.innerWidth - ($root.defaultOffSet)))+'px','height':$root.calendarShow ? (($root.innerHeight)-($root.defaultOffSet*3)-8)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '2s':'0s'}"   style="position:fixed;   padding:0px; margin-left:0px; left:0px;  overflow:auto;   background-color:rgba(0,0,0,0); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
+        <div   ng-style="{'top':($root.defaultOffSet*2)+'px','width': (($root.innerWidth - ($root.defaultOffSet)))+'px','height':$root.calendarShow ? (($root.innerHeight)-($root.defaultOffSet*3)-8)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"   style="position:fixed;   padding:0px; margin-left:0px; left:0px;  overflow:auto;   background-color:rgba(0,0,0,0); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s; pointer-events:auto !important; "  >	
 			
 		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;" ng-init="$root.showSchedule = true">
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
@@ -346,7 +346,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                         <span style=" width:100%; padding-left:15px; padding-right:12px;"> Calendar  
 
                             <span ng-click="$root.showSchedule = !$root.showSchedule" 
-                                class="pull-right">
+                                class="pull-right" style="cursor:pointer">
                                     <i ng-class="{'fa-toggle-on':$root.showSchedule === true , 'fa-toggle-off':!$root.showSchedule || $root.showSchedule === false}" class="fa"></i> | Schedule 
                          
                             </span>
@@ -369,7 +369,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                             ng-init="$root.daysRemaining(card.dateStart, card.key); $root.daysRemaining(card.dateEnd, (card.key+'end')); " >  
                                  
                                 <h5 >
-                                   <i class="fa {{card.icon}} fa-2x" aria-hidden="true"></i>
+                                   <i class="fa {{card.icon}} " aria-hidden="true"></i>
                                     <strong style="margin-left:10px;">{{card.key}}</strong>
                                 
                                 </h5>
@@ -387,14 +387,14 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                                     </span>
                                     
                                     
-                                
+                                <span ng-show="$root.selections.dateToSee === true">
                                 
                                 Start Date:{{card.dateStart}}<br/>
                                 End Date:{{card.dateEnd}}<br>
                                 Description: Some text.
                                 <!--{{$root.daysRemainingValue[card.key] > 0 ? 'Begins in ':'Started '}}{{$root.daysRemainingValue[card.key]+'days'}}{{$root.daysRemainingValue[card.key] < 0 ? ' ago':''}}</br>
                                 {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +'days'}}</br>  -->
-                                
+                                </span>
                             </p>
                         </div>
                     </div>     
@@ -416,38 +416,48 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                             
                             ng-click="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] >= 0 ?  $root.openModal(card) : ''   "
                             
-                            style=" padding:10px; border:none;  min-width:170px;vertical-align:top;display:inline-block; border:none height:auto;    margin:0px; overflow:auto; overflow:hidden; margin:10px;  " 
+                            style=" padding:10px; border:none;  min-height:112px !important; min-width:170px !important; vertical-align:top;display:inline-block; border:none height:auto;    margin:0px; overflow:auto; overflow:hidden; margin:10px;  " 
                             
                             ng-init="$root.daysRemaining(card.dateStart, card.key); $root.daysRemaining(card.dateEnd, (card.key+'end')); " >  
                                  
-                                <h5 >
-                                   <i class="fa {{card.icon}} fa-2x" aria-hidden="true"></i>
-                                    <strong style="margin-left:10px;">{{card.key}}</strong>
-                                
-                                </h5>
-                            
-                            
-                                <p style="margin-top:0px;"> 		
-                                    
-                                        <span ng-show="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] > 0">
-                                        {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +' days'}} <i  
-                                    class="fa fa-exclamation-circle blink"></i> <br/>
+                            <h5 class="text-left" style="width:100%; ">
+                                   <div class="  text-center" style="width:100%;">
+                                    <span class="text-center" style="width:100%;   height:auto;">
+                                        <i style="font-size: 4vw;" class="fa {{card.icon}} " aria-hidden="true"></i>
                                     </span>
-                                    <span ng-show="$root.daysRemainingValue[card.key] > 0 && $root.daysRemainingValue[card.key] < 5 ">
-                                        Starts in {{$root.daysRemainingValue[(card.key)] +' days'}} <i  1
-                                        class="fa fa-exclamation-circle blink"></i><br/>
-                                    </span>
+                                   </div>
+
+                                   <div class="  text-center" style="width:100%; margin-top:10px;">
+                                        <strong class="text-center" style="line-height:1.3em;">{{card.key}}</strong><br>
+                                 
                                     
                                     
+                                        <div style="position: relative; margin-top:10px;  background-color: green; padding: 10px; " 
+                                            ng-show="$root.daysRemainingValue[card.key] <= 0 && $root.daysRemainingValue[(card.key+'end')] > 0">
+                                                {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +' days'}} 
+                                                <i  class="fa fa-exclamation-circle blink"></i> <br/>
+                                        </div>
+                                        <div style="position: relative; margin-top:10px;   background-color: orange; padding: 10px;  " ng-show="$root.daysRemainingValue[card.key] > 0 && $root.daysRemainingValue[card.key] < 5 ">
+                                            Starts in {{$root.daysRemainingValue[(card.key)] +' days'}} <i  1
+                                            class="fa fa-exclamation-circle blink"></i><br/>
+                                        </div>
+                                    </div>
+                                   
+                                    
+                            </h5>
+                                 
+                              
+                                    
+                            <p style="width:100%;" ng-show="$root.selections.dateToSee === true">
+
+                               Start Date:{{card.dateStart}} 
                                 
-                                
-                                Start Date:{{card.dateStart}}<br/>
                                 End Date:{{card.dateEnd}}<br>
                                 Description: Some text.
                                 <!--{{$root.daysRemainingValue[card.key] > 0 ? 'Begins in ':'Started '}}{{$root.daysRemainingValue[card.key]+'days'}}{{$root.daysRemainingValue[card.key] < 0 ? ' ago':''}}</br>
                                 {{$root.daysRemainingValue[(card.key+'end')] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[(card.key+'end')] +'days'}}</br>  -->
-                                
                             </p>
+                           
                         </div>
                     </div>     
                 </div>
@@ -531,9 +541,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 		    </div> 
         </div> 
 
-        <!--<div   ng-style="{'height':$root.scheduleShow ? (($root.innerHeight)-200)+'px':'0px','opacity':$root.scheduleShow ? '1':'0' , 'transition-delay':$root.scheduleShow ? '2s':'0s'}"    style="position:fixed; top:130px; padding:0px; margin-left:10px; left:0px; width:99%; overflow:auto;   background-color:rgba(0,0,0,0); opacity:0;  transition-property:height, opacity; -webkit-transition:height 1s, opacity 1s;  "  >
-            
-        </div>-->
+       
 
         
     </div>
