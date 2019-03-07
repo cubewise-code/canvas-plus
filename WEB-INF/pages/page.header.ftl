@@ -343,17 +343,22 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;" ng-init="$root.showSchedule = true">
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
                     style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%; padding-right:20px;  ">
-                        <span style=" width:100%; padding-left:15px; padding-right:12px;"> Calendar  
+                        <span style=" width:100%; padding-left:15px; padding-right:12px;"> {{$root.selections.year}} - Calendar  
 
                             <span ng-click="$root.showSchedule = !$root.showSchedule" 
                                 class="pull-right" style="cursor:pointer">
-                                    <i ng-class="{'fa-toggle-on':$root.showSchedule === true , 'fa-toggle-off':!$root.showSchedule || $root.showSchedule === false}" class="fa"></i> | Schedule 
+                                   Schedule |
+                                    <i ng-class="{'fa-toggle-on':$root.showSchedule === true , 'fa-toggle-off':!$root.showSchedule || $root.showSchedule === false}" class="fa"></i> 
                          
                             </span>
                         </span>
                          
                 </h4>
+                 
                 <div class="container-cards"  ng-show="$root.showSchedule"  > 
+                      <h4 style="color:#fff; margin-top:0px; padding:10px;margin-bottom:0px;">
+                        <strong>Schedule List:</strong>
+                    </h4>
                     <div ng-style="{'top':$root.defaultOffSet+'px'}"  style="pointer-events:auto; padding:0px;  position:relative; left:0px; " >
                 
                         <div ng-if="!$root.loading" 
@@ -406,8 +411,9 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
             <div ng-show="$root.showSchedule" ng-style="{'top':$root.showSchedule ? '0px':$root.defaultOffSet+'px'}"  style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
                 
                 <div class="container-cards" ng-style="{'padding-top':$root.defaultOffSet+'px'} "  > 
+                    
                     <div   style="pointer-events:auto; padding:0px;  position:relative; left:0px; top:0px;" >
-                
+                        
                         <div ng-if="!$root.loading" 
                             ng-show="!$root.selections.dateToSee   "
                             ng-repeat="card in $root.defaults['schedule'][$root.selections.year] track by $index" 
