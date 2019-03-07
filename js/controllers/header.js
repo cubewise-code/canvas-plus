@@ -168,11 +168,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             }
             //Initialize all variables
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
-            
-             
+               //$rootScope.showScheduleCard($rootScope.selections.year,$rootScope.calendarMonthSelected,$rootScope.calendarDaySelected);
+            $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
             $rootScope.loadcalendarYearIsHere();
             globals.updateSettings(values, defaults, selections, parameter, options); 
+            
             $timeout(function(){
+               
                  $rootScope.refreshCalendar();
             })
              
@@ -663,7 +665,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
          
 
 
-        console.log(y,m,d ,$rootScope.hasNum[y][m][d],"year month and day of the clicked day item")
+       
     }
     $scope.editEvent = function(date){
         console.log("Add event, ",date);

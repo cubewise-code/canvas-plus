@@ -478,7 +478,8 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                         
                         <h4 style="color:#fff; margin:0px; padding:0px;">
                              
-                               <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> {{$root.calendarDateSelected}}
+                               <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> 
+                               {{$root.calendarDateSelected}}
                             
 
                             <div  class="pull-right" > 
