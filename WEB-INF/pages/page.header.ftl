@@ -343,7 +343,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
                     style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%;   ">
-                        <span style="  padding-left:15px; padding-right:15px;"> Calendar Date:{{$root.calendarDateSelected}}
+                        <span style="  padding-left:15px; padding-right:15px;"> Calendar  
                          
                         </span>
                 </h4>
@@ -458,10 +458,20 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 				style=" z-index:22;  margin:0 auto;    border-radius:0px; min-height:250px;"  >
                
                    <div ng-show="$root.selections.dateToSee  " 
-                        style="padding:0px; margin:0px; background-color:orange; ">
-                        <div  class="text-right"> 
-                            <i style="color:#fff; cursor:pointer;" ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i>
-                        </div>
+                        style="padding:0px; margin:0px; padding:5px;background-color:orange; ">
+                        
+                        <h4 style="color:#fff; margin:0px; padding:0px;">
+                             
+                               <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> {{$root.calendarDateSelected}}
+                            
+
+                            <div  class="pull-right" > 
+                                <i style="color:#fff; cursor:pointer;" 
+                                ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
+                                class="fa fa-times fa-fw" area-hidden="true"></i>
+                            </div>
+                             </span>
+                        </h4>
                     </div>
 
                 <div class="col-xs-12 col-md-12" style="background-color:rgba(0,0,0,0.4); padding:10px;" 
