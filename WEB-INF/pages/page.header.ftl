@@ -127,7 +127,7 @@
         </a>
         <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
         style="color:#fff; display:inline-block; padding-left:20px; padding-top:15px;">
-         Night <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i> Day </span>
+         Day <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i></span>
         </div>
         
     </div>
