@@ -741,7 +741,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         location.assign(url)
     }
      
-   
+   $rootScope.nightTime = false;
     $rootScope.findColorByHr = function(color){
              var m = moment($rootScope.overRideDate);
              console.log(m);
@@ -755,10 +755,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             console.log(currentHour)
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
                 g = "transparent";
+               
             } else if(currentHour >= split_evening) {
+                $rootScope.nightTime = true;
                 g = "#000000"+"c9";
             } else {
                 g ="transparent";
+                
             }
             console.log(g )
             return g;

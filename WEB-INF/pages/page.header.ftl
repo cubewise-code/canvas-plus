@@ -125,7 +125,9 @@
             title="Your Logo Here" 
             style="background-size:contain;display:inline-block; float:left; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999999;" /> 
         </a>
-        <span class="pull-left"  ng-click="nightTime = ! nightTime; $root.colortouse  = nightTime ?  '#000000c9' : 'transparent' " style="color:#fff; display:inline-block; padding-left:20px; padding-top:15px;">Day | Night <i ng-class="{'fa-toggle-on':nightTime, 'fa-toggle-off':!nightTime}"class="fa fa-toggle-on"></i></span>
+        <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
+        style="color:#fff; display:inline-block; padding-left:20px; padding-top:15px;">
+         Night <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i> Day </span>
         </div>
         
     </div>
@@ -342,9 +344,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
                     style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%;   ">
                         <span style="  padding-left:15px; padding-right:15px;"> Calendar Date:{{$root.calendarDateSelected}}
-                        <sup ng-if="$root.selections.dateToSee">
-                        <i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i>
-                        </sup>
+                         
                         </span>
                 </h4>
                 <div class="container-cards"  > 
