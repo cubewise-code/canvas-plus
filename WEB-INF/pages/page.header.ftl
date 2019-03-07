@@ -57,7 +57,7 @@
                         <option>Tabloid</option>
                       </select>
                       
-                      <select  ng-model="print.outputType" class="form-control printdropdown">
+                      <select ng-init="print.outputType = $root.defaults.printOption" ng-model="print.outputType" class="form-control printdropdown">
                         <option value="pdf">PDF</option>
                         <option value="png">PNG</option>
                         <option value="jpeg">JPEG</option>

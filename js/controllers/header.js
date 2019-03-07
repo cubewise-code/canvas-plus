@@ -10,6 +10,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     */
     
     // console.log("HEADER");
+    
     $rootScope.applicationHeaderColor='#72a7e7';
     $rootScope.applicationHeaderColorSecondary='#4F81BD';
     $rootScope.applicationHeaderColorSelect = '#4F81BD';
@@ -58,7 +59,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.values={
         year:''
     }; 
+   
     $rootScope.defaults={
+            printOption:'pdf',
             year:"",
             region:"",
             department:"",
