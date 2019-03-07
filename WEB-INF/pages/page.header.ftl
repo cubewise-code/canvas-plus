@@ -125,9 +125,7 @@
             title="Your Logo Here" 
             style="background-size:contain;display:inline-block; float:left; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999999;" /> 
         </a>
-        <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
-        style="color:#fff; display:inline-block; padding-left:20px; padding-top:15px;">
-         Day <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i></span>
+ 
         </div>
         
     </div>
@@ -273,6 +271,16 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                 ></tm1-ui-subnm>
             </div>
 
+
+ <div class="col-lg-12 col-xs-12">
+<h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
+    <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
+        style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
+         Day Setting <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
+
+    </span>
+
+</div>
 
 
  </div>

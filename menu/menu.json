@@ -8,7 +8,7 @@
     "expanded": false
   },
   {
-    "label": "t-test-upload-multi-sheet",
+    "label": "Multi Upload",
     "icon_class": "fa-file-text-o",
     "data": {
       "page": "t-test-upload-multi-sheet"
