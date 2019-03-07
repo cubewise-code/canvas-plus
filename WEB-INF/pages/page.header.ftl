@@ -448,8 +448,8 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
             </div>
                             
 			<div    
-            class="col-lg-2 col-md-3 col-xs-12" 
-             ng-class="{'full-width':$root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1)}"
+             
+             ng-class="{'full-width':$root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1), 'col-lg-2 col-md-3 col-xs-12':!$root.selections.dateToSee }"
              ng-init="$root.getDaysInMonth($index, $root.selections.year)"
              ng-if="!$root.loading"
              ng-hide="$root.selections.dateToSee && $root.calendarMonthSelected != $root.includeZeroForNum($index+1)"
@@ -457,7 +457,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 				ng-repeat="month in $root.defaults.months track by $index"  
 				style=" z-index:22;  margin:0 auto;    border-radius:0px; min-height:250px;"  >
                
-                   <div ng-show="$root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1)" 
+                   <div ng-show="$root.selections.dateToSee  " 
                         style="padding:0px; margin:0px; background-color:orange; ">
                         <div  class="text-right"> 
                             <i style="color:#fff; cursor:pointer;" ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i>
@@ -470,7 +470,7 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
                     <h4 style="color:#fff;" >
                     <strong style="display:inline-block" >
-                    {{month}}
+                    {{month}} 
                     
                     </strong>
                     <span class="pull-right" style="display:inline-block">
