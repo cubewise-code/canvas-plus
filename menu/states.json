@@ -12,11 +12,11 @@
     "templateUrl": "html/Excel Upload.html"
   },
   "t-test-upload-multi-sheet": {
-    "url": "/t-test-upload-multi-sheet",
+    "url": "/workbook-upload",
     "templateUrl": "html/t-test-upload-multi-sheet.html"
   },
   "sticky-header": {
-    "url": "/sticky-header",
+    "url": "/gl-report",
     "templateUrl": "html/sticky-header.html"
   }
 }

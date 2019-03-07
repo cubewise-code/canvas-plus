@@ -13,7 +13,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "Sticky Headers";
+    $rootScope.pageTitle = "GL Report";
      
     $scope.chartLoading = false;
     $rootScope.headerOutOffView = false;

@@ -8,18 +8,18 @@
     "expanded": false
   },
   {
-    "label": "Multi Upload",
+    "label": "Workbook Upload",
     "icon_class": "fa-file-text-o",
     "data": {
-      "page": "t-test-upload-multi-sheet"
+      "page": "workbook-upload"
     },
     "expanded": false
   },
   {
-    "label": "sticky-header",
+    "label": "GL Report",
     "icon_class": "fa-file-text-o",
     "data": {
-      "page": "sticky-header"
+      "page": "gl-report"
     },
     "expanded": false
   }
