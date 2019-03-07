@@ -10,7 +10,7 @@
 
    
  
-    <div ng-init="$root.findIfLoggedIn();" style="position:fixed; top:0px; right:0px; z-index:9999; padding:10px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
+    <div ng-init="$root.findIfLoggedIn(); $root.printOpened = false;" style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
     
       
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
@@ -35,39 +35,52 @@
                     
                 </span>
             </li>
-            <li class="dropdown hidden-xs hidden-print" style="color:#fff !important; background-color:transparent !important;">
-                <a class="dropdown-toggle" data-toggle="dropdown">
+            <li 
+                style="color:#fff !important; z-index:99999; background-color:transparent !important;">
+                <div style="display:block; z-index:99999; cursor:pointer;" ng-click="showPrint()"   >
                   <i class="fa fa-print fa-fw"></i>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu nav-dropdown" >
-                  <li class="paddingtop10" >                    
+                </div>
+                <div ng-style="{'top':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary, 'right': !$root.printOpened ? '-300px':'0px'}" 
+                      
+                     style="width:300px; padding:10px; position:fixed;    width:300px; float:right;  color:#333;  -webkit-transition:right 1s; transition-property:right; ">
+                  <div class="paddingtop10"   >                    
                     <span>
                       <select ng-model="print.pageOrientation" class="form-control printpageformat">
-                        <option >Landscape</option>
+                        <option>Landscape</option>
                         <option>Portrait</option>
                       </select>
                       <select ng-model="print.pageSize" class="form-control printdropdown">
                         <option>A5</option>
                         <option>A4</option>
-                        <option >A3</option>
+                        <option>A3</option>
                         <option>Letter</option>
                         <option>Tabloid</option>
                       </select>
+                      
+                      <select  ng-model="print.outputType" class="form-control printdropdown">
+                        <option value="pdf">PDF</option>
+                        <option value="png">PNG</option>
+                        <option value="jpeg">JPEG</option>
+                      </select>
                     </span>
-                    <a href="print.pdf?url={{$root.pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
-                      <i class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
+                    <#if settings.getPrinterVersion() == "1">
+                    <a style="color:#fff !important;"  href="print.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
+                    <#else>
+                    <a style="color:#fff !important;"  href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}&output-type={{print.outputType}}" target="_blank">
+                    </#if>
+                        <i style="color:#fff !important;"  class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
                     </a>
-                  </li>
-                  <li role="separator" class="divider"></li>
-                  <li>
-                      <a href="" ngclipboard data-clipboard-text="{{pageUrl()}}" ngclipboard-success="copySuccess(e);">
+                  </div>
+                  <div style="border-color:#fff !important; role="separator" class="divider"></div>
+                  <div style="color:#fff !important;">
+                      <a style="color:#fff !important;"  href="" ngclipboard data-clipboard-text="{{pageUrl()}}" ngclipboard-success="copySuccess(e);">
                         <i class="fa fa-clipboard fa-fw marginright15"  ></i> <span translate="COPYTOCLIPBOARD"></span>
                         <span class="pull-right">
                           <span ng-if="isCopied" class="label label-default" translate="COPIED"></span>
                         </span>
                       </a>
-                  </li>
-                </ul>                  
+                  </div>
+                </div>                  
             </li>
             
 
@@ -112,7 +125,7 @@
             title="Your Logo Here" 
             style="background-size:contain;display:inline-block; float:left; height: 40px; position:relative; left:0px; top:0px;margin-top:5px; margin-left: 10px; z-index:999999;" /> 
         </a>
-        <span class="pull-left"  ng-click="nightTime = ! nightTime; $root.colortouse  = nightTime ?  '#000000c9' : 'transparent' " style="color:#fff; display:inline-block; padding-top:10px;">Day | Night <i ng-class="{'fa-toggle-on':nightTime, 'fa-toggle-off':!nightTime}"class="fa fa-toggle-on"></i></span>
+        <span class="pull-left"  ng-click="nightTime = ! nightTime; $root.colortouse  = nightTime ?  '#000000c9' : 'transparent' " style="color:#fff; display:inline-block; padding-left:20px; padding-top:15px;">Day | Night <i ng-class="{'fa-toggle-on':nightTime, 'fa-toggle-off':!nightTime}"class="fa fa-toggle-on"></i></span>
         </div>
         
     </div>
@@ -178,7 +191,7 @@
         <div id="calendarBtn" ng-click=" $root.calendarShow = !$root.calendarShow;  $root.scheduleShow = false; $root.showView =  $root.activeTab != '-1' && !$root.calendarShow ? true : false"
             ng-style="{'background-color': $root.calendarShow ? $root.applicationHeaderColorSecondary : '#fff' ,  'color':$root.calendarShow ?   '#fff': $root.applicationHeaderColorSecondary}"     
             class=" pull-right text-center " 
-            style="box-shadow: 5px -5px 10px rgba(0,0,0,0.4) ;-webkit-transition:top 1s; transition-property:top; transition-duration: 1s;    position:fixed; top:50px; padding-top:1em; cursor:pointer;right:0px;  z-index:999; width:45px; height:50px;">
+            style="  -webkit-transition:top 1s; transition-property:top; transition-duration: 1s;    position:fixed; top:50px; padding-top:1em; cursor:pointer;right:0px;  z-index:999; width:45px; height:50px;">
         <i   class="fa fa-calendar" area-hidden="true"> </i> 
         </div> 
    
@@ -328,7 +341,11 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 		    <div style="position:relative; top:0px; vertical-align:top; left:0px; width:100%;">
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
                     style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%;   ">
-                        <span style="  padding-left:15px; padding-right:15px;"> Calendar Date:{{$root.calendarDateSelected}}<sup ng-if="$root.selections.dateToSee"><i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i></sup></span>
+                        <span style="  padding-left:15px; padding-right:15px;"> Calendar Date:{{$root.calendarDateSelected}}
+                        <sup ng-if="$root.selections.dateToSee">
+                        <i ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i>
+                        </sup>
+                        </span>
                 </h4>
                 <div class="container-cards"  > 
                     <div ng-style="{'top':$root.defaultOffSet+'px'}"  style="pointer-events:auto; padding:0px;  position:relative; left:0px; " >
@@ -432,14 +449,26 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                             
 			<div    
             class="col-lg-2 col-md-3 col-xs-12" 
+             ng-class="{'full-width':$root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1)}"
              ng-init="$root.getDaysInMonth($index, $root.selections.year)"
              ng-if="!$root.loading"
+             ng-hide="$root.selections.dateToSee && $root.calendarMonthSelected != $root.includeZeroForNum($index+1)"
              ng-style="{'top':$root.defaultOffSet+'px'}"
 				ng-repeat="month in $root.defaults.months track by $index"  
 				style=" z-index:22;  margin:0 auto;    border-radius:0px; min-height:250px;"  >
                
-                <div class="col-xs-12 col-md-12" style="background-color:rgba(0,0,0,0.4)">
-                    <h4 ng-style="{'color':month === $root.currentMonth   && $root.selections.year == $root.setYear  ? 'steelblue':'#fff'}">
+                   <div ng-show="$root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1)" 
+                        style="padding:0px; margin:0px; background-color:orange; ">
+                        <div  class="text-right"> 
+                            <i style="color:#fff; cursor:pointer;" ng-click="$root.selections.dateToSee = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" class="fa fa-times fa-fw" area-hidden="true"></i>
+                        </div>
+                    </div>
+
+                <div class="col-xs-12 col-md-12" style="background-color:rgba(0,0,0,0.4); padding:10px;" 
+                ng-style="{'border-top':$root.calendarMonthSelected === $root.includeZeroForNum($index+1) && $root.selections.year == $root.setYear  ? '5px solid orange':'1px solid transparent'}" >
+                  
+
+                    <h4 style="color:#fff;" >
                     <strong style="display:inline-block" >
                     {{month}}
                     
@@ -493,13 +522,6 @@ ng-init="animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
          
   
-    <!--<div ng-style="{'height':$root.defaultOffSet+'px', 'width':$root.defaultOffSet+'px', 'top':($root.windowclientY-25)+'px', 'left':($root.windowclientX-25)+'px'}" 
-        class="targetSVG" 
-        ng-if="$root.mouseOverBird" 
-        style="position:fixed;   " 
-         >
-
-    </div>-->
     
     
 </div>

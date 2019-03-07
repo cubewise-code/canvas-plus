@@ -570,7 +570,14 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
 
     }
-   
+   $rootScope.showPrint = function(){
+       if($rootScope.printOpened === true){
+           $rootScope.printOpened = false;
+       }else{
+           $rootScope.printOpened = true;
+       }
+
+   }
     $rootScope.includeZeroForNum = function(num){
         if(parseInt(num) < 10){
             return '0'+ (num+'');
