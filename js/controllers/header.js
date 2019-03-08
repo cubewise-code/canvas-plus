@@ -30,6 +30,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";
+
     $rootScope.desktop = false;
      
         var ua = navigator.userAgent;
@@ -59,13 +60,18 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.values={
         year:''
     }; 
-   
+    $rootScope.eventName = [];
+    $rootScope.itemToView = [];
+    $rootScope.itemToDisplay = 1;
+    $rootScope.itemDeleted = 0;
     $rootScope.defaults={
             printOption:'pdf',
             year:"",
+            calendarCube:'Calendar',
             region:"",
             department:"",
             settingsInstance: 'dev',
+            
             settingsCube: 'System User Settings',
             settingsMeasure: 'String',
             months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -108,7 +114,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
     $rootScope.userLoggedOut = false;
      
-    
+    $rootScope.returnDateInReverse = function(date){
+        var dateArray = (date+'').split('/');
+        return dateArray[2]+'-'+dateArray[1]+'-'+dateArray[0];
+    }
 
     $rootScope.closeApplication = function(view){
       if(!$rootScope.scheduleShow){
@@ -685,7 +694,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
             $rootScope.calendarYearSelected = y;
             console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
-            $rootScope.calendarDateSelected = $rootScope.calendarDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
+            $rootScope.calendarDateSelected = $rootScope.calendarFilterDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
        
         }else{
             $rootScope.selections.dateToSee = true;
@@ -695,7 +704,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
             $rootScope.calendarYearSelected = y;
             console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
-            $rootScope.calendarDateSelected = $rootScope.calendarDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
+            $rootScope.calendarDateSelected = $rootScope.calendarFilterDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
         }
          
 
@@ -759,12 +768,34 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         // Here January is 0 based
         // return new Date(year, month+1, 0).getDate();
     };
- 
+    
+    $rootScope.deleteEvent = function(rowJson, referenceElements){
+        var myArrayToSend = [];
+        _.forEach(rowJson.cells, function(value, key) {
+            var ref = value.reference();
+            //console.log(key, value.reference(), "reference from inside the controller");
+            myArrayToSend.push({value:'', instance:'dev', cube:'Calendar', cubeElements:ref});
+        });
+        console.log(myArrayToSend, "row to delete");
+        $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
+            if(!result.failed){
+                 console.log(result, "cleared cells");
+                  $rootScope.query(true); 
+            }else{
+                 console.log(result.message);
+            }
+            
+        });
+    }
+    $rootScope.createEvent = function(){
+        console.log("new event to create")
+    }
     $scope.goToNewPage = function(url){
         location.assign(url)
     }
-     
-   $rootScope.nightTime = false;
+    
+
+    $rootScope.nightTime = false;
     $rootScope.findColorByHr = function(color){
              var m = moment($rootScope.overRideDate);
              console.log(m);
