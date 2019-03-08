@@ -18,7 +18,10 @@
            isDemo: ${settings.isDemo()?c},
            showWatchCounter: ${settings.showWatchCounter()?c},
            isPopupLoginMode: ${settings.getEnablePopupOnLogin()?c},
-           showSystemDiagnostics: ${settings.showSystemDiagnostics()?c}
+           showSystemDiagnostics: ${settings.showSystemDiagnostics()?c},
+           showOIDCErrorDisplay: ${settings.getEnableOIDCErrorDisplay()?c},
+           ssoInactiveMessage: "${settings.getSsoInactiveMessage()}",
+           fullPageReloadOnLogin: ${settings.getFullPageReloadOnLogin()?c}
       };
       
       var ssoSlaves = {};
@@ -77,9 +80,20 @@
   <body>
    <div id="wrapper-pending-sso" ng-if="!$root.applicationIsReady">    
     <#include "../page.pending.sso.ftl">
+    
+    <div ng-if="oidcError">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="panel panel-danger">
+            <div class="panel-heading"><pre class="tm1-ui-oidc-error">{{oidcError | json}}</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
    </div>
    
-   <div id="wrapper" ng-if="$root.applicationIsReady">    
+   <div id="wrapper" ng-if="$root.applicationIsReady" ng-show="$root.showApplication">    
       <div ng-controller="MainCtrl as mainCtrl" >
         <div id="page-status" ng-hide="true" ng-if="$root.isLoading">LOADING</div>
         <div id="page-status" ng-hide="true" ng-if="!$root.isLoading">READY</div>

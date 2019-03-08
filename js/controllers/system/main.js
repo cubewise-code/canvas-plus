@@ -1,6 +1,6 @@
 
-app.controller('MainCtrl', ['$scope', '$rootScope', '$timeout', '$state', '$stateParams', '$location', '$ngBootbox', '$compile', '$tm1Ui', '$transitions', '$log',
-                            function($scope, $rootScope, $timeout, $state, $stateParams, $location, $ngBootbox, $compile, $tm1Ui, $transitions, $log) {
+app.controller('MainCtrl', ['$scope', '$rootScope', '$timeout', '$state', '$stateParams', '$location', '$ngBootbox', '$compile', '$tm1Ui', '$transitions', '$log', '$window',
+                            function($scope, $rootScope, $timeout, $state, $stateParams, $location, $ngBootbox, $compile, $tm1Ui, $transitions, $log, $window) {
 	
 	// Contains the menu control
 	$scope.menu = {};
@@ -237,9 +237,15 @@ app.controller('MainCtrl', ['$scope', '$rootScope', '$timeout', '$state', '$stat
 					$ngBootbox.hideAll();
 					$scope.loginScope.$destroy();
 					
-					if(!_.isEmpty(instance)){
-						$state.reload($state.current.name);
-					}					
+					if(!_.isEmpty(instance)){                        
+                        if(appSettings.fullPageReloadOnLogin){
+                            $window.location.reload(true);
+                        }
+                        else{
+                            $rootScope.showApplication = true;
+                            $state.reload($state.current.name);
+                        }
+					}
 				};
 			}
 			

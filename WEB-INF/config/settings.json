@@ -74,6 +74,8 @@
   "printerExecutionTimeout": 60,
   "fileUploadDirRelativePath": "files",
   "viewsSourceDirPath": "WEB-INF/config/views",
+  "disableOverridesForExport": false,
+  "disableMaskingForExport": false,
   "logToFile": false,
   "smtpServer": "smtp.office365.com",
   "smtpPort": 25,
@@ -92,6 +94,7 @@
   "cacheTimeLapseInMinutes": 0,
   "cacheGlobalTimeoutInMinutes": 5,
   "cacheSessionTimeoutInMinutes": 5,
+  "ssoInactiveMessage": "Your session credentials has expired and you may need to login again. Proceed?",
   "enablePopupOnLogin": true,
   "enableClickJackingFilter": true,
   "printerVersion": "2",
@@ -107,5 +110,10 @@
   "printerPauseBeforeForceShutdown": 500,
   "printerBrowserHandleRetryWait": 1000,
   "printerOnPageNavigationWaitForKeyword": "networkAlmostIdle",
-  "printerAdditionalParameters": []
+  "printerAdditionalParameters": [],
+  "printerOutputFolderAndTimestampPrefix": "-",
+  "printerAllowedBasePaths": [],
+  "printerInstanceCountLimit": 5,
+  "enableOIDCErrorDisplay": true,
+  "fullPageReloadOnLogin": false
 }

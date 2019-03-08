@@ -15,7 +15,9 @@
       var appSettings = {
            showSideBar: ${settings.getShowSideBar()?c},
            useCustomNavigation: false,
-           isDemo: ${settings.isDemo()?c}
+           isDemo: ${settings.isDemo()?c},
+           showOIDCErrorDisplay: ${settings.getEnableOIDCErrorDisplay()?c},
+           ssoInactiveMessage: "${settings.getSsoInactiveMessage()}"
       };
       
       var ssoSlaves = {};

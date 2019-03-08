@@ -89,6 +89,7 @@
     <url-pattern>/api/dbr/comments/save</url-pattern>    
     <url-pattern>/api/processes</url-pattern>
     <url-pattern>/api/email</url-pattern>
+    <url-pattern>/api/export</url-pattern>
     
     <!-- Non Modifying -->
     <url-pattern>/api/sec</url-pattern>
