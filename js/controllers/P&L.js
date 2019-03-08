@@ -1,4 +1,4 @@
-app.controller('stickyheaderCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui','$timeout', 
+app.controller('PLCtrl',  ['$scope', '$rootScope', '$log', '$tm1Ui','$timeout', 
 function($scope, $rootScope, $log, $tm1Ui,$timeout) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
@@ -441,3 +441,4 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
 
         });
 }]);
+

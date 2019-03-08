@@ -8,18 +8,18 @@
     "expanded": false
   },
   {
-    "label": "Workbook Upload",
+    "label": "P\u0026L",
     "icon_class": "fa-file-text-o",
     "data": {
-      "page": "workbook-upload"
+      "page": "p\u0026l"
     },
     "expanded": false
   },
   {
-    "label": "GL Report",
+    "label": "Workbook Upload",
     "icon_class": "fa-file-text-o",
     "data": {
-      "page": "gl-report"
+      "page": "workbook-upload"
     },
     "expanded": false
   }

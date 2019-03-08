@@ -1,0 +1,139 @@
+<div ng-controller="ttestCalendarCtrl">
+
+  <style>
+    .tm1-ui-dbr {
+      text-align: right;
+    }
+    .tm1-ui-dbr input {
+      text-align: right;
+    }   
+    .criteria {
+      margin-top: 10px;
+    }
+    .consol {
+      font-weight: bold;
+    }
+  </style>
+
+  <h1>
+    <span style="float: left; width: 50px; "><i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i><i ng-if="!$root.isLoading" class="fa fa-cube"></i></span> t-test-Calendar
+  </h1>
+  
+  <h3 class="text-muted">Criteria</h3>
+  
+  <div class="row">
+    <div class="col-md-3">     
+     Version
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Version" tm1-select-only="true" tm1-subset="Default" tm1-default-element="1" ng-model="page.titles['Version']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">     
+     }Clients
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="}Clients" tm1-select-only="true" tm1-default-element="Admin" ng-model="page.titles['}Clients']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">     
+     Period Daily
+    </div>
+    <div class="col-md-3">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Period Daily" tm1-select-only="true" tm1-default-element="2019-03-10" ng-model="page.titles['Period Daily']"></tm1-ui-subnm>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3">
+      Suppress Zeroes
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" ng-init="page.suppressZero = 'none'" ng-model="page.suppressZero">
+        <option value="none">Do not Suppress Zeroes</option>
+        <option value="row">Suppress Zero on Rows</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+  
+  <h3 class="text-muted">Template</h3> 
+  
+  <div class="table-responsive" >
+    <tm1-ui-rpt-view tm1-instance="dev" tm1-cube="Calendar" ng-model="data" tm1-suppress-zero="{{page.suppressZero}}" >
+      <tm1-ui-rpt-config>
+        <tm1-ui-rpt-title tm1-dimension="Version" tm1-element="{{page.titles['Version']}}"></tm1-ui-rpt-title>
+        <tm1-ui-rpt-title tm1-dimension="}Clients" tm1-element="{{page.titles['}Clients']}}"></tm1-ui-rpt-title>
+        <tm1-ui-rpt-title tm1-dimension="Period Daily" tm1-element="{{page.titles['Period Daily']}}"></tm1-ui-rpt-title>
+          
+        <tm1-ui-rpt-row tm1-dimension="Item" tm1-mdx="{[Item].[All items],[Item].[Item 1],[Item].[Item 2],[Item].[Item 3],[Item].[Item 4],[Item].[Item 5],[Item].[Item 6],[Item].[Item 7],[Item].[Item 8],[Item].[Item 9],[Item].[Item 10]}"></tm1-ui-rpt-row>
+          
+        <tm1-ui-rpt-column tm1-dimension="Calendar Measure" tm1-mdx="{[Calendar Measure].[icon],[Calendar Measure].[Name],[Calendar Measure].[Description],[Calendar Measure].[Action],[Calendar Measure].[Status],[Calendar Measure].[Person in charge],[Calendar Measure].[Due Date]}"></tm1-ui-rpt-column>
+                    
+      </tm1-ui-rpt-config>
+      
+      <tm1-ui-rpt-template>
+        <table id="af1" class="table table-condensed">
+          <thead>
+            
+              <tr>
+                <th>Item</th>
+              
+                <th class="text-center">icon</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Action</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Person in charge</th>
+                <th class="text-center">Due Date</th>
+              </tr>
+              
+            
+          </thead>
+          <tbody>
+            <tr ng-repeat="rowData in data.rows track by $index" >
+              <td tm1-ui-rpt-row-element="rowData" tm1-dimension="Item"></td>
+            
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('icon')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Name')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Description')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Action')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Status')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Person in charge')"></tm1-ui-dbr>
+              </td>
+              <td class="text-right">
+                <tm1-ui-dbr tm1-rpt-view-model="data" tm1-rpt-row-cell="rowData.getCell('Due Date')"></tm1-ui-dbr>
+              </td>
+            
+            </tr>
+          </tbody>
+          </table>
+          
+      </tm1-ui-rpt-template>
+    </tm1-ui-rpt-view> 
+  </div>  
+
+</div>

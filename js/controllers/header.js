@@ -287,7 +287,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
   $scope.animatePadding = function(number){
       document.getElementById("header").style.paddingTop = number+"px";
   }
-     $transitions.onStart({}, function ($transitions) {
+
+    // STARTED new page transition///
+    $transitions.onStart({}, function ($transitions) {
          
            $timeout( function(){ 
               $rootScope.pathToUse = $transitions._targetState._identifier.name;
@@ -319,19 +321,19 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                                 }
                             }
                          }
-                       //  for(var item in  $rootScope.menuData[0].children){
+                         //for(var item in  $rootScope.menuData[0].children){
                             
-                     //   if( $rootScope.pathToUse === 'base'){
-                       //     $rootScope.activeTab = 0;
+                         //if( $rootScope.pathToUse === 'base'){
+                         //   $rootScope.activeTab = 0;
                          //   $rootScope.activeSubTab = 0;
-                        //} else if( $rootScope.menuData[0].children[item].data.page === $rootScope.pathToUse){
+                         //} else if( $rootScope.menuData[0].children[item].data.page === $rootScope.pathToUse){
                          //       
-                           // $rootScope.activeTab = parseInt(item)-1;
-                            //$rootScope.activeSubTab = 0;
+                         // $rootScope.activeTab = parseInt(item)-1;
+                         //$rootScope.activeSubTab = 0;
                            
                         //} 
                         
-                      //  }
+                      //}
                  }
                     
                     
@@ -570,11 +572,43 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $rootScope.calendarYearSelected = $rootScope.defaults.year;
         $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.calendarYearSelected;
      }
+     if($rootScope.selections.year){
+          $rootScope.query(true); 
+     }
        
-
+     
 
 
     }
+
+    $rootScope.seeData = function(cell){
+        console.log(cell, "cell data")
+    }
+    $rootScope.query = function(loading){
+		$rootScope.loading = loading;
+		// Create data set
+		// based on the MDX statement from the \WEB-INF\resources\mdx_named.json file
+        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period Daily":$rootScope.selections.year, "Client":$rootScope.user.FriendlyName} }).then(function(result){
+			if(!result.failed){
+                $rootScope.dataset = $tm1Ui.resultsetTransform("dev", "Calendar", result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
+				var options = {preload: false, watch: false};
+				if($rootScope.table){
+                   
+					options.index = $rootScope.table.options.index;
+					options.pageSize = $rootScope.table.options.pageSize;
+				}
+				$rootScope.table = $tm1Ui.tableCreate($rootScope, $rootScope.dataset.rows, options);
+                $rootScope.table.pageSize(10000);
+			}
+			else {
+				$rootScope.message = result.message;
+			}		
+			$rootScope.loading = false;
+		});		
+	};
+	
+	 
+    
    $rootScope.showPrint = function(){
        if($rootScope.printOpened === true){
            $rootScope.printOpened = false;
@@ -596,8 +630,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
     $rootScope.daysRemaining = function(datetoset, month) {
         $rootScope.daysRemainingValue[month] = [];
-        var splitdatetoset = (datetoset).split('/');
-        var eventdate = moment(splitdatetoset[2]+"-"+splitdatetoset[1]+"-"+splitdatetoset[0]);
+         
+        var eventdate = moment(datetoset);
         if($rootScope.overRideDate != ''){
              var todaysdate = moment($rootScope.overRideDate);
         }else{
@@ -647,6 +681,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             $rootScope.selections.dateToSee = true;
             $rootScope.selections.dateCreateNew = false;
             $rootScope.calendarDaySelected = (d)+1;
+            $rootScope.calendarFilterDaySelected = $rootScope.parseToDateFormat((d)+1);
             $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
             $rootScope.calendarYearSelected = y;
             console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
@@ -655,7 +690,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         }else{
             $rootScope.selections.dateToSee = true;
             $rootScope.selections.dateCreateNew = true;
-            
+            $rootScope.calendarFilterDaySelected = $rootScope.parseToDateFormat((d)+1);
             $rootScope.calendarDaySelected = (d)+1;
             $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
             $rootScope.calendarYearSelected = y;
@@ -685,36 +720,19 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             },100
         )
     }
-    $scope.parseToDateFormat = function(val){
+    $rootScope.parseToDateFormat = function(val){
         var tempval = val;    
         if(val < 10){
             tempval = '0'+val;
         }
         return tempval;
     }
-    $scope.seeDetails = function(date){ 
-        var arraytemp = (date+'').split('/');
-        var daytemp = $scope.parseToDateFormat(arraytemp[0]);
-        var monthtemp = $scope.parseToDateFormat(arraytemp[1]);
-        var yeartemp = arraytemp[2];
-
-
-        $rootScope.calendarDate = moment(yeartemp+'-'+monthtemp+'-'+daytemp).format("dddd, MMMM Do YYYY");
-        ;
-        $timeout(
-
-            function(){
-                $('#detailsModal').modal();
-            },100
-        )
-        
-        console.log("See Event Details",date);
-    }
+    
     $rootScope.openModal = function(item){
-        console.log(item);
+         
         $rootScope.showView = true;
         $rootScope.scheduleShow = false;
-        //$scope.goToNewPage('#/sticky-header');
+         $scope.goToNewPage('#/'+item);
 
     }
     $rootScope.getDaysInMonth = function(month,year) {

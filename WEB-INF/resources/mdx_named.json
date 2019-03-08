@@ -42,6 +42,21 @@
       { "name":"Region", "value":"1" },
       { "name":"Department", "value":"1" }
     ]
+  },
+  {
+    "id": "Calendar",
+    "mdx": [
+      "SELECT TM1SubsetToSet([Calendar Measure], \"Default\") ON COLUMNS,",
+      "NON EMPTY {TM1DRILLDOWNMEMBER( {[Period Daily].[{{Period}}].children }, ALL, RECURSIVE )} * {[Item].[All items].children]} ON ROWS",
+      "FROM [Calendar]",
+      "where ( [Version].[Actual],  [}Clients].[{{Client}}] )" 
+    ],
+    "description":"",
+    "mdxParams": [
+      { "name":"Period", "value":"2019" },
+      { "name":"Client", "value":"Admin" }
+      
+    ]
   }
 
 ]

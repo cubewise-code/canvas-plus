@@ -3,20 +3,12 @@
     "url": "/summary",
     "templateUrl": "html/summary.html"
   },
-  "test-modal": {
-    "url": "/test-modal",
-    "templateUrl": "html/Test-Modal.html"
+  "p\u0026l": {
+    "url": "/p\u0026l",
+    "templateUrl": "html/P\u0026L.html"
   },
-  "excel-upload": {
-    "url": "/excel-upload",
-    "templateUrl": "html/Excel Upload.html"
-  },
-  "t-test-upload-multi-sheet": {
+  "workbook-upload": {
     "url": "/workbook-upload",
-    "templateUrl": "html/t-test-upload-multi-sheet.html"
-  },
-  "sticky-header": {
-    "url": "/gl-report",
-    "templateUrl": "html/sticky-header.html"
+    "templateUrl": "html/Workbook Upload.html"
   }
 }

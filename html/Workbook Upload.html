@@ -1,0 +1,122 @@
+<div ng-controller="WorkbookUploadCtrl" ng-mousemove="$root.mouseMovedSetXY($event); "
+ 
+  style=" transition-property:padding-top;  transition-duration: 1s;" >
+
+  <h1 style="padding-top:100px;">
+    
+  </h1>
+   
+  <div class="row">
+  	<div class="col-lg-4 col-md-12 col-xs-12 panel">
+      
+       <button class="btn btn-primary" style="width:100%">
+					<a href="files/Template-Multi-Upload.xlsx" target="_blank" style="color:white">
+						<i class="fa fa-download  fa-fw"></i> Download Template
+					</a>
+      </button>
+        
+       
+    </div>
+		<div class="col-lg-4 col-md-6 col-xs-12 panel">
+      <label class="btn btn-primary btn-file" style="width:100%">
+        <i class="fa fa-upload fa-fw"></i> Upload Workbook
+        <js-xls type='file' onread="read" onerror="error" style="display: none;"></js-xls>
+      </label>
+    </div>
+		<div class="col-lg-4 col-md-6 col-xs-12 panel" >
+			<label class="btn btn-primary btn-file "  ng-click="saveAll()" style="width:100%">
+        <i class="fa fa-floppy-o fa-fw"></i> Save
+      </label>
+		</div>
+  </div>
+		 
+	<div ng-repeat="dim in colToValidate track by $index">
+	  <tm1-ui-element-list   tm1-instance="dev" tm1-dimension="{{colDimensionName[$index][0]}}" tm1-subset="{{colDimensionSubset[$index][0]}}" tm1-attributes="{{colDimensionAttributes[$index][0]}}" ng-model="lists.colDriver[$index]"></tm1-ui-element-list>
+		<span ng-repeat="item in colToValidate[$index] track by $index">
+				
+				<tm1-ui-element-list   tm1-instance="dev" tm1-dimension="{{colToValidate[$parent.$index][$index]}}" tm1-subset="{{subsetForValidationLists[$parent.$index][$index]}}" tm1-attributes="{{attributesforValidationList[$parent.$index][$index]}}" ng-model="lists.rowDriver[colToValidate[$parent.$index][$index]]"></tm1-ui-element-list>
+		</span>
+	</div>
+	
+	<div class="panel panel-primary" 
+		  ng-show="sheetsToReadIn[$index][0]"
+			ng-if="(sheetsToLoad).indexOf(sheetsUploaded[$index]) > -1  "
+			ng-repeat="book in sheetsUploaded track by $index "
+			ng-init="sheetsToShowIn[$index][0] = true;">
+			<div class="panel-heading" ng-click="sheetsToShowIn[$index][0] = !sheetsToShowIn[$index][0]" 	>
+				<span>	 
+					<span class="pull-left"   >
+						 <i ng-class="{'fa-check':sheetsToReadIn[$index][0],'fa-times':!sheetsToReadIn[$index][0]}" class="fa fa-fw"></i></span>{{sheetsUploaded[$index]}} 
+					 <span ng-if="workbookUploadedSheetsData.length" class="pull-right">Total:{{values.itemsToBeUploaded[$index]}} items | <span style="cursor:pointer;" 	ng-click="sheetsToReadIn[$index][0] = !sheetsToReadIn[$index][0]"  class="text-right">
+						  Delete <i class="fa fa-times"></i>
+						 </span></span>
+					 
+				 
+				</span>
+			</div>
+				
+			<div class="panel-body" ng-if="workbookUploadedSheetsData.length" ng-show=" sheetsToShowIn[$index][0]">        
+				<table  ng-show="sheetsToReadIn[$index][0]  "
+			 id="test-element-list-subset-and-attribute"
+				class="table ">
+ 
+			
+            	<thead>
+            		<tr>
+									<th   class="text-center"><span class="text-danger" 
+										 
+											ng-click="showErrorsOnly[$index] = !showErrorsOnly[$index]">
+											<i style="font-size:1.3em" ng-class="{'fa-toggle-on':showErrorsOnly[$index], 'fa-toggle-off':!showErrorsOnly[$index] }" class="fa ">
+												</i><br>{{values.errorCount[$index]  }} Error{{values.errorCount[$index] > 1 ? 's':''}}  </span>
+									</th>
+                                     
+									 <th  
+											ng-repeat="col in workbookUploadedSheetsColumnData[$parent.$index] track by $index" 
+											class="text-left" 
+											ng-class=" headerValidationError[$parent.$parent.$index] ? 'alert-danger':''" 
+											popover-class="increase-popover-width alert-danger"  
+											uib-popover-html="headerValidationErrorPopover[$parent.$parent.$index]" 
+											popover-append-to-body="false"
+											popover-placement="bottom-center" 
+											popover-enable=" headerValidationError[$parent.$parent.$index]" 
+											popover-trigger="'mouseenter'" 
+											popover-class="popover-class-danger">
+									 		<span ng-if=" (colToValidate[$parent.$parent.$index]).indexOf(col) > -1 " class="pull-left">
+										   <i   
+																ng-class="{'fa-check':!headerValidationError[$parent.$parent.$index],'fa-times':headerValidationError[$parent.$parent.$index]}"			class="fa fa-fw  " area-hidden="true"		></i>
+									 </span>
+									 <span ng-if=" (colToValidate[$parent.$parent.$index]).indexOf(col) === -1 " class="pull-left">
+										 <i   
+																ng-class="{'fa-check':!headerValidationError[$parent.$parent.$index],'fa-times':headerValidationError[$parent.$parent.$index]}"			class="fa fa-fw  " area-hidden="true"		></i>
+									 </span>
+									 {{col}}   
+									  
+									 </th>
+									  
+            		</tr>
+            	</thead>
+            	<tbody >
+            		<tr ng-repeat="row in workbookUploadedSheetsData[$index] track by $index" ng-hide="headerValidationError[$parent.$index] || (showErrorsOnly[$parent.$index] && (row.selectedArray).indexOf('false') === -1)" >
+																			<td class="text-center">{{$index+1}} 
+                                        <input ng-if="!record.error " 
+                                        type="checkbox" ng-init="row.selected =  (row.selectedArray).indexOf('false') === -1" 
+                                        ng-model="row.selected" ng-click="countItemsToBeUploaded()"> 
+                                      </td>
+																			<td ng-class="row.error.length?'alert-danger':''" 
+                                         popover-class="increase-popover-width alert-danger"  uib-popover-html="row.error"  popover-append-to-body="true"
+                                         popover-placement="right-center" popover-enable="row.error.length>0" popover-trigger="'mouseenter'" popover-class="popover-class-danger" ng-repeat="column in workbookUploadedSheetsColumnData[$parent.$parent.$index] track by $index">
+																			{{row[column]}}
+																		</td>
+	            	</tr>
+            	</tbody>
+            	
+            </table>
+					</div>
+          <div class="panel-footer">
+            
+          </div>
+          
+        </div>
+      
+      </div>
+</div>
