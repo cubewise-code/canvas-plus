@@ -501,7 +501,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                                     tm1-instance="{{$root.defaults.settingsInstance}}"
                                     tm1-cube="{{$root.defaults.calendarCube}}"
                                     tm1-elements="Actual,{{$root.returnDateInReverse($root.calendarDateSelected)}},{{$root.user.FriendlyName}},Item {{($parent.$index)+1}},{{measure}}"    
-                                    
+                                     ng-model="itemList[measure][($parent.$index)+1]"
                                     > 
                                     </tm1-ui-dbr> 
                                   
@@ -514,11 +514,12 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                                     tm1-instance="{{$root.defaults.settingsInstance}}"
                                     tm1-cube="{{$root.defaults.calendarCube}}"
                                     tm1-elements="Actual,{{$root.returnDateInReverse($root.calendarDateSelected)}},{{$root.user.FriendlyName}},Item {{($parent.$index)+1}},Due Date"    
-                                     
+                                     ng-model="itemList['Due Date'][($parent.$index)+1]"
                                     > 
                                     </tm1-ui-dbr> 
                                   <!-- ng-blur="$root.hasNum = []; $root.openEventCreate = false;  $root.query(true);  " -->
-                                  <button class="btn btn-primary" ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'])">SAVE</button>
+                                 <br>
+                                  <button class="btn btn-primary" ng-class="{'disabled':itemList['Due Date'][($parent.$index)+1] === ''}" ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'])">SAVE</button>
                         </div>
                         
                     </div>
