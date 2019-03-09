@@ -437,7 +437,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 			<div    
              
              ng-class="{'col-xs-12 col-md-12 col-xlg-12':$root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1), 'col-xlg-2 col-md-3 col-xs-12':!$root.selections.dateToSee }"
-             ng-init="$root.getDaysInMonth($index, $root.selections.year)"
+             ng-init="$root.getDaysInMonth($index, $root.selections.year); $root.itemDeleted = 0"
              ng-if="!$root.loading"
              ng-hide="$root.selections.dateToSee && $root.calendarMonthSelected != $root.includeZeroForNum($index+1)"
              ng-style="{'top':$root.defaultOffSet+'px'}"
@@ -449,51 +449,78 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                         
                         <h4 style="color:#fff; margin:0px; padding:0px;">
                              
-                               <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> 
+                            <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> 
                                {{$root.calendarDateSelected}}
                             
-
-                            <div  class="pull-right" > 
-                                <i style="color:#fff; cursor:pointer;" 
-                                ng-click="$root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
-                                class="fa fa-times fa-fw" area-hidden="true"></i>
-                            </div>
+                            <div   class="pull-right" > 
+                                <i style="color:#fff; margin-left:10px; margin-right:5px;cursor:pointer;" class="fa fa-times"
+                                ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
+                                 ></i>
+                            </div> 
+                            <!--<div   class="pull-right" > 
+                                <span style="color:#fff; cursor:pointer;"
+                                ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
+                                 >Save | </span>
+                            </div>-->
+                            
                              </span>
                              
                         </h4>
                         <div ng-show="$root.openEventCreate" class="full-width" style="padding-left:15px; padding-right:15px; color:#fff;">
-                        <h4 >Create Event</h4>
-                          <p   
-                             
-                             
-                            ng-repeat="item in ['','','','','','','','','',''] track by $index" ng-show="false">
+                         
+                        <h4 >Create Event {{'#'+($root.itemDeleted+1)}}</h4>
+                          <p  
+                            ng-repeat="item in ['1','2','3','4','5','6','7','8','9','10'] track by $index" 
+                            ng-show="false">
                                 
                                 
                                 <tm1-ui-dbr  
                                     ng-show="false"
                                     tm1-instance="{{$root.defaults.settingsInstance}}"
                                     tm1-cube="{{$root.defaults.calendarCube}}"
-                                    tm1-elements="Actual,{{$root.returnDateInReverse($root.calendarDateSelected)}},{{$root.user.FriendlyName}},Item {{$index+1}},Due Date"    
+                                    tm1-elements="Actual,{{$root.returnDateInReverse($root.calendarDateSelected)}},{{$root.user.FriendlyName}},Item {{$index+1}},Status"    
                                     ng-model="$root.eventName[$index]"
                                 > 
                                 </tm1-ui-dbr>
+                             
                         </p>
-                        <span  ng-if="$root.eventName[$index]  && $root.eventName[$index] === ''" ng-init="$root.itemDeleted = $root.itemDeleted+1;" ></span>
-                        <p ng-show="$root.eventName[$index] === '' && $index <= $root.itemDeleted+1" style="padding-bottom:20px;" ng-repeat="item in ['','','','','','','','','',''] track by $index"  >
-                                Add Event - {{'#'+($index+1)}} <br>
-                                <span ng-repeat="measure in ['Name','Description','icon','Due Date']" >
+                       
+                        
+                        <div
+                            ng-if="$root.eventName.length && $root.eventName[$index] != null" 
+                            ng-show="$root.eventName[$index] === '' && $index > $root.itemDeleted-1 && $index <= $root.itemDeleted "  
+                            style="padding-bottom:20px;" 
+                            ng-repeat="item in $root.eventName track by $index" >
+   
+                            
+                                 
+                                <div ng-repeat="measure in ['Name','Description','icon' ]" >
                                     <label>{{measure}}:</label>
                                     <tm1-ui-dbr  
-                                
+                                    
                                     tm1-instance="{{$root.defaults.settingsInstance}}"
                                     tm1-cube="{{$root.defaults.calendarCube}}"
                                     tm1-elements="Actual,{{$root.returnDateInReverse($root.calendarDateSelected)}},{{$root.user.FriendlyName}},Item {{($parent.$index)+1}},{{measure}}"    
+                                    
+                                    > 
+                                    </tm1-ui-dbr> 
+                                  
+
+                                   
+                                </div>
+                                 <label>Due Date:</label>
+                                    <tm1-ui-dbr  
+                                    
+                                    tm1-instance="{{$root.defaults.settingsInstance}}"
+                                    tm1-cube="{{$root.defaults.calendarCube}}"
+                                    tm1-elements="Actual,{{$root.returnDateInReverse($root.calendarDateSelected)}},{{$root.user.FriendlyName}},Item {{($parent.$index)+1}},Due Date"    
                                      
                                     > 
-                                    </tm1-ui-dbr>
-                                </span>
-                        </p>
-
+                                    </tm1-ui-dbr> 
+                                  <!-- ng-blur="$root.hasNum = []; $root.openEventCreate = false;  $root.query(true);  " -->
+                                  <button class="btn btn-primary" ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'])">SAVE</button>
+                        </div>
+                        
                     </div>
                     </div>
                 
@@ -508,8 +535,8 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                     </strong>
                     <span class="pull-right" style="display:inline-block">
                         <div ng-if=" $root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1)" style="position:absolute; top:0px; vertical-align:top; right:0px; width:auto;">
-                            <div ng-click="$root.openEventCreate = !$root.openEventCreate; !$root.openEventCreate ? $root.createEvent():''" class="btn btn-success" style="  border-radius:0px;">
-                            {{$root.openEventCreate ? 'Save':'+ Event'}}
+                            <div ng-click="$root.openEventCreate = !$root.openEventCreate;  $root.createEvent() " class="btn btn-success" style="  border-radius:0px;">
+                            {{$root.openEventCreate ? '+ Event':'+ Event'}}
                             </div>
                         </div>  
                           

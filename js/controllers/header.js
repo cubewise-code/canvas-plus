@@ -582,7 +582,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.calendarYearSelected;
      }
      if($rootScope.selections.year){
+          
           $rootScope.query(true); 
+          $tm1Ui.dataRefresh();
      }
        
      
@@ -686,6 +688,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
     $rootScope.selections.dateCreateNew = false;
     $rootScope.showScheduleCard = function(y,m,d, decider){
+
         if(decider){
             $rootScope.selections.dateToSee = true;
             $rootScope.selections.dateCreateNew = false;
@@ -706,12 +709,30 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
             $rootScope.calendarDateSelected = $rootScope.calendarFilterDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
         }
+        $timeout(
+            function(){
+                 $rootScope.captureFirstItem($rootScope.eventName);
+            },1000
+        )
+        
          
 
 
        
     }
-     
+    $rootScope.doSaveEvent = function(){
+
+    }
+    $rootScope.captureFirstItem = function(array){
+        $rootScope.itemDeleted = 0;
+        for(var sad =0; sad < array.length;sad++ ){
+            console.log(array[sad]);
+            if(array[sad] != ''){
+                $rootScope.itemDeleted++;
+            }
+        }
+        console.log($rootScope.itemDeleted+'items deleted from view')
+    }
     $scope.editEvent = function(date){
         console.log("Add event, ",date);
         $timeout(
@@ -781,15 +802,41 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
             if(!result.failed){
                  console.log(result, "cleared cells");
+                 $rootScope.hasNum = []; 
+                 
                   $rootScope.query(true); 
+                   $tm1Ui.dataRefresh();
             }else{
                  console.log(result.message);
             }
             
+       
         });
     }
+    $rootScope.saveItem = function(rowJson, referenceElements){
+        var myArrayToSave = [];
+        myArrayToSave.push({value:'New', instance:'dev', cube:'Calendar', cubeElements:referenceElements});
+       
+        $tm1Ui.cellsetPut(myArrayToSave).then(function(result){
+            if(!result.failed){
+                 console.log(result, "cleared cells");
+                 $rootScope.hasNum = []; 
+                $rootScope.openEventCreate  = false;
+                  $rootScope.query(true); 
+                   $tm1Ui.dataRefresh();
+            }else{
+                 console.log(result.message);
+            }
+            
+       
+        });
+    }
+    $rootScope.refreshData = function(){
+        $tm1Ui.dataRefresh()
+    }
     $rootScope.createEvent = function(){
-        console.log("new event to create")
+        console.log("new event to create");
+        $rootScope.captureFirstItem($rootScope.eventName);
     }
     $scope.goToNewPage = function(url){
         location.assign(url)
