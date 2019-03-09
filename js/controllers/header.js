@@ -418,7 +418,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
 
     $rootScope.createCSSSelector('.tm1-login-modal','pointer-events:none; background-repeat: no-repeat; background-attachment: fixed; background-position: top center; background-color: '+$rootScope.applicationHeaderColor+';');
-    $rootScope.createCSSSelector('.tm1-login-modal .panel-default > .panel-heading', 'color: #fff; padding-top: 40px; padding-bottom: 20px; background-repeat: no-repeat; background-position: 50% 50%; border-color: transparent; background-color: '+$rootScope.applicationHeaderColor+' !important;');
+    $rootScope.createCSSSelector('.tm1-login-modal .panel-default > .panel-heading', 'color: #fff; padding-top: 40px; padding-bottom: 20px; background-repeat: no-repeat; background-position: 50% 50%; border-color: transparent; background-color: '+'rgba(0,0,0,0.3)'+' !important;');
     $rootScope.createCSSSelector('.right-hand-nav', 'position:fixed; left:100%; height:100%; width:300px; background-color: '+$rootScope.applicationHeaderColorSecondary+'; top:0px; -webkit-transition: margin-top 500ms ease-out ; -moz-transition: margin-top 500ms ease-out ; -o-transition: margin-top 500ms ease-out ; transition: margin-top 500ms ease-out ; ');
     $rootScope.createCSSSelector('.navbuttons .active', 'display: inline-block; vertical-align: top; background-color: '+$rootScope.applicationHeaderColorSecondary+'; border: 0px solid #ddd; color: #fff !important; ');
     $rootScope.createCSSSelector('.selected-bg',' background-color: '+$rootScope.applicationHeaderColorSelect+'; color:#fff; ');
@@ -637,9 +637,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
      
 
 
-    $rootScope.daysRemaining = function(datetoset, month) {
-        $rootScope.daysRemainingValue[month] = [];
-         
+    $rootScope.daysRemaining = function(datetoset) {
+       
+          
         var eventdate = moment(datetoset);
         if($rootScope.overRideDate != ''){
              var todaysdate = moment($rootScope.overRideDate);
@@ -647,7 +647,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
               var todaysdate = moment();
         }
         
-        $rootScope.daysRemainingValue[month] = eventdate.diff(todaysdate, 'days');
+         return eventdate.diff(todaysdate, 'days');
        // console.log($rootScope.daysRemainingValue[month]);
     }
     
@@ -711,6 +711,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
        
     }
+     
     $scope.editEvent = function(date){
         console.log("Add event, ",date);
         $timeout(

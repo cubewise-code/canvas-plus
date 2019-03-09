@@ -611,5 +611,23 @@ div.tm1-subnm-hierarchy-style {
     width:60% !important;
     min-width:60% !important;
 }
- 
- 
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+   
+    background-image: url(../images/1.png);
+    background-position: center;
+}
+ .modal .panel-body {
+    padding: 15px;
+    background-color: rgba(0,0,0,0.3);
+}
+  

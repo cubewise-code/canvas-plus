@@ -29,7 +29,7 @@ app.controller('summaryCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$tm1Ui
   $scope.table = $tm1UiTable.create($scope, $scope.page.accounts, {pageSize: 1000, preload: false, filter: $scope.filter});
 $scope.getHeight= function() {
    var top = document.getElementById("table").getBoundingClientRect().top;
-   console.log(top);
+   //console.log(top);
    return ((window.innerHeight) - ((top)+100));
 }
   
