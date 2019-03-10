@@ -599,7 +599,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 		$rootScope.loading = loading;
 		// Create data set
 		// based on the MDX statement from the \WEB-INF\resources\mdx_named.json file
-        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period Daily":$rootScope.selections.year, "Client":$rootScope.user.FriendlyName} }).then(function(result){
+        console.log($rootScope.selections.year, "YEAR TO PASS TO MDX")
+        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period":$rootScope.selections.year, "Client":'Admin'} }).then(function(result){
 			if(!result.failed){
                 $rootScope.dataset = $tm1Ui.resultsetTransform("dev", "Calendar", result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
 				var options = {preload: false, watch: false};
