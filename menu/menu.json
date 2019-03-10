@@ -10,17 +10,19 @@
   {
     "label": "P\u0026L",
     "icon_class": "fa-file-text-o",
+    "children": [
+      {
+        "label": "Workbook Upload",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page":"p\u0026l/workbook-upload"
+        },
+        "expanded": false
+      }
+    ],
     "data": {
       "page": "p\u0026l"
     },
-    "expanded": false
-  },
-  {
-    "label": "Workbook Upload",
-    "icon_class": "fa-file-text-o",
-    "data": {
-      "page": "workbook-upload"
-    },
-    "expanded": false
+    "expanded": true
   }
 ]

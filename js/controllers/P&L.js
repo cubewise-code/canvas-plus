@@ -13,7 +13,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "GL Report";
+    $rootScope.pageTitle = "P&L Report";
      $timeout( function(){ 
         if(document.getElementById('level-one-gl-report')){
             document.getElementById('level-one-gl-report').setAttribute("class", "active");

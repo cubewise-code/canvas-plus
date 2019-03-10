@@ -137,6 +137,7 @@
         style="z-index:99999999; vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " 
         ng-mouseleave = "status.isopen = false;" >
         <li   ng-click="  $root.showView = false; $root.scheduleShow = false; $root.calendarShow = false;  $root.applicationTriggerFindUser();  "   
+            ng-show="!$root.subPathBoolean"
             id="home-nav-btn" ng-class="$root.activeTab === -1 || $root.activeTabOver === 'home' ? 'active':''"
             ng-mouseover="$root.activeTabOver = 'home'"  ng-mouseleave="$root.activeTabOver = ''" >
                 
@@ -144,6 +145,41 @@
                     <i   class="fa fa-home fa-1x"></i>   
                     <span class="hidden-xs"> Home </span> 
                 </a> 
+                
+            
+            </li> 
+            <li  ng-show="$root.subPathBoolean" >
+                
+                <a data-ng-href="{{'#/'+($root.selectedsubParentPage).split(' /')[0]}}"  >  
+                    <i class="fa fa-angle-left fa-1x"></i>   
+                    <span class="hidden-xs"> Back </span> 
+                </a> 
+                
+            
+            </li> 
+            <li ng-mouseover="$root.activeTabOver = item.label; getLeftMargin('level-one-'+((item.label)).split(' ').join('-').toLowerCase()); "   ng-mouseleave="$root.activeTabOver = ''"
+                ng-repeat="item in $root.menuData[0].children track by $index"   
+                ng-show="$root.subPathBoolean && $root.activeTabOver === item.label" 
+                ng-if="item.label "
+                ng-class="$root.activeTabOver === item.label  || $root.activeTab === $index ? 'active':''" > 
+               
+      
+                
+               <div class="btn-group" uib-dropdown dropdown-append-to-body outsideClick is-open="status.isopen"  >
+                   
+                    <a ng-href="#/{{findClickthrough(item.data.page)}}"  
+                     style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " 
+                     ng-click="$root.indexOver = $root.showView ? $index:''; $root.showView = true; $root.calendarShow = false; $root.scheduleShow  = false; $root.applicationTriggerFindUser();"   >
+                            <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i>   
+                            <span class="hidden-xs"> 
+                            {{item.label}}   
+                            </span>
+                            <span ng-if="$root.menuData[0]['children'][$index].children.length > 0" class="caret"></span>
+                    </a>
+               
+                </div>
+
+                
             
             </li> 
             <li  id="level-one-{{((item.label)).split(' ').join('-').toLowerCase()}}"
@@ -157,7 +193,7 @@
                    
                     <a ng-href="#/{{findClickthrough(item.data.page)}}"  
                      style="padding-bottom:1em;" ng-mouseover = "status.isopen = true; $root.indexOver = $index;  " 
-                     ng-click="   $root.indexOver = $index; $root.showView = true; $root.calendarShow = false; $root.scheduleShow  = false; $root.applicationTriggerFindUser();"   >
+                     ng-click="$root.indexOver = $root.showView ? $index:''; $root.showView = true; $root.calendarShow = false; $root.scheduleShow  = false; $root.applicationTriggerFindUser();"   >
                             <i class="fa fa-fw {{item.icon_class}} fa-1x" ></i>   
                             <span class="hidden-xs"> 
                             {{item.label}}   
@@ -168,12 +204,14 @@
                 </div>
 
             </li>
+            
+            
             <li id="level-two-{{((subitem.label)).split(' ').join('-').toLowerCase()}}" 
                 ng-class="subitem.data.page === $root.pathToUse || $root.activeTabOver === subitem.label ? 'active' :''"
                 ng-show="$root.subPathBoolean" 
                 ng-mouseover="$root.activeTabOver = subitem.label"  ng-mouseleave="$root.activeTabOver = ''" 
                 ng-repeat="subitem in $root.menuData[0]['children'][$root.activeTab].children track by $index"  data-toggle="tab">
-               
+
                   
                     <a  ng-click="$root.showView = true; $root.calendarShow = false; $root.scheduleShow  = false; $root.applicationTriggerFindUser();" ng-href="#/{{findClickthrough(subitem.data.page)}}"  href="#">
                      <i class="fa fa-fw {{subitem.icon_class}} fa-1x" ></i> 
@@ -182,6 +220,7 @@
                  
           
             </li> 
+            
         </ul>
         
          <!--<div ng-click="  $root.scheduleShow = !$root.scheduleShow;  $root.showView =   $root.activeTab != '-1' && !$root.scheduleShow && !$root.calendarShow ? true : false; $root.calendarShow = false;  "
@@ -280,7 +319,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 <h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
     <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
         style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
-         Day Setting <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
+         Dark Mode <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
 
     </span>
 
@@ -312,14 +351,16 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
     text-decoration: none !important;
 }
 </style>
-<ul ng-mouseleave = "$root.indexOver = '';  " 
+<ul ng-mouseleave = "$root.indexOver =  ''   " 
     id="pop-over-body" 
-    ng-if="$root.menuData[0]['children'][$root.indexOver].children.length > 0" 
-    ng-style="{'top':(($root.defaultOffSet) + (34))+'px !important'}"  class="popOverContainer" >
+    ng-if="$root.showView && $root.menuData[0]['children'][$root.indexOver].children.length > 0" 
+    style="top:100px !important; margin-top:0px;"  class="popOverContainer" >
     <li ng-repeat="subitem in $root.menuData[0]['children'][$root.indexOver].children track by $index" role="menuitem" ng-click="status.isopen = false; $root.indexOver = '';  " style="cursor:pointer; margin:0px; text-decorations:none; padding:0px; padding:1em; border-bottom:thin solid #777; ">
-        <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  
+        <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} 
+        <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  
     </li>
 </ul>
+ 
  <div ng-if="!$root.showView && $root.selections.year" ng-init="$root.loadcalendarYearIsHere()"> 
     <div ng-mousemove="mouseMovedSetXY($event); "  class="container" 
         ng-style="{'height':($root.innerHeight)-180+'px'}" 

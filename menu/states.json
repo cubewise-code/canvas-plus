@@ -7,8 +7,8 @@
     "url": "/p\u0026l",
     "templateUrl": "html/P\u0026L.html"
   },
-  "workbook-upload": {
-    "url": "/workbook-upload",
+  "p\u0026l/workbook-upload": {
+    "url": "/p\u0026l/workbook-upload",
     "templateUrl": "html/Workbook Upload.html"
   }
 }
