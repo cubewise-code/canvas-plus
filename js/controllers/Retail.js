@@ -347,7 +347,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             
            
         }); 
-        $scope.initSelectionAccount = function(){
+        $scope.initSelectionProduct = function(){
                
                 $timeout(
                 function(){
@@ -367,7 +367,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                  },1000 )
         }
         $scope.$watch('$root.selections.subset', function (newValue, oldValue, scope) {
-            $scope.initSelectionAccount();
+            $scope.initSelectionProduct();
             if(newValue != oldValue){
                   $scope.refreshMainData();
                 $scope.chartLoading = true;
