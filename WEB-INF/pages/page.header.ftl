@@ -398,12 +398,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 		    <div class=" calendar-header" ng-init="$root.showSchedule = true">
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
                     style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%; padding-right:20px;  ">
-                        <span ng-show="$root.selections.dateToSee"  class="pull-right" > 
-                                <span style="color:#fff; margin-left:10px; margin-right:5px;cursor:pointer;" 
-                               
-                                ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
-                                 >|  Back to Full Year   </span>
-                            </span> 
+                         
                         <span style=" width:100%; padding-left:15px; padding-right:12px;"> {{$root.selections.year}} - Calendar  
 
                             <span ng-show="$root.selections.dateToSee" ng-click="$root.showSchedule = !$root.showSchedule" 
@@ -438,7 +433,12 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                             <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> 
                                {{$root.calendarDateSelected}}
                             
-                           
+                           <span ng-show="$root.selections.dateToSee"  class="pull-right" > 
+                                <button  class="btn btn-small btn-primary" 
+                               style="position: absolute; right: 15px; top: 0px; border-radius: 0px;"
+                                ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
+                                 >Back to Full Year</button>
+                            </span> 
                             <!--<div   class="pull-right" > 
                                 <span style="color:#fff; cursor:pointer;"
                                 ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
