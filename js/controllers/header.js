@@ -911,7 +911,54 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             }
         )
     });
-      
+
+    // number of drops created.
+    var nbDrop = $rootScope.innerHeight/2; 
+
+    // function to generate a random number range.
+    $rootScope.randRange = function ( minNum, maxNum) {
+    return (Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum);
+    }
+
+     
+// function to generate drops
+$rootScope.createRain = function(show) {
+if(show){
+    for( i=1;i<nbDrop;i++) {
+    var dropLeft = $rootScope.randRange(0,1600);
+    var dropTop = $rootScope.randRange(-1000,1400);
+
+    $('.rain').append('<div class="drop" id="drop'+i+'"></div>');
+    $('#drop'+i).css('left',dropLeft);
+    $('#drop'+i).css('top',dropTop);
+    }
+}else{
+    $rootScope.stopRain();
+}
+     
+
+}
+ $scope.showRain = false
+$rootScope.stopRain = function() {
+    
+    for( j=1;j<nbDrop;j++) {
+    if(document.getElementById('drop'+j+'')){
+         var child = document.getElementById('drop'+j+'');
+          
+         let node = document.getElementById('drop'+j+'');
+        if (node.parentNode) {
+        node.parentNode.removeChild(node);
+        
+        }
+    }
+        
+   
+    }
+     $scope.showRain = false;
+
+}
+// Make it rain
+ 
         
 }]);
 

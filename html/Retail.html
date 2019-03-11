@@ -876,7 +876,7 @@
   	<div ng-show="$root.headerOutOffView && $root.subsetSelected" 
   		style=" position:fixed; left:0px;   margin:0px; padding:10px;  background-color:#fff; overflow:auto; height:300px;  background-color: #fff;" 
 		ng-mouseleave="$root.subsetSelected = false"	
-		ng-style="{'top':(getContainerTop('fixedFirstColHeader')+(225))+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"		 >
+		ng-style="{'top':(getContainerTop('fixedFirstColHeader')+($root.defaultOffSet*4))+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"		 >
 
 		<table class="table "  >
 			<tr>

@@ -100,18 +100,20 @@
     style=" -webkit-transition:padding-top 1s; transition-property:padding-top;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;   transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;      background-position: center;  " ng-mouseover="$root.top = 65"   > 
     
     <div ng-style="{'background-color':$root.colortouse}" style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
+            <section ng-show="!$root.showView" class="rain"></section>
 
     </div> 
     
       <div class="cloud-group-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudGrouprandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
         ng-repeat-start="cloudGroup in  ['','','','',''] track by $index"  
         ng-style="{'top':($root.myCloudGrouprandomAnim[$index]/2)+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudGrouprandomAnim[$index]))+'s'}"   >
-            <div ng-init="$root.myRCloudGroupRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
+     
+            <div ng-click="showRain = !showRain; createRain(showRain);" ng-init="$root.myRCloudGroupRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
                       id="cloud{{$index}}" class="cloud-group " 
                     ng-style="{'animation-delay':($index+1)+'s', 'animation-duration':(($root.myRCloudGroupRandomAnim[$index]))+'s'}">
             </div>
         </div>  
-      <div class="cloud-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
+      <div ng-click="showRain = !showRain; createRain(showRain);" class="cloud-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
         ng-repeat-end="cloud in  ['','','','','','',''] track by $index"  
         ng-style="{'top':($root.myCloudrandomAnim[$index]/2)+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudrandomAnim[$index]))+'s'}"   >
             <div ng-init="$root.myRCloudRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
