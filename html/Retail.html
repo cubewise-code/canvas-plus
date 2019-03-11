@@ -266,9 +266,9 @@
 									ng-if="mainData['rowDimension']['subset']"
 									class="btn btn-primary" 
 									id="subsetSelect"  
-									ng-click="  subsetSelected = !subsetSelected"
+									ng-click="  $root.subsetSelected = !$root.subsetSelected"
 									 >
-									 <i ng-class="{'fa-times':subsetSelected,'fa-list':!subsetSelected }" class="fa " style="color:#fff"></i>
+									 <i ng-class="{'fa-times':$root.subsetSelected,'fa-list':!$root.subsetSelected }" class="fa " style="color:#fff"></i>
 									 
 								</button>
 								 
@@ -298,9 +298,9 @@
 								 	ng-if="mainData['rowDimension']['subset']"
 									class="btn btn-primary" 
 									id="subsetSelect"  
-									ng-click="  subsetSelected = !subsetSelected"
+									ng-click="  $root.subsetSelected = !$root.subsetSelected"
 									 >
-									 <i ng-class="{'fa-times':subsetSelected,'fa-list':!subsetSelected }" class="fa " style="color:#fff"></i>
+									 <i ng-class="{'fa-times':$root.subsetSelected,'fa-list':!$root.subsetSelected }" class="fa " style="color:#fff"></i>
 									 
 								</button>
 								 
@@ -486,8 +486,8 @@
 				</table>
 			</div>
 			 
-			<div id="subsetDropDown" ng-mouseleave="subsetSelected = false" 
-					  ng-show="subsetSelected  && !$root.headerOutOffView "
+			<div id="subsetDropDown" ng-mouseleave="$root.subsetSelected = false" 
+					  ng-show="$root.subsetSelected  && !$root.headerOutOffView "
 							   style="  position:fixed; left:0px; z-index:34; min-height:250px;max-height:400px;  margin:0px; padding:0px; background-color: #f8f8f8; overflow:auto;   " 
 							   ng-style="{'top':  ( (getContainerHeight('chartRow')) + (getContainerTop('stickyContainer')) + getContainerHeight('visualiseChartValues')+(getContainerHeight('columnWidthDim') )  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"
 							  >
@@ -777,9 +777,9 @@
 									ng-if="mainData['rowDimension']['subset']"
 									class="btn btn-primary" 
 									id="subsetSelect"  
-									ng-click="subsetSelected = !subsetSelected; "
+									ng-click="$root.subsetSelected = !$root.subsetSelected; "
 									 >
-									 <i ng-class="{'fa-times':subsetSelected,'fa-list':!subsetSelected }" class="fa " style="color:#fff"></i>
+									 <i ng-class="{'fa-times':$root.subsetSelected,'fa-list':!$root.subsetSelected }" class="fa " style="color:#fff"></i>
 									 
 							</button>
 					 
@@ -873,9 +873,9 @@
             	
             </table> 
     </div>          
-  	<div ng-show="$root.headerOutOffView && subsetSelected" 
+  	<div ng-show="$root.headerOutOffView && $root.subsetSelected" 
   		style=" position:fixed; left:0px;   margin:0px; padding:10px;  background-color:#fff; overflow:auto; height:300px;  background-color: #fff;" 
-		ng-mouseleave="subsetSelected = false"	
+		ng-mouseleave="$root.subsetSelected = false"	
 		ng-style="{'top':(getContainerTop('fixedFirstColHeader')+(225))+'px', 'width':getContainerWidth('columnWidthDim')+'px'}"		 >
 
 		<table class="table "  >

@@ -25,7 +25,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $rootScope.headerOutOffView = false;
     $scope.selections.driver = "All Products by Category";
     $rootScope.loggedOut = false;
-    $scope.subsetSelected = false;	
+    $rootScope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
     $scope.rowFormat = [] ;
     $scope.refreshMainData = function(){
@@ -34,7 +34,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "visualiseChartValues":true,
         "debugJson":false,
         "totalColumnElement":"Year",
-        "rowDimension":{"name":"Product", "mdx":"{TM1DRILLDOWNMEMBER( {[Product].["+$scope.selections.driver+"]}, ALL, RECURSIVE )}","attributes":"Description"},
+        "rowDimension":{"name":"Product", "subset":"All Elements","attributes":"Description"},
         "rowElementFormat":false,
         "rowElementFormatAttributes":"}FormatType",
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
@@ -77,8 +77,9 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
  
     $scope.getSubsetList  = function(){
         $tm1Ui.dimensionSubsets($scope.mainData['instance'],$scope.mainData['rowDimension']['name']).then(function(result){
-             //console.log(result, "!!!!!!!!!!!!!");
+              
             if(result){ 
+                console.log(result, "!!!!!!!!!!!!!");
                     $scope.lists.subsetList = result; 
             }
         });
@@ -155,7 +156,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                     if($($body).scrollTop() > (valuetoEval)){
 
                         $rootScope.headerOutOffView = true;
-                        
+                        console.log("$rootScope.headerOutOffView", $rootScope.headerOutOffView)
                         $($stickyHeader).css('display','block'); 
                         $($stickyHeader).css('opacity','1'); 
                         $($stickyHeader).css('pointer-events','auto'); 
