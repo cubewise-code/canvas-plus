@@ -12,3 +12,7 @@ Step 8: Test your new Application http://localhost:8080/NEWAPP
 
 <img src="images/screen-grab-application.png" style="width:100%; height:auto;"><br>
 <img src="images/screen-shot-2.png"  style="width:100%; height:auto;">
+<img src="images/screen-shot-3.png"  style="width:100%; height:auto;">
+<img src="images/screen-shot-4.png"  style="width:100%; height:auto;">
+<img src="images/screen-shot-5.png"  style="width:100%; height:auto;">
+<img src="images/screen-shot-6.png"  style="width:100%; height:auto;">
