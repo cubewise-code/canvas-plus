@@ -505,7 +505,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                                   <!-- ng-blur="$root.hasNum = []; $root.openEventCreate = false;  $root.query(true);  " -->
                                  <br>
                                   <button style="width:100%; text-align:center;" class="btn btn-primary" ng-class="{'disabled':itemList['Due Date'][($parent.$index)+1] === ''}" 
-                                  ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'], ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'])">SAVE</button>
+                                  ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'], ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Person in charge'])">SAVE</button>
                         </div>
                         
                     </div>
