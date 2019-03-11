@@ -416,7 +416,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
             >
 			<div    
              
-            ng-class="{'col-xs-12 col-md-12 col-xlg-12': $root.selections.dateToSee , 'col-xlg-3 col-md-4 col-xs-12':!$root.selections.dateToSee }"
+            ng-class="{'col-xs-12 col-md-12 col-xlg-12': $root.selections.dateToSee , 'col-xlg-2 col-md-2 col-xs-12':!$root.selections.dateToSee }"
              ng-init="$root.getDaysInMonth($index, $root.selections.year); $root.itemDeleted = 0"
              ng-if="!$root.loading"
              ng-hide="$root.selections.dateToSee && $root.calendarMonthSelected != $root.includeZeroForNum($index+1)"
