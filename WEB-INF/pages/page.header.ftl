@@ -476,8 +476,8 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
    
                             
                                  
-                                <div ng-repeat="measure in ['Name','Description','icon' ]" >
-                                    <label>{{measure}}:</label>
+                                <div ng-repeat="measure in ['Name','Description','icon','Action' ]" style="margin-top:10px;" >
+                                    <label>{{measure}}: <i ng-if="measure === 'icon'" class="{{'fa '+itemList[measure][($parent.$index)+1]}}"></i></label>
                                     <tm1-ui-dbr  
                                     
                                     tm1-instance="{{$root.defaults.settingsInstance}}"
@@ -504,7 +504,8 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                                     </tm1-ui-dbr> 
                                   <!-- ng-blur="$root.hasNum = []; $root.openEventCreate = false;  $root.query(true);  " -->
                                  <br>
-                                  <button class="btn btn-primary" ng-class="{'disabled':itemList['Due Date'][($parent.$index)+1] === ''}" ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'], ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'])">SAVE</button>
+                                  <button style="width:100%; text-align:center;" class="btn btn-primary" ng-class="{'disabled':itemList['Due Date'][($parent.$index)+1] === ''}" 
+                                  ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'], ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'])">SAVE</button>
                         </div>
                         
                     </div>
