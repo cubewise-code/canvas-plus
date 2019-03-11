@@ -10,5 +10,9 @@
   "p\u0026l/workbook-upload": {
     "url": "/p\u0026l/workbook-upload",
     "templateUrl": "html/Workbook Upload.html"
+  },
+  "retail": {
+    "url": "/retail",
+    "templateUrl": "html/Retail.html"
   }
 }

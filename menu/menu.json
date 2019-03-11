@@ -15,7 +15,7 @@
         "label": "Workbook Upload",
         "icon_class": "fa-file-text-o",
         "data": {
-          "page":"p\u0026l/workbook-upload"
+          "page": "p\u0026l/workbook-upload"
         },
         "expanded": false
       }
@@ -24,5 +24,13 @@
       "page": "p\u0026l"
     },
     "expanded": true
+  },
+  {
+    "label": "Retail",
+    "icon_class": "fa-shopping-cart",
+    "data": {
+      "page": "retail"
+    },
+    "expanded": false
   }
 ]
