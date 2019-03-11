@@ -1,4 +1,4 @@
-app.controller('RetailCtrl',  ['$scope', '$rootScope', '$log', '$tm1Ui','$timeout', 
+app.controller('PLCtrl',  ['$scope', '$rootScope', '$log', '$tm1Ui','$timeout', 
 function($scope, $rootScope, $log, $tm1Ui,$timeout) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
@@ -13,17 +13,17 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "Retail Report";
+    $rootScope.pageTitle = "P&L Report";
      $timeout( function(){ 
-        if(document.getElementById('level-one-retail-report')){
-            document.getElementById('level-one-retail-report').setAttribute("class", "active");
+        if(document.getElementById('level-one-gl-report')){
+            document.getElementById('level-one-gl-report').setAttribute("class", "active");
 			 
         }
        
     }, 100); 
     $scope.chartLoading = false;
     $rootScope.headerOutOffView = false;
-    $scope.selections.driver = "All Products by Category";
+    $rootScope.selections.account = "4";
     $rootScope.loggedOut = false;
     $scope.subsetSelected = false;	
     $scope.chartselections = [true,true,true];
@@ -34,13 +34,12 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "visualiseChartValues":true,
         "debugJson":false,
         "totalColumnElement":"Year",
-        "rowDimension":{"name":"Product", "mdx":"{TM1DRILLDOWNMEMBER( {[Product].["+$scope.selections.driver+"]}, ALL, RECURSIVE )}","attributes":"Description"},
-        "rowElementFormat":false,
+        "rowDimension":{"name":"Account", "mdx":"{TM1DRILLDOWNMEMBER( {[Account].[4]}, ALL, RECURSIVE )}","attributes":"Description"},
         "rowElementFormatAttributes":"}FormatType",
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},
         "instance":$rootScope.defaults.settingsInstance,
-        "cube":"Retail",
-        "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$scope.selections.driver,'Sales Amount'],
+        "cube":"General Ledger",
+        "defaultCubeArray":['Actual',$rootScope.selections.year,'Year','Local',$rootScope.selections.region,$rootScope.selections.department,'1','Amount'],
         "dbrPercentageFormat":false,
         "dbrDataDecimal":0,
         "chart":{
@@ -347,19 +346,19 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
             
            
         }); 
-        $scope.initSelectionDriver = function(){
+        $scope.initSelectionAccount = function(){
                
                 $timeout(
                 function(){
             //console.log("INIT SELECTIONS ACCOUNT CHOSEN");
             var arrayToKeep = [];
-            for(var ttr = 0; ttr < $scope.lists.driver.length; ttr++){
-                arrayToKeep.push($scope.lists.driver[ttr]['key']);
+            for(var ttr = 0; ttr < $scope.lists.account.length; ttr++){
+                arrayToKeep.push($scope.lists.account[ttr]['key']);
             }
-            if( (arrayToKeep).indexOf($scope.selections.driver) === -1  ){
+            if( (arrayToKeep).indexOf($rootScope.selections.account) === -1  ){
              //   console.log("NO SELECTED ACCOUNT IN SUBSET - INITIALISE FIRST IN THE LIST");
-                if($scope.lists.driver.length){
-                           $scope.selections.driver = $scope.lists.driver['0']['key'];
+                if($scope.lists.account.length){
+                           $rootScope.selections.account = $scope.lists.account['0']['key'];
                 }
           
                 
@@ -367,7 +366,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                  },1000 )
         }
         $scope.$watch('$root.selections.subset', function (newValue, oldValue, scope) {
-            $scope.initSelectionDriver();
+            $scope.initSelectionAccount();
             if(newValue != oldValue){
                   $scope.refreshMainData();
                 $scope.chartLoading = true;
@@ -442,5 +441,4 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
 
         });
 }]);
-
 
