@@ -393,99 +393,35 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
          
  
         <div   
-            ng-style="{'top':($root.defaultOffSet*2)+'px','width': (($root.innerWidth - ($root.defaultOffSet)))+'px','height':$root.calendarShow ? (($root.innerHeight)-($root.defaultOffSet*3)-8)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"   class=" calendar-cotainer "  >	
+            ng-style="{'top':($root.defaultOffSet*2)+'px','width': (($root.innerWidth - ($root.defaultOffSet)))+'px','height':$root.calendarShow ? (($root.innerHeight)-($root.defaultOffSet*3)-8)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"   class=" calendar-container "  >	
 			
 		    <div class=" calendar-header" ng-init="$root.showSchedule = true">
                 <h4 ng-style="{'top':($root.defaultOffSet),'width':$root.innerWidth-($root.defaultOffSet),'height':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
                     style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%; padding-right:20px;  ">
+                        <span ng-show="$root.selections.dateToSee"  class="pull-right" > 
+                                <span style="color:#fff; margin-left:10px; margin-right:5px;cursor:pointer;" 
+                               
+                                ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
+                                 >|  Back to Full Year   </span>
+                            </span> 
                         <span style=" width:100%; padding-left:15px; padding-right:12px;"> {{$root.selections.year}} - Calendar  
 
-                            <span ng-click="$root.showSchedule = !$root.showSchedule" 
+                            <span ng-show="$root.selections.dateToSee" ng-click="$root.showSchedule = !$root.showSchedule" 
                                 class="pull-right" style="cursor:pointer">
-                                   Schedule |
+                                   Schedule 
                                     <i ng-class="{'fa-toggle-on':$root.showSchedule === true , 'fa-toggle-off':!$root.showSchedule || $root.showSchedule === false}" class="fa"></i> 
                          
                             </span>
                         </span>
                          
                 </h4>
-                <div class="container-cards"  
-                    ng-show="$root.showSchedule"  
-                    ng-style="{'top':$root.defaultOffSet+'px', 'margin-bottom':0+'px'}"  
-                    style="pointer-events:auto; padding:0px; width:100%; display:inline-block; position:relative; left:0px; " 
-                   >
-  
-                    <div 
-                        ng-class="{'col-xs-12 col-md-3 col-xlg-1': !$root.selections.dateToSee , 'col-xs-12 col-md-4 col-xlg-3': $root.selections.dateToSee } " 
-                        class="card" 
-                         
-                        ng-repeat="row in $root.table.data() track by $index"  
-                        style=" padding:10px; border:none; color:#fff; min-height:140px !important; background-color:transparent;  vertical-align:top;  border:none;     " 
-                        ng-style="{   'cursor':$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] >= 0 ? 'pointer':'unset', 'color':$root.daysRemainingValue[row['Period Daily'].key] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] >= 0 ? '#fff':'#fff'}"
-                        ng-show=" ( ( ( ($root.calendarDateSelected+'').split('/')[2])+'-'+(($root.calendarDateSelected+'').split('/')[1])+'-'+($root.calendarFilterDaySelected) ) === row['elements'][0]['name'] )  "
-                        ng-if="!$root.loading"
-                        ng-init="$root.daysRemainingValue[row['Period Daily'].key][row.elements[1].name] = $root.daysRemaining(row.elements[0].name);$root.daysRemainingValue[row['Period Daily'].key+'end'][row.elements[1].name] =  $root.daysRemaining(row.cells[6].value); "
-                        >
-                        <div 
-                        
-                        ng-style="{ 'background-color':$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] >= 0 ? 'green':($root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 5 && $root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] > 0 ? $root.applicationHeaderColorSecondary:($root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] < 0 ? 'rgba(0,0,0,0.4)':'rgba(0,0,0,0.4)'))}" 
-                        style="width: 100%; min-height:170px;height: auto;padding: 10px;display: inline-block;background-color: rgba(0, 0, 0, 0.4);">
-                            <h5 class="text-left" style="width:calc(100%); display:inline-block; float:left; margin:0 auto;">
-                                   <div class="text-center" > {{row.elements[0].name}}</div>
-
-                                    <div class="pull-right" style="cursor:pointer;" ng-show="$root.selections.dateToSee && ( ( ($root.calendarDateSelected+'').split('/')[2])+'-'+(($root.calendarDateSelected+'').split('/')[1])+'-'+($root.calendarFilterDaySelected) ) === row['elements'][0]['name']" > 
-                                      <small style="color:#fff;">Delete</small> |  <i ng-click=" $root.deleteEvent(row,row.cells[0].reference())" class="fa fa-times" area-hidden="true"> </i>
-                                    </div>
-                                   <div  ng-click="$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  $root.openModal('p&l') : ''   "
-                                    ng-class="{'text-left':$root.selections.dateToSee ,'text-center':!$root.selections.dateToSee || $root.selections.dateToSee === false } " 
-                                    class=" " style="width:100%;">
-                                    <span class="text-center" style="width:100%;   height:auto;">
-                                         <i style="font-size: 4vw;" class="fa {{row['icon'].value}} " aria-hidden="true"></i>
-                                    </span>
-                                   </div>
-
-                                   <div  ng-click="$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  $root.openModal('p&l') : ''   " ng-class="{'text-left':$root.selections.dateToSee ,'text-center':!$root.selections.dateToSee || $root.selections.dateToSee === false  }"  style="width:100%; margin-top:10px;">
-                                        <strong class="text-center" style="line-height:1.3em;">{{row.cells[1].value}}</strong>  
-                                        <div style="position: relative; margin-top:10px;  background-color: green; padding: 10px; " 
-                                            ng-show="$root.daysRemainingValue[(row['Period Daily'].key)][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] > 0">
-                                                 <i  class="fa fa-exclamation-circle blink"></i> {{$root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] +' day(s)'}} 
-                                                 <br/>
-                                        </div>
-                                        <div style="position: relative; margin-top:10px;   background-color: orange; padding: 10px;  " 
-                                            ng-show="$root.daysRemainingValue[(row['Period Daily'].key)][(row['elements'][1].name)] > 0 && $root.daysRemainingValue[(row['Period Daily'].key)][(row['elements'][1].name)] < 5 ">
-                                           <i  class="fa fa-exclamation-circle blink"></i>  Starts in {{$root.daysRemainingValue[((row['Period Daily'].key))][(row['elements'][1].name)] +' day(s)'}}  <br/>
-                                        </div>
-                                          
-
-                                    </div>
-                                  
-                                    
-                                    
-                                </h5>
-                                <div style="width:100%; display:inline-block;  margin:0 auto; float:left;">
-                                    <div  ng-show="$root.selections.dateToSee && ( ( ($root.calendarDateSelected+'').split('/')[2])+'-'+(($root.calendarDateSelected+'').split('/')[1])+'-'+($root.calendarFilterDaySelected) ) === row['elements'][0]['name']" 
-                                                ng-repeat="cell in row.cells track by $index" ng-if="$index > 1"
-                                                class="text-left" > 
-                                                <span style="padding-right: 10px;"><small>{{cell.key}}</small>: {{cell.value}}</span>
-                                    </div> 
-                                </div>
-                                </div>
-                            </div>
-                
-                        <div>
-                        
-                    </div>
-
-             
-
-             
-       
-                </div>
-            </div>
-            
+              
+               
+            <div ng-class="{'col-xs-12 col-md-6 col-xlg-6':$root.scheduleShow && $root.selections.dateToSee , 'col-xs-12 col-md-12 col-xlg-12':!$root.scheduleShow && $root.selections.dateToSee , 'col-xlg-12 col-md-12 col-xs-12':!$root.scheduleShow  && !$root.selections.dateToSee }"
+            >
 			<div    
              
-             ng-class="{'col-xs-12 col-md-12 col-xlg-12':$root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1), 'col-xlg-2 col-md-3 col-xs-12':!$root.selections.dateToSee }"
+            ng-class="{'col-xs-12 col-md-12 col-xlg-12': $root.selections.dateToSee , 'col-xlg-3 col-md-4 col-xs-12':!$root.selections.dateToSee }"
              ng-init="$root.getDaysInMonth($index, $root.selections.year); $root.itemDeleted = 0"
              ng-if="!$root.loading"
              ng-hide="$root.selections.dateToSee && $root.calendarMonthSelected != $root.includeZeroForNum($index+1)"
@@ -495,17 +431,14 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                
                    <div ng-show="$root.selections.dateToSee  " 
                         style="padding:0px; margin:0px; padding:5px;background-color:orange; ">
-                        
+                           
+
                         <h4 style="color:#fff; margin:0px; padding:0px;">
                              
                             <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> 
                                {{$root.calendarDateSelected}}
                             
-                            <div   class="pull-right" > 
-                                <i style="color:#fff; margin-left:10px; margin-right:5px;cursor:pointer;" class="fa fa-times"
-                                ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
-                                 ></i>
-                            </div> 
+                           
                             <!--<div   class="pull-right" > 
                                 <span style="color:#fff; cursor:pointer;"
                                 ng-click="$root.hasNum = []; $root.selections.dateToSee = false; $root.openEventCreate = false; $root.selections.dateCreateNew = false; $root.loadcalendarYearIsHere()" 
@@ -571,7 +504,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                                     </tm1-ui-dbr> 
                                   <!-- ng-blur="$root.hasNum = []; $root.openEventCreate = false;  $root.query(true);  " -->
                                  <br>
-                                  <button class="btn btn-primary" ng-class="{'disabled':itemList['Due Date'][($parent.$index)+1] === ''}" ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'],['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Person in charge'])">SAVE</button>
+                                  <button class="btn btn-primary" ng-class="{'disabled':itemList['Due Date'][($parent.$index)+1] === ''}" ng-click="saveItem(row, ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'], ['Actual',$root.returnDateInReverse($root.calendarDateSelected),$root.user.FriendlyName,'Item '+(($parent.$index)+1),'Status'])">SAVE</button>
                         </div>
                         
                     </div>
@@ -589,7 +522,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
                     <span class="pull-right" style="display:inline-block">
                         <div ng-if=" $root.selections.dateToSee && $root.calendarMonthSelected === $root.includeZeroForNum($index+1)" style="position:absolute; top:0px; vertical-align:top; right:0px; width:auto;">
                             <div ng-click="$root.openEventCreate = !$root.openEventCreate;  $root.createEvent() " class="btn btn-success" style="  border-radius:0px;">
-                            {{$root.openEventCreate ? '+ Event':'+ Event'}}
+                            {{$root.openEventCreate ? 'x':'+ Event'}}
                             </div>
                         </div>  
                           
@@ -631,8 +564,88 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 			    </div> 
 		    </div> 
         </div> 
+</div>
+         <div class="container-cards  col-xlg-12 col-md-12 col-xs-12 "  
+                    ng-show="$root.showSchedule"  
+                     
+                    ng-style="{'top':$root.defaultOffSet+'px', 'margin-bottom':0+'px'}"  
+                    style="pointer-events: auto;   display: inline-block; position: relative; left: 0px; top: 50px; margin-bottom: 0px; " 
+                   >
+  
+                    <div 
+                        ng-class="{'col-xs-12 col-md-3 col-xlg-3': $root.selections.dateToSee  } " 
+                        class="card" 
+                         
+                        ng-repeat="row in $root.table.data() track by $index"  
+                        style="   border:none; color:#fff; min-height:140px !important; background-color:transparent;  vertical-align:top;  border:none;     " 
+                        ng-style="{   'cursor':$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] >= 0 ? 'pointer':'unset', 'color':$root.daysRemainingValue[row['Period Daily'].key] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] >= 0 ? '#fff':'#fff'}"
+                        ng-hide="!$root.selections.dateToSee || $root.selections.dateToSee && ( ( ($root.calendarDateSelected+'').split('/')[2])+'-'+(($root.calendarDateSelected+'').split('/')[1])+'-'+($root.calendarFilterDaySelected) ) != (row['elements'][0]['name'])"
+                        ng-if="!$root.loading"
+                        ng-init="$root.daysRemainingValue[row['Period Daily'].key][row.elements[1].name] = $root.daysRemaining(row.elements[0].name);$root.daysRemainingValue[row['Period Daily'].key+'end'][row.elements[1].name] =  $root.daysRemaining(row.cells[6].value); "
+                        >
+                        <div 
+                        class="col-xs-12 col-md-12 col-xlg-12 text-left"
+                        ng-style="{ 'background-color':$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] >= 0 ? 'green':($root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 5 && $root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] > 0 ? $root.applicationHeaderColorSecondary:($root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[(row['Period Daily'].key+'end')][row.elements[1].name] < 0 ? 'rgba(0,0,0,0.4)':'rgba(0,0,0,0.4)'))}" 
+                        style="  min-height:170px;height: auto;padding: 10px;display: inline-block;background-color: rgba(0, 0, 0, 0.4);">
+                        
+                            <h5 class="col-xs-12 col-md-12 col-xlg-12 text-left" style="  display:inline-block; float:left; margin:0 auto;">
+                                   
+                                   <div class="text-left" > {{row.elements[0].name}}
+                                   <div class="pull-right" style="cursor:pointer;" ng-show="$root.selections.dateToSee && ( ( ($root.calendarDateSelected+'').split('/')[2])+'-'+(($root.calendarDateSelected+'').split('/')[1])+'-'+($root.calendarFilterDaySelected) ) === row['elements'][0]['name']" > 
+                                      <small style="color:#fff;">Delete</small> |  <i ng-click=" $root.deleteEvent(row,row.cells[0].reference())" class="fa fa-times" area-hidden="true"> </i>
+                                    </div>  
+                                   </div>
+                                     
+                                   <div  ng-click="$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  $root.openModal('p&l') : ''   "
+                                    ng-class="{'text-left':$root.selections.dateToSee ,'text-center':!$root.selections.dateToSee || $root.selections.dateToSee === false } " 
+                                    class=" " style="width:100%;">
+                                    <span class="text-center" style="width:100%;   height:auto;">
+                                         <i style="font-size: 4vw;" class="fa {{row['icon'].value}} " aria-hidden="true"></i>
+                                    </span>
+                                   </div>
 
+                              
+                                  
+                                    
+                                    
+                                </h5>
+                                <div class="col-xs-12 col-md-12 col-xlg-12"style="  display:inline-block;  margin:0 auto; float:left;">
+                                   
+                                    
+                                    
+                                    <div  ng-show="$root.selections.dateToSee && ( ( ($root.calendarDateSelected+'').split('/')[2])+'-'+(($root.calendarDateSelected+'').split('/')[1])+'-'+($root.calendarFilterDaySelected) ) === row['elements'][0]['name']" 
+                                                ng-repeat="cell in row.cells track by $index" ng-if="$index > 1"
+                                                class="text-left" > 
+                                                <span style="padding-right: 10px;"><small>{{cell.key}}</small>: {{cell.value}}</span>
+                                    </div> 
+                                          <div  ng-click="$root.daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  $root.openModal('p&l') : ''   " ng-class="{'text-left':$root.selections.dateToSee ,'text-center':!$root.selections.dateToSee || $root.selections.dateToSee === false  }"  style="width:auto; margin-top:0px;">
+                                         
+                                        <div style="position: relative; margin-top:10px;  background-color: green; padding: 10px; " 
+                                            ng-show="$root.daysRemainingValue[(row['Period Daily'].key)][(row['elements'][1].name)] <= 0 && $root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] > 0">
+                                                 <i  class="fa fa-exclamation-circle blink"></i> {{$root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] > 0 ? 'Ends in ':'Finised '}}{{$root.daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] +' day(s)'}} 
+                                                 <br/>
+                                        </div>
+                                        <div style="position: relative; margin-top:10px;   background-color: orange; padding: 10px;  " 
+                                            ng-show="$root.daysRemainingValue[(row['Period Daily'].key)][(row['elements'][1].name)] > 0 && $root.daysRemainingValue[(row['Period Daily'].key)][(row['elements'][1].name)] < 5 ">
+                                           <i  class="fa fa-exclamation-circle blink"></i>  Starts in {{$root.daysRemainingValue[((row['Period Daily'].key))][(row['elements'][1].name)] +' day(s)'}}  <br/>
+                                        </div>
+                                          
+
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                
+                        <div>
+                        
+                    </div>
+
+             
+
+             
        
+                </div>
+            </div>
 
         
     </div>
