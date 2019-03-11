@@ -179,12 +179,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
                //$rootScope.showScheduleCard($rootScope.selections.year,$rootScope.calendarMonthSelected,$rootScope.calendarDaySelected);
             $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
-            $rootScope.loadcalendarYearIsHere();
+         
             globals.updateSettings(values, defaults, selections, parameter, options); 
             
             $timeout(function(){
                
                  $rootScope.refreshCalendar();
+                     $rootScope.loadcalendarYearIsHere();
             })
              
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
@@ -584,7 +585,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
      if($rootScope.selections.year){
           
           $rootScope.query(true); 
-          $tm1Ui.dataRefresh();
+          
      }
        
      
@@ -595,12 +596,15 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.seeData = function(cell){
         console.log(cell, "cell data")
     }
+    $rootScope.startedloading = false;
     $rootScope.query = function(loading){
 		$rootScope.loading = loading;
 		// Create data set
 		// based on the MDX statement from the \WEB-INF\resources\mdx_named.json file
-        console.log($rootScope.selections.year, "YEAR TO PASS TO MDX")
-        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period":$rootScope.selections.year, "Client":'Admin'} }).then(function(result){
+        
+            $rootScope.startedloading = true;
+         
+        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period":$rootScope.defaults.year, "Client":$rootScope.user.FriendlyName} }).then(function(result){
 			if(!result.failed){
                 $rootScope.dataset = $tm1Ui.resultsetTransform("dev", "Calendar", result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
 				var options = {preload: false, watch: false};
@@ -611,12 +615,16 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 				}
 				$rootScope.table = $tm1Ui.tableCreate($rootScope, $rootScope.dataset.rows, options);
                 $rootScope.table.pageSize(10000);
+                $rootScope.startedloading = false;
+                $tm1Ui.dataRefresh();
 			}
 			else {
 				$rootScope.message = result.message;
 			}		
 			$rootScope.loading = false;
+            
 		});		
+        
 	};
 	
 	 
@@ -802,7 +810,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         console.log(myArrayToSend, "row to delete");
         $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
             if(!result.failed){
-                 console.log(result, "cleared cells");
+                 console.log(result, "cleared event");
                  $rootScope.hasNum = []; 
                  
                   $rootScope.query(true); 
@@ -814,17 +822,18 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
        
         });
     }
-    $rootScope.saveItem = function(rowJson, referenceElements){
+    $rootScope.saveItem = function(rowJson, referenceElements, userRefElements){
         var myArrayToSave = [];
         myArrayToSave.push({value:'New', instance:'dev', cube:'Calendar', cubeElements:referenceElements});
+        myArrayToSave.push({value:$rootScope.user.FriendlyName, instance:'dev', cube:'Calendar', cubeElements:userRefElements});
        
         $tm1Ui.cellsetPut(myArrayToSave).then(function(result){
             if(!result.failed){
-                 console.log(result, "cleared cells");
-                 $rootScope.hasNum = []; 
-                $rootScope.openEventCreate  = false;
-                  $rootScope.query(true); 
-                   $tm1Ui.dataRefresh();
+                 console.log(result, "added new event");
+                    $rootScope.hasNum = []; 
+                    $rootScope.openEventCreate  = false;
+                    $rootScope.query(true); 
+                   
             }else{
                  console.log(result.message);
             }

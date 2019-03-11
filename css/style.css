@@ -630,4 +630,23 @@ div.tm1-subnm-hierarchy-style {
     padding: 15px;
     background-color: rgba(0,0,0,0.3);
 }
+.calendar-cotainer{
+    position:fixed;   
+    padding:0px; 
+    margin-left:0px; 
+    left:0px;  
+    overflow:auto;   
+    background-color:rgba(0,0,0,0); 
+    opacity:0;  
+    transition-property:height, opacity; 
+    -webkit-transition:height 1s, opacity 1s; 
+    pointer-events:auto !important;
+}
+.calendar-header{
+    position:relative; 
+    top:0px; 
+    vertical-align:top; 
+    left:0px; 
+    width:100%;
+}
   
