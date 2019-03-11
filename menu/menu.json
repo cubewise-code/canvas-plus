@@ -10,16 +10,7 @@
   {
     "label": "P\u0026L",
     "icon_class": "fa-file-text-o",
-    "children": [
-      {
-        "label": "Workbook Upload",
-        "icon_class": "fa-file-text-o",
-        "data": {
-          "page": "p\u0026l/workbook-upload"
-        },
-        "expanded": false
-      }
-    ],
+    "children": [],
     "data": {
       "page": "p\u0026l"
     },
@@ -28,9 +19,19 @@
   {
     "label": "Retail",
     "icon_class": "fa-shopping-cart",
+    "children": [
+      {
+        "label": "Workbook Upload",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "retail/workbook-upload"
+        },
+        "expanded": false
+      }
+    ],
     "data": {
       "page": "retail"
     },
-    "expanded": false
+    "expanded": true
   }
 ]
