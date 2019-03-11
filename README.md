@@ -6,6 +6,7 @@ The canvas-plus project contains a ready to use Canvas application with few cool
 
 # Prerequisites
 * Canvas v3.2.1
+* All new pages added to this project should use the Canvas Sample TM1 instance
 
 # To install it
 1. Duplicate the ROOT folder
