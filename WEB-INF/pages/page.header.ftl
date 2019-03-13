@@ -234,7 +234,7 @@
         </div> -->
 
         <div id="calendarBtn" ng-click=" $root.calendarShow = !$root.calendarShow;  $root.scheduleShow = false; $root.showView =  $root.activeTab != '-1' && !$root.calendarShow ? true : false"
-            ng-style="{'background-color': $root.calendarShow ? $root.applicationHeaderColorSecondary : '#fff' ,  'color':$root.calendarShow ?   '#fff': $root.applicationHeaderColorSecondary}"     
+            ng-style="{'background-color': $root.calendarShow ?  '#fff':$root.applicationHeaderColorSecondary ,  'color':$root.calendarShow ?   $root.applicationHeaderColorSecondary: '#fff'}"     
             class=" pull-right text-center " 
             style="  -webkit-transition:top 1s; transition-property:top; transition-duration: 1s;    position:fixed; top:50px; padding-top:1em; cursor:pointer;right:0px;  z-index:999; width:45px; height:50px;">
         <i   class="fa fa-calendar" area-hidden="true"> </i> 

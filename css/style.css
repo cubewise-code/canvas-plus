@@ -52,25 +52,23 @@ html{
     .navbuttons li {
         display: inline-block;
         vertical-align: bottom;
-        background-color: #fff;
-        color: #666;
+         
         padding: 1em;
         padding-left:0px;
         padding-right:0px;
         box-shadow: 5px 10px 18px rgba(0,0,0,0.5);
     }
     
-    .navbuttons a{
-        font-size:1em;
-        padding:1.5em;
-        color: #666;
-         
-        text-decoration: none;
-    } 
+    .navbuttons a {
+    font-size: 1em;
+    padding: 1.5em;
+    color: #fff !important;
+    text-decoration: none;
+    }
     .navbuttons .active a{
         font-size:1em;
         padding:1.5em;
-        color: #fff;
+       
          
         text-decoration: none;
     }
