@@ -75,29 +75,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             settingsCube: 'System User Settings',
             settingsMeasure: 'String',
             months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
-            monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-             schedule:{
-            2018:{
-                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2018', dateEnd:'10/01/2018'},
-                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2018', dateEnd:'11/02/2018'},
-                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2018', dateEnd:'10/03/2018'},
-                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2018', dateEnd:'10/04/2018'},
-                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2018', dateEnd:'10/05/2018'},
-                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2018', dateEnd:'10/09/2018'},
-                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2018', dateEnd:'10/11/2018'},
-                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2018', dateEnd:'10/12/2018'}
-            },
-            2019:{
-                0:{key:'Take a deep breath',icon:'fa-coffee',dateStart:'10/01/2019', dateEnd:'10/01/2019'},
-                1:{key:'Kick Off',icon:'fa-futbol-o', dateStart:'10/02/2019', dateEnd:'11/02/2019'},
-                2:{key:'Planning Application Open',icon:'fa-unlock-alt',dateStart:'10/03/2019', dateEnd:'10/03/2019'},
-                3:{key:'First Pass Review',icon:'fa-eye',dateStart:'10/04/2019', dateEnd:'10/04/2019'},
-                4:{key:'Review Guidlines Published',icon:'fa-print',dateStart:'10/05/2019', dateEnd:'10/05/2019'},
-                5:{key:'Second Pass Review',icon:'fa-eye',dateStart:'10/06/2019', dateEnd:'10/09/2019'},
-                6:{key:'Department Presentations',icon:'fa-play',dateStart:'10/10/2019', dateEnd:'10/11/2019'},
-                7:{key:'Final Plan Published',icon:'fa-flag-checkered',dateStart:'10/11/2019', dateEnd:'10/12/2019'}
-            }
-        }
+            monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+             
     };
     $rootScope.applicationTriggerFindUser = function(){
         $rootScope.countIdel = 0;
@@ -114,10 +93,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
     $rootScope.userLoggedOut = false;
      
-    $rootScope.returnDateInReverse = function(date){
-        var dateArray = (date+'').split('/');
-        return dateArray[2]+'-'+dateArray[1]+'-'+dateArray[0];
-    }
+    
 
     $rootScope.closeApplication = function(view){
       if(!$rootScope.scheduleShow){
@@ -150,48 +126,64 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
        // console.log(sessionname);
 
     }
-    $rootScope.date = new Date() ;
-    $rootScope.date  = ((($rootScope.date+"").split(":")[0]).split(',').join('')).split(' ').join('')
-  //  console.log($rootScope.date, "date");
-    //Initialize all variables
-    /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
-    $scope.initializeVariables = function(){
-                $tm1Ui.applicationUser("dev").then(function(data){
-                    $rootScope.values.user = data;
-                   //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department);
-                    globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default"});
-                    globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "region", {"tm1Dimension":"Region", "tm1Alias":"Description"});
-                    globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Description"});
-                   
-                   console.log($scope.defaults.year);
-                   
-                });   
-            }
-            $rootScope.refreshCalendar = function(){
-                console.log("REFRESH CALENDAR");
+     
+
+
+
+    $rootScope.nightTime = false; 
+     $rootScope.findColorByHr = function(color){
+             var m = moment($rootScope.overRideDate);
+             console.log(m);
+            var g = null; //return g
+            
+            if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
+            
+            var split_afternoon = 12 //24hr time to split the afternoon
+            var split_evening = 17 //24hr time to split the evening
+            var currentHour = parseFloat(m.format("HH"));
+            console.log(currentHour)
+            if(currentHour >= split_afternoon && currentHour <= split_evening) {
+                g = "transparent";
+               
+            } else if(currentHour >= split_evening) {
+                $rootScope.nightTime = true;
+                g = "#000000"+"c9";
+            } else {
+                g ="transparent";
                 
-                $rootScope.loading = true;
-                $timeout(function(){
-                    $rootScope.loading = false;
-                }, 1000)
             }
+            console.log(g )
+            return g;
+        
+    }
+
+    /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
+        $scope.initializeVariables = function(){
+            $tm1Ui.applicationUser("dev").then(function(data){
+                $rootScope.values.user = data;
+            
+                globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default"});
+                globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "region", {"tm1Dimension":"Region", "tm1Alias":"Description"});
+                globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Description"});
+            
+            
+            
+            });   
+        }
+            
             //Initialize all variables
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
-               //$rootScope.showScheduleCard($rootScope.selections.year,$rootScope.calendarMonthSelected,$rootScope.calendarDaySelected);
-            $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
-         
+               
+           $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
+ 
             globals.updateSettings(values, defaults, selections, parameter, options); 
             
-            $timeout(function(){
-               
-                 $rootScope.refreshCalendar();
-                     $rootScope.loadcalendarYearIsHere();
-            })
-             
+            
+            // $rootScope.refreshCalendar();
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
            
         }
-
+         
              
 
             //Run Initialization
@@ -327,30 +319,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                                      }
                                 }else{
                                       
-                                  //  document.getElementById($rootScope.menuData[0]['children'][i]['data'].page).setAttribute("class", "");
+                                 
                                 }
                             }
-                         }
-                         //for(var item in  $rootScope.menuData[0].children){
-                            
-                         //if( $rootScope.pathToUse === 'base'){
-                         //   $rootScope.activeTab = 0;
-                         //   $rootScope.activeSubTab = 0;
-                         //} else if( $rootScope.menuData[0].children[item].data.page === $rootScope.pathToUse){
-                         //       
-                         // $rootScope.activeTab = parseInt(item)-1;
-                         //$rootScope.activeSubTab = 0;
-                           
-                        //} 
-                        
-                      //}
-                 }
-                    
-                    
-            } );
-          
-
-          
+                         }  
+                 }    
+            } ); 
      });
 
     $rootScope.createCSSSelector = function(selector, style) {
@@ -433,7 +407,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
  
   
 
-      $rootScope.countIdel = 0;
+    $rootScope.countIdel = 0;
     $rootScope.mouseMovedSetXY = function($event){
        $rootScope.windowclientX = event.clientX;     // Get the horizontal coordinate
         $rootScope.windowclientY = event.clientY; 
@@ -545,342 +519,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         return Math.abs( Math.random() * (max - min) + min);
     }
     
-
-    //$rootScope.overRideDate = '02/10/2019';
-    $rootScope.setYear = '2019';
-    if($rootScope.overRideDate != '' && $rootScope.overRideDate){
-        $rootScope.dateNow = new Date($rootScope.overRideDate) ;
-    }else{
-        $rootScope.dateNow = new Date() ;
-    }
-    
-    //console.log(" $rootScope.dateNow",  $rootScope.dateNow, (($rootScope.dateNow+"").split(":")[0]).split(' ')[2]);
-    $rootScope.dateNumber =(($rootScope.dateNow+"").split(":")[0]).split(' ')[2];
-    $rootScope.date  = ((($rootScope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
-    //console.log($rootScope.dateNumber, $rootScope.dateNow,"$rootScope.dateNumber$rootScope.dateNumber");   
-    if($rootScope.overRideDate && $rootScope.overRideDate != ''){
-         var d = new Date($rootScope.overRideDate);
-    }else{
-        var d = new Date();
-    }
-    $scope.hasNum = [];
-    var n = d.getMonth();
-    var p = d.getDay();
-    var y = d.getFullYear();
-    //$rootScope.date = d;
-    $rootScope.monthNow = n;
-    $rootScope.dayNow = p;
-    $rootScope.yearNow =  y;
-   // console.log($rootScope.date);
-    console.log($rootScope.dayNow, parseInt($rootScope.dateNumber),$rootScope.date,$rootScope.monthNow,$rootScope.yearNow)
-    $rootScope.daysRemainingValue = []; 
-    $rootScope.selections.dateToSee = false;
-    $rootScope.loadcalendarYearIsHere = function(){
-     if($rootScope.selections.dateToSee){
-
-     }else{
-        $rootScope.calendarDaySelected = parseInt($rootScope.dateNumber); 
-        $rootScope.calendarMonthSelected = $rootScope.includeZeroForNum($rootScope.monthNow+1);
-        $rootScope.calendarYearSelected = $rootScope.defaults.year;
-        $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.calendarYearSelected;
-     }
-     if($rootScope.selections.year){
-          
-          $rootScope.query(true); 
-          
-     }
-       
-     
-
-
-    }
-
     $rootScope.seeData = function(cell){
         console.log(cell, "cell data")
     }
-    $rootScope.startedloading = false;
-    $rootScope.query = function(loading){
-		$rootScope.loading = loading;
-		// Create data set
-		// based on the MDX statement from the \WEB-INF\resources\mdx_named.json file
-        
-            $rootScope.startedloading = true;
-         
-        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period":$rootScope.defaults.year, "Client":$rootScope.user.FriendlyName} }).then(function(result){
-			if(!result.failed){
-                $rootScope.dataset = $tm1Ui.resultsetTransform("dev", "Calendar", result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
-				var options = {preload: false, watch: false};
-				if($rootScope.table){
-                   
-					options.index = $rootScope.table.options.index;
-					options.pageSize = $rootScope.table.options.pageSize;
-				}
-				$rootScope.table = $tm1Ui.tableCreate($rootScope, $rootScope.dataset.rows, options);
-                $rootScope.table.pageSize(10000);
-                $rootScope.startedloading = false;
-                $tm1Ui.dataRefresh();
-			}
-			else {
-				$rootScope.message = result.message;
-			}		
-			$rootScope.loading = false;
-            
-		});		
-        
-	};
-	
-	 
     
-   $rootScope.showPrint = function(){
-       if($rootScope.printOpened === true){
-           $rootScope.printOpened = false;
-       }else{
-           $rootScope.printOpened = true;
-       }
-
-   }
-    $rootScope.includeZeroForNum = function(num){
-        if(parseInt(num) < 10){
-            return '0'+ (num+'');
-
-        }else{
-             return  num;
-        }
-    }
-     
-
-
-    $rootScope.daysRemaining = function(datetoset) {
-       
-          
-        var eventdate = moment(datetoset);
-        if($rootScope.overRideDate != ''){
-             var todaysdate = moment($rootScope.overRideDate);
-        }else{
-              var todaysdate = moment();
-        }
-        
-         return eventdate.diff(todaysdate, 'days');
-       // console.log($rootScope.daysRemainingValue[month]);
-    }
-    
-
-
- $rootScope.days = [];
-    $rootScope.firstDayPosition = [];
       
 
-    function timenow(){
-        var now= new Date(), 
-        ampm= 'am', 
-        h= now.getHours(), 
-        m= now.getMinutes(), 
-        s= now.getSeconds();
-        if(h>= 12){
-            if(h>12) h -= 12;
-            ampm= 'pm';
-        }
-
-        if(m<10) m= '0'+m;
-        if(s<10) s= '0'+s;
-        return now.toLocaleDateString()+ ' ' + h + ':' + m + ':' + s + ' ' + ampm;
-    }
-    $scope.loading = false;
-    $scope.doUpdate = function(){
-        $scope.loading = true;
-        $scope.hasNum = [];
-        $rootScope.days = [];
-        
-        $timeout( function(){ 
-        
-        $scope.loading = false;
-       
-    },1000); 
-    }
-    $rootScope.selections.dateCreateNew = false;
-    $rootScope.showScheduleCard = function(y,m,d, decider){
-
-        if(decider){
-            $rootScope.selections.dateToSee = true;
-            $rootScope.selections.dateCreateNew = false;
-            $rootScope.calendarDaySelected = (d)+1;
-            $rootScope.calendarFilterDaySelected = $rootScope.parseToDateFormat((d)+1);
-            $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
-            $rootScope.calendarYearSelected = y;
-            console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
-            $rootScope.calendarDateSelected = $rootScope.calendarFilterDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
-       
-        }else{
-            $rootScope.selections.dateToSee = true;
-            $rootScope.selections.dateCreateNew = true;
-            $rootScope.calendarFilterDaySelected = $rootScope.parseToDateFormat((d)+1);
-            $rootScope.calendarDaySelected = (d)+1;
-            $rootScope.calendarMonthSelected = $rootScope.defaults.monthkey[($rootScope.defaults.months).indexOf(m)];
-            $rootScope.calendarYearSelected = y;
-            console.log("Month selected", $rootScope.calendarDaySelected , ($rootScope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
-            $rootScope.calendarDateSelected = $rootScope.calendarFilterDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
-        }
-        $timeout(
-            function(){
-                 $rootScope.captureFirstItem($rootScope.eventName);
-            },1000
-        )
-        
-         
-
-
-       
-    }
-    $rootScope.doSaveEvent = function(){
-
-    }
-    $rootScope.captureFirstItem = function(array){
-        $rootScope.itemDeleted = 0;
-        for(var sad =0; sad < array.length;sad++ ){
-            console.log(array[sad]);
-            if(array[sad] != ''){
-                $rootScope.itemDeleted++;
-            }
-        }
-        console.log($rootScope.itemDeleted+'items deleted from view')
-    }
-    $scope.editEvent = function(date){
-        console.log("Add event, ",date);
-        $timeout(
-
-            function(){
-                $('#editEventModal').modal();
-            },100
-        )
-    }
-    $scope.createNewEvent = function(date){
-        console.log("create New Event",date);
-        $timeout(
-
-            function(){
-                $('#createEventModal').modal();
-            },100
-        )
-    }
-    $rootScope.parseToDateFormat = function(val){
-        var tempval = val;    
-        if(val < 10){
-            tempval = '0'+val;
-        }
-        return tempval;
-    }
-    
-    $rootScope.openModal = function(item){
-         
-        $rootScope.showView = true;
-        $rootScope.scheduleShow = false;
-         $scope.goToNewPage('#/'+item);
-
-    }
-    $rootScope.getDaysInMonth = function(month,year) {
-        // Here January is 1 based
-        //Day 0 is the last day in the previous month
-        $rootScope.firstDayPosition[month] =  [];
-        var firstDayPositionArray = [];
-        var firstDayPosition =new Date(year, month, 0).getDay();
-        
-        for(var yh = 0; yh < firstDayPosition;yh++){
-            firstDayPositionArray.push(yh);
-        }
-        $scope.firstDayPosition[month] = firstDayPositionArray;
-       // console.log("first day position", firstDayPosition, $scope.firstDayPosition[month]);
-        var days  = new Date(year, month+1, 0).getDate();
-        var mypreArray = [];
-       // console.log(days);
-         for(var ttg = 0; ttg < days; ttg++){
-            mypreArray.push(ttg)
-         }
-        // console.log('days in month', month, days, mypreArray );
-         $rootScope.days[month] = mypreArray;
-       // retu$scorn mypreArray;
-        // Here January is 0 based
-        // return new Date(year, month+1, 0).getDate();
-    };
-    
-    $rootScope.deleteEvent = function(rowJson, referenceElements){
-        var myArrayToSend = [];
-        _.forEach(rowJson.cells, function(value, key) {
-            var ref = value.reference();
-            //console.log(key, value.reference(), "reference from inside the controller");
-            myArrayToSend.push({value:'', instance:'dev', cube:'Calendar', cubeElements:ref});
-        });
-        console.log(myArrayToSend, "row to delete");
-        $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
-            if(!result.failed){
-                 console.log(result, "cleared event");
-                 $rootScope.hasNum = []; 
-                 
-                  $rootScope.query(true); 
-                   $tm1Ui.dataRefresh();
-            }else{
-                 console.log(result.message);
-            }
-            
-       
-        });
-    }
-    $rootScope.saveItem = function(rowJson, referenceElements, userRefElements){
-        var myArrayToSave = [];
-        myArrayToSave.push({value:'New', instance:'dev', cube:'Calendar', cubeElements:referenceElements});
-        myArrayToSave.push({value:$rootScope.user.FriendlyName, instance:'dev', cube:'Calendar', cubeElements:userRefElements});
-       
-        $tm1Ui.cellsetPut(myArrayToSave).then(function(result){
-            if(!result.failed){
-                 console.log(result, "added new event");
-                    $rootScope.hasNum = []; 
-                    $rootScope.openEventCreate  = false;
-                    $rootScope.query(true); 
-                   
-            }else{
-                 console.log(result.message);
-            }
-            
-       
-        });
-    }
-    $rootScope.refreshData = function(){
-        $tm1Ui.dataRefresh()
-    }
-    $rootScope.createEvent = function(){
-        console.log("new event to create");
-        $rootScope.captureFirstItem($rootScope.eventName);
-    }
-    $scope.goToNewPage = function(url){
-        location.assign(url)
-    }
-    
-
-    $rootScope.nightTime = false;
-    $rootScope.findColorByHr = function(color){
-             var m = moment($rootScope.overRideDate);
-             console.log(m);
-            var g = null; //return g
-            
-            if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
-            
-            var split_afternoon = 12 //24hr time to split the afternoon
-            var split_evening = 17 //24hr time to split the evening
-            var currentHour = parseFloat(m.format("HH"));
-            console.log(currentHour)
-            if(currentHour >= split_afternoon && currentHour <= split_evening) {
-                g = "transparent";
-               
-            } else if(currentHour >= split_evening) {
-                $rootScope.nightTime = true;
-                g = "#000000"+"c9";
-            } else {
-                g ="transparent";
-                
-            }
-            console.log(g )
-            return g;
-        
-    }
 
     $rootScope.findLengthOfJsonObg=  function(data){
         return _.keys(data).length
@@ -923,43 +567,54 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
 
      
-// function to generate drops
-$rootScope.createRain = function(show) {
-if(show){
-    for( i=1;i<nbDrop;i++) {
-    var dropLeft = $rootScope.randRange(0,1600);
-    var dropTop = $rootScope.randRange(-1000,1400);
+    // function to generate drops
+    $rootScope.createRain = function(show) {
+        if(show){
+            for( i=1;i<nbDrop;i++) {
+            var dropLeft = $rootScope.randRange(0,1600);
+            var dropTop = $rootScope.randRange(-1000,1400);
 
-    $('.rain').append('<div class="drop" id="drop'+i+'"></div>');
-    $('#drop'+i).css('left',dropLeft);
-    $('#drop'+i).css('top',dropTop);
-    }
-}else{
-    $rootScope.stopRain();
-}
-     
-
-}
- $scope.showRain = false
-$rootScope.stopRain = function() {
-    
-    for( j=1;j<nbDrop;j++) {
-    if(document.getElementById('drop'+j+'')){
-         var child = document.getElementById('drop'+j+'');
-          
-         let node = document.getElementById('drop'+j+'');
-        if (node.parentNode) {
-        node.parentNode.removeChild(node);
-        
+            $('.rain').append('<div class="drop" id="drop'+i+'"></div>');
+            $('#drop'+i).css('left',dropLeft);
+            $('#drop'+i).css('top',dropTop);
+            }
+        }else{
+            $rootScope.stopRain();
         }
-    }
         
-   
-    }
-     $scope.showRain = false;
 
-}
-// Make it rain
+    }
+    $scope.showRain = false
+    $rootScope.stopRain = function() {
+        
+        for( j=1;j<nbDrop;j++) {
+            if(document.getElementById('drop'+j+'')){
+                var child = document.getElementById('drop'+j+'');
+                
+                let node = document.getElementById('drop'+j+'');
+                if (node.parentNode) {
+                node.parentNode.removeChild(node);
+                
+                }
+            }
+            
+    
+        }
+        $scope.showRain = false;
+
+    }
+    $rootScope.refreshData = function(){
+            $tm1Ui.dataRefresh()
+    }
+    $rootScope.showPrint = function(){
+        if($rootScope.printOpened === true){
+            $rootScope.printOpened = false;
+        }else{
+            $rootScope.printOpened = true;
+        }
+
+    } 
+ 
  
         
 }]);
