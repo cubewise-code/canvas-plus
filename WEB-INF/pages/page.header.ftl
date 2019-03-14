@@ -388,12 +388,14 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
     </div>
         
-           
-
-
-
-          <!--<div ng-include="'html/Calendar.html'" > </div> -->
-         <calendar ng-if="$root.selections.year" tm1-instance="dev" selected-year="{{$root.selections.year}}"></calendar> 
+            
+         <calendar 
+            ng-if="$root.selections.year && $root.user.FriendlyName" 
+            tm1-instance="dev" 
+            selected-year="{{$root.selections.year}}"
+            cube-name = "Calendar"
+            user="{{$root.user.FriendlyName}}"
+          ></calendar> 
         
     </div>
 

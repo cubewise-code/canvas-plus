@@ -63,7 +63,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.eventName = [];
     $rootScope.itemToView = [];
     $rootScope.itemToDisplay = 1;
-    $rootScope.itemDeleted = 0;
+    
     $rootScope.defaults={
             printOption:'pdf',
             year:"",
@@ -174,7 +174,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             //Initialize all variables
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
                
-           $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
+          // $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
  
             globals.updateSettings(values, defaults, selections, parameter, options); 
             

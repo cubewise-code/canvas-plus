@@ -5,30 +5,36 @@
                 templateUrl: 'html/Calendar.html',
                 scope:{
                     tm1Instance: '@', 
-                    selectedYear:'@'
+                    selectedYear:'@',
+                    cubeName:'@',
+                    user:'@'
                    
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
                     monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
                 };
-                 
-                 
+                scope.user = $attributes.user;
+                scope.cubeName = $attributes.cubeName;
                 scope.selections = {};
                 scope.firstDayPosition = {};
                 scope.instance = $attributes.tm1Instance;
                 scope.selections.year = $attributes.selectedYear;
-
+                scope.defaultOffSet = 57;
                 console.log(scope.instance, scope.selections.year);
                 scope.hasNum = [];
+                scope.innerHeight = window.innerHeight;
+                scope.innerWidth = window.innerWidth ;
     scope.setYear = '2019'; 
     scope.itemList = [];
     scope.selections.dateToSee = false;
-    $rootScope.selections.dateCreateNew = false;
+    scope.selections.dateCreateNew = false;
     scope.days = [];
     scope.firstDayPosition = [];
-    $rootScope.daysRemainingValue = [];
+    scope.daysRemainingValue = [];
     scope.overRideDate = '';
+   
+    scope.eventName = [];
     if(scope.overRideDate != '' && scope.overRideDate){
         scope.dateNow = new Date(scope.overRideDate) ;
     }else{
@@ -39,24 +45,24 @@
     var p = scope.dateNow.getDay();
     var y = scope.dateNow.getFullYear();
     scope.monthNow = n;
-    $rootScope.dayNow = p;
-    $rootScope.yearNow =  y; 
-    $rootScope.dateNumber =((scope.dateNow+"").split(":")[0]).split(' ')[2];
-    $rootScope.date  = (((scope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
+    scope.dayNow = p;
+    scope.yearNow =  y; 
+    scope.dateNumber =((scope.dateNow+"").split(":")[0]).split(' ')[2];
+    scope.date  = (((scope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
       
     
      
     
     
-    scope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ scope.selections.year;
+    scope.calendarDateSelected = scope.dateNumber+"/"+ scope.calendarMonthSelected+"/"+ scope.selections.year;
      
    
-    $rootScope.refreshCalendar = function(){
+    scope.refreshCalendar = function(){
        
-        $rootScope.loading = true;
+        scope.loading = true;
         $timeout(function(){
               $timeout(function(){
-                $rootScope.loading = false;
+                scope.loading = false;
                 
                scope.loadcalendarYearIsHere();
              }, 1000)
@@ -69,14 +75,14 @@
         if(scope.selections.dateToSee){
 
         }else{
-            scope.calendarDaySelected = parseInt($rootScope.dateNumber); 
-            $rootScope.calendarMonthSelected = scope.includeZeroForNum(scope.monthNow+1);
-            $rootScope.calendarYearSelected = $rootScope.defaults.year;
-            scope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.calendarYearSelected;
+            scope.calendarDaySelected = parseInt(scope.dateNumber); 
+            scope.calendarMonthSelected = scope.includeZeroForNum(scope.monthNow+1);
+            scope.calendarYearSelected = scope.selections.year;
+            scope.calendarDateSelected = scope.dateNumber+"/"+ scope.calendarMonthSelected+"/"+ scope.calendarYearSelected;
         }
         if(scope.selections.year){
             
-            $rootScope.query(true); 
+            scope.query(true); 
             
         } 
     } 
@@ -85,31 +91,31 @@
         return dateArray[2]+'-'+dateArray[1]+'-'+dateArray[0];
     }
 
-    $rootScope.query = function(loading){
-		$rootScope.loading = loading;
+    scope.query = function(loading){
+		scope.loading = loading;
 		// Create data set
 		// based on the MDX statement from the \WEB-INF\resources\mdx_named.json file
         
      
          
-        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period":$rootScope.defaults.year, "Client":$rootScope.user.FriendlyName} }).then(function(result){
+        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period":scope.selections.year, "Client":scope.user} }).then(function(result){
 			if(!result.failed){
-                $rootScope.dataset = $tm1Ui.resultsetTransform("dev", "Calendar", result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
+                scope.dataset = $tm1Ui.resultsetTransform("dev", "Calendar", result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
 				var options = {preload: false, watch: false};
 				if(scope.table){
                    
 					options.index = scope.table.options.index;
 					options.pageSize = scope.table.options.pageSize;
 				}
-				scope.table = $tm1Ui.tableCreate($rootScope, $rootScope.dataset.rows, options);
+				scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, options);
                 scope.table.pageSize(10000);
              
                 $tm1Ui.dataRefresh();
 			}
 			else {
-				$rootScope.message = result.message;
+                console.log(result.message);
 			}		
-			$rootScope.loading = false;
+			scope.loading = false;
             
 		});		
         
@@ -123,7 +129,7 @@
         }
     }
      
-	 $rootScope.daysRemaining = function(datetoset) {
+	 scope.daysRemaining = function(datetoset) {
        
           
         var eventdate = moment(datetoset);
@@ -137,32 +143,39 @@
        
     }
      
- 
+     scope.captureFirstItem = function(array){
+       scope.itemDeleted = 0;
+        for(var sad =0; sad < array.length;sad++ ){
+           
+            if(array[sad] != ''){
+               scope.itemDeleted++;
+            }
+        }
+   
+    }
     scope.showScheduleCard = function(y,m,d, decider){
-        $rootScope.selections.dateCreateNew = true;
+        scope.selections.dateCreateNew = true;
         if(decider){
             scope.selections.dateToSee = true;
             
             scope.calendarDaySelected = (d)+1;
-            $rootScope.calendarFilterDaySelected = scope.parseToDateFormat((d)+1);
-            $rootScope.calendarMonthSelected = scope.defaults.monthkey[(scope.defaults.months).indexOf(m)];
-            $rootScope.calendarYearSelected = y;
-           // console.log("Month selected", $rootScope.calendarDaySelected , (scope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
-            scope.calendarDateSelected = $rootScope.calendarFilterDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
+            scope.calendarFilterDaySelected = scope.parseToDateFormat((d)+1);
+            scope.calendarMonthSelected = scope.defaults.monthkey[(scope.defaults.months).indexOf(m)];
+            scope.calendarYearSelected = y;
+            scope.calendarDateSelected = scope.calendarFilterDaySelected+'/'+scope.calendarMonthSelected+'/'+scope.calendarYearSelected;
        
         }else{
             scope.selections.dateToSee = true;
               
-            $rootScope.calendarFilterDaySelected = scope.parseToDateFormat((d)+1);
+            scope.calendarFilterDaySelected = scope.parseToDateFormat((d)+1);
             scope.calendarDaySelected = (d)+1;
-            $rootScope.calendarMonthSelected = scope.defaults.monthkey[(scope.defaults.months).indexOf(m)];
-            $rootScope.calendarYearSelected = y;
-          //  console.log("Month selected", $rootScope.calendarDaySelected , (scope.defaults.months).indexOf(m)+1 , $rootScope.calendarYearSelected );
-            scope.calendarDateSelected = $rootScope.calendarFilterDaySelected+'/'+$rootScope.calendarMonthSelected+'/'+$rootScope.calendarYearSelected;
+            scope.calendarMonthSelected = scope.defaults.monthkey[(scope.defaults.months).indexOf(m)];
+            scope.calendarYearSelected = y;
+            scope.calendarDateSelected = scope.calendarFilterDaySelected+'/'+scope.calendarMonthSelected+'/'+scope.calendarYearSelected;
         }
         $timeout(
             function(){
-                 $rootScope.captureFirstItem($rootScope.eventName);
+                 scope.captureFirstItem(scope.eventName);
             },1000
         )
         
@@ -172,16 +185,7 @@
        
     }
   
-    $rootScope.captureFirstItem = function(array){
-        $rootScope.itemDeleted = 0;
-        for(var sad =0; sad < array.length;sad++ ){
-            console.log(array[sad]);
-            if(array[sad] != ''){
-                $rootScope.itemDeleted++;
-            }
-        }
-        console.log($rootScope.itemDeleted+'items deleted from view')
-    }
+    
     scope.editEvent = function(date){
         console.log("Add event, ",date);
         $timeout(
@@ -208,10 +212,10 @@
         return tempval;
     }
     
-    $rootScope.openModal = function(item){
+    scope.openModal = function(item){
          
         $rootScope.showView = true;
-        $rootScope.scheduleShow = false;
+        scope.scheduleShow = false;
         scope.goToNewPage('#/'+item);
 
     }
@@ -226,7 +230,7 @@
             firstDayPositionArray.push(yh);
         }
         scope.firstDayPosition[month] = firstDayPositionArray;
-         console.log("first day position", firstDayPosition, scope.firstDayPosition[month]);
+        //console.log("first day position", firstDayPosition, scope.firstDayPosition[month]);
         var days  = new Date(year, month+1, 0).getDate();
         var mypreArray = [];
        // console.log(days);
@@ -240,7 +244,7 @@
         // return new Date(year, month+1, 0).getDate();
     };
     
-    $rootScope.deleteEvent = function(rowJson, referenceElements){
+    scope.deleteEvent = function(rowJson, referenceElements){
         var myArrayToSend = [];
         _.forEach(rowJson.cells, function(value, key) {
             var ref = value.reference();
@@ -253,7 +257,7 @@
                  console.log(result, "cleared event");
                  scope.hasNum = []; 
                  
-                  $rootScope.query(true); 
+                  scope.query(true); 
                    $tm1Ui.dataRefresh();
             }else{
                  console.log(result.message);
@@ -265,14 +269,14 @@
     scope.saveItem = function(rowJson, referenceElements, userRefElements){
         var myArrayToSave = [];
         myArrayToSave.push({value:'New', instance:'dev', cube:'Calendar', cubeElements:referenceElements});
-        myArrayToSave.push({value:$rootScope.user.FriendlyName, instance:'dev', cube:'Calendar', cubeElements:userRefElements});
+        myArrayToSave.push({value:scope.user, instance:'dev', cube:'Calendar', cubeElements:userRefElements});
        
         $tm1Ui.cellsetPut(myArrayToSave).then(function(result){
             if(!result.failed){
                  console.log(result, "added new event");
                     scope.hasNum = []; 
-                    $rootScope.openEventCreate  = false;
-                    $rootScope.query(true); 
+                    scope.openEventCreate  = false;
+                    scope.query(true); 
                    
             }else{
                  console.log(result.message);
@@ -282,16 +286,22 @@
         });
     }
     
-    scope.createEvent = function(){
+    scope.createEvent = function(eventName){
         console.log("new event to create");
-        $rootScope.captureFirstItem($rootScope.eventName);
+        scope.openEventCreate = !scope.openEventCreate;
+        scope.captureFirstItem(eventName);
     }
     scope.goToNewPage = function(url){
         location.assign(url)
     }
     
 
-    
+     $(window).resize(function() { 
+        
+                scope.innerHeight = window.innerHeight;
+                scope.innerWidth = window.innerWidth ;
+         
+    });
     
  
 
@@ -299,8 +309,13 @@
                     return $attributes.selectedYear;
                     
                     }, function (newValue, oldValue) { 
+                        scope.hasNum = []; 
+                        scope.selections.dateToSee = false; 
+                        scope.openEventCreate = false; 
+                        scope.selections.dateCreateNew = false; 
+                        
                         scope.selections.year = newValue;
-                        $rootScope.refreshCalendar(); 
+                        scope.refreshCalendar(); 
                         console.log(newValue, "Year changes inside directive");
                                 
                     })
