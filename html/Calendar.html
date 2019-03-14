@@ -44,7 +44,12 @@
                     </strong>
                      <span class="pull-right" style="display:block; position:absolute; right:0px; top:0px;">
                          
-                          
+                          <span ng-show="selections.dateToSee"  class="pull-right" > 
+                                <div   
+                                    style="background-color:orange !important; padding:10px; border:0px solid orange !important; position: absolute; right: 15px; top: 0px; border-radius: 0px;"
+                                    ng-click="hasNum = []; selections.dateToSee = false; openEventCreate = false; selections.dateCreateNew = false; loadcalendarYearIsHere()" 
+                                    ><i class="fa fa-times"></i></div>
+                            </span>
                      </span>
                       
                     </h4>
@@ -97,12 +102,7 @@
                             <span style=" padding:8px; padding-left:15px;  padding-right:15px;"> 
                                {{calendarDateSelected}}
                             
-                            <span ng-show="selections.dateToSee"  class="pull-right" > 
-                                <div   
-                                    style="background-color:orange !important; padding:10px; border:0px solid orange !important; position: absolute; right: 15px; top: 0px; border-radius: 0px;"
-                                    ng-click="hasNum = []; selections.dateToSee = false; openEventCreate = false; selections.dateCreateNew = false; loadcalendarYearIsHere()" 
-                                    ><i class="fa fa-times"></i></div>
-                            </span> -->
+                             -->
                             <!--<div   class="pull-right" > 
                                 <span style="color:#fff; cursor:pointer;"
                                 ng-click="hasNum = []; selections.dateToSee = false; openEventCreate = false; selections.dateCreateNew = false;  " 
@@ -113,7 +113,7 @@
                              
                         </h4>-->
                         <div ng-show="openEventCreate" class="full-width" style="padding-left:15px; padding-right:15px; color:#fff;">
-                         
+                           
                         <h4 >Create Event {{'#'+(itemDeleted+1)}}
                             <span class="pull-right">
                                       <div ng-if="selections.dateToSee && calendarMonthSelected === includeZeroForNum($index+1)" 
