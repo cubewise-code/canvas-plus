@@ -222,26 +222,34 @@
     scope.getDaysInMonth = function(month,year) {
         // Here January is 1 based
         //Day 0 is the last day in the previous month
-        scope.firstDayPosition[month] =  [];
-        var firstDayPositionArray = [];
-        var firstDayPosition =new Date(year, month, 0).getDay();
+        $tm1Ui.applicationUser(scope.instance).then(function(result){
+              if(result.IsActive){
+                 // console.log(result)
+              
+
         
-        for(var yh = 0; yh < firstDayPosition;yh++){
-            firstDayPositionArray.push(yh);
-        }
-        scope.firstDayPosition[month] = firstDayPositionArray;
-        //console.log("first day position", firstDayPosition, scope.firstDayPosition[month]);
-        var days  = new Date(year, month+1, 0).getDate();
-        var mypreArray = [];
-       // console.log(days);
-         for(var ttg = 0; ttg < days; ttg++){
-            mypreArray.push(ttg)
-         }
-        // console.log('days in month', month, days, mypreArray );
-         scope.days[month] = mypreArray;
-       // retu$scorn mypreArray;
-        // Here January is 0 based
-        // return new Date(year, month+1, 0).getDate();
+                scope.firstDayPosition[month] =  [];
+                var firstDayPositionArray = [];
+                var firstDayPosition =new Date(year, month, 0).getDay();
+                
+                for(var yh = 0; yh < firstDayPosition;yh++){
+                    firstDayPositionArray.push(yh);
+                }
+                scope.firstDayPosition[month] = firstDayPositionArray;
+                //console.log("first day position", firstDayPosition, scope.firstDayPosition[month]);
+                var days  = new Date(year, month+1, 0).getDate();
+                var mypreArray = [];
+            // console.log(days);
+                for(var ttg = 0; ttg < days; ttg++){
+                    mypreArray.push(ttg)
+                }
+                // console.log('days in month', month, days, mypreArray );
+                scope.days[month] = mypreArray;
+            // retu$scorn mypreArray;
+                // Here January is 0 based
+                // return new Date(year, month+1, 0).getDate();
+              }
+         });
     };
     
     scope.deleteEvent = function(rowJson, referenceElements){
