@@ -138,8 +138,18 @@
         }else{
               var todaysdate = moment();
         }
-        
-         return eventdate.diff(todaysdate, 'days');
+        if( (eventdate['_d']+'').split(' ')[0] === (todaysdate['_d']+'').split(' ')[0] && (eventdate['_d']+'').split(' ')[1] === (todaysdate['_d']+'').split(' ')[1] && (eventdate['_d']+'').split(' ')[2] === (todaysdate['_d']+'').split(' ')[2] && (eventdate['_d']+'').split(' ')[3] === (todaysdate['_d']+'').split(' ')[3] ){
+            return 0;
+        }else{
+            if((eventdate.diff(todaysdate, 'days')) < 0){
+                return ((eventdate.diff(todaysdate, 'days')));
+            }else{
+                  return ((eventdate.diff(todaysdate, 'days'))+1);
+            }
+             
+        }
+        //console.log(eventdate['_d'], todaysdate['_d'] );
+          
        
     }
      
