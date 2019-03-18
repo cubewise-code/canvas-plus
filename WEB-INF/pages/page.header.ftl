@@ -373,7 +373,7 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
 
         <div  ng-mouseover="$root.mouseOverBird = true" ng-mouseleave="$root.mouseOverBird = false" ng-mouseleave="$root.mouseOverBird = false" ng-mouseover="$root.mouseOverBird = true" 
             ng-mousedown="$root.birdsCapturedCount = $root.birdsCapturedCount+1; $root.birdKilledArray[$index] = true;" 
-            ng-repeat="bird in $root.defaults.schedule[$root.selections.year] track by $index" 
+            ng-repeat="bird in ['','','','','','','','', '', '', '', '', '', ''] track by $index" 
             ng-init="$root.myrandomAnim[$index] = $root.getRandomArbitrary(8,14);   " 
             class="bird-container " 
             ng-style="{'top':($root.myrandomAnim[$index])+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myrandomAnim[$index]))+'s'}"   >
