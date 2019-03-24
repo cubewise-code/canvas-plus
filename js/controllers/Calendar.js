@@ -226,7 +226,7 @@
          
         $rootScope.showView = true;
         scope.scheduleShow = false;
-        scope.goToNewPage('#/'+item);
+        //scope.goToNewPage('#/'+item);
 
     }
     scope.getDaysInMonth = function(month,year) {
