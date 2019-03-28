@@ -4,16 +4,17 @@
  
     <div ng-show='false'>
         <tm1-ui-user  ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
+        
     </div>
     <div id="mininavinternal"></div>
- 
+    
 
    
  
-    <div ng-init="$root.findIfLoggedIn(); $root.printOpened = false;" 
+    <div ng-init=" $root.printOpened = false;" 
         style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
-    
-      
+
+        <span ng-init=" $rootScope.getWeather($root.user.Name); "></span>
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
             <li class="dropdown "  style="color:#fff !important; background-color:transparent !important;" >
@@ -98,14 +99,14 @@
     ng-init="animatePadding($root.defaultOffSet); $root.colortouse = $root.findColorByHr($root.applicationHeaderColor)"  
     ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '50px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
     style=" -webkit-transition:padding-top 1s; transition-property:padding-top;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;   transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;      background-position: center;  " ng-mouseover="$root.top = 65"   > 
-    
-    <div ng-style="{'background-color':$root.colortouse}" style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
+    <span >
+    <div ng-if="$root.showClouds "  ng-style="{'background-color':$root.colortouse}" style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
             <section ng-show="!$root.showView" class="rain"></section>
 
     </div> 
     
-      <div class="cloud-group-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudGrouprandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
-        ng-repeat-start="cloudGroup in  ['','','','',''] track by $index"  
+      <div  class="cloud-group-container " ng-if="$root.showClouds && !$root.showView || $root.scheduleShow"  ng-init="$root.myCloudGrouprandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
+        ng-repeat-start="cloudGroup in  $root.cloudArray track by $index"  
         ng-style="{'top':($root.myCloudGrouprandomAnim[$index]/2)+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudGrouprandomAnim[$index]))+'s'}"   >
      
             <div ng-click="showRain = !showRain; createRain(showRain);" ng-init="$root.myRCloudGroupRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
@@ -113,8 +114,9 @@
                     ng-style="{'animation-delay':($index+1)+'s', 'animation-duration':(($root.myRCloudGroupRandomAnim[$index]))+'s'}">
             </div>
         </div>  
-      <div ng-click="showRain = !showRain; createRain(showRain);" class="cloud-container " ng-if="!$root.showView || $root.scheduleShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
-        ng-repeat-end="cloud in  ['','','','','','',''] track by $index"  
+      <div   ng-click="showRain = !showRain; createRain(showRain);" class="cloud-container "
+       ng-if="$root.showClouds && !$root.showView || $root.scheduleShow"  ng-init="$root.myCloudrandomAnim[$index] = $root.getRandomArbitrary(44,55);   " 
+        ng-repeat-end="cloud in  $root.cloudArray track by $index"  
         ng-style="{'top':($root.myCloudrandomAnim[$index]/2)+'%','animation-delay':($index+1)+'s', 'animation-duration':(($root.myCloudrandomAnim[$index]))+'s'}"   >
             <div ng-init="$root.myRCloudRandomAnim[$index] = $root.getRandomArbitrary(0.5,1)"  
                       id="cloud{{$index}}" class="cloud " 
@@ -133,7 +135,44 @@
         </a>
  
         </div>
-        
+        <span class="pull-left" style="  position:fixed; top:0px; left:50%; width:50%; background-color:rgba(0,0,0,0.6); color:#fff; text-align:center; margin-left:-25%;">
+            
+            <tm1-ui-dbr  ng-show="false"  tm1-read-only="true"
+				tm1-instance="dev" 
+				tm1-cube="User Weather"  
+				tm1-elements="Admin,description,String"
+                ng-model="$root.user['weatherDescription']"
+				   >
+			</tm1-ui-dbr>
+            {{$root.user['weatherDescription']}}
+            <tm1-ui-dbr  ng-show="false" tm1-read-only="true"
+				tm1-instance="dev" 
+				tm1-cube="User Weather"  
+				tm1-elements="Admin,temperature,String"
+                ng-model="$root.user['weatherTemp']"
+				  >
+			</tm1-ui-dbr>
+            <i class="fa fa-thermometer-three-quarters" area-hidden="true"></i> | {{$root.user['weatherTemp']}} &#8451; 
+            <tm1-ui-dbr ng-show="false"  tm1-read-only="true"
+				tm1-instance="dev" 
+				tm1-cube="User Weather"  
+				tm1-elements="Admin,clouds,String"
+                ng-model="$root.user['weatherClouds']"
+                tm1-on-change="$root.createCloudArray($root.user['weatherClouds'], $root.user['weatherDescription']);"
+				  >
+			</tm1-ui-dbr>
+            <tm1-ui-dbr  tm1-read-only="true"
+				tm1-instance="dev" 
+				tm1-cube="User Weather"  
+				tm1-elements="Admin,city,String"
+                ng-model="$root.user['city']"
+                
+				  >
+			</tm1-ui-dbr>
+            
+            <span ng-if="$root.user['weatherClouds'] > -1 && $root.user['weatherDescription']" ng-init="$root.createCloudArray($root.user['weatherClouds'], $root.user['weatherDescription']);"></span>
+               
+     </span>
     </div>
      
     <ul class="navbuttons"   
@@ -337,14 +376,16 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
     <h4 style="   width:100%; " 
     class="text-left pull-left">
         {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}} 
+       
         <span class="hidden-xs pull-right text-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
             
 
-        {{$root.defaults.year}} | 
+         {{$root.defaults.year}} | 
         <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
         <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
         
     </span>
+      
     </h4>
 </div>
 </div>

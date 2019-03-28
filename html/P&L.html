@@ -238,17 +238,18 @@
 		tm1-attributes="{{mainData['colDimension']['attributes']}}">
 	</tm1-ui-element-list>           	
  
-<div ng-if="lists.account" ng-init="initSelectionAccount()">
-	<span ng-repeat="row in lists.account track by $index">
+	<div ng-if="lists.account" ng-init="initSelectionAccount()">
+		<span ng-repeat="row in lists.account track by $index">
 			<tm1-ui-dbr ng-show="false"
-								ng-if="cubeDimensionalityArray.length"
-								tm1-instance="{{mainData['instance']}}" 
-								tm1-cube="}ElementAttributes_{{mainData['rowDimension']['name']}}"  
-                  				tm1-elements="{{row.key}},{{mainData['rowElementFormatAttributes']}}"
-								 ng-model="$root.rowFormat[row.key]"
-								  >
-							</tm1-ui-dbr>
-		</span> </div>
+				ng-if="cubeDimensionalityArray.length"
+				tm1-instance="{{mainData['instance']}}" 
+				tm1-cube="}ElementAttributes_{{mainData['rowDimension']['name']}}"  
+				tm1-elements="{{row.key}},{{mainData['rowElementFormatAttributes']}}"
+				ng-model="$root.rowFormat[row.key]"
+					>
+			</tm1-ui-dbr>
+		</span> 
+	</div>
 	  
       	
 	<div id="stickyContainer"  class="stickyContainer"  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 

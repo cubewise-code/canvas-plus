@@ -33,5 +33,13 @@
       "page": "retail"
     },
     "expanded": true
+  },
+  {
+    "label": "MDXView",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "mdxview"
+    },
+    "expanded": false
   }
 ]

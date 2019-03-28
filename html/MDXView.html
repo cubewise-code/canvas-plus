@@ -1,0 +1,81 @@
+<div ng-controller="MDXViewCtrl" ng-if="$root.user.Name && $root.selections.year" style="padding-top:100px;">
+
+  <style>
+	.tm1-ui-element-consol{
+		background-color: #f8f8f8;
+
+	}
+	.tm1-ui-element-consol-1{
+		background-color: #bdebfd;
+
+	}
+	</style>
+  
+  <div class="row"  >
+		<div ng-if="dataset && !loading">
+  
+			<table class="table" ng-if="!loading">
+				<thead>
+					<tr ng-repeat="row in dataset.headers track by $index">
+						<th style="border-right:1px solid #ccc; background-color: #f0efef" ng-repeat="col in row.rows track by $index" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+							 {{$index === 0 ? '':col.dimension}} 
+							<input ng-if="$index === 0" class="form-control" 
+							 
+								style="background-color: #fff;  display:inline-block" 
+								type="text" ng-model="selections.searchRows"   
+								placeholder="Search {{col.dimension}}..."> 
+						</th>
+						<th style="border-right:1px solid #ccc;background-color: #f0efef" 
+						ng-init="seeNewData(dataset.headers[$parent.$parent.$index]['columns'][$index])" 
+						ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+						 	{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']:'' }}
+						</th>
+					</tr>
+				</thead>
+				<tbody   >
+					<tr    ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+						ng-repeat="row in  table.data()  track by $index" >
+						<td   
+								style="min-width:250px; border-right:1px solid #ccc; " 
+								ng-repeat="el in row.elements track by $index" 
+								ng-show="el.visible || $parent.$index == 0" 
+								colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
+								ng-class="{'tm1-ui-element-consol': el.element.type == 'C' && row.index > 1, 'tm1-ui-element-consol tm1-ui-element-consol-1': el.element.type == 'C' && row.index === 1}"  >
+								<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+								<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+								<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+								<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+								<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+								{{el.element.attributes['Description']}} 
+						</td>
+						<td   style="border-right:1px solid #ccc;" 
+							ng-style="{'background-color':row.elements[0].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' ? '#ddd !important':''}"
+							ng-class="{'tm1-ui-element-consol': row.index > 1  && row.elements[0].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C'  , 'tm1-ui-element-consol tm1-ui-element-consol-1': row.elements[0].element.type == 'C' && row.index === 1}"  
+							ng-repeat="cell in row.cells track by $index" class="text-right" >
+							<input cellref="{{(cell.reference()).toString()}}" contenteditable='true'  id="{{'input-'+$parent.$parent.$index+'-'+$index}}" ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}" ng-model="cell.value" ng-focus=" getFocus($event); " ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? cell.update(query):''; cell.value != '' && cell.value != cell.lastValue ?   $root.refreshNew(dataset):'';   " />
+							<span ng-init=" " ng-if="cell.isReadOnly" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div ng-if="table.pages() > 1">
+				<div class="btn-group" role="group" >
+					<button type="button" class="btn btn-default" ng-click="table.previous()"><i class="fa fa-angle-left"></i></button>
+					<span class="btn btn-default" style="width: 100px;">{{table.page()}} of {{table.pages()}}</span>
+					<button type="button" class="btn btn-default" ng-click="table.next()"><i class="fa fa-angle-right"></i></button>
+				</div>
+				<div class="btn-group pull-right" role="group" >
+					<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10)">10</button>
+					<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15)">15</button>
+					<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30)">30</button>
+					<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50)">50</button>
+					<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(1000)">All</button>
+				</div>
+			</div>
+		 
+		</div> 
+  </div>
+    
+
+</div>

@@ -5,21 +5,22 @@
     <welcome-file>index</welcome-file>
   </welcome-file-list>
   
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Forbidden</web-resource-name>
-      <url-pattern>/*</url-pattern>
-                  
-      <http-method>DELETE</http-method>
-      <http-method>HEAD</http-method>
-      <http-method>PATCH</http-method>
-      <http-method>PUT</http-method>
-      <http-method>TRACE</http-method>
-    </web-resource-collection>
-    <auth-constraint />
-  </security-constraint>
-  
   <!-- Filters -->
+  <!-- Allowed Action(s) -->
+  <filter>
+      <filter-name>restActionFilter</filter-name>
+      <filter-class>com.cubewise.rest.RestActionFilter</filter-class>
+      
+      <init-param>
+        <param-name>allowedActions</param-name>
+        <param-value>GET,POST</param-value>
+      </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>restActionFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <!-- x-frame-options -->
   <filter>
       <filter-name>appClickFilter</filter-name>
