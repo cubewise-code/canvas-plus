@@ -49,6 +49,7 @@
 								{{el.element.attributes['Description']}} 
 						</td>
 						<td   style="border-right:1px solid #ccc;" 
+							ng-right-click="openRefModel(cell.reference().toString()); seeNewData(dataset.dimensions)"
 							ng-style="{'background-color':row.elements[0].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' ? '#ddd !important':''}"
 							ng-class="{'tm1-ui-element-consol': row.index > 1  && row.elements[0].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C'  , 'tm1-ui-element-consol tm1-ui-element-consol-1': row.elements[0].element.type == 'C' && row.index === 1}"  
 							ng-repeat="cell in row.cells track by $index" class="text-right" >
@@ -76,6 +77,44 @@
 		 
 		</div> 
   </div>
-    
+  
+	 
 
+	<div id="refModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	 
+				<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+					<h4 class="modal-title" id="myModalLabel">Cell Reference</h4>
+				</div>
+				<div class="modal-body table-responsive">
+						<table class="table">
+							<thead>
+								<th>
+
+								</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="dimension in $root.dimensionArray track by $index" >
+									<td class="text-left">
+										{{dimension}}
+									</td>
+									<td class="text-right">
+										{{$root.cellreferneceArray[$index]}}
+								</td>
+								 
+							</tr>
+							</tbody>
+						</table> 
+				</div>
+				<div class="modal-footer">
+				<!--	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+					 
+				</div>
+			</div>
+		</div>
+		</div>
+	
+				
 </div>

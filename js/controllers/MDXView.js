@@ -79,7 +79,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.getFocus = function($event) {           
         $scope.focusObj = $event.target.id;
         document.getElementById($event.target.id).addEventListener('paste', $scope.handlePaste);
-         console.log("add paste event listener",$event.target.id)
+        console.log("add paste event listener",$event.target.id)
     }
     $scope.getLastFocus = function() {  
          if(document.getElementById($scope.focusObj)){
@@ -98,6 +98,16 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
         
     
     }   
+    $rootScope.cellreferneceArray = [];
+    $rootScope.dimensionArray = [];
+    $scope.openRefModel = function(elementString){
+        $rootScope.cellreferneceArray = (elementString+'').split(',')
+        $tm1Ui.cubeDimensions("dev","General Ledger").then(function(result){
+            $rootScope.dimensionArray = result;
+            $("#refModal").modal({show: true});  
+        })
+          
+    }
         $scope.refresh = function(){
           
             $timeout(
@@ -258,4 +268,14 @@ $scope.addRequest = function(aray,cell,tempElement){
 
     
 }]);
- 
+app.directive('ngRightClick', ['$parse', function($parse) {
+    return function(scope, element, attrs) {
+        var fn = $parse(attrs.ngRightClick);
+        element.bind('contextmenu', function(event) {
+            scope.$apply(function() {
+                event.preventDefault();
+                fn(scope, {$event:event});
+            });
+        });
+    };
+}]);
