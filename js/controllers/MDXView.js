@@ -170,7 +170,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
             $fixedHeader = $(el).find('.fixed-container');
             $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
             //$headerContent = $(el).find('#headerContent');
-            //$sideContent = $(el).find('#sideContent');
+            $sideContent = $(el).find('#sideContent');
            // $subsetDropdown = $(el).find('#subsetDropDown');
             //$sideChartContent = $(el).find('#sideChartContent');
             //$sideDebugContent = $(el).find('#sideDebugContent');
@@ -194,7 +194,8 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                         $($fixedHeader).css('pointer-events','auto'); 
                        
                           
-                        
+                        $($sideContent).css('display', 'block');
+                        $($sideContent).css('margin-top', -$($body).scrollTop());
                         $($fixedFirstColHeader).css('display','block !important'); 
                     }else{
                          
@@ -203,6 +204,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                         $($stickyHeader).css('opacity','0'); 
                         $($stickyHeader).css('pointer-events','none'); 
                          $($fixedHeader).css('pointer-events','none'); 
+                         
                          
                           $($fixedFirstColHeader).css('display','none !important'); 
                     } 

@@ -194,16 +194,16 @@
   <div class="row"  >
 		<div id="stickyContainer"  class="stickyContainer"  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
 				<div class="fixedFirstColHeader"  
-					ng-style="{'top': ( (getContainerTop('stickyContainer') + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('columnWidthDim') )+'px', 'height':(getContainerHeight('columnWidthDim')*3)+'px'} " >
+					ng-style="{'top': ( (getContainerTop('stickyContainer') + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('headerRowHeight0') )+'px', 'height':(getContainerHeight('headerRowHeight0')*3)+'px'} " >
 					
-					<div ng-style="{'width': getContainerWidth('columnWidthDim')+'px', 'height':(getContainerHeight('columnWidthDim')*3)+'px'} " 
+					<div ng-style="{'width': getContainerWidth('firstHeaderColHeight')+'px', 'height':(getContainerHeight('firstHeaderColHeight'))+'px'} " 
 					class="text-left " 
 					style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
 					<table class="table" >
 							<thead>
 								<tr ng-repeat="row in dataset.headers track by $index">
 									<th
-									ng-style="{'height':(getContainerHeight('columnWidthDim')*3)+'px'}"
+									ng-style="{'height':(getContainerHeight('firstHeaderColHeight'))+'px'}"
 									style="border-right:1px solid #ccc; background-color: #f0efef" 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible" colspan="{{col.colspan}}" 
@@ -233,7 +233,7 @@
 							style="padding:0px; margin:0 auto; position:relative; display:inline-block; left:0px; top:0px; float:left;" 
 							ng-repeat="row in dataset.headers track by $index">
 							<div    ng-repeat="col in row.rows track by $index" 
-								ng-style="{'width': (getContainerWidth('columnWidthDim')*(col.colspan))+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
+								ng-style="{'width': (getContainerWidth('headerRowHeight0')*(col.colspan))+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
 								style="background-color: #f0efef; font-weight:600; display:inline-block; margin: 0 auto;  padding:10px; 	  float:left; ">
 									{{$index === 0 ? '':col.dimension}} 
 							</div>
@@ -249,13 +249,39 @@
 					</div>
 			</div>
 
+			<div  id="sideContent" class="fixed-container-side" style="z-index:30; background-color:#fff;" style="height:37px"
+				ng-style="{'top': (  (getContainerTop('stickyContainer'))  +(getContainerHeight('firstHeaderColHeight'))  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':(getContainerWidth('rowHieghtElement'+1))+'px'}">
+				<table class="table">
+					<tbody  >
+							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+							ng-repeat="row in  table.data()  track by $index" >
+							<td   
+									ng-style="{'height':getContainerHeight('rowHieghtElement'+row.index) + 'px'}" 
+									style="min-width:250px; border-right:1px solid #ccc; " 
+									ng-repeat="el in row.elements track by $index" 
+									ng-show="el.visible || $parent.$index == 0" 
+									colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
+									ng-class="{'tm1-ui-element-consol': el.element.type == 'C' && row.index > 1, 'tm1-ui-element-consol tm1-ui-element-consol-1': el.element.type == 'C' && row.index === 1}"  >
+									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+									<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+									<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+									<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+									{{el.element.attributes['Description']}} 
+							</td>
+							 
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
 
 			<div  >
 			 
 				<table class="table" >
 					<thead>
 						<tr  id="headerContent" ng-repeat="row in dataset.headers track by $index">
-							<th   style="border-right:1px solid #ccc; background-color: #f0efef" 
+							<th id="firstHeaderColHeight"  style="border-right:1px solid #ccc; background-color: #f0efef" 
 								ng-repeat="col in row.rows track by $index" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 								{{$index === 0 ? '':col.dimension}} 
 								<!-- <input ng-if="$index === 0" class="form-control" 
@@ -273,10 +299,10 @@
 						</tr>
 					</thead>
 					<tbody   id="bodyContent" ng-init="setUpStickyHeader(); "> 
-						<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+						<tr id="rowHeightElement{{$index}}" ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
-							<td id="columnWidthDim"  
-									id="rowHeightElement{{$index}}" 
+							<td id="rowHieghtElement{{row.index}}"  
+									
 									style="min-width:250px; border-right:1px solid #ccc; " 
 									ng-repeat="el in row.elements track by $index" 
 									ng-show="el.visible || $parent.$index == 0" 
