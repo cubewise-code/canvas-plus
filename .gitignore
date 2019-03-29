@@ -2,9 +2,11 @@ admin/**
 assets/**
 help/**
 html/samples/**
+html/system/**
 js/controllers/samples/**
 lang/**
 node_modules
+META-INF/**
 WEB-INF/classes/**
 WEB-INF/lib/**
 WEB-INF/config/**
@@ -16,5 +18,6 @@ WEB-INF/pages/templates/**
 WEB-INF/web.xml.*
 WEB-INF/wro.xml.*
 WEB-INF/print/phantomjs.exe
-WEB-INF/print/phantomjs.exe
-export.jsp
+export.js
+WEB-INF/pages/Archive.zip
+._.DS_Store

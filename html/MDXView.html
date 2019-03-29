@@ -204,7 +204,7 @@
 								<tr ng-repeat="row in dataset.headers track by $index">
 									<th
 									ng-style="{'height':(getContainerHeight('firstHeaderColHeight'))+'px'}"
-									style="border-right:1px solid #ccc; background-color: #f0efef" 
+									style="border-right:1px solid #ccc; background-color: #f0efef; padding:0px;" 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible" colspan="{{col.colspan}}" 
 									rowspan="{{col.rowspan}}" 
@@ -303,7 +303,7 @@
 							ng-repeat="row in  table.data()  track by $index" >
 							<td id="rowHieghtElement{{row.index}}"  
 									
-									style="min-width:250px; border-right:1px solid #ccc; " 
+									style="min-width:250px; width:250px !important;  border-right:1px solid #ccc; " 
 									ng-repeat="el in row.elements track by $index" 
 									ng-show="el.visible || $parent.$index == 0" 
 									colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
@@ -315,7 +315,7 @@
 									<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
 									{{el.element.attributes['Description']}} 
 							</td>
-							<td id="columnWidth{{$index}}"  style="max-width:100px; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+							<td id="columnWidth{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
 								ng-right-click="openRefModel(cell.reference().toString()); seeNewData(dataset.dimensions)"
 								ng-style="{'background-color':row.elements[0].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' ? '#ddd !important':''}"
 								ng-class="{'tm1-ui-element-consol': row.index > 1  && row.elements[0].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C'  , 'tm1-ui-element-consol tm1-ui-element-consol-1': row.elements[0].element.type == 'C' && row.index === 1}"  
