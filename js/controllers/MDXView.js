@@ -9,8 +9,15 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     *     For more information: https://github.com/cubewise-code/canvas-best-practice
     */
     
-    $scope.defaults = {};
-    $scope.selections = {};
+    $scope.defaults = {
+        instance:"dev",
+        cube:"General Ledger",
+        cubeView:"",
+        namedMDXQueryId: "P&L",
+    };
+    $scope.selections = {
+        
+    };
     $scope.lists = {};
     $scope.values = {};
     $rootScope.pageTitle = "executeMDXCubeView";
@@ -30,48 +37,82 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
         
         
      }
+     
+     $scope.triggerResize = function(){
+        $timeout(function() {
+             
+            $window.dispatchEvent(new Event("resize"));
+             
+        }, 500);
+
+     }
     $rootScope.refreshNew = function(newdataset){
          
         $timeout(
 
             function(){
-                $tm1Ui.cubeExecuteView("dev","General Ledger", "Budget Template").then(function(result){
-                    if(!result.failed){
-                        $scope.datasetNew =    $tm1Ui.resultsetTransform("dev", "General Ledger", result, {alias: {Account: "Description", Period: "Short Description", Department: "Description", Version: "Description"}});
-                           
-                        $scope.dataset = newdataset;
-                            var options = {preload: false, watch: false};
-                             
-                            $scope.tableNew = $tm1Ui.tableCreate($scope, $scope.datasetNew.rows, options);
-                            $scope.tableNew.pageSize(1000)
-                           // console.log($scope.table.data(), $scope.tableNew.data());  
-                            var tableRows = $scope.table.data();
-                            for(newrow in $scope.tableNew.data()){
-                                for(row in $scope.table.data()){
-                                    if($scope.tableNew.data()[newrow].index === $scope.table.data()[row].index){
-                                       // console.log($scope.tableNew.data()[newrow].cells, "same row");
-                                        $scope.table.data()[row].cells = $scope.tableNew.data()[newrow].cells;
+                if($scope.defaults.cubeView != ''){
+                    $tm1Ui.cubeExecuteView($scope.defaults.instance,$scope.defaults.cube, $scope.defaults.cubeView).then(function(result){
+                        if(!result.failed){
+                            $scope.datasetNew = $tm1Ui.resultsetTransform($scope.defaults.instance,$scope.defaults.cube, result, {alias: {Account: "Description", Period: "Short Description", Department: "Description", Version: "Description"}});
+                               
+                            $scope.dataset = newdataset;
+                                var options = {preload: false, watch: false};
+                                 
+                                $scope.tableNew = $tm1Ui.tableCreate($scope, $scope.datasetNew.rows, options);
+                                $scope.tableNew.pageSize(100000)
+                               // console.log($scope.table.data(), $scope.tableNew.data());  
+                                var tableRows = $scope.table.data();
+                                for(newrow in $scope.tableNew.data()){
+                                    for(row in $scope.table.data()){
+                                        if($scope.tableNew.data()[newrow].index === $scope.table.data()[row].index){
+                                           // console.log($scope.tableNew.data()[newrow].cells, "same row");
+                                            $scope.table.data()[row].cells = $scope.tableNew.data()[newrow].cells;
+                                        }
+                                    
                                     }
-                                
                                 }
-                            }
-                            $scope.getLastFocus();
-                            //$scope.table = $scope.tableNew
-                             
-                                
-                         
-                        
-                         
-                        
-                         
-                        
-                         
-                    } else {
-                        $scope.message = result.message;
-                      
-                    }		
-                   
-                })
+                                $scope.getLastFocus();
+                                 
+                        } else {
+                            $scope.message = result.message;
+                          
+                        }		
+                       
+                    })
+
+                }else{
+                    if($scope.defaults.namedMDX != '' && $scope.defaults.cubeView === ''){
+                        $tm1Ui.cubeExecuteNamedMdx($scope.defaults.instance, $scope.defaults.namedMDXQueryId, {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region}}).then(function(result){
+                            if(!result.failed){
+                                $scope.datasetNew = $tm1Ui.resultsetTransform($scope.defaults.instance,$scope.defaults.cube, result, {alias: {Account: "Description", Period: "Short Description", Department: "Description", Version: "Description"}});
+                                   
+                                $scope.dataset = newdataset;
+                                    var options = {preload: false, watch: false};
+                                     
+                                    $scope.tableNew = $tm1Ui.tableCreate($scope, $scope.datasetNew.rows, options);
+                                    $scope.tableNew.pageSize(100000)
+                                   // console.log($scope.table.data(), $scope.tableNew.data());  
+                                    var tableRows = $scope.table.data();
+                                    for(newrow in $scope.tableNew.data()){
+                                        for(row in $scope.table.data()){
+                                            if($scope.tableNew.data()[newrow].index === $scope.table.data()[row].index){
+                                               // console.log($scope.tableNew.data()[newrow].cells, "same row");
+                                                $scope.table.data()[row].cells = $scope.tableNew.data()[newrow].cells;
+                                            }
+                                        
+                                        }
+                                    }
+                                    $scope.getLastFocus();
+                                     
+                            } else {
+                                $scope.message = result.message;
+                              
+                            }		
+                           
+                        })
+                    }
+                }
             },500
         )
     }
@@ -112,10 +153,11 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
           
             $timeout(
                 function(){
-                    $tm1Ui.cubeExecuteView("dev","General Ledger", "Budget Template").then(function(result){
+                    if($scope.defaults.cubeView != ''){
+                    $tm1Ui.cubeExecuteView($scope.defaults.instance,$scope.defaults.cube, $scope.defaults.cubeView).then(function(result){
                         if(!result.failed){
                             
-                            $scope.dataset = $tm1Ui.resultsetTransform("dev", "General Ledger", result, {alias: {Account: "Description", Period: "Short Description", Department: "Description", Version: "Description"}});
+                            $scope.dataset = $tm1Ui.resultsetTransform($scope.defaults.instance,$scope.defaults.cube, result, {alias: {Account: "Description", Period: "Short Description", Department: "Description", Version: "Description"}});
                             var options = {preload: false, watch: false};
                             if($scope.table){
                                 options.index = $scope.table.options.index;
@@ -123,7 +165,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                                  
                             }
                             $scope.table = $tm1Ui.tableCreate($scope, $scope.dataset.rows, options);
-                            $scope.table.pageSize(1000)
+                            $scope.table.pageSize(100000)
                             $scope.loading = false;
                             console.log("loadded new from old rows")
                             $scope.table.refresh();
@@ -135,6 +177,34 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                         }		
                        
                     })
+                }else{
+                    if($scope.defaults.namedMDX != '' && $scope.defaults.cubeView === ''){
+                        $tm1Ui.cubeExecuteNamedMdx($scope.defaults.instance, $scope.defaults.namedMDXQueryId, {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region}}).then(function(result){
+                          
+                            if(!result.failed){
+                                
+                                $scope.dataset = $tm1Ui.resultsetTransform("dev", "General Ledger", result, {alias: {Account: "Description", Period: "Short Description", Department: "Description", Version: "Description"}});
+                                var options = {preload: false, watch: false};
+                                if($scope.table){
+                                    options.index = $scope.table.options.index;
+                                    options.pageSize = $scope.table.options.pageSize;
+                                    
+                                }
+                                $scope.table = $tm1Ui.tableCreate($scope, $scope.dataset.rows, options);
+                                $scope.table.pageSize(100000)
+                                $scope.loading = false;
+                                console.log("loadded new from old rows")
+                                $scope.table.refresh();
+                                //$rootScope.tableData = $scope.table.data();
+                                
+                            } else {
+                                $scope.message = result.message;
+                                $scope.loading = false;
+                            }		
+                        
+                        })
+                    }
+                }
                 },500
             )
              
@@ -187,7 +257,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                     if($($body).scrollTop() > parseInt(valuetoEval) || $($body).scrollLeft() != 0){
 
                         $rootScope.headerOutOffView = true;
-                        console.log("view header")
+                        console.log("view header", $rootScope.columnWidthValue)
                         $($stickyHeader).css('display','block'); 
                         $($stickyHeader).css('opacity','1'); 
                         $($stickyHeader).css('pointer-events','auto'); 
@@ -208,24 +278,10 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                          
                           $($fixedFirstColHeader).css('display','none !important'); 
                     } 
-                    //if($($body).scrollLeft() != 0){
-                       // $($fixedFirstColHeader).css('display','block');
-                        // $(sideChartContent).css('display', 'block');
-                        // $($sideChartContent).css('margin-top', -$($body).scrollTop());
-                        // $(sideDebugContent).css('display', 'block');
-                        // $($sideDebugContent).css('margin-top', -$($body).scrollTop());
-                        // $($sideContent).css('display', 'block');
-                        // $($sideContent).css('margin-top', -$($body).scrollTop());
-                    //}else{
-                       //  $($fixedFirstColHeader).css('display','none');
-                        // $($sideContent).css('display', 'none');
-                        // $(sideChartContent).css('display', 'none');
-                        // $(sideDebugContent).css('display', 'none');
-                   // }
                      
-                    //$($subsetDropdown).css('margin-top', -$($body).scrollTop());
                      $($stickyHeader).css('margin-left', -$($body).scrollLeft());
-                    console.log("scroll inside the summary left , top : ",-$($body).scrollLeft(), -$($body).scrollTop()); 
+                   // console.log("scroll inside the summary left , top : ",-$($body).scrollLeft(), -$($body).scrollTop()); 
+                    
             });
            
            
@@ -248,6 +304,16 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
        
 
    }
+   $scope.getContainerWidthClass = function(idName){
+    if(document.getElementsByClassName(idName).length > 0){
+        var tempObj = document.getElementsByClassName(idName)[0];
+        if(tempObj != null || tempObj != undefined ){
+            return tempObj.getBoundingClientRect().width;
+        }
+    }
+    
+
+}
 
    $scope.getContainerHeight = function(idName){
        if(document.getElementById(idName)){
@@ -275,16 +341,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
        }
     }
         
-    $scope.toggleRow = function(){
-        for(row in $rootScope.tableData){
-            var obbj = $rootScope.tableData[row];
-
-                    //console.log(obbj['elements'][0]['element']); 
-                    $rootScope.tableData[row]['elements'][0]['element'].toggle()
-                  
-        }
-        $scope.table.refresh();
-     }
+     
      $scope.sendCellSetPutArray = [];
      $scope.handlePaste = function(e) {
 		var clipboardData, pastedData;

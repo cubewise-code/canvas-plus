@@ -3,9 +3,9 @@
 		"id": "P&L",
 		"mdx": [
       "SELECT NON EMPTY {[Period].[Oct], [Period].[Oct YTD], [Period].[Year]} * {[Version].[Actual], [Version].[Budget]} ON COLUMNS,",
-      "NON EMPTY {TM1SubsetToSet([Account], \"Net Income\")} * {[Department].AllMembers} ON ROWS",
+      "NON EMPTY {TM1SubsetToSet([Account], \"Net Income\")} * {[Region].AllMembers} * {[Department].AllMembers}  ON ROWS",
       "FROM [General Ledger]",
-      "WHERE ([Year].&[{{Year}}], [Region].&[{{Region}}], [General Ledger Measure].&[Amount], [Currency].&[Local])" 
+      "WHERE ([Year].&[{{Year}}], [General Ledger Measure].&[Amount], [Currency].&[Local])" 
     ],
 		"description":"",
 		"mdxParams": [

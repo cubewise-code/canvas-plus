@@ -636,7 +636,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             }
         }
     }
-    
+    $rootScope.triggerResize = function(){
+        $timeout(function() {
+            $window.dispatchEvent(new Event("resize"));
+        }, 500);
+     }
     $(window).resize(function() { 
         $timeout(
             function(){
