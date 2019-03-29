@@ -120,7 +120,7 @@
                                         ng-show="openEventCreate"
                                             style="  top:0px; vertical-align:top; right:0px; width:auto; ">
                                             <div ng-click="   createEvent(eventName) " class="btn btn-warning" style=" background-color:darkorange !important; border-radius:0px;">
-                                            {{openEventCreate ? 'x':'+ Event'}}
+                                            <i ng-if="openEventCreate" class="fa fa-times" area-hidden="true"></i>
                                             </div>
                                         </div>
                             </span>
@@ -222,7 +222,7 @@
                                        <i style="font-size:1.3em;" ng-click=" deleteEvent(row,row.cells[0].reference())" class="fa fa-trash " area-hidden="true"> </i>
                                     </div>  
                                    </div>
-                                      <div  ng-click="daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] < 0 && daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  openModal('p&l') : ''   " ng-class="{'text-left':selections.dateToSee ,'text-center':!selections.dateToSee || selections.dateToSee === false  }"  style="width:auto; margin-top:0px;">
+                                      <div  ng-click="daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] < 0 && daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  openModal() : ''   " ng-class="{'text-left':selections.dateToSee ,'text-center':!selections.dateToSee || selections.dateToSee === false  }"  style="width:auto; margin-top:0px;">
                                        
                                         <div style="position: relative; margin-top:10px;  background-color: green; padding: 0px; " 
                                             ng-show="(daysRemainingValue[(row['Period Daily'].key)][(row['elements'][1].name)]) <= 0 && daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0">
@@ -243,7 +243,7 @@
                                     
                                     
                                 </div>
-                                <div class="col-md-12 col-xs-12  " ng-click="daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  openModal('p&l') : ''   "
+                                <div class="col-md-12 col-xs-12  " ng-click="daysRemainingValue[row['Period Daily'].key][(row['elements'][1].name)] <= 0 && daysRemainingValue[((row['Period Daily'].key)+'end')][(row['elements'][1].name)] >= 0 ?  openModal() : ''   "
                                     ng-class="{'text-left':selections.dateToSee ,'text-center':!selections.dateToSee || selections.dateToSee === false } " 
                                     class="text-center " >
                                         <span class="text-center" style="width:100%;  display:block; height:auto;">

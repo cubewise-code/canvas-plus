@@ -78,12 +78,96 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
              
     };
+    $scope.on_request_success = function(response) {
+        console.debug('response', response);
+    } 
+    
+    $scope.on_request_error = function(r, text_status, error_thrown) {
+        console.debug('error', text_status + ", " + error_thrown + ":\n" + r.responseText);
+    }
+    
+    $rootScope.loadWeatherViaTi = function(userName){
+        
+      
+         $tm1Ui.processExecute("dev","Cube.User Weather.loadFromSrc").then(function(result){
+            console.log("NEW WEATHER IS UPDATED FOR USER", result)
+            if(result.success){
+                
+               $tm1Ui.dataRefresh();
+            }else{
+                
+            }
+        })
+    }
+    $rootScope.cloudArray = [];
+    $rootScope.showClouds = true;
+    $rootScope.createCloudArray = function(num, weather){
+        
+        $rootScope.showClouds = true;
+        console.log("creating clouds array", num, weather )
+        if(num > 15){
+           if(weather === "Rain"){
+                $scope.showRain = true;
+                $scope.createRain(true);
+                $rootScope.showClouds = true;
+           }else{
+            $rootScope.stopRain()
+           }
+            num = 15;
+        }else{
+            $rootScope.stopRain()
+            if(weather === "Clear"){
+                num = 0;
+                $scope.showRain = false;
+                $rootScope.cloudArray = [];
+                $rootScope.showClouds = false;
+            }
+        }
+        $rootScope.cloudArray = [];
+            $timeout(
+                function(){
+
+                
+                    
+                    if(document.getElementsByClassName('cloud-group-container').length > 0){
+                        for(bbb = 0; bbb < document.getElementsByClassName('cloud-group-container').length; bbb++ ){
+                            if(document.getElementsByClassName('cloud-group-container')[bbb]){
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                
+                    for(var gt = 0; gt < num; gt++){
+                        $rootScope.cloudArray.push(gt)
+                        
+                    }
+            }
+        )
+
+
+    }
+    $rootScope.getWeather = function(userName){
+        $rootScope.loadWeatherViaTi(userName);
+    }
     $rootScope.applicationTriggerFindUser = function(){
         $rootScope.countIdel = 0;
         $rootScope.idelTimePassed = false;
         //console.log("checking the user loged in ");
+
         $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
-             $rootScope.userLoggedOut = false;
+            if(result['IsActive']){
+                 $rootScope.userLoggedOut = false;
+                 
+            }else{
+                 $rootScope.userLoggedOut = true;
+            }
+            
+             console.log("USER", result)
+
+           
+              
         });
        
             
@@ -156,28 +240,31 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             return g;
         
     }
-
+     
     /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
         $scope.initializeVariables = function(){
-            $tm1Ui.applicationUser("dev").then(function(data){
-                $rootScope.values.user = data;
             
+            $tm1Ui.applicationUser("dev").then(function(data){
+
+                $rootScope.values.user = data;
+                
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default"});
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "region", {"tm1Dimension":"Region", "tm1Alias":"Description"});
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Description"});
             
-            
+                
             
             });   
+            
         }
             
             //Initialize all variables
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
                
           // $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
- 
+          
             globals.updateSettings(values, defaults, selections, parameter, options); 
-            
+            $rootScope.getWeather($rootScope.userName);
             
             // $rootScope.refreshCalendar();
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
@@ -292,8 +379,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
     // STARTED new page transition///
     $transitions.onStart({}, function ($transitions) {
-         
+
            $timeout( function(){ 
+            
               $rootScope.pathToUse = $transitions._targetState._identifier.name;
                    if($transitions._targetState._identifier.navigable){
                         $rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
@@ -559,7 +647,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     });
 
     // number of drops created.
-    var nbDrop = $rootScope.innerHeight/2; 
+    var nbDrop = $rootScope.innerHeight/10; 
 
     // function to generate a random number range.
     $rootScope.randRange = function ( minNum, maxNum) {
@@ -571,8 +659,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.createRain = function(show) {
         if(show){
             for( i=1;i<nbDrop;i++) {
-            var dropLeft = $rootScope.randRange(0,1600);
-            var dropTop = $rootScope.randRange(-1000,1400);
+            var dropLeft = $rootScope.randRange(0,$rootScope.innerWidth);
+            var dropTop = $rootScope.randRange(-$rootScope.innerHeight,$rootScope.innerHeight);
 
             $('.rain').append('<div class="drop" id="drop'+i+'"></div>');
             $('#drop'+i).css('left',dropLeft);

@@ -14,5 +14,9 @@
   "retail": {
     "url": "/retail",
     "templateUrl": "html/Retail.html"
+  },
+  "mdxview": {
+    "url": "/mdxview",
+    "templateUrl": "html/MDXView.html"
   }
 }

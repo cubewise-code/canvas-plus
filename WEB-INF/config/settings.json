@@ -85,6 +85,7 @@
   "smtpEmailFrom": "ishapiro@cubewise.com",
   "smtpEmailSendGap": 2,
   "taskPrintPdfRetry": 3,
+  "allowedRestPaths": [],
   "printDPI": 170,
   "printPageCheckAttempts": 100,
   "enableSecurityCheck": false,
