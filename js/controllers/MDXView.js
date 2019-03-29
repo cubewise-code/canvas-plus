@@ -138,43 +138,150 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                 },500
             )
              
-         }
-         $rootScope.tableData = [];
-         $rootScope.tableRowCollapseData = [];
-         $rootScope.collapsedRowArray = [];
-         $scope.refresh();
-         //localStorage.clear();
-         $scope.seeNewData = function(data){
-             //console.log(data)
-         }
-         $scope.getColType = function(data){
-            return data;
-        }
-         $scope.seeData = function(rowindex,table){
-           
-           // console.log(rowindex, $scope.dataset.rows[rowindex])
-            $scope.dataset.rows[(rowindex)]['Account']['element'].toggle();
-            $scope.table.refresh();
-            $rootScope.refreshNew($scope.dataset);
+    }
+    $rootScope.tableData = [];
+    $rootScope.tableRowCollapseData = [];
+    $rootScope.collapsedRowArray = [];
+    $scope.refresh();
+    //localStorage.clear();
+    
+    
+    
+    $scope.seeNewData = function(data){
+            //console.log(data)
+    }
+    $scope.getColType = function(data){
+        return data;
+    }
+    
+    $scope.seeData = function(rowindex,table){
+        
+        // console.log(rowindex, $scope.dataset.rows[rowindex])
+        $scope.dataset.rows[(rowindex)]['Account']['element'].toggle();
+        $scope.table.refresh();
+        $rootScope.refreshNew($scope.dataset);
 
-            // console.log($scope.dataset.rows[rowindex])
-         };
-     
-     
-        $scope.toggleRow = function(){
+        // console.log($scope.dataset.rows[rowindex])
+        };
+    
+        var stickyContainer = function(el) {
+            $body = $(el);  
+            $stickyHeader = $(el).find('#sticky-header');
+            $fixedHeader = $(el).find('.fixed-container');
+            $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
+            //$headerContent = $(el).find('#headerContent');
+            //$sideContent = $(el).find('#sideContent');
+           // $subsetDropdown = $(el).find('#subsetDropDown');
+            //$sideChartContent = $(el).find('#sideChartContent');
+            //$sideDebugContent = $(el).find('#sideDebugContent');
+
+            return $($body).scroll(function() { 
+                 
+                    $scope.offsetTop = 1;
+                
+                $scope.scrolling = true;
+                 
+                     var valuetoEval = $scope.offsetTop;
+               
+                
+                    if($($body).scrollTop() > parseInt(valuetoEval) || $($body).scrollLeft() != 0){
+
+                        $rootScope.headerOutOffView = true;
+                        console.log("view header")
+                        $($stickyHeader).css('display','block'); 
+                        $($stickyHeader).css('opacity','1'); 
+                        $($stickyHeader).css('pointer-events','auto'); 
+                        $($fixedHeader).css('pointer-events','auto'); 
+                       
+                          
+                        
+                        $($fixedFirstColHeader).css('display','block !important'); 
+                    }else{
+                         
+                        $rootScope.headerOutOffView = false;
+                        console.log("hide header")
+                        $($stickyHeader).css('opacity','0'); 
+                        $($stickyHeader).css('pointer-events','none'); 
+                         $($fixedHeader).css('pointer-events','none'); 
+                         
+                          $($fixedFirstColHeader).css('display','none !important'); 
+                    } 
+                    //if($($body).scrollLeft() != 0){
+                       // $($fixedFirstColHeader).css('display','block');
+                        // $(sideChartContent).css('display', 'block');
+                        // $($sideChartContent).css('margin-top', -$($body).scrollTop());
+                        // $(sideDebugContent).css('display', 'block');
+                        // $($sideDebugContent).css('margin-top', -$($body).scrollTop());
+                        // $($sideContent).css('display', 'block');
+                        // $($sideContent).css('margin-top', -$($body).scrollTop());
+                    //}else{
+                       //  $($fixedFirstColHeader).css('display','none');
+                        // $($sideContent).css('display', 'none');
+                        // $(sideChartContent).css('display', 'none');
+                        // $(sideDebugContent).css('display', 'none');
+                   // }
+                     
+                    //$($subsetDropdown).css('margin-top', -$($body).scrollTop());
+                     $($stickyHeader).css('margin-left', -$($body).scrollLeft());
+                    console.log("scroll inside the summary left , top : ",-$($body).scrollLeft(), -$($body).scrollTop()); 
+            });
+           
+           
+    };
+
+
+    $scope.setUpStickyHeader = function(){
+        $scope.stickyScrollTable = new stickyContainer($('#stickyContainer'));
+   }
+
+
+    
+   $scope.getContainerWidth = function(idName){
+       if(document.getElementById(idName)){
+           var tempObj = document.getElementById(idName);
+           if(tempObj != null || tempObj != undefined ){
+               return tempObj.getBoundingClientRect().width;
+           }
+       }
+       
+
+   }
+
+   $scope.getContainerHeight = function(idName){
+       if(document.getElementById(idName)){
+           var tempObjTwo = document.getElementById(idName);
+           if(tempObjTwo != null || tempObj != undefined ){
+               return tempObjTwo.getBoundingClientRect().height;
+           }
+       }
+   }
+   $scope.getContainerTop = function(id){
+       if(document.getElementById(id)){
+           var tempObjTop = document.getElementById(id);
+           if(tempObjTop != null || tempObjTop != undefined ){
+               return tempObjTop.getBoundingClientRect().top;
+           }
+       }
+   }
+    
+   $scope.setTableHeight = function(id){
+       if(document.getElementById(id)){
+           var tempObjToTrack = document.getElementById(id);
+           if(tempObjToTrack != null || tempObjToTrack != undefined ){
+               return ((window.innerHeight - tempObjToTrack.getBoundingClientRect().top));
+           }
+       }
+    }
+        
+    $scope.toggleRow = function(){
         for(row in $rootScope.tableData){
             var obbj = $rootScope.tableData[row];
 
-           
-                 
                     //console.log(obbj['elements'][0]['element']); 
                     $rootScope.tableData[row]['elements'][0]['element'].toggle()
-                 
-                
-           
-           
+                  
         }
-         $scope.table.refresh();
+        $scope.table.refresh();
      }
      $scope.sendCellSetPutArray = [];
      $scope.handlePaste = function(e) {

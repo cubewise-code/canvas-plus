@@ -509,7 +509,8 @@
 								</table>
 			</div>
 
-            <table ng-style="{'pointer-events':!chartLoading && $root.chartsDataLoaded ? 'auto':'none'}" id="test-element-list-item-display"  
+			<table ng-style="{'pointer-events':!chartLoading && $root.chartsDataLoaded ? 'auto':'none'}" 
+			id="test-element-list-item-display"  
 			class="table table-bordered">
 			   
 				<tbody ng-if="lists.months ">
@@ -769,7 +770,7 @@
 					  </tr>
 				</tbody>
 				
-            	<tbody  id="headerContent">
+        <tbody  id="headerContent">
             		<tr>
             			<td colspan="1" id="columnWidthDim" class="text-left min-width250   colwidth" 
 							style="padding:10px; background-color: #f8f8f8;">
@@ -807,7 +808,7 @@
 					
 					<tr   ng-repeat="row in lists.account | filter:page.searchAccount track by $index">
 
-	            		<td   
+	          <td   
 						id="rowHieghtElement{{$index}}" 
 						ng-style="{'cursor': mainData['chart']['show'] ? 'pointer':'default'}"
 						class="text-left min-width250 {{row['topLevelClass']}}" 
