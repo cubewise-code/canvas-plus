@@ -8,9 +8,7 @@
 		background-color: #bdebfd;
 
 	}
-	body,html{
-			overflow:hidden;
-		}
+ 
 		.stickyContainer{
 			padding-top:0px;
 			position:fixed;
@@ -205,7 +203,7 @@
 									ng-style="{'height':(getContainerHeight('firstHeaderColHeight'))+'px'}"
 									style="border-right:1px solid #ccc; background-color: #f0efef; padding:0px;" 
 									ng-repeat="col in row.rows track by $index" 
-									ng-if="col.visible" colspan="{{col.colspan}}" 
+									ng-if="col.visible  " colspan="{{col.colspan}}" 
 									rowspan="{{col.rowspan}}" 
 									class="text-center min-width250" >
 										{{$index === 0 ? '':col.dimension}} 
@@ -249,24 +247,24 @@
 			</div>
 
 			<div  id="sideContent" class="fixed-container-side" style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;" style="height:37px"
-				ng-style="{'top': (  (getContainerTop('stickyContainer'))  +(getContainerHeight('firstHeaderColHeight'))  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':(getContainerWidth('rowHieghtElement'+1))+'px'}">
+				ng-style="{'top': (  (getContainerTop('stickyContainer'))  +(getContainerHeight('firstHeaderColHeight'))  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':(getContainerWidth('rowHieghtElement'+1)*(table.data()[0].elements.length))+'px'}">
 				<table class="table">
 					<tbody  >
 							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
 							<td   
-									ng-style="{'height':getContainerHeight('rowHieghtElement'+row.index) + 'px'}" 
-									style="min-width:250px; border-right:1px solid #ccc; " 
-									ng-repeat="el in row.elements track by $index" 
-									ng-show="el.visible || $parent.$index == 0" 
-									colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
-									ng-class="{'tm1-ui-element-consol': el.element.type == 'C' && row.index > 1, 'tm1-ui-element-consol tm1-ui-element-consol-1': el.element.type == 'C' && row.index === 1}"  >
-									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
-									<span ng-show="!selections.searchRows"><i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-									<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-									<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
-									</span>{{el.element.attributes['Description']}} 
+                            style="min-width:250px; width:250px !important;  border-right:1px solid #ccc; " 
+                            ng-repeat="el in row.elements track by $index" 
+                            ng-show="el.visible" 
+                            colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
+                            ng-class="{'tm1-ui-element-consol': el.element.type == 'C' && row.index > 1, 'tm1-ui-element-consol tm1-ui-element-consol-1': el.element.type == 'C' && row.index === 1}"  >
+                            <span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+                            <span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+                            <span ng-show="!selections.searchRows">
+                                <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+                                <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+                            </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+                             {{el.element.attributes['Description']}} 
 							</td>
 							 
 						</tr>
@@ -312,8 +310,8 @@
 									<span ng-show="!selections.searchRows">
                                         <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                                         <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-                                        <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
-                                    </span>
+                                      </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+                                   
                                     {{el.element.attributes['Description']}} 
 							</td>
 							<td id="headerColHeight"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
@@ -328,7 +326,7 @@
 					</tbody>
 				</table>
 				
-				<div ng-if="table.pages() > 1">
+				<div class="col-xs-12 col-md-12" ng-show="dataset && table.pages() > 1">
 					<div class="btn-group" role="group" >
 						<button type="button" class="btn btn-default" ng-click="table.previous()"><i class="fa fa-angle-left"></i></button>
 						<span class="btn btn-default" style="width: 100px;">{{table.page()}} of {{table.pages()}}</span>
@@ -339,7 +337,7 @@
 						<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15)">15</button>
 						<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30)">30</button>
 						<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50)">50</button>
-						<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(1000)">All</button>
+						<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000)">All</button>
 					</div>
 				</div>
 			

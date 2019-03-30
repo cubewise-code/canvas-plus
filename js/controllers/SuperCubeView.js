@@ -44,7 +44,13 @@
                                        var options = {preload: false, watch: false};
                                         
                                        scope.tableNew = $tm1Ui.tableCreate(scope, scope.datasetNew.rows, options);
-                                       scope.tableNew.pageSize(1000)
+                                       scope.tablerowLength = scope.table.data().length;
+                                       if(scope.tablerowLength > 500){
+                                            scope.tableNew.pageSize(50)
+                                       }else{
+                                            scope.tableNew.pageSize(1000)
+                                       }
+                                       
                                       // console.log(scope.table.data(), scope.tableNew.data());  
                                        var tableRows = scope.table.data();
                                         for(newrow in scope.tableNew.data()){
@@ -104,6 +110,7 @@
                    })
                      
                 }
+                scope.tablerowLength = 0;
                 scope.refresh = function(){
                         $timeout(
                            function(){
@@ -117,11 +124,19 @@
                                            options.pageSize = scope.table.options.pageSize;
                                             
                                        }
-                                       scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, options);
-                                       scope.table.pageSize(1000)
-                                       scope.loading = false;
-                                       console.log("loadded new from old rows")
-                                       scope.table.refresh();
+                                        scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, options);
+                                        scope.tablerowLength = scope.table.data().length;
+                                         
+                                        if(scope.tablerowLength > 500){
+                                            scope.table.pageSize(50)
+                                       }else{
+                                            scope.table.pageSize(1000)
+                                       }   
+                                            
+                                       
+                                        scope.loading = false;
+                                        console.log("loadded new from old rows")
+                                        scope.table.refresh();
                                        //scope.tableData = scope.table.data();
                                         
                                    } else {
@@ -130,7 +145,7 @@
                                    }		
                                   
                                })
-                           },500
+                           },2000
                     )
                         
                 }
@@ -362,8 +377,10 @@
                     return $attributes.cubeView;
                     
                     }, function (newValue, oldValue) { 
-                        
-                        console.log(newValue, "Year changes inside directive");
+                        if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                            console.log(newValue, "Year changes inside directive");
+                        }
+                       
                                 
                     })
  
