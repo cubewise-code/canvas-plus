@@ -183,11 +183,12 @@
                 //$headerContent = $(el).find('#headerContent');
                 $sideContent = $(el).find('#sideContent');           
                 scope.scrolling = true;
-                 
+                $($stickyHeader).css('display','block'); 
+                $($sideContent).css('display', 'block');
                      var valuetoEval = scope.offsetTop;
                
                 
-                    if($($body).scrollTop() > parseInt(valuetoEval) || $($body).scrollLeft() != 0){
+                    if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() != 0){
 
                         scope.headerOutOffView = true;
                         console.log("view header")
