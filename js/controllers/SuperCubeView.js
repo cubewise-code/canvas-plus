@@ -36,6 +36,7 @@
                 scope.refreshNew = function(newdataset){ 
                     $timeout( 
                         function(){
+                            $rootScope.isLoading = true;
                             $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName, scope.cubeView).then(function(result){
                                 if(!result.failed){
                                    scope.datasetNew =    $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -64,7 +65,7 @@
                                        scope.getLastFocus(); 
                                 } else {
                                    scope.message = result.message; 
-                               }		
+                               }	$rootScope.isLoading = false;
                               
                            })
                         },500
@@ -114,9 +115,10 @@
                 scope.refresh = function(){
                         $timeout(
                            function(){
+                               $rootScope.isLoading = true;
                                $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName, scope.cubeView).then(function(result){
                                    if(!result.failed){
-                                       
+                                    $rootScope.isLoading = false;
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
                                        var options = {preload: false, watch: false};
                                        if(scope.table){
@@ -142,6 +144,7 @@
                                    } else {
                                        scope.message = result.message;
                                        scope.loading = false;
+                                       $rootScope.isLoading = false;
                                    }		
                                   
                                })
@@ -216,7 +219,12 @@
                      $($stickyHeader).css('margin-left', -$($body).scrollLeft());
               });
            
-           
+              scope.getTableWidth = function(){
+                 return window.innerWidth -20;
+                
+         
+            }
+         
                
               scope.getContainerWidth = function(idName){
                   if(document.getElementById(idName)){
