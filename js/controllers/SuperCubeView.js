@@ -158,7 +158,7 @@
                 scope.refresh();
                 
                 scope.seeNewData = function(data){
-                    //console.log(data)
+                    console.log(data)
                 }
                 scope.getColType = function(data){
                     return data;
@@ -368,6 +368,18 @@
                  
                 scope.goToNewPage = function(url){
                     location.assign(url)
+                }
+                scope.rowsToDisplay = function(){
+                    var count = 0;
+                    for(row in scope.table.data()){
+                        if(scope.selections.searchRows && ((scope.table.data()[row].elements[0].element.attributes['Description']).toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
+                            console.log("rows to display");
+                            count++;
+                        }else{
+                            
+                        }
+                    }
+                    return count;
                 }
                 scope.dispatchResize = function(){
                     window.dispatchEvent(new Event('resize'));
