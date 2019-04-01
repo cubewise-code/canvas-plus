@@ -21,6 +21,19 @@
                 scope.cubeName = $attributes.cubeName;
                 scope.attributeOptions = $attributes.attributeOptions;
                 
+                scope.dateNow = new Date() ;
+            
+            
+                var n = scope.dateNow.getMonth();
+                var p = scope.dateNow.getDay();
+                var y = scope.dateNow.getFullYear();
+                scope.monthNow = n;
+                scope.dayNow = p;
+                scope.yearNow =  y; 
+                scope.dateNumber =((scope.dateNow+"").split(":")[0]).split(' ')[2];
+                //scope.date  = (((scope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
+                
+
                 scope.getMathMax = function(arr){
                     if(arr){
                        var max = arr.reduce(function(a, b) {
@@ -101,18 +114,20 @@
                 }
            
            
-                scope.cellreferneceArray = [];
+                scope.cellreferenceArray = [];
                 scope.dimensionArray = [];
                 scope.openRefModel = function(elementString){
-                   scope.cellreferneceArray = (elementString+'').split(',')
+                   scope.cellreferenceArray = (elementString+'').split(',')
                    $tm1Ui.cubeDimensions(scope.tm1Instance,scope.cubeName).then(function(result){
                        scope.dimensionArray = result;
-                       $("#refModal").modal({show: true});  
+                       scope.getCellDrill(scope.cellreferenceArray);
+                        
                    })
                      
                 }
                 scope.tablerowLength = 0;
                 scope.refresh = function(){
+
                         $timeout(
                            function(){
                                $rootScope.isLoading = true;
@@ -139,6 +154,8 @@
                                         scope.loading = false;
                                         console.log("loadded new from old rows")
                                         scope.table.refresh();
+                                        
+                                         
                                        //scope.tableData = scope.table.data();
                                         
                                    } else {
@@ -148,17 +165,18 @@
                                    }		
                                   
                                })
-                           },2000
+                           },1000
                     )
                         
                 }
+
                 scope.tableData = [];
                 scope.tableRowCollapseData = [];
                 scope.collapsedRowArray = [];
                 scope.refresh();
                 
                 scope.seeNewData = function(data){
-                    console.log(data)
+                    //console.log(data)
                 }
                 scope.getColType = function(data){
                     return data;
@@ -218,6 +236,14 @@
                      
                      $($stickyHeader).css('margin-left', -$($body).scrollLeft());
               });
+              scope.formatUploadButton = function(){
+                if(document.getElementsByClassName('tm1-ui-export')[0]){
+                    console.log(document.getElementsByClassName('tm1-ui-export')[0].innerHTML)
+                    document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('|').join('');
+                    document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('Excel').join('');
+                    document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('CSV').join('');
+                }
+              }
            
               scope.getTableWidth = function(){
                  return window.innerWidth -20;
@@ -361,10 +387,68 @@
             
                 
                
-                
+           scope.drillNames = [];
            
-               
-         
+           scope.getCellDrill = function(cubeElements){
+            scope.drillNames = [];
+            $tm1Ui.cellGetDrillNames(scope.tm1Instance,scope.cubeName,cubeElements).then(function(data){
+                scope.tableDrillSource = [];
+                scope.tableDrillCol = [];
+                scope.datasetDrill= [];
+                scope.tableDrill = [];
+                 scope.drillNames = data;
+                 console.log(data, "Transactional data")
+                 $("#refModal").modal({show: true});
+            });
+           }
+           scope.getDrillTable = function(cubeElements, name){
+               scope.drillNameChosen = name;
+                $tm1Ui.cellGetDrillNameTransactions(scope.tm1Instance,scope.cubeName, cubeElements, name).then(function(data){
+                    if(data){
+                        if(name === "Transactions"){
+                            scope.datasetDrill = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, data);
+                           
+                            var options = {preload: false, watch: false};
+                            if(scope.tableDrill){
+                                
+                              //  options.pageSize = scope.tableDrill.options.pageSize;
+                                    
+                            }
+                            scope.tableDrill = $tm1Ui.tableCreate(scope, scope.datasetDrill.rows, options);
+                        
+                            scope.tableDrill.pageSize(1000)
+                        }else{
+                            scope.tableDrillSource = [];
+                            scope.tableDrillCol = [];
+                           // scope.tableDrill = data.value;
+                           _.forEach(data.value[0], function(colvalue, colkey) {
+                            scope.tableDrillCol.push(colkey);
+                            //console.log(rowkey, rowvalue);
+                             
+                            });
+                            _.forEach(data.value, function(value, key) {
+                                scope.tableDrillSource[key] = [];
+                                scope.tableDrillSource[key] = value;
+                                 
+                            });
+                        }
+                        console.log(data, "Transactional data")
+                        //scope.datasetDrill = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, data);
+                        //var optionsDrill = {preload: false, watch: false};
+                        //if(scope.tableDrill){
+                         //   optionsDrill.index = scope.tableDrill.options.index;
+                          //  optionsDrill.pageSize = scope.tableDrill.options.pageSize;
+                                
+                        //}
+                        //scope.tableDrill = $tm1Ui.tableCreate(scope, scope.datasetDrill.rows, optionsDrill);
+                    
+                       // scope.tableDrill.pageSize(1000)
+                    }  
+                
+                });
+           }
+          
+           
                  
                 scope.goToNewPage = function(url){
                     location.assign(url)

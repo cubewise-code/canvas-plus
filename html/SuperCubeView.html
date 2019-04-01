@@ -193,6 +193,25 @@
 			color:#fff;
 			text-align: center;
 		}
+		 
+		 
+		.tm1-ui-export a:last-child{
+		display:none
+		}
+		.tm1-ui-export a:first-child{
+			visibility: hidden;
+			position: relative;
+		}
+		
+		.tm1-ui-export a:first-child::after {
+			padding-left:10px;
+			vertical-align: top;
+			visibility: visible;
+			font-size:1.3em;
+			font-family: FontAwesome;
+			content: "\f1c3";
+		}
+		 
 		
 	</style>
   
@@ -214,11 +233,15 @@
 									ng-if="col.visible  " colspan="{{col.colspan}}" 
 									rowspan="{{col.rowspan}}" 
 									class="text-center min-width250" >
-									<span ng-show="false" class="pull-left" style="text-align:left; ">	{{$index === 0 ? 'Rows:'+table.data().length+' | ':''}}  </span>
+									<span ng-if="$index === 0"class="pull-left" style="text-align:left; width:15%; display:inline-block; ">
+										 
+											<tm1-ui-export ng-init="formatUploadButton()" tm1-target-id="af1" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+								 
+										 </span>
 									{{$index === 0 ? '':col.dimension}}
 										<input ng-if="$index === 0" class="form-control" 
                                             ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-											style="background-color: transparent;display:inline-block;border: none;" 
+											style="display:inline-block;width:80%;background-color: transparent;display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
 											placeholder="Search {{col.dimension}}..."> 
 									</th>
@@ -287,7 +310,7 @@
 
 			<div  >
 			 
-				<table class="table" >
+				<table class="table" id="af1">
 					<thead>
 						<tr  id="headerContent" ng-repeat="row in dataset.headers track by $index">
 							<th id="firstHeaderColHeight"  style="border-right:1px solid #ccc; background-color: #f0efef" 
@@ -309,13 +332,13 @@
 					</thead>
 					<tbody   id="bodyContent" ng-init="setUpStickyHeader(); "> 
 						<tr id="rowHeightElement{{$index}}" 
-						ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
 							<td id="rowHieghtElement{{row.index}}-{{$index}}"  
 									  
 									style="min-width:250px; width:250px !important;  border-right:1px solid #ccc; " 
 									ng-repeat="el in row.elements track by $index" 
-									ng-show="el.visible || $parent.$index == 0" 
+									ng-show="el.visible || $parent.$index === 0" 
 									colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
 									ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
@@ -330,11 +353,11 @@
 							</td>
 							<td id="headerColHeight"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
 								ng-right-click="openRefModel(cell.reference().toString()); "
-								ng-style="{'background-color':row.elements[0].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' ? '#ddd !important':''}"
-								ng-class="{'tm1-ui-element-consol': row.index > 1  && row.elements[0].element.type === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  , 'tm1-ui-element-consol': row.elements[0].element.type == 'C' && row.index === 1}"  
+								 
+								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 								ng-repeat="cell in row.cells track by $index" class="text-right" >
 								<input cellref="{{(cell.reference()).toString()}}" contenteditable='true'  id="{{'input-'+$parent.$parent.$index+'-'+$index}}" ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}" ng-model="cell.value" ng-focus=" getFocus($event); " ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? cell.update(query):''; cell.value != '' && cell.value != cell.lastValue ?   refreshNew(dataset):'';   " />
-								<span ng-init=" " ng-if="cell.isReadOnly" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+								<span ng-if="cell.isReadOnly" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
 							</td>
 						</tr>
 					</tbody>
@@ -373,7 +396,10 @@
 						<table class="table">
 							<thead>
 								<th>
-
+									Dimension
+								</th>
+								<th>
+									Element
 								</th>
 							</thead>
 							<tbody>
@@ -382,16 +408,83 @@
 										{{dimension}}
 									</td>
 									<td class="text-right">
-										{{cellreferneceArray[$index]}}
+										{{cellreferenceArray[$index]}}
 								</td>
 								 
 							</tr>
 							</tbody>
 						</table> 
+						<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width:100%;">
+							<div class="btn-group" role="group" aria-label="First group" style="width:100%;">
+								<button ng-repeat="drillName in drillNames track by $index" ng-click="getDrillTable(cellreferenceArray, drillName.name)">{{drillName.name}}</button>
+								<span 	ng-show="tableDrill.length > 0 || tableDrillCol.length > 0"  class="   pull-right"  > 
+								 
+									
+										<tm1-ui-export 
+									 
+										ng-init="formatUploadButton()" 
+										tm1-target-id="af2" 
+										tm1-output-name="{{(cellreferenceArray.toString()+'').split(',').join('-')}}-{{drillNameChosen}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" 
+										m1-field-separator="" 
+										tm1-field-qualifier="" 
+										tm1-locale=""></tm1-ui-export>
+							 
+								</span>
+								 
+							</div>
+							 
+						 </div>
 				</div>
-				<div class="modal-footer">
+
+				<div class="modal-footer" style="overflow:auto; height:500px;">
 				<!--	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-					 
+			 
+					<table id="af2" ng-if="datasetDrill && !loading && drillNameChosen === 'Transactions'" class="table table-striped" ng-if="!loading">
+						<thead>
+							<tr ng-repeat="row in datasetDrill.headers">
+								<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+									{{col.dimension}}
+								</th>
+								<th ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+									{{col.name}}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="row in tableDrill.data()" >
+								<td ng-repeat="el in row.elements" ng-if="el.visible || $parent.$index == 0" colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" ng-class="{'tm1-ui-element-consol': el.element.type == 'C'}"  >
+									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+									<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+									<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+									<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+									{{el.name}}
+								</td>
+								<td ng-repeat="cell in row.cells" class="text-right" >
+									<input ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-model="cell.value" ng-blur="cell.update(query);" />
+									<span ng-if="cell.isReadOnly" style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table id="af2" ng-if="tableDrillCol.length && drillNameChosen != 'Transactions'" 
+					class="table table-striped" >
+						<thead>
+						 
+								<th ng-repeat="item in tableDrillCol track by $index">
+									{{item}}
+								</th>
+						 
+						</thead>
+						 <tbody>
+							 <tr ng-repeat="row in tableDrillSource track by $index"> 
+									<td ng-repeat="item in row track by $index">
+										{{item}}
+									</td>
+							 </tr>
+						 </tbody>
+					</table>
+				 
 				</div>
 			</div>
 		</div>
