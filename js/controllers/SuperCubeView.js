@@ -59,7 +59,7 @@
                                         
                                        scope.tableNew = $tm1Ui.tableCreate(scope, scope.datasetNew.rows, options);
                                        scope.tablerowLength = scope.table.data().length;
-                                       if(scope.tablerowLength > 500){
+                                       if(scope.tablerowLength > 100){
                                             scope.tableNew.pageSize(50)
                                        }else{
                                             scope.tableNew.pageSize(1000)
@@ -139,20 +139,20 @@
                                        if(scope.table){
                                            options.index = scope.table.options.index;
                                            options.pageSize = scope.table.options.pageSize;
-                                            
+                                           scope.tablerowLength = scope.table.data().length;
+                                         
+                                           if(scope.tablerowLength > 100){
+                                               scope.table.pageSize(50)
+                                          }else{
+                                               scope.table.pageSize(1000)
+                                          }   
                                        }
                                         scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, options);
-                                        scope.tablerowLength = scope.table.data().length;
-                                         
-                                        if(scope.tablerowLength > 500){
-                                            scope.table.pageSize(50)
-                                       }else{
-                                            scope.table.pageSize(1000)
-                                       }   
+                                       
                                             
                                        
                                         scope.loading = false;
-                                        console.log("loadded new from old rows")
+                                        
                                         scope.table.refresh();
                                         
                                          
