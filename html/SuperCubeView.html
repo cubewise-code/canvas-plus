@@ -16,7 +16,7 @@
 		background-color: #bdebfd;
 
 	}
- 
+	 
 		.stickyContainer{
 			padding-top:0px;
 			position:fixed;
@@ -222,7 +222,7 @@
 					ng-style="{'top': ( (getContainerTop('stickyContainer') + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('headerColHeight') )+'px', 'height':(getContainerHeight('headerColHeight'))+'px'} " >
 					
 					<div ng-style="{'width': getContainerWidth('firstHeaderColHeight')+'px', 'height':(getContainerHeight('firstHeaderColHeight'))+'px'} " 
-					class="text-left " 
+					class="text-left  " 
 					style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
 					<table class="table  " >
 							<thead>
@@ -260,17 +260,22 @@
 					<div id="sticky-header" ng-show="selections.searchRows && rowsToDisplay() > 0 || !selections.searchRows" 	class="sticky-header"   style="height:auto;"
 						ng-style="{'width': (getContainerWidth('headerContent')+2)+'px' } " 
 					>
-					<span class="hidden-xs" ng-style="{'width': (getContainerWidth('headerContent'))+'px', 'height': getContainerHeight('headerRowHeight'+(row.index-1))+'px' }" 
+					<span class=" " ng-style="{'width': (getContainerWidth('headerContent'))+'px', 'height': getContainerHeight('headerRowHeight'+(row.index-1))+'px' }" 
 							style="padding:0px; margin:0 auto; position:relative; display:inline-block; left:0px; top:0px; float:left;" 
 							ng-repeat="row in dataset.headers track by $index">
 							<div    ng-repeat="col in row.rows track by $index" 
 								ng-style="{'width': (getContainerWidth('firstHeaderColHeight')*(col.colspan))+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
 								style="background-color: #f0efef; font-weight:600; display:inline-block; margin: 0 auto;  padding:10px; 	  float:left; ">
-								{{$index === 0 ? '':col.dimension}}  
+								{{$index === 0 ? '':col.dimension}}  {{$index}} | {{$parent.$index}}
+								<input ng-if="$index === 0" class="form-control" 
+																	ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+									style="display:inline-block;width:80%;background-color: transparent;display:inline-block;border: none;" 
+									type="text" ng-model="selections.searchRows"   
+									placeholder="Search {{col.dimension}}..."> 
 							</div>
 							<div   ng-show="col.visible"   class="text-center center " 
-							ng-style="{'width': (getContainerWidth('headerColHeight')*col.colspan)+'px', 'height':'37px'} " 
-									ng-repeat="col in row.columns track by $index" 
+								ng-style="{'width': (getContainerWidth('headerColHeight')*col.colspan)+'px', 'height':'37px'} " 
+								ng-repeat="col in row.columns track by $index" 
 								style="background-color: #f0efef;  font-weight:600;	border: 1px solid #ddd;  border-right: 0px solid #ddd; margin: 0 auto; border-left:1px solid #ddd; float:left;">
 								 {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']:'' }}  
 				 
@@ -365,7 +370,7 @@
 					</tbody>
 				</table>
 				
-				<div class="col-xs-12 col-md-12" style="position:fixed;  z-index:22; bottom:10px; right:0px;" ng-show="dataset && table.pages() > 1">
+				<div class="col-xs-12 col-md-12" style="position:fixed; background-color:#fff;   box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:8px; right:0px;" >
 					<div class="btn-group pull-left" role="group" style="font-weight:0.7em;"  >
 						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous()"><i class="fa fa-angle-left"></i></button>
 						<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>

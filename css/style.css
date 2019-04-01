@@ -576,7 +576,7 @@ div.tm1-subnm-hierarchy-style {
 /*  CUSTOM CSS SCROLL BARS  */
 ::-webkit-scrollbar
 {
-  width: 12px;  /* for vertical scrollbars */
+  width: 16px;  /* for vertical scrollbars */
   height: 8px; /* for horizontal scrollbars */
   
    background-color: transparent;
