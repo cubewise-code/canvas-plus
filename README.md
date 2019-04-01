@@ -11,8 +11,8 @@ The canvas-plus project contains a ready to use Canvas application with few cool
 
 # To install it
 1. Stop the Cubewise Application Server
-1. Copy the C:\CWAS\canvas_base and paste it into the C:\CWAS\webapps
-1. Renamme it to "canvas-plus" for example
+1. Copy the **C:\CWAS\canvas_base** and paste it into the **C:\CWAS\webapps**
+1. Rename it to "canvas-plus" for example
 1. Download the canvas-plus folder from [github](https://github.com/cubewise-code/canvas-plus)
 1. Unzip the folder and paste all files into your new canvas_plus folder (created above)
 1. This application contains a TM1py scripts to get weather data. Once TM1py is installed you will need to install the **geocoder** library (python install geocoder).
