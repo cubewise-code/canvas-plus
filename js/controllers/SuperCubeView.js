@@ -64,7 +64,7 @@
                                        }else{
                                             scope.tableNew.pageSize(1000)
                                        }
-                                       
+                                        
                                       // console.log(scope.table.data(), scope.tableNew.data());  
                                        var tableRows = scope.table.data();
                                         for(newrow in scope.tableNew.data()){
@@ -76,6 +76,7 @@
                                             }
                                         }
                                        scope.getLastFocus(); 
+                                       $rootScope.isLoading = false;
                                 } else {
                                    scope.message = result.message; 
                                }	$rootScope.isLoading = false;
@@ -127,7 +128,7 @@
                 }
                 scope.tablerowLength = 0;
                 scope.refresh = function(){
-
+                    $rootScope.isLoading = true;
                         $timeout(
                            function(){
                                $rootScope.isLoading = true;
@@ -150,7 +151,7 @@
                                         scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, options);
                                        
                                             
-                                       
+                                        $rootScope.isLoading = false;
                                         scope.loading = false;
                                         
                                         scope.table.refresh();
@@ -466,7 +467,14 @@
                     return count;
                 }
                 scope.dispatchResize = function(){
-                    window.dispatchEvent(new Event('resize'));
+                    $timeout(
+
+                        function(){
+                            window.dispatchEvent(new Event('resize'));
+                        },500
+                    )
+
+                    
                 }
 
                 $(window).resize(function() { 
