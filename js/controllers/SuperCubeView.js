@@ -59,12 +59,7 @@
                                         
                                        scope.tableNew = $tm1Ui.tableCreate(scope, scope.datasetNew.rows, options);
                                        scope.tablerowLength = scope.table.data().length;
-                                       if(scope.tablerowLength > 100){
-                                            scope.tableNew.pageSize(50)
-                                       }else{
-                                            scope.tableNew.pageSize(1000)
-                                       }
-                                        
+                                      
                                       // console.log(scope.table.data(), scope.tableNew.data());  
                                        var tableRows = scope.table.data();
                                         for(newrow in scope.tableNew.data()){
@@ -75,6 +70,7 @@
                                                 } 
                                             }
                                         }
+                                        
                                        scope.getLastFocus(); 
                                        $rootScope.isLoading = false;
                                 } else {
@@ -113,7 +109,9 @@
                         }
                     } 
                 }
-           
+                scope.getTableRowLength = function(){
+                    return scope.table.data().length;
+                }
            
                 scope.cellreferenceArray = [];
                 scope.dimensionArray = [];
@@ -126,6 +124,7 @@
                    })
                      
                 }
+                scope.currentRowCount = 100;
                 scope.tablerowLength = 0;
                 scope.refresh = function(){
                     $rootScope.isLoading = true;
@@ -142,21 +141,18 @@
                                            options.pageSize = scope.table.options.pageSize;
                                            scope.tablerowLength = scope.table.data().length;
                                          
-                                           if(scope.tablerowLength > 100){
-                                               scope.table.pageSize(50)
-                                          }else{
-                                               scope.table.pageSize(1000)
-                                          }   
+                                            
                                        }
                                         scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, options);
-                                       
-                                            
+                                        scope.table.pageSize(scope.currentRowCount)
+                                        scope.tableDimensionLength =  scope.table.data()[0].elements.length;
+                                        console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
                                         $rootScope.isLoading = false;
                                         scope.loading = false;
                                         
                                         scope.table.refresh();
                                         
-                                         
+                                       
                                        //scope.tableData = scope.table.data();
                                         
                                    } else {
@@ -210,32 +206,50 @@
                      var valuetoEval = scope.offsetTop;
                
                 
-                    if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() != 0){
+                    if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() >= 0){
 
                         scope.headerOutOffView = true;
                         console.log("view header")
-                        $($stickyHeader).css('display','block'); 
-                        $($stickyHeader).css('opacity','1'); 
-                        $($stickyHeader).css('pointer-events','auto'); 
-                        $($fixedHeader).css('pointer-events','auto'); 
+                        if($($stickyHeader)){
+                            $($stickyHeader).css('display','block'); 
+                            $($stickyHeader).css('opacity','1'); 
+                            $($stickyHeader).css('pointer-events','auto'); 
+                        }
+                        if($($fixedHeader) && $($fixedFirstColHeader)){
+                            $($fixedHeader).css('pointer-events','auto'); 
+                            $($fixedFirstColHeader).css('display','block !important');
+                        }
                        
-                          
-                        $($sideContent).css('display', 'block');
-                        $($sideContent).css('margin-top', -$($body).scrollTop());
-                        $($fixedFirstColHeader).css('display','block !important'); 
+                       
+                        if( $($sideContent)){
+                            $($sideContent).css('display', 'block');
+                            $($sideContent).css('margin-top', -$($body).scrollTop());
+                        }
+                       
+                         
                     }else{
                          
                         scope.headerOutOffView = false;
                         console.log("hide header")
-                        $($stickyHeader).css('opacity','0'); 
-                        $($stickyHeader).css('pointer-events','none'); 
-                         $($fixedHeader).css('pointer-events','none'); 
+                        if($($stickyHeader)){
+                            $($stickyHeader).css('opacity','0'); 
+                            $($stickyHeader).css('pointer-events','none'); 
+                        }
+                        if($($fixedHeader)){
+                            $($fixedHeader).css('pointer-events','none'); 
+                        }
+                        if($($fixedFirstColHeader)){
+                            $($fixedFirstColHeader).css('display','none !important'); 
+                        }
                          
                          
-                          $($fixedFirstColHeader).css('display','none !important'); 
+                         
+                          
                     } 
-                     
-                     $($stickyHeader).css('margin-left', -$($body).scrollLeft());
+                     if($($stickyHeader)){
+                        $($stickyHeader).css('margin-left', -$($body).scrollLeft());
+                     }
+                    
               });
               scope.formatUploadButton = function(){
                 if(document.getElementsByClassName('tm1-ui-export')[0]){
