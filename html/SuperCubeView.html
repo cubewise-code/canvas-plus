@@ -229,7 +229,7 @@
 								<tr ng-repeat="row in dataset.headers track by $index" >
 									<th
 									ng-style="{'height':(getContainerHeight('firstHeaderColHeight'))+'px'}"
-									style="border-right:0px solid #ccc; background-color: #f0efef; " 
+									style="border-right:1px solid #ccc; background-color: #f0efef; " 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible  " colspan="{{col.colspan}}" 
 									rowspan="{{col.rowspan}}" 
@@ -360,8 +360,22 @@
 								 
 								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 								ng-repeat="cell in row.cells track by $index" class="text-right" >
-								<input cellref="{{(cell.reference()).toString()}}" contenteditable='true'  id="{{'input-'+$parent.$parent.$index+'-'+$index}}" ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}" ng-model="cell.value" ng-focus=" getFocus($event); " ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? cell.update(query):''; cell.value != '' && cell.value != cell.lastValue ?   refreshNew(dataset):'';   " />
-								<span ng-if="cell.isReadOnly" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+								<input 
+								cellref="{{(cell.reference()).toString()}}" 
+								contenteditable='true'  
+								id="{{'input-'+$parent.$parent.$index+'-'+$index}}" 
+								ng-if="!cell.isReadOnly" 
+								type="text" 
+								class="form-control text-right" 
+								tm1-ui-format-number="0" 
+								ng-attr-tabindex="{{row.index}}" 
+								ng-model="cell.value " 
+								ng-value="focusObj === 'input-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:0) : (cell.value | formatNumber:0)" 
+								ng-focus="getFocus($event);  " 
+								ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? cell.update(query):''; cell.value != '' && cell.value != cell.lastValue ?   refreshNew(dataset):'';   " />
+								
+								<span ng-if="cell.isReadOnly && cell.value < 0 " style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+								<span ng-if="cell.isReadOnly && cell.value >= 0" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
 							</td>
 						</tr>
 					</tbody>
