@@ -1,0 +1,494 @@
+
+  <style>
+	.tm1-ui-element-consol{
+		background-color: #f8f8f8;
+
+	}
+	.tm1-ui-element-consol-1{
+		background-color: #bdebfd;
+
+	}
+	.tm1-ui-element-consol-2{
+		background-color: #bdebfd;
+
+	}
+	.tm1-ui-element-consol-3{
+		background-color: #bdebfd;
+
+	}
+ 
+		.stickyContainer{
+			padding-top:0px;
+			position:fixed;
+			left:0px;
+			top:146px;
+			width:100% ;
+			max-width:100%;
+			max-height:100%;
+			padding-bottom:20px;
+			overflow:auto; 
+			transition-property:width, height;  
+    		transition-duration: 0.5s, 0.5s;  
+		}
+		 
+		/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  .min-width250{ min-width: 250px; }
+ 
+  
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+ .min-width250{ min-width: 250px; }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+ .min-width250{ min-width: 250px; }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+ .min-width250{ min-width: 250px; }
+  
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  .min-width250{ min-width: 150px; }
+  
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  .min-width250{ min-width: 100px; }
+  
+}
+
+		.fixed-container{
+		
+			pointer-events: none;
+			padding:0px;
+			position:fixed;
+			top:146px;
+			left:0px;
+			width:100%;
+			height:auto;
+			z-index:2;
+			display:block;
+			background-color: transparent;
+			color:#333;
+			
+			overflow:hidden;
+		}
+		.fixed-container-chart{
+		
+			pointer-events: auto;
+			padding:0px;
+			position:fixed;
+			top:169px;
+			left:0px;
+			width:100%;
+			height:auto;
+			z-index:2;
+			display:block;
+			background-color: transparent;
+			color:#333;
+			
+			overflow:hidden;
+		}
+		.fixed-container-debug{
+			pointer-events: auto;
+			padding:0px;
+			position:fixed;
+			top:169px;
+			left:0px;
+			width:100%;
+			height:auto;
+			z-index:2;
+			display:block;
+			background-color: transparent;
+			color:#333;
+			
+			overflow:hidden;
+		}
+		.fixed-container-side{
+		
+			pointer-events: auto;
+			padding:0px;
+			position:fixed;
+			top:169px;
+			left:0px;
+			width:100%;
+			height:auto;
+			z-index:33;
+			display:block;
+			background-color: transparent;
+			color:#333;
+			
+			overflow:hidden;
+		}
+		.sticky-header{ 
+				opacity:0;
+			background-color:#fff;  
+			color:#333;
+		}
+		.fixedFirstColHeader{
+			position:fixed;
+			left:0px;
+			z-index:38;
+			background-color:#fff;
+			display: block;
+		}
+		 
+		.white-bg{
+			background-color: white;
+			color:#666;
+		}
+		.grey-bg{
+			background-color: #f8f8f8;
+			color:#666;
+		}
+		.black-bg{
+			z-index:999;
+			pointer-events:none;
+			background-color: rgba(0,0,0,0);
+			width:100%;
+			height:100%;
+			top:0px;
+			left:0px;
+			display:block;
+			position:fixed;
+			color:#fff;
+			text-align: center;
+		}
+		 
+		 
+		.tm1-ui-export a:last-child{
+		display:none
+		}
+		.tm1-ui-export a:first-child{
+			visibility: hidden;
+			position: relative;
+		}
+		
+		.tm1-ui-export a:first-child::after {
+			padding-left:10px;
+			vertical-align: top;
+			visibility: visible;
+			font-size:1.3em;
+			font-family: FontAwesome;
+			content: "\f1c3";
+		}
+		 
+		
+	</style>
+  
+  	<div class="row"  >
+		<div id="stickyContainer"  class="stickyContainer "  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
+				<div class="fixedFirstColHeader hidden-xs"  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
+					ng-style="{'top': ( (getContainerTop('stickyContainer') + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('headerColHeight') )+'px', 'height':(getContainerHeight('headerColHeight'))+'px'} " >
+					
+					<div ng-style="{'width': getContainerWidth('firstHeaderColHeight')+'px', 'height':(getContainerHeight('firstHeaderColHeight'))+'px'} " 
+					class="text-left " 
+					style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
+					<table class="table  " >
+							<thead>
+								<tr ng-repeat="row in dataset.headers track by $index" >
+									<th
+									ng-style="{'height':(getContainerHeight('firstHeaderColHeight'))+'px'}"
+									style="border-right:1px solid #ccc; background-color: #f0efef; padding:0px;" 
+									ng-repeat="col in row.rows track by $index" 
+									ng-if="col.visible  " colspan="{{col.colspan}}" 
+									rowspan="{{col.rowspan}}" 
+									class="text-center min-width250" >
+					 
+									<span ng-if="$index === 0"class="pull-left" style="text-align:left; width:15%; display:inline-block; ">
+										 
+											<tm1-ui-export ng-init="formatUploadButton()" tm1-target-id="af1" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+								 
+										 </span>
+									{{$index === 0 ? '':col.dimension}} 
+										<input ng-if="$index === 0" class="form-control" 
+                                            ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+											style="display:inline-block;width:80%;background-color: transparent;display:inline-block;border: none;" 
+											type="text" ng-model="selections.searchRows"   
+											placeholder="Search {{col.dimension}}..."> 
+									</th>
+								 
+								</tr>
+							</thead>
+						</table>
+
+					</div>
+			
+			</div>
+
+			<div class="fixed-container  " ng-style="{'width':getTableWidth()+'px'}"  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);">
+					<div id="sticky-header" ng-show="selections.searchRows && rowsToDisplay() > 0 || !selections.searchRows" 	class="sticky-header"   style="height:auto;"
+						ng-style="{'width': (getContainerWidth('headerContent')+2)+'px' } " 
+					>
+					<span class="hidden-xs" ng-style="{'width': (getContainerWidth('headerContent'))+'px', 'height': getContainerHeight('headerRowHeight'+(row.index-1))+'px' }" 
+							style="padding:0px; margin:0 auto; position:relative; display:inline-block; left:0px; top:0px; float:left;" 
+							ng-repeat="row in dataset.headers track by $index">
+							<div    ng-repeat="col in row.rows track by $index" 
+								ng-style="{'width': (getContainerWidth('firstHeaderColHeight')*(col.colspan))+'px', 'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
+								style="background-color: #f0efef; font-weight:600; display:inline-block; margin: 0 auto;  padding:10px; 	  float:left; ">
+								{{$index === 0 ? '':col.dimension}}  
+							</div>
+							<div   ng-show="col.visible"   class="text-center center " 
+							ng-style="{'width': (getContainerWidth('headerColHeight')*col.colspan)+'px', 'height':'37px'} " 
+									ng-repeat="col in row.columns track by $index" 
+								style="background-color: #f0efef;  font-weight:600;	border: 1px solid #ddd;  border-right: 0px solid #ddd; margin: 0 auto; border-left:1px solid #ddd; float:left;">
+								 {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']:'' }}  
+				 
+							</div>
+						</span>
+					
+					</div>
+			</div>
+
+			<div  id="sideContent" 
+				class="fixed-container-side hidden-xs" 
+				style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
+				ng-style="{'top': (  (getContainerTop('stickyContainer'))  +(getContainerHeight('firstHeaderColHeight'))  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':(getContainerWidth('rowHieghtElement'+1+'-'+0)*(table.data()[0].elements.length))+'px'}">
+				<table  class="table  ">
+					<tbody  >
+							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+							ng-repeat="row in  table.data()  track by $index"  >
+							<td   				ng-init="seeNewData(el.element)"
+														ng-style="{'height':(getContainerHeight('rowHieghtElement'+row.index+'-'+$index))+'px','width':(getContainerWidth('rowHieghtElement'+row.index+'-'+$index))+'px'}"
+                            style=" border-right:1px solid #ccc; " 
+                            ng-repeat="el in row.elements track by $index" 
+                            ng-show="el.visible" 
+                            colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
+                            ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
+                            <span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+                            <span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+                            <span ng-show="!selections.searchRows">
+                                <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+                                <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+                            </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+														<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description']}} </span>
+							</td>
+							 
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+
+			<div  >
+			 
+				<table class="table" id="af1">
+					<thead>
+						<tr  id="headerContent" ng-repeat="row in dataset.headers track by $index">
+							<th id="firstHeaderColHeight"  style="border-right:1px solid #ccc; background-color: #f0efef" 
+								ng-repeat="col in row.rows track by $index" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+								{{$index === 0 ? '':col.dimension}} 
+								<input ng-if="$index === 0" class="form-control" 
+								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+								style="background-color: transparent;display:inline-block;border: none;" 
+								type="text" ng-model="selections.searchRows"   
+								placeholder="Search {{col.dimension}}..."> 
+							</th>
+							<th id="headerRowHeight{{row.index-1}}" 
+							style="border-right:1px solid #ccc;background-color: #f0efef" 
+						 
+							ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+								{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']:'' }}
+							</th>
+						</tr>
+					</thead>
+					<tbody   id="bodyContent" ng-init="setUpStickyHeader(); "> 
+						<tr id="rowHeightElement{{$index}}" 
+						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+							ng-repeat="row in  table.data()  track by $index" >
+							<td id="rowHieghtElement{{row.index}}-{{$index}}"  
+									  
+									style="min-width:250px; width:250px !important;  border-right:1px solid #ccc; " 
+									ng-repeat="el in row.elements track by $index" 
+									ng-show="el.visible || $parent.$index === 0" 
+									colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
+									ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
+									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+									<span ng-show="!selections.searchRows">
+                                        <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+                                        <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+                                      </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+                                   
+																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description']}} </span>
+																		
+							</td>
+							<td id="headerColHeight"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+								ng-right-click="openRefModel(cell.reference().toString()); "
+								 
+								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
+								ng-repeat="cell in row.cells track by $index" class="text-right" >
+								<input cellref="{{(cell.reference()).toString()}}" contenteditable='true'  id="{{'input-'+$parent.$parent.$index+'-'+$index}}" ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}" ng-model="cell.value" ng-focus=" getFocus($event); " ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? cell.update(query):''; cell.value != '' && cell.value != cell.lastValue ?   refreshNew(dataset):'';   " />
+								<span ng-if="cell.isReadOnly" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<div class="col-xs-12 col-md-12" style="position:fixed;  z-index:22; bottom:10px; right:0px;" ng-show="dataset && table.pages() > 1">
+					<div class="btn-group pull-left" role="group" style="font-weight:0.7em;"  >
+						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous()"><i class="fa fa-angle-left"></i></button>
+						<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>
+						<button type="button" class="btn btn-default" style="font-weight:0.7em;" ng-click="table.next()"><i class="fa fa-angle-right"></i></button>
+					</div>
+					<div class="btn-group pull-right" role="group" style="font-weight:0.7em;" >
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10)">10</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15)">15</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30)">30</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50)">50</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000)">All</button>
+						</div>
+				</div>
+			
+		 
+		</div>
+	</div>
+
+	 
+
+	<div id="refModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	 
+				<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+					<h4 class="modal-title" id="myModalLabel">Cell Reference</h4>
+				</div>
+				<div class="modal-body table-responsive">
+						<table class="table">
+							<thead>
+								<th>
+									Dimension
+								</th>
+								<th>
+									Element
+								</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="dimension in dimensionArray track by $index" >
+									<td class="text-left">
+										{{dimension}}
+									</td>
+									<td class="text-right">
+										{{cellreferenceArray[$index]}}
+								</td>
+								 
+							</tr>
+							</tbody>
+						</table> 
+						<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width:100%;">
+							<div class="btn-group" role="group" aria-label="First group" style="width:100%;">
+								<button ng-repeat="drillName in drillNames track by $index" ng-click="getDrillTable(cellreferenceArray, drillName.name)">{{drillName.name}}</button>
+								<span 	ng-show="tableDrill.length > 0 || tableDrillCol.length > 0"  class="   pull-right"  > 
+								 
+									
+										<tm1-ui-export 
+									 
+										ng-init="formatUploadButton()" 
+										tm1-target-id="af2" 
+										tm1-output-name="{{(cellreferenceArray.toString()+'').split(',').join('-')}}-{{drillNameChosen}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" 
+										m1-field-separator="" 
+										tm1-field-qualifier="" 
+										tm1-locale=""></tm1-ui-export>
+							 
+								</span>
+								 
+							</div>
+							 
+						 </div>
+				</div>
+
+				<div class="modal-footer" style="overflow:auto; height:500px;">
+				<!--	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			 
+					<table id="af2" ng-if="datasetDrill && !loading && drillNameChosen === 'Transactions'" class="table table-striped" ng-if="!loading">
+						<thead>
+							<tr ng-repeat="row in datasetDrill.headers">
+								<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+									{{col.dimension}}
+								</th>
+								<th ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+									{{col.name}}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="row in tableDrill.data()" >
+								<td ng-repeat="el in row.elements" ng-if="el.visible || $parent.$index == 0" colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" ng-class="{'tm1-ui-element-consol': el.element.type == 'C'}"  >
+									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+									<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+									<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+									<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+									{{el.name}}
+								</td>
+								<td ng-repeat="cell in row.cells" class="text-right" >
+									<input ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-model="cell.value" ng-blur="cell.update(query);" />
+									<span ng-if="cell.isReadOnly" style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table id="af2" ng-if="tableDrillCol.length && drillNameChosen != 'Transactions'" 
+					class="table table-striped" >
+						<thead>
+						 
+								<th ng-repeat="item in tableDrillCol track by $index">
+									{{item}}
+								</th>
+						 
+						</thead>
+						 <tbody>
+							 <tr ng-repeat="row in tableDrillSource track by $index"> 
+									<td ng-repeat="item in row track by $index">
+										{{item}}
+									</td>
+							 </tr>
+						 </tbody>
+					</table>
+				 
+				</div>
+			</div>
+		</div>
+		</div>
+	

@@ -3,7 +3,9 @@ assets/**
 help/**
 html/samples/**
 html/system/**
+js/controllers/t-test*
 js/controllers/samples/**
+js/controllers/system/**
 lang/**
 node_modules
 META-INF/**
@@ -19,5 +21,6 @@ WEB-INF/web.xml.*
 WEB-INF/wro.xml.*
 WEB-INF/print/phantomjs.exe
 export.js
+js/client.startup.js
 WEB-INF/pages/Archive.zip
-._.DS_Store
+._.DS_Store*
