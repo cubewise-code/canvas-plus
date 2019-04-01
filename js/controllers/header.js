@@ -9,7 +9,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     *     For more information: https://github.com/cubewise-code/canvas-best-practice
     */
     
-    // console.log("HEADER");
+    ////console.log("HEADER");
     
     $rootScope.applicationHeaderColor='#72a7e7';
     $rootScope.applicationHeaderColorSecondary='#4F81BD';
@@ -55,7 +55,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.clickedSubNav = function(num){
          
         $rootScope.activeSubTab = num;
-        console.log("sub nav clicked", $rootScope.activeSubTab, $rootScope.session.active);
+       //console.log("sub nav clicked", $rootScope.activeSubTab, $rootScope.session.active);
     }
     $rootScope.values={
         year:''
@@ -90,7 +90,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         
       
          $tm1Ui.processExecute("dev","Cube.User Weather.loadFromSrc").then(function(result){
-            console.log("NEW WEATHER IS UPDATED FOR USER", result)
+           //console.log("NEW WEATHER IS UPDATED FOR USER", result)
             if(result.success){
                 
                $tm1Ui.dataRefresh();
@@ -104,7 +104,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.createCloudArray = function(num, weather){
         
         $rootScope.showClouds = true;
-        console.log("creating clouds array", num, weather )
+       //console.log("creating clouds array", num, weather )
         if(num > 15){
            if(weather === "Rain"){
                 $scope.showRain = true;
@@ -164,7 +164,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                  $rootScope.userLoggedOut = true;
             }
             
-             console.log("USER", result)
+            //console.log("USER", result)
 
            
               
@@ -183,7 +183,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
       if(!$rootScope.scheduleShow){
            $tm1Ui.applicationLogout($rootScope.defaults.settingsInstance).then(function(result){
                 if(result['success']){
-                   // console.log("USE LOGGED OUT", $rootScope.user);
+                   ////console.log("USE LOGGED OUT", $rootScope.user);
                     $rootScope.userLoggedOut = true;
                     $rootScope.showView = false;
                     
@@ -207,7 +207,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     };
     
     $rootScope.logout = function(sessionname){
-       // console.log(sessionname);
+       ////console.log(sessionname);
 
     }
      
@@ -217,7 +217,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.nightTime = false; 
      $rootScope.findColorByHr = function(color){
              var m = moment($rootScope.overRideDate);
-             console.log(m);
+            //console.log(m);
             var g = null; //return g
             
             if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
@@ -225,7 +225,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             var split_afternoon = 12 //24hr time to split the afternoon
             var split_evening = 17 //24hr time to split the evening
             var currentHour = parseFloat(m.format("HH"));
-            console.log(currentHour)
+           //console.log(currentHour)
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
                 g = "transparent";
                
@@ -236,7 +236,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 g ="transparent";
                 
             }
-            console.log(g )
+           //console.log(g )
             return g;
         
     }
@@ -278,7 +278,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         
   $scope.getLeftMargin = function(idname){
     if(document.getElementById(idname) ){
-      //  console.log(document.getElementById(idname).getBoundingClientRect().left  );
+      // //console.log(document.getElementById(idname).getBoundingClientRect().left  );
         if(document.getElementById("pop-over-body")){
             document.getElementById("pop-over-body").style.left = document.getElementById(idname).getBoundingClientRect().left +"px";
         }
@@ -293,7 +293,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
               if( document.getElementById('dropdownbtns')){
                   
                 document.getElementById('dropdownbtns').style.top=  ((document.getElementById('dropdownbtns').style.top) -$scope.scrollPos) +"px"
-                   console.log(document.getElementById('dropdownbtns').style.top);
+                  //console.log(document.getElementById('dropdownbtns').style.top);
               }
                
             $scope.$digest();
@@ -301,7 +301,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
   
   $rootScope.onChartElementClick = function(element){
-      console.log("element:", element);
+     //console.log("element:", element);
   }
   $transitions.onSuccess({}, function ($transitions) {
        $scope.initializeVariables();
@@ -313,18 +313,18 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
        
                       
     $timeout( function(){ 
-        console.log($rootScope.pathArray, "path array");
+       //console.log($rootScope.pathArray, "path array");
          
         if(($rootScope.pathArray[1].name).split("/").length > 1  ){
             $rootScope.subPathBoolean = true; 
             
-            console.log(($rootScope.pathArray[1].name).split("/").length, "sub path true");
+           //console.log(($rootScope.pathArray[1].name).split("/").length, "sub path true");
         }else{
             if(($rootScope.pathArray[1].name) === 'base'){
-                 console.log($rootScope.pathArray[1].name, "No Sub Path");
+                //console.log($rootScope.pathArray[1].name, "No Sub Path");
                  $rootScope.subPathBoolean = false;
             }else{
-                 console.log($rootScope.pathArray[1].name, "No Sub Path");
+                //console.log($rootScope.pathArray[1].name, "No Sub Path");
                 $rootScope.subPathBoolean = false;
             }
             
@@ -499,14 +499,14 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.mouseMovedSetXY = function($event){
        $rootScope.windowclientX = event.clientX;     // Get the horizontal coordinate
         $rootScope.windowclientY = event.clientY; 
-       // console.log(event.x, event.y);
+       ////console.log(event.x, event.y);
         $scope.mouseMovedXY = event.x+' '+event.y;
         if($rootScope.idelTimePassed){
             if(!$rootScope.loggedOut){
                 $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
                 if(result){
                     if(result['IsActive']){
-                   // console.log(result, "LOGIN INFO");
+                   ////console.log(result, "LOGIN INFO");
                         $rootScope.alpha = 0; 
                         $rootScope.loggedOut = false;
                         $rootScope.idelTimePassed =false;
@@ -576,7 +576,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                    
                     if( $rootScope.idelTimePassed  ){ 
                            
-                           // console.log("STARTED PAUSE HIDING INFO");
+                           ////console.log("STARTED PAUSE HIDING INFO");
                            if($scope.mouseMovedXY === $scope.lastMovedXY){
                                 $rootScope.alpha = 0.9; 
                                // $rootScope.closeApplication(false);
@@ -585,7 +585,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                            }
                         
                     } 
-                   console.log("count",  $rootScope.desktop, $rootScope.countIdel,$scope.lastMovedXY, $scope.mouseMovedXY); 
+                  //console.log("count",  $rootScope.desktop, $rootScope.countIdel,$scope.lastMovedXY, $scope.mouseMovedXY); 
                     $rootScope.countIdel++; 
                     $rootScope.runTimeout();
                 }
@@ -608,7 +608,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
     
     $rootScope.seeData = function(cell){
-        console.log(cell, "cell data")
+       //console.log(cell, "cell data")
     }
     
       
@@ -620,7 +620,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.getContainerTop = function(id, bottomOffset){
         
         if(document.getElementById(id)){
-           //  console.log(id, bottomOffset, document.getElementById(id));
+           // //console.log(id, bottomOffset, document.getElementById(id));
             var tempObjToTrack = document.getElementById(id);
             if(tempObjToTrack != null || tempObjToTrack != undefined ){
                 return tempObjToTrack.getBoundingClientRect().top;

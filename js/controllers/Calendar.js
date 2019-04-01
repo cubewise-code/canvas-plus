@@ -21,7 +21,7 @@
                 scope.instance = $attributes.tm1Instance;
                 scope.selections.year = $attributes.selectedYear;
                 scope.defaultOffSet = 57;
-                console.log(scope.instance, scope.selections.year);
+               //console.log(scope.instance, scope.selections.year);
                 scope.hasNum = [];
                 scope.innerHeight = window.innerHeight;
                 scope.innerWidth = window.innerWidth ;
@@ -113,7 +113,7 @@
                 $tm1Ui.dataRefresh();
 			}
 			else {
-                console.log(result.message);
+               //console.log(result.message);
 			}		
 			scope.loading = false;
             
@@ -197,7 +197,7 @@
   
     
     scope.editEvent = function(date){
-        console.log("Add event, ",date);
+       //console.log("Add event, ",date);
         $timeout(
 
             function(){
@@ -206,7 +206,7 @@
         )
     }
     scope.createNewEvent = function(date){
-        console.log("create New Event",date);
+       //console.log("create New Event",date);
         $timeout(
 
             function(){
@@ -234,7 +234,7 @@
         //Day 0 is the last day in the previous month
         $tm1Ui.applicationUser(scope.instance).then(function(result){
               if(result.IsActive){
-                 // console.log(result)
+                 ////console.log(result)
               
 
         
@@ -249,11 +249,11 @@
                 //console.log("first day position", firstDayPosition, scope.firstDayPosition[month]);
                 var days  = new Date(year, month+1, 0).getDate();
                 var mypreArray = [];
-            // console.log(days);
+            ////console.log(days);
                 for(var ttg = 0; ttg < days; ttg++){
                     mypreArray.push(ttg)
                 }
-                // console.log('days in month', month, days, mypreArray );
+                ////console.log('days in month', month, days, mypreArray );
                 scope.days[month] = mypreArray;
             // retu$scorn mypreArray;
                 // Here January is 0 based
@@ -269,16 +269,16 @@
             //console.log(key, value.reference(), "reference from inside the controller");
             myArrayToSend.push({value:'', instance:'dev', cube:'Calendar', cubeElements:ref});
         });
-        console.log(myArrayToSend, "row to delete");
+       //console.log(myArrayToSend, "row to delete");
         $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
             if(!result.failed){
-                 console.log(result, "cleared event");
+                //console.log(result, "cleared event");
                  scope.hasNum = []; 
                  
                   scope.query(true); 
                    $tm1Ui.dataRefresh();
             }else{
-                 console.log(result.message);
+                //console.log(result.message);
             }
             
        
@@ -291,13 +291,13 @@
        
         $tm1Ui.cellsetPut(myArrayToSave).then(function(result){
             if(!result.failed){
-                 console.log(result, "added new event");
+                //console.log(result, "added new event");
                     scope.hasNum = []; 
                     scope.openEventCreate  = false;
                     scope.query(true); 
                    
             }else{
-                 console.log(result.message);
+                //console.log(result.message);
             }
             
        
@@ -305,7 +305,7 @@
     }
     
     scope.createEvent = function(eventName){
-        console.log("new event to create");
+       //console.log("new event to create");
         scope.openEventCreate = !scope.openEventCreate;
         scope.captureFirstItem(eventName);
     }
@@ -334,7 +334,7 @@
                         
                         scope.selections.year = newValue;
                         scope.refreshCalendar(); 
-                        console.log(newValue, "Year changes inside directive");
+                       //console.log(newValue, "Year changes inside directive");
                                 
                     })
  
