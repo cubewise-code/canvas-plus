@@ -261,7 +261,7 @@
               }
            
               scope.getTableWidth = function(){
-                 return window.innerWidth -20;
+                 return scope.innerWidth -20;
                 
          
             }
@@ -493,8 +493,8 @@
 
                 $(window).resize(function() { 
                     
-                            scope.innerHeight = window.innerHeight;
-                            scope.innerWidth = window.innerWidth ;
+                            scope.innerHeight = document.getElementById('stickyContainer').getBoundingClientRect().height;
+                            scope.innerWidth = document.getElementById('stickyContainer').getBoundingClientRect().width ;
                     
                 });
                 

@@ -229,7 +229,7 @@
 								<tr ng-repeat="row in dataset.headers track by $index" >
 									<th
 									ng-style="{'height':(getContainerHeight('firstHeaderColHeight'))+'px'}"
-									style="border-right:1px solid #ccc; background-color: #f0efef; " 
+									style="border-right:0px solid #ccc; background-color: #f0efef; " 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible  " colspan="{{col.colspan}}" 
 									rowspan="{{col.rowspan}}" 
@@ -291,7 +291,7 @@
 							ng-repeat="row in  table.data()  track by $index"  >
 							<td   				ng-init="seeNewData(el.element)"
 														ng-style="{'height':(getContainerHeight('rowHieghtElement'+$parent.$index+'-'+$index))+'px'}"
-                            style=" border-right:1px solid #ccc; " 
+                            style=" border-right:0px solid #ccc; vertical-align:text-top; " 
                             ng-repeat="el in row.elements track by $index" 
                             ng-show="el.visible" 
 														colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
