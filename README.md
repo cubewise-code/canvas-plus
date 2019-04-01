@@ -6,6 +6,7 @@ The canvas-plus project contains a ready to use Canvas application with few cool
 
 # Prerequisites
 * Canvas v3.2.0
+* [TM1py](https://github.com/cubewise-code/TM1py-samples)
 * All new pages added to this project should use the Canvas Sample TM1 instance
 
 # To install it
@@ -14,5 +15,8 @@ The canvas-plus project contains a ready to use Canvas application with few cool
 1. Renamme it to "canvas-plus" for example
 1. Download the canvas-plus folder from [github](https://github.com/cubewise-code/canvas-plus)
 1. Unzip the folder and paste all files into your new canvas_plus folder (created above)
+1. This application contains a TM1py scripts to get weather data. Once TM1py is installed you will need to install the **geocoder** library (python install geocoder).
+1. To store the weather data, you will have to copy the new cube **User Weather** from the **canvas-plus\files\WeatherCubeFiles** folder to your TM1 instance data folder.
+1. Start the Cubewise Application Server and you should be ready to go!
 
 <img src="https://s3.amazonaws.com/cubewise-downloads/web_assets/canvas-assets/canvas-plus.png"/>
