@@ -1,5 +1,12 @@
 <div ng-controller="MDXViewCtrl" ng-if="$root.user.Name && $root.selections.year" style="padding-top:100px;">
- 
+ <style>
+	 html{
+		 overflow: hidden;
+	 }
+	 body{
+		overflow:hidden
+	}
+</style>
 	<super-cube-view 
 		tm1-instance = "dev"
 		cube-name = "General Ledger"

@@ -576,7 +576,7 @@ div.tm1-subnm-hierarchy-style {
 /*  CUSTOM CSS SCROLL BARS  */
 ::-webkit-scrollbar
 {
-  width: 12px;  /* for vertical scrollbars */
+  width: 16px;  /* for vertical scrollbars */
   height: 8px; /* for horizontal scrollbars */
   
    background-color: transparent;
@@ -586,8 +586,8 @@ div.tm1-subnm-hierarchy-style {
 
 ::-webkit-scrollbar-track
 {
-  background-color: rgba(0, 0, 0, 0.1);
-  background: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
 }
 
 ::-webkit-scrollbar-thumb

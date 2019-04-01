@@ -13,7 +13,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "executeMDXCubeView";
+    $rootScope.pageTitle = "Super Cube View + Freezepane";
     
      
     $rootScope.showView = true; 
