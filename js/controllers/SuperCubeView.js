@@ -58,15 +58,16 @@
                                        var options = {preload: false, watch: false};
                                         
                                        scope.tableNew = $tm1Ui.tableCreate(scope, scope.datasetNew.rows, options);
-                                       scope.tablerowLength = scope.table.data().length;
-                                      
-                                      ////console.log(scope.table.data(), scope.tableNew.data());  
+                                       
+                                       scope.tablerowLength = scope.tableNew.data().length;
+                                       scope.tableNew.pageSize(scope.currentRowCount)
+                                      // console.log(scope.table.data(), scope.tableNew.data());  
                                        var tableRows = scope.table.data();
                                         for(newrow in scope.tableNew.data()){
                                             for(row in scope.table.data()){
                                                 if(scope.tableNew.data()[newrow].index === scope.table.data()[row].index){
-                                                  ////console.log(scope.tableNew.data()[newrow].cells, "same row");
-                                                   scope.table.data()[row].cells = scope.tableNew.data()[newrow].cells;
+                                                  console.log(scope.tableNew.data()[newrow].cells, "same row");
+                                                   scope.table.data()[row] = scope.tableNew.data()[newrow];
                                                 } 
                                             }
                                         }
@@ -85,7 +86,7 @@
                 scope.getFocus = function($event) {           
                    scope.focusObj = $event.target.id;
                    document.getElementById($event.target.id).addEventListener('paste', scope.handlePaste);
-                  //console.log("add paste event listener",$event.target.id)
+                   console.log("add paste event listener",$event.target.id)
                 }
 
                 scope.getLastFocus = function() {  
@@ -146,7 +147,7 @@
                                         scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, options);
                                         scope.table.pageSize(scope.currentRowCount)
                                         scope.tableDimensionLength =  scope.table.data()[0].elements.length;
-                                       //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
+                                        console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
                                         $rootScope.isLoading = false;
                                         scope.loading = false;
                                         
@@ -209,7 +210,7 @@
                     if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() >= 0){
 
                         scope.headerOutOffView = true;
-                       //console.log("view header")
+                        console.log("view header")
                         if($($stickyHeader)){
                             $($stickyHeader).css('display','block'); 
                             $($stickyHeader).css('opacity','1'); 
@@ -230,7 +231,7 @@
                     }else{
                          
                         scope.headerOutOffView = false;
-                       //console.log("hide header")
+                        console.log("hide header")
                         if($($stickyHeader)){
                             $($stickyHeader).css('opacity','0'); 
                             $($stickyHeader).css('pointer-events','none'); 
@@ -253,7 +254,7 @@
               });
               scope.formatUploadButton = function(){
                 if(document.getElementsByClassName('tm1-ui-export')[0]){
-                   //console.log(document.getElementsByClassName('tm1-ui-export')[0].innerHTML)
+                    console.log(document.getElementsByClassName('tm1-ui-export')[0].innerHTML)
                     document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('|').join('');
                     document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('Excel').join('');
                     document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('CSV').join('');
@@ -334,7 +335,7 @@
                        mainArrayObj[item] = [tempal];
                    }
                    for(item in mainArrayObj){
-                      ////console.log(parseInt(startRow), parseInt(columnRow) )
+                      // console.log(parseInt(startRow), parseInt(columnRow) )
                       var aray = (mainArrayObj[item]+'').split(',')
                        for(cell in aray){
                             
@@ -363,7 +364,7 @@
                    }
            
                    $tm1Ui.cellsetPut(scope.sendCellSetPutArray).then(function(result){
-                       ////console.log(result, "######## saved")
+                       // console.log(result, "######## saved")
                         if(result.success){
                             
                            
@@ -412,7 +413,7 @@
                 scope.datasetDrill= [];
                 scope.tableDrill = [];
                  scope.drillNames = data;
-                //console.log(data, "Transactional data")
+                 console.log(data, "Transactional data")
                  $("#refModal").modal({show: true});
             });
            }
@@ -447,7 +448,7 @@
                                  
                             });
                         }
-                       //console.log(data, "Transactional data")
+                        console.log(data, "Transactional data")
                         //scope.datasetDrill = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, data);
                         //var optionsDrill = {preload: false, watch: false};
                         //if(scope.tableDrill){
@@ -472,7 +473,7 @@
                     var count = 0;
                     for(row in scope.table.data()){
                         if(scope.selections.searchRows && ((scope.table.data()[row].elements[0].element.attributes['Description']).toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
-                           //console.log("rows to display");
+                            console.log("rows to display");
                             count++;
                         }else{
                             
@@ -505,7 +506,7 @@
                     
                     }, function (newValue, oldValue) { 
                         if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                           //console.log(newValue, "Year changes inside directive");
+                            console.log(newValue, "Year changes inside directive");
                         }
                        
                                 
