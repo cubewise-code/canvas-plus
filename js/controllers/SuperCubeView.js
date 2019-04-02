@@ -180,7 +180,7 @@
                                         
                                         scope.table.refresh();
                                         
-                                        scope.setUpFreezePane();
+                                        
                                        //scope.tableData = scope.table.data();
                                         
                                    } else {
@@ -221,7 +221,7 @@
                 console.log("setting up freeze pane", scope.tableId, document.querySelector('#stickyContainer'))
                
                 if( document.querySelector('#stickyContainer'+scope.tableId)){
-
+                    scope.formatUploadButton();
                     angular.element(document.querySelector('#stickyContainer'+scope.tableId)).bind('scroll', function(){
                         scope.offsetTop = 0;
                         var el = $('#stickyContainer'+scope.tableId);
@@ -234,7 +234,7 @@
                         scope.scrolling = true;
                         $($stickyHeader).css('display','block'); 
                         $($sideContent).css('display', 'block');
-                        scope.formatUploadButton();
+                         
                              var valuetoEval = scope.offsetTop;
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
@@ -366,7 +366,7 @@
                 $timeout(
                     function(){
                          
-                        if(document.getElementById(id) ){
+                        if(document.getElementById(id) && document.getElementById(id).getElementsByClassName('fixed-container').length > 0 ){
                             console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
                                 return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
                              
@@ -471,7 +471,7 @@
                    scope.sendCellSetPutArray.push(request);
            }
             scope.refresh();
-             
+            scope.setUpFreezePane();
                
            scope.drillNames = [];
            

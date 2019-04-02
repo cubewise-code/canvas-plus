@@ -139,7 +139,7 @@
 			position: relative;
 		}
 		
-		.tm1-ui-export a:first-child::before {
+		.tm1-ui-export a:first-child::after {
 			padding-left:10px;
 			vertical-align: top;
 			visibility: visible;
@@ -422,7 +422,7 @@
 				<div class="modal-footer" style="overflow:auto; height:500px;">
 				<!--	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
 			 
-					<table id="af2" ng-if="datasetDrill && !loading && drillNameChosen === 'Transactions'" class="table table-striped" ng-if="!loading">
+					<table id="af2" ng-show="datasetDrill && !loading && drillNameChosen === 'Transactions'" class="table table-striped" ng-if="!loading">
 						<thead>
 							<tr ng-repeat="row in datasetDrill.headers">
 								<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
