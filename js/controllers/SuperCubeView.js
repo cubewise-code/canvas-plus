@@ -14,9 +14,9 @@
                     tableTop:'@',
                     tableId:'@',
                     tableHeightBottomOffset:'@',
-                    tableDimensionColumnClass:'@'
-
-                   
+                    tableDimensionColumnClass:'@',
+                    tableDataColumnClass:'@',
+                   tableId:"@"
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -34,7 +34,10 @@
                 scope.tableLeft = $attributes.tableLeft;
                 scope.tableTop = $attributes.tableTop;
                 scope.tableId = $attributes.tableId;
+
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
+                scope.tableDataColumnClass = $attributes.tableDataColumnClass;
+
                 scope.dateNow = new Date() ;
             
             
@@ -176,7 +179,7 @@
                                         
                                         scope.table.refresh();
                                         
-                                       
+                                        scope.setUpFreezePane();
                                        //scope.tableData = scope.table.data();
                                         
                                    } else {
@@ -194,7 +197,7 @@
                 scope.tableData = [];
                 scope.tableRowCollapseData = [];
                 scope.collapsedRowArray = [];
-                scope.refresh();
+                
                 
                 scope.seeNewData = function(data){
                     //console.log(data)
@@ -205,7 +208,7 @@
                 
                 scope.seeData = function(rowindex,table){
                     
-                    scope.dataset.rows[(rowindex)]['Account']['element'].toggle();
+                    scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][0]]['element'].toggle();
                     scope.table.refresh();
                     scope.refreshNew(scope.dataset);
             
@@ -214,78 +217,98 @@
                  
            scope.scrollAmountTop = 0;
             scope.setUpFreezePane = function(){
-                angular.element(document.querySelector('#stickyContainer')).bind('scroll', function(){
-                    scope.offsetTop = 0;
-                    var el = $('#stickyContainer');
-                    $body = $(el);  
-                    $stickyHeader = $(el).find('#sticky-header');
-                    $fixedHeader = $(el).find('.fixed-container');
-                    $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
-                    //$headerContent = $(el).find('#headerContent');
-                    $sideContent = $(el).find('#sideContent');           
-                    scope.scrolling = true;
-                    $($stickyHeader).css('display','block'); 
-                    $($sideContent).css('display', 'block');
-                         var valuetoEval = scope.offsetTop;
-                   
-                         scope.scrollAmountTop =  $($body).scrollTop();
+                console.log("setting up freeze pane", scope.tableId, document.querySelector('#stickyContainer'))
+               
+                if( document.querySelector('#stickyContainer'+scope.tableId)){
 
-                        if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() >= 0){
+                    angular.element(document.querySelector('#stickyContainer'+scope.tableId)).bind('scroll', function(){
+                        scope.offsetTop = 0;
+                        var el = $('#stickyContainer'+scope.tableId);
+                        $body = $(el);  
+                        $stickyHeader = $(el).find('#sticky-header');
+                        $fixedHeader = $(el).find('.fixed-container');
+                        $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
+                        //$headerContent = $(el).find('#headerContent');
+                        $sideContent = $(el).find('#sideContent'+scope.tableId);           
+                        scope.scrolling = true;
+                        $($stickyHeader).css('display','block'); 
+                        $($sideContent).css('display', 'block');
+                        scope.formatUploadButton();
+                             var valuetoEval = scope.offsetTop;
+                       
+                             scope.scrollAmountTop =  $($body).scrollTop();
     
-                            scope.headerOutOffView = true;
-                            console.log("view header")
-                            if($($stickyHeader)){
-                                $($stickyHeader).css('display','block'); 
-                                $($stickyHeader).css('opacity','1'); 
-                                $($stickyHeader).css('pointer-events','auto'); 
-                            }
-                            if($($fixedHeader) && $($fixedFirstColHeader)){
-                                $($fixedHeader).css('pointer-events','auto'); 
-                                $($fixedFirstColHeader).css('display','block !important');
-                            }
-                           
-                           
-                            if( $($sideContent)){
-                                $($sideContent).css('display', 'block');
-                                $($sideContent).css('margin-top', -$($body).scrollTop());
-                                $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(225)) )) + $($body).scrollTop());
-
-                            }
-                           
-                             
-                        }else{
-                             
-                            scope.headerOutOffView = false;
-                            console.log("hide header")
-                            if($($stickyHeader)){
-                                $($stickyHeader).css('opacity','0'); 
-                                $($stickyHeader).css('pointer-events','none'); 
-                            }
-                            if($($fixedHeader)){
-                                $($fixedHeader).css('pointer-events','none'); 
-                            }
-                            if($($fixedFirstColHeader)){
-                                $($fixedFirstColHeader).css('display','none !important'); 
-                            }
-                             
-                             
-                             
-                              
-                        } 
-                         if($($stickyHeader)){
-                            $($stickyHeader).css('margin-left', -$($body).scrollLeft());
-                         }
-                        
-                  });
-            }
+                            if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() >= 0){
+        
+                                scope.headerOutOffView = true;
+                                console.log("view header")
+                                if($($stickyHeader)){
+                                    $($stickyHeader).css('display','block'); 
+                                    $($stickyHeader).css('opacity','1'); 
+                                    $($stickyHeader).css('pointer-events','auto'); 
+                                }
+                                if($($fixedHeader) && $($fixedFirstColHeader)){
+                                    $($fixedHeader).css('pointer-events','auto'); 
+                                    $($fixedFirstColHeader).css('display','block !important');
+                                }
+                               
+                               
+                                if( $($sideContent)){
+                                    $($sideContent).css('display', 'block');
+                                    $($sideContent).css('margin-top', -$($body).scrollTop());
+                                    
+                                    $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(157+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) )) )) + $($body).scrollTop());
+                                                                    
+                                }
+                               
+                                 
+                            }else{
+                                 
+                                scope.headerOutOffView = false;
+                                console.log("hide header")
+                                if($($stickyHeader)){
+                                    $($stickyHeader).css('opacity','0'); 
+                                    $($stickyHeader).css('pointer-events','none'); 
+                                }
+                                if($($fixedHeader)){
+                                    $($fixedHeader).css('pointer-events','none'); 
+                                }
+                                if($($fixedFirstColHeader)){
+                                    $($fixedFirstColHeader).css('display','none !important'); 
+                                }
+                                 
+                                 
+                                 
+                                  
+                            } 
+                             if($($stickyHeader)){
+                                $($stickyHeader).css('margin-left', -$($body).scrollLeft());
+                             }
+                            
+                      });
+                }else{
+                    scope.waitTillContainerArives();
+                }
                 
+            }
+            scope.waitTillContainerArives = function(){
+                $timeout(
+                    function(){
+                        scope.setUpFreezePane();
+                    },1000
+                )
+                
+            }
              
               scope.formatUploadButton = function(){
-                if(document.getElementsByClassName('tm1-ui-export')[0]){
-                    console.log(document.getElementsByClassName('tm1-ui-export')[0].innerHTML)
-                    document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('|').join('');
-                    document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('Excel').join('');
-                    document.getElementsByClassName('tm1-ui-export')[0].innerHTML = (document.getElementsByClassName('tm1-ui-export')[0].innerHTML+'').split('CSV').join('');
+                if(document.getElementsByClassName('tm1-ui-export').length){
+                   // console.log(document.getElementsByClassName('tm1-ui-export')[0].innerHTML)
+                    for(ff = 0; ff < document.getElementsByClassName('tm1-ui-export').length; ff++){
+                        document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split('|').join('');
+                        document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split('Excel').join('');
+                        document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split('CSV').join('');
+                    }
+                    
                 }
               }
            
@@ -295,8 +318,8 @@
          
             }
             scope.getTableWidthinPx = function(){
-                if(document.getElementById('stickyContainer')){
-                    return document.getElementById('stickyContainer').getBoundingClientRect().width - 12 ;
+                if(document.getElementById('stickyContainer'+scope.tableId)){
+                    return document.getElementById('stickyContainer'+scope.tableId).getBoundingClientRect().width - 12 ;
                 }
                  
             }
@@ -341,11 +364,11 @@
             scope.workOutContainerHeight = function(id){
                 $timeout(
                     function(){
-                        if(document.getElementById(id)){
-                            var tempObjToTrack = document.getElementById(id);
-                            if(tempObjToTrack != null || tempObjToTrack != undefined ){
-                                return  ((tempObjToTrack.getBoundingClientRect().height +  Math.abs(scope.scrollAmountTop))-80)+'px';
-                            }
+                         
+                        if(document.getElementById(id) ){
+                            console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
+                                return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
+                             
                         }
                     }
                 )
@@ -446,8 +469,8 @@
                    
                    scope.sendCellSetPutArray.push(request);
            }
-            
-                 scope.setUpFreezePane();
+            scope.refresh();
+             
                
            scope.drillNames = [];
            
