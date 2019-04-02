@@ -31,72 +31,7 @@
     		transition-duration: 0.5s, 0.5s;  
 		}
 		 
-		/* 
-  ##Device = Desktops
-  ##Screen = 1281px to higher resolution desktops
-*/
-
-@media (min-width: 1281px) {
-  .min-width250{ min-width: 250px; }
  
-  
-}
-
-/* 
-  ##Device = Laptops, Desktops
-  ##Screen = B/w 1025px to 1280px
-*/
-
-@media (min-width: 1025px) and (max-width: 1280px) {
-  
- .min-width250{ min-width: 250px; }
-  
-}
-
-/* 
-  ##Device = Tablets, Ipads (portrait)
-  ##Screen = B/w 768px to 1024px
-*/
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  
- .min-width250{ min-width: 200px; }
-  
-}
-
-/* 
-  ##Device = Tablets, Ipads (landscape)
-  ##Screen = B/w 768px to 1024px
-*/
-
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  
- .min-width250{ min-width: 150px; }
-  
-}
-
-/* 
-  ##Device = Low Resolution Tablets, Mobiles (Landscape)
-  ##Screen = B/w 481px to 767px
-*/
-
-@media (min-width: 481px) and (max-width: 767px) {
-  
-  .min-width250{ min-width: 100px; }
-  
-}
-
-/* 
-  ##Device = Most of the Smartphones Mobiles (Portrait)
-  ##Screen = B/w 320px to 479px
-*/
-
-@media (min-width: 320px) and (max-width: 480px) {
-  
-  .min-width250{ min-width: 100px; }
-  
-}
-
 		.fixed-container{
 		
 			pointer-events: none;
@@ -217,7 +152,7 @@
 	</style>
   
   	<div class="row"  >
-		<div id="stickyContainer"  class="stickyContainer "  ng-style="{'height': setTableHeight('stickyContainer')+'px', 'width':getTableWidth()+'px','position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
+		<div id="stickyContainer"  class="stickyContainer "  ng-style="{'height': setTableHeight('stickyContainer')+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
 				<div class="fixedFirstColHeader  "  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
 					ng-style="{'top': ( (getContainerTop('stickyContainer') + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('headerColHeight') )+'px', 'height':(getContainerHeight('headerColHeight'))+'px', 'left':getTableLeft()} " >
 					
@@ -233,7 +168,7 @@
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible  " colspan="{{col.colspan}}" 
 									rowspan="{{col.rowspan}}" 
-									class="text-center min-width250" >
+									class="text-center {{tableDimensionColumnClass}}" >
 						 
 									<span ng-if="$index === 0"class="pull-left" style="text-align:left; width:15%; display:inline-block; ">
 										  
@@ -257,7 +192,7 @@
 			
 			</div>
 
-			<div class="fixed-container  " ng-style="{'width':getTableWidth()+'px','position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);">
+			<div class="fixed-container  " ng-style="{'width':getTableWidthinPx(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);">
 					<div id="sticky-header" ng-show="selections.searchRows && rowsToDisplay() > 0 || !selections.searchRows" 	class="sticky-header"   style="height:auto;"
 						ng-style="{'width': (getContainerWidth('headerContent')+2)+'px' } " 
 					>
@@ -265,7 +200,7 @@
 							style="padding:0px; margin:0 auto; position:relative; display:inline-block; left:0px; top:0px; float:left;" 
 							ng-repeat="row in dataset.headers track by $index">
 							<div    ng-repeat="col in row.rows track by $index" 
-								ng-style="{  'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
+								ng-style="{  'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left {{tableDimensionColumnClass}}" 
 								style="background-color: #f0efef; font-weight:600; display:inline-block; margin: 0 auto;  padding:10px; 	  float:left; ">
 								{{col.dimension}}  
 							</div>
@@ -284,7 +219,7 @@
 			<div  id="sideContent" 
 				class="fixed-container-side" 
 				style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
-				ng-style="{'top': (  (getContainerTop('stickyContainer'))  +(getContainerHeight('firstHeaderColHeight'))  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':(getContainerWidth('rowHieghtElement'+0+'-'+0)*(table.data()[0].elements.length))+'px', 'position': getTablePosition(),'left':getTableLeft()}">
+				ng-style="{'top': (  (getContainerTop('stickyContainer'))  +(getContainerHeight('firstHeaderColHeight'))  )+'px' , 'height':workOutContainerHeight('stickyContainer'), 'width':(getContainerWidth('rowHieghtElement'+0+'-'+0)*(table.data()[0].elements.length))+'px', 'position': getTablePosition(),'left':getTableLeft()}">
 				<table  class="table ">
 					<tbody  >
 							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
@@ -295,7 +230,7 @@
                             ng-repeat="el in row.elements track by $index" 
                             ng-show="el.visible" 
 														colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
-														class="min-width250"
+														class="{{tableDimensionColumnClass}}"
                             ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
                             <span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
                             <span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
@@ -339,7 +274,7 @@
 						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
 							<td id="rowHieghtElement{{$parent.$index}}-{{$index}}"  
-									class="min-width250"
+									class="{{tableDimensionColumnClass}}"
 									style=" border-right:1px solid #ccc; " 
 									ng-repeat="el in row.elements track by $index" 
 									ng-show="el.visible || $parent.$index === 0" 
@@ -381,7 +316,8 @@
 					</tbody>
 				</table>
 				
-				<div class="col-xs-12 col-md-12" style="position:fixed; background-color:#fff;   box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:8px; right:0px;" 
+				<div   ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
+				style="position:fixed; padding:0px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
 				 >
 					<div class="btn-group pull-left" role="group" style="font-weight:0.7em;"  >
 						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous();"><i class="fa fa-angle-left"></i></button>
