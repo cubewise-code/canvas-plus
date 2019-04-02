@@ -356,14 +356,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
   })
   $scope.animateSideBar = function(a, b, open){
        if(open){
-            if(document.getElementById("stickyContainer")){
-                 document.getElementById("stickyContainer").style.width = "100%";
-            } 
+             
            document.getElementById("righthandsidebar").style.marginLeft = (-300)+"px";
        }else{
-            if(document.getElementById("stickyContainer")){
-                document.getElementById("stickyContainer").style.width = (window.innerWidth -300)+"px";
-            }
+             
            document.getElementById("righthandsidebar").style.marginLeft = (0)+"px";
        }
              

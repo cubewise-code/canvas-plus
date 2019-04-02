@@ -25,8 +25,8 @@
                 scope.cubeView = $attributes.cubeView;
                 scope.cubeName = $attributes.cubeName;
                 scope.attributeOptions = $attributes.attributeOptions;
-                scope.tableWidth = $attributes.tableWidth;
-                scope.innerWidth = window.innerWidth/$attributes.tableWidth;
+                scope.tableWidth = $attributes.tableWidth; 
+                scope.innerWidth = window.innerWidth;
                 scope.tablePosition = $attributes.tablePosition;
                 scope.tableLeft = $attributes.tableLeft;
                 scope.tableTop = $attributes.tableTop;
@@ -280,7 +280,7 @@
               }
            
               scope.getTableWidth = function(){
-                 return scope.innerWidth -20;
+                 return scope.innerWidth ;
                 
          
             }
@@ -513,7 +513,7 @@
                 $(window).resize(function() { 
 
                             scope.innerHeight = window.innerHeight;
-                            scope.innerWidth =  window.innerWidth/$attributes.tableWidth;
+                            scope.innerWidth =  window.innerWidth;
                     
                 });
                 
