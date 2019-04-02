@@ -7,7 +7,12 @@
                     tm1Instance: '@',  
                     cubeName:'@',
                     cubeView:'@',
-                    attributeOptions:'@'
+                    attributeOptions:'@',
+                    tableWidth:'@',
+                    tablePosition:'@',
+                    tableLeft:'@',
+                    tableTop:'@'
+
                    
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
@@ -20,7 +25,12 @@
                 scope.cubeView = $attributes.cubeView;
                 scope.cubeName = $attributes.cubeName;
                 scope.attributeOptions = $attributes.attributeOptions;
-                
+                scope.tableWidth = $attributes.tableWidth;
+                scope.innerWidth = window.innerWidth/$attributes.tableWidth;
+                scope.tablePosition = $attributes.tablePosition;
+                scope.tableLeft = $attributes.tableLeft;
+                scope.tableTop = $attributes.tableTop;
+
                 scope.dateNow = new Date() ;
             
             
@@ -33,7 +43,15 @@
                 scope.dateNumber =((scope.dateNow+"").split(":")[0]).split(' ')[2];
                 //scope.date  = (((scope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
                 
-
+                scope.getTablePosition = function(){
+                    return scope.tablePosition;
+                }
+                scope.getTableLeft = function(){
+                    return scope.tableLeft;
+                }
+                scope.getTableTop = function(){
+                    return scope.tableTop;
+                }
                 scope.getMathMax = function(arr){
                     if(arr){
                        var max = arr.reduce(function(a, b) {
@@ -495,18 +513,19 @@
                 $(window).resize(function() { 
 
                             scope.innerHeight = window.innerHeight;
-                            scope.innerWidth = window.innerWidth;
+                            scope.innerWidth =  window.innerWidth/$attributes.tableWidth;
                     
                 });
                 
  
 
                 scope.$watch(function () {
-                    return $attributes.cubeView;
+                    return $attributes.tableWidth;
                     
                     }, function (newValue, oldValue) { 
                         if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                             console.log(newValue, "Year changes inside directive");
+
                         }
                        
                                 
