@@ -143,6 +143,7 @@
                 scope.cellreferenceArray = [];
                 scope.dimensionArray = [];
                 scope.openRefModel = function(elementString){
+                    console.log(elementString, "elementString")
                    scope.cellreferenceArray = (elementString+'').split(',')
                    $tm1Ui.cubeDimensions(scope.tm1Instance,scope.cubeName).then(function(result){
                        scope.dimensionArray = result;
@@ -408,9 +409,9 @@
                       var aray = (mainArrayObj[item]+'').split(',')
                        for(cell in aray){
                             
-                           var tempElement = document.getElementById('input-'+(parseInt(startRow)+parseInt(item))+'-'+(parseInt(columnRow)+parseInt(cell)))
+                           var tempElement = document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(item))+'-'+(parseInt(columnRow)+parseInt(cell)))
                            //console.log((parseInt(startRow)+parseInt(item)), (parseInt(columnRow)+parseInt(cell)), aray[cell] )
-                           //console.log(tempElement.getAttribute("cellref") );
+                           console.log(tempElement.getAttribute("cellref") );
                            if(tempElement != undefined && tempElement != null){
                                //console.log(tempElement.getAttribute("cellref") );
                                scope.addRequest(aray,cell,tempElement)
@@ -419,7 +420,7 @@
                               if(row === 'none'){
            
                               }else{
-                                   var tempElement = document.getElementById('input-'+(row)+'-'+(parseInt(columnRow)+parseInt(cell)))
+                                   var tempElement = document.getElementById('input-'+scope.tableId+'-'+(row)+'-'+(parseInt(columnRow)+parseInt(cell)))
                                    if(tempElement != undefined && tempElement != null){
                                    scope.addRequest(aray,cell,tempElement)
                                    }
@@ -447,9 +448,9 @@
                     
            }
            scope.nextAvailable = function(row, col){
-               var tempElementTwo = document.getElementById('input-'+(row+1)+'-'+col )
+               var tempElementTwo = document.getElementById('input-'+scope.tableId+'-'+(row+1)+'-'+col )
                if(tempElementTwo === undefined && tempElementTwo === null){
-                   tempElementThree = document.getElementById('input-'+(row+2)+'-'+col )
+                   tempElementThree = document.getElementById('input-'+scope.tableId+'-'+(row+2)+'-'+col )
                    if(tempElementThree === undefined && tempElementTwo === null){
                         return 'none'
                    }else{
@@ -483,7 +484,7 @@
                 scope.tableDrill = [];
                  scope.drillNames = data;
                  console.log(data, "Transactional data")
-                 $("#refModal").modal({show: true});
+                 $("#refModal"+scope.tableId).modal({show: true});
             });
            }
            scope.getDrillTable = function(cubeElements, name){

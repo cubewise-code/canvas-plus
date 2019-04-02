@@ -308,14 +308,14 @@
 								<input 
 								cellref="{{(cell.reference()).toString()}}" 
 								contenteditable='true'  
-								id="{{'input-'+$parent.$parent.$index+'-'+$index}}" 
+								id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
 								ng-if="!cell.isReadOnly" 
 								type="text" 
 								class="form-control text-right" 
 								tm1-ui-format-number="0" 
 								ng-attr-tabindex="{{row.index}}" 
 								ng-model="cell.value " 
-								ng-value="focusObj === 'input-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:0) : (cell.value | formatNumber:0)" 
+								ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:0) : (cell.value | formatNumber:0)" 
 								ng-focus="getFocus($event);  " 
 								ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? cell.update(query):''; cell.value != '' && cell.value != cell.lastValue ?   refreshNew(dataset):'';   " />
 								
@@ -354,7 +354,7 @@
 
 	 
 
-	<div id="refModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	 
 				<div class="modal-dialog" style="width:90%" role="document">
 			<div class="modal-content"  >
