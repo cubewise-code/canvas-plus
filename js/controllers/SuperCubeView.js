@@ -67,7 +67,7 @@
                                             for(row in scope.table.data()){
                                                 if(scope.tableNew.data()[newrow].index === scope.table.data()[row].index){
                                                   console.log(scope.tableNew.data()[newrow].cells, "same row");
-                                                   scope.table.data()[row] = scope.tableNew.data()[newrow];
+                                                   scope.table.data()[row]['cells'] = scope.tableNew.data()[newrow]['cells'];
                                                 } 
                                             }
                                         }
@@ -182,9 +182,9 @@
                 
                 scope.seeData = function(rowindex,table){
                     
-                   scope.dataset.rows[(rowindex)]['Account']['element'].toggle();
-                   scope.table.refresh();
-                   scope.refreshNew(scope.dataset);
+                    scope.dataset.rows[(rowindex)]['Account']['element'].toggle();
+                    scope.table.refresh();
+                    scope.refreshNew(scope.dataset);
             
                 };
                
