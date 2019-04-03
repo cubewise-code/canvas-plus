@@ -224,7 +224,7 @@
 				ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('firstHeaderColHeight'+tableId))  )+'px' , 'height':workOutContainerHeight('af'+tableId), 'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'position': getTablePosition(),'left':getTableLeft()}">
 				<table  class="table ">
 					<tbody  >
-							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index"  >
 							<td   			 
 														ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px'}"
@@ -282,7 +282,7 @@
 					</thead>
 					<tbody    id="bodyContent{{tableId}}"  > 
 						<tr id="rowHeightElement{{$index}}" 
-						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
 							<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
 									class="{{tableDimensionColumnClass}}"

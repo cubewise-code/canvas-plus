@@ -624,7 +624,13 @@
                 scope.rowsToDisplay = function(){
                     var count = 0;
                     for(row in scope.table.data()){
-                        if(scope.selections.searchRows && ((scope.table.data()[row].elements[0].element.attributes['Description']).toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
+                        if(scope.table.data()[row].elements[0].element.attributes['Description']){
+                            var arrayOfAliasAndNames = [(scope.table.data()[row].elements[0].element.attributes['Description']).toLowerCase(), scope.table.data()[row].elements[0].element.name, scope.table.data()[row].elements[0].element.alias ]
+                        }else{
+                            var arrayOfAliasAndNames = [  scope.table.data()[row].elements[0].element.name  ]
+                        }
+                         
+                        if(scope.selections.searchRows && (arrayOfAliasAndNames).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
                           //console.log("rows to display");
                             count++;
                         }else{
