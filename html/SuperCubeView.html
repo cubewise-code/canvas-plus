@@ -31,72 +31,7 @@
     		transition-duration: 0.5s, 0.5s;  
 		}
 		 
-		/* 
-  ##Device = Desktops
-  ##Screen = 1281px to higher resolution desktops
-*/
-
-@media (min-width: 1281px) {
-  .min-width250{ min-width: 250px; }
  
-  
-}
-
-/* 
-  ##Device = Laptops, Desktops
-  ##Screen = B/w 1025px to 1280px
-*/
-
-@media (min-width: 1025px) and (max-width: 1280px) {
-  
- .min-width250{ min-width: 250px; }
-  
-}
-
-/* 
-  ##Device = Tablets, Ipads (portrait)
-  ##Screen = B/w 768px to 1024px
-*/
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  
- .min-width250{ min-width: 200px; }
-  
-}
-
-/* 
-  ##Device = Tablets, Ipads (landscape)
-  ##Screen = B/w 768px to 1024px
-*/
-
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  
- .min-width250{ min-width: 150px; }
-  
-}
-
-/* 
-  ##Device = Low Resolution Tablets, Mobiles (Landscape)
-  ##Screen = B/w 481px to 767px
-*/
-
-@media (min-width: 481px) and (max-width: 767px) {
-  
-  .min-width250{ min-width: 100px; }
-  
-}
-
-/* 
-  ##Device = Most of the Smartphones Mobiles (Portrait)
-  ##Screen = B/w 320px to 479px
-*/
-
-@media (min-width: 320px) and (max-width: 480px) {
-  
-  .min-width250{ min-width: 100px; }
-  
-}
-
 		.fixed-container{
 		
 			pointer-events: none;
@@ -161,7 +96,7 @@
 			overflow:hidden;
 		}
 		.sticky-header{ 
-				opacity:0;
+			opacity:1;
 			background-color:#fff;  
 			color:#333;
 		}
@@ -204,7 +139,7 @@
 			position: relative;
 		}
 		
-		.tm1-ui-export a:first-child::after {
+		.tm1-ui-export a:first-child::before {
 			padding-left:10px;
 			vertical-align: top;
 			visibility: visible;
@@ -213,38 +148,40 @@
 			content: "\f1c3";
 		}
 		  
-		
+		.table{
+			margin-bottom:0px;
+		}
 	</style>
   
-  	<div class="row"  >
-		<div id="stickyContainer"  class="stickyContainer "  ng-style="{'height': setTableHeight('stickyContainer')+'px'}"> 
+  	<div class="row"   >
+		<div id="stickyContainer{{tableId}}"   class="stickyContainer "  ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
 				<div class="fixedFirstColHeader  "  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
-					ng-style="{'top': ( (getContainerTop('stickyContainer') + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('headerColHeight') )+'px', 'height':(getContainerHeight('headerColHeight'))+'px'} " >
+					ng-style="{'top': ( (getContainerTop('stickyContainer'+tableId) + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'height':(getContainerHeight('headerColHeight0'))+'px', 'left':getTableLeft()} " >
 					
-					<div ng-style="{'width': getContainerWidth('firstHeaderColHeight')+'px', 'height':(getContainerHeight('firstHeaderColHeight'))+'px'} " 
+					<div ng-style=" {'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px'} " 
 					class="text-left " 
 					style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
-					<table class="table  " >
-							<thead>
+					<table class="table  "  >
+							<thead >
 								<tr ng-repeat="row in dataset.headers track by $index" >
-									<th
-									ng-style="{'height':(getContainerHeight('firstHeaderColHeight'))+'px'}"
-									style="border-right:0px solid #ccc; background-color: #f0efef; " 
+									<th  
+									ng-style="{'height':(getContainerHeight('headerRowHeight'+tableId)*(col.rowspan))+'px'}"
+									style="border-right:1px solid #ccc; background-color: #f0efef; " 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible  " colspan="{{col.colspan}}" 
 									rowspan="{{col.rowspan}}" 
-									class="text-center min-width250" >
+									class="text-center {{tableDimensionColumnClass}}" >
 						 
 									<span ng-if="$index === 0"class="pull-left" style="text-align:left; width:15%; display:inline-block; ">
 										  
-											<tm1-ui-export ng-init="formatUploadButton()" tm1-target-id="af1" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+											<tm1-ui-export   tm1-target-id="af1{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 								 
 									</span>
 
 									<span style="padding:8px;" ng-show="$index != 0 ">{{col.dimension}} </span> 
 										<input ng-if="$index === 0" class="form-control" 
                                             ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-											style="display:inline-block;width:80%;background-color: transparent;display:inline-block;border: none;" 
+											style="display:inline-block;width:80%;background-color: rgb(240, 239, 239);display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
 											placeholder="Search {{col.dimension}}..."> 
 									</th>
@@ -257,20 +194,20 @@
 			
 			</div>
 
-			<div class="fixed-container  " ng-style="{'width':getTableWidth()+'px'}"  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);">
+			<div class="fixed-container  " ng-style="{'width':getTableWidthinPx(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);">
 					<div id="sticky-header" ng-show="selections.searchRows && rowsToDisplay() > 0 || !selections.searchRows" 	class="sticky-header"   style="height:auto;"
-						ng-style="{'width': (getContainerWidth('headerContent')+2)+'px' } " 
+						ng-style="{'width': (getContainerWidth('headerContent'+tableId))+'px' } " 
 					>
-					<span   ng-style="{'width': (getContainerWidth('headerContent'))+'px', 'height': getContainerHeight('headerRowHeight'+(row.index-1))+'px' }" 
+					<span   ng-style="{'width': (getContainerWidth('headerContent'+tableId))+'px', 'height': getContainerHeight('headerRowHeight'+tableId)+'px' }" 
 							style="padding:0px; margin:0 auto; position:relative; display:inline-block; left:0px; top:0px; float:left;" 
 							ng-repeat="row in dataset.headers track by $index">
 							<div    ng-repeat="col in row.rows track by $index" 
-								ng-style="{  'height':getContainerHeight('columnWidthDim')+'px'} " class="text-left min-width250" 
+								ng-style="{   'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+$index) )+'px', 'height': getContainerHeight('headerRowHeight'+tableId)+'px'} " class="text-left" 
 								style="background-color: #f0efef; font-weight:600; display:inline-block; margin: 0 auto;  padding:10px; 	  float:left; ">
-								{{col.dimension}}  
+								{{$index > 0 ? col.dimension:''}}  
 							</div>
-							<div   ng-show="col.visible"   class="text-center center " 
-							ng-style="{'width': (getContainerWidth('headerColHeight')*col.colspan)+'px', 'height':'37px'} " 
+							<div  ng-show="col.visible"   class="text-center center " 
+									ng-style="{'width':((getContainerWidth('headerColHeight'+$index)*(col.colspan) ))+'px','height': getContainerHeight('headerRowHeight'+tableId)+'px'} " 
 									ng-repeat="col in row.columns track by $index" 
 								style="background-color: #f0efef;  font-weight:600;	border: 1px solid #ddd;  border-right: 0px solid #ddd; margin: 0 auto; border-left:1px solid #ddd; float:left;">
 								 {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']:'' }}  
@@ -281,21 +218,21 @@
 					</div>
 			</div>
 
-			<div  id="sideContent" 
+			<div  id="sideContent{{tableId}}" 
 				class="fixed-container-side" 
 				style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
-				ng-style="{'top': (  (getContainerTop('stickyContainer'))  +(getContainerHeight('firstHeaderColHeight'))  )+'px' , 'height':getContainerHeight('bodyContent')+'px', 'width':(getContainerWidth('rowHieghtElement'+0+'-'+0)*(table.data()[0].elements.length))+'px'}">
+				ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('firstHeaderColHeight'+tableId))  )+'px' , 'height':workOutContainerHeight('af'+tableId), 'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'position': getTablePosition(),'left':getTableLeft()}">
 				<table  class="table ">
 					<tbody  >
 							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index"  >
-							<td   				ng-init="seeNewData(el.element)"
-														ng-style="{'height':(getContainerHeight('rowHieghtElement'+$parent.$index+'-'+$index))+'px'}"
+							<td   			 
+														ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px'}"
                             style=" border-right:0px solid #ccc; vertical-align:text-top; " 
                             ng-repeat="el in row.elements track by $index" 
                             ng-show="el.visible" 
 														colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
-														class="min-width250"
+														class="{{tableDimensionColumnClass}}"
                             ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
                             <span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
                             <span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
@@ -312,13 +249,22 @@
 				</table>
 			</div>
 
-			<div  >
+			<div  ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
 			 
-				<table class="table" id="af1">
-					<thead>
-						<tr  id="headerContent" ng-repeat="row in dataset.headers track by $index">
-							<th id="firstHeaderColHeight"  style="border-right:1px solid #ccc; background-color: #f0efef" 
-								ng-repeat="col in row.rows track by $index" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+				<table class="table" id="af1{{tableId}}">
+					<thead id="head{{tableId}}" >
+						<tr  id="headerContent{{tableId}}" ng-repeat="row in dataset.headers track by $index">
+							<th id="firstHeaderColHeight{{tableId}}" ng-if="$index === 0 && col.visible " style="border-right:1px solid #ccc; background-color: #f0efef" 
+								ng-repeat="col in row.rows track by $index"   colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+								 {{$index > 0 ? col.dimension:''}} 
+								<input ng-if="$index === 0" class="form-control" 
+								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+								style="background-color: transparent;display:inline-block;border: none;" 
+								type="text" ng-model="selections.searchRows"   
+								placeholder="Search {{col.dimension}}..."> 
+							</th>
+							<th id="firstHeaderColHeight{{tableId}}"   ng-if="$index > 0 && col.visible"  style="border-right:1px solid #ccc; background-color: #f0efef" 
+								ng-repeat="col in row.rows track by $index"   colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 								 {{col.dimension}} 
 								<input ng-if="$index === 0" class="form-control" 
 								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
@@ -326,7 +272,7 @@
 								type="text" ng-model="selections.searchRows"   
 								placeholder="Search {{col.dimension}}..."> 
 							</th>
-							<th id="headerRowHeight{{row.index-1}}" 
+							<th id="headerRowHeight{{tableId}}" 
 							style="border-right:1px solid #ccc;background-color: #f0efef" 
 						 
 							ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
@@ -334,12 +280,12 @@
 							</th>
 						</tr>
 					</thead>
-					<tbody   id="bodyContent" ng-init="setUpStickyHeader(); "> 
+					<tbody    id="bodyContent{{tableId}}"  > 
 						<tr id="rowHeightElement{{$index}}" 
 						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
-							<td id="rowHieghtElement{{$parent.$index}}-{{$index}}"  
-									class="min-width250"
+							<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
+									class="{{tableDimensionColumnClass}}"
 									style=" border-right:1px solid #ccc; " 
 									ng-repeat="el in row.elements track by $index" 
 									ng-show="el.visible || $parent.$index === 0" 
@@ -355,19 +301,36 @@
 																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description']}} </span>
 																		
 							</td>
-							<td id="headerColHeight"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
-								ng-right-click="openRefModel(cell.reference().toString()); "
-								 
+							<td id="headerColHeight{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+								ng-right-click="openRefModel(cell.reference().toString()); " 
 								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 								ng-repeat="cell in row.cells track by $index" class="text-right" >
-								<input cellref="{{(cell.reference()).toString()}}" contenteditable='true'  id="{{'input-'+$parent.$parent.$index+'-'+$index}}" ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}" ng-model="cell.value" ng-focus=" getFocus($event); " ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? cell.update(query):''; cell.value != '' && cell.value != cell.lastValue ?   refreshNew(dataset):'';   " />
-								<span ng-if="cell.isReadOnly" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+								
+								<input 
+									cellref="{{(cell.reference()).toString()}}" 
+									contenteditable='true'  
+									id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
+									ng-if="!cell.isReadOnly" 
+									type="text" 
+									class="form-control text-right" 
+									tm1-ui-format-number="0" 
+									ng-attr-tabindex="{{row.index}}" 
+									ng-model="cell.value " 
+									ng-paste="handlePaste($event)"
+									ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:0) : (cell.value | formatNumber:0)" 
+									ng-focus="getFocus($event);  " 
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+								<!--cell.update(query)-->
+							 
+								<span ng-if="cell.isReadOnly && cell.value < 0 " style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+								<span ng-if="cell.isReadOnly && cell.value >= 0" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				
-				<div class="col-xs-12 col-md-12" style="position:fixed; background-color:#fff;   box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:8px; right:0px;" 
+				<div   ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
+				style="position:fixed; padding:0px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
 				 >
 					<div class="btn-group pull-left" role="group" style="font-weight:0.7em;"  >
 						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous();"><i class="fa fa-angle-left"></i></button>
@@ -394,25 +357,38 @@
 
 	 
 
-	<div id="refModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	 
 				<div class="modal-dialog" style="width:90%" role="document">
 			<div class="modal-content"  >
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-					<h4 class="modal-title" id="myModalLabel">Cell Reference</h4>
+					<h4 class="modal-title" id="myModalLabel">Cell Reference
+						<span class="pull-right">
+								<tm1-ui-dbr
+								ng-if="cellreferenceArray.length"
+								 tm1-instance="{{tm1Instance}}"
+								 tm1-cube="{{cubeName}}"
+								 tm1-elements='{{cellreferenceArray.toString()}}' 
+								 >
+							</tm1-ui-dbr>
+						</span>
+					</h4>
 				</div>
 				<div class="modal-body table-responsive">
 						<table class="table">
+
 							<thead>
 								<th>
 									Dimension
 								</th>
-								<th>
+								<th class="text-right">
 									Element
 								</th>
 							</thead>
+
 							<tbody>
+							 
 								<tr ng-repeat="dimension in dimensionArray track by $index" >
 									<td class="text-left">
 										{{dimension}}
@@ -432,8 +408,8 @@
 									
 										<tm1-ui-export 
 									 
-										ng-init="formatUploadButton()" 
-										tm1-target-id="af2" 
+										 
+										tm1-target-id="af2{{tableId}}" 
 										tm1-output-name="{{(cellreferenceArray.toString()+'').split(',').join('-')}}-{{drillNameChosen}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" 
 										m1-field-separator="" 
 										tm1-field-qualifier="" 
@@ -449,7 +425,7 @@
 				<div class="modal-footer" style="overflow:auto; height:500px;">
 				<!--	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
 			 
-					<table id="af2" ng-if="datasetDrill && !loading && drillNameChosen === 'Transactions'" class="table table-striped" ng-if="!loading">
+					<table id="af2{{tableId}}" ng-show="datasetDrill && !loading && drillNameChosen === 'Transactions'" class="table table-striped" ng-if="!loading">
 						<thead>
 							<tr ng-repeat="row in datasetDrill.headers">
 								<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
@@ -461,7 +437,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="row in tableDrill.data()" >
+							<tr ng-repeat="row in tableDrill[tableId].data()" >
 								<td ng-repeat="el in row.elements" ng-if="el.visible || $parent.$index == 0" colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" ng-class="{'tm1-ui-element-consol': el.element.type == 'C'}"  >
 									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>

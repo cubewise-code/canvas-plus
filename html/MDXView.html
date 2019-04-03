@@ -1,17 +1,122 @@
-<div ng-controller="MDXViewCtrl" ng-if="$root.user.Name && $root.selections.year" style="padding-top:100px;">
- <style>
-	 html{
-		 overflow: hidden;
-	 }
-	 body{
-		overflow:hidden
-	}
-</style>
-	<super-cube-view 
-		tm1-instance = "dev"
-		cube-name = "General Ledger"
-		cube-view = "Budget Template"
-		attribute-options="{{attributeOptions}}"
-	> 
-	</super-cube-view>		
+<div ng-controller="MDXViewCtrl" ng-if="$root.user.Name && $root.selections.year"  >
+	<style>
+		html{
+			overflow: hidden;
+		}
+		body{
+			overflow:hidden
+		}
+		/* 
+		##Device = Desktops
+		##Screen = 1281px to higher resolution desktops
+		*/
+
+		@media (min-width: 1281px) {
+		.min-width250{ min-width: 250px !important;  width: 250px !important;  max-width: 250px !important; }
+		
+		
+		}
+
+		/* 
+		##Device = Laptops, Desktops
+		##Screen = B/w 1025px to 1280px
+		*/
+
+		@media (min-width: 1025px) and (max-width: 1280px) {
+		
+		.min-width250{ min-width: 150px; }
+		
+		}
+
+		/* 
+		##Device = Tablets, Ipads (portrait)
+		##Screen = B/w 768px to 1024px
+		*/
+
+		@media (min-width: 768px) and (max-width: 1024px) {
+		
+		.min-width250{ min-width: 100px; }
+		
+		}
+
+		/* 
+		##Device = Tablets, Ipads (landscape)
+		##Screen = B/w 768px to 1024px
+		*/
+
+		@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+		
+		.min-width250{ min-width: 100px; }
+		
+		}
+
+		/* 
+		##Device = Low Resolution Tablets, Mobiles (Landscape)
+		##Screen = B/w 481px to 767px
+		*/
+
+		@media (min-width: 481px) and (max-width: 767px) {
+		
+		.min-width250{ min-width: 100px; }
+		
+		}
+
+		/* 
+		##Device = Most of the Smartphones Mobiles (Portrait)
+		##Screen = B/w 320px to 479px
+		*/
+
+		@media (min-width: 320px) and (max-width: 480px) {
+		
+		.min-width250{ min-width: 100px; }
+		
+		}
+
+		.min-width100{
+			max-width:70px !important; 
+			width:70px !important; 
+			min-width:70px !important; 
+			
+		}
+		
+		 
+
+	</style>
+	<div id="one">
+			<super-cube-view 
+			tm1-instance = "dev"
+			cube-name = "General Ledger"
+			cube-view = "Budget Template"
+			attribute-options="{{attributeOptions}}"  
+			table-height-bottom-offset="30"
+			table-width="50%"
+			table-left="0"
+			table-top="145px"
+			table-dimension-column-class="min-width250"
+			table-data-column-class="min-width100"
+			table-id="one"
+			
+			> 
+		</super-cube-view>	
+	</div>
+	<div id="two" >
+			 <super-cube-view 
+			tm1-instance = "dev"
+			cube-name = "Retail"
+			cube-view = "Default"
+			attribute-options="{{attributeOptions}}"  
+			table-height-bottom-offset="30"
+			table-width="50%"
+			table-left="50%"
+			table-top="145px"
+			table-dimension-column-class="min-width250"
+			table-data-column-class="min-width100"
+			table-id="two" 
+			> 
+		</super-cube-view> 
+	</div>  
+
+	 	
+	 	
+	 
 </div>

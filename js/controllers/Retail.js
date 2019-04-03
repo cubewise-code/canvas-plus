@@ -79,7 +79,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         $tm1Ui.dimensionSubsets($scope.mainData['instance'],$scope.mainData['rowDimension']['name']).then(function(result){
               
             if(result){ 
-                console.log(result, "!!!!!!!!!!!!!");
+               //console.log(result, "!!!!!!!!!!!!!");
                     $scope.lists.subsetList = result; 
             }
         });
@@ -156,7 +156,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                     if($($body).scrollTop() > (valuetoEval)){
 
                         $rootScope.headerOutOffView = true;
-                        console.log("$rootScope.headerOutOffView", $rootScope.headerOutOffView)
+                       //console.log("$rootScope.headerOutOffView", $rootScope.headerOutOffView)
                         $($stickyHeader).css('display','block'); 
                         $($stickyHeader).css('opacity','1'); 
                         $($stickyHeader).css('pointer-events','auto'); 
@@ -358,7 +358,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
                 arrayToKeep.push($scope.lists.driver[ttr]['key']);
             }
             if( (arrayToKeep).indexOf($scope.selections.driver) === -1  ){
-             //   console.log("NO SELECTED ACCOUNT IN SUBSET - INITIALISE FIRST IN THE LIST");
+             //  //console.log("NO SELECTED ACCOUNT IN SUBSET - INITIALISE FIRST IN THE LIST");
                 if($scope.lists.driver.length){
                            $scope.selections.driver = $scope.lists.driver['0']['key'];
                 }
