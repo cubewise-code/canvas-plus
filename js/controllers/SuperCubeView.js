@@ -16,7 +16,8 @@
                     tableHeightBottomOffset:'@',
                     tableDimensionColumnClass:'@',
                     tableDataColumnClass:'@',
-                   tableId:"@"
+                   tableId:"@",
+                   rowsToLoad:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -34,7 +35,7 @@
                 scope.tableLeft = $attributes.tableLeft;
                 scope.tableTop = $attributes.tableTop;
                 scope.tableId = $attributes.tableId;
-
+                scope.rowsToLoad =  $attributes.rowsToLoad;
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
 
@@ -166,7 +167,7 @@
                    
                      
                 }
-                scope.currentRowCount = 100;
+                scope.currentRowCount = scope.rowsToLoad;
                 scope.tablerowLength = 0;
                 
                 scope.refresh = function(){
@@ -584,7 +585,7 @@
                             }
                             scope.tableDrill = $tm1Ui.tableCreate(scope, scope.datasetDrill.rows, options);
                         
-                            scope.tableDrill.pageSize(1000)
+                            scope.tableDrill.pageSize(scope.rowsToLoad)
                         }else{
                             scope.tableDrillSource = [];
                             scope.tableDrillCol = [];
