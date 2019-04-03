@@ -240,7 +240,7 @@
                                 <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                                 <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                             </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
-														<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description']}} </span>
+														<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description'] || el.element.attributes['alias'] || el.name}} </span>
 							</td>
 							 
 						</tr>
@@ -298,7 +298,7 @@
                                         <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                                       </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
                                    
-																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description']}} </span>
+																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{ el.element.attributes['Description'] || el.element.attributes['alias'] || el.name  }} </span>
 																		
 							</td>
 							<td id="headerColHeight{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
