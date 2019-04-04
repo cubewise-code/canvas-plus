@@ -163,7 +163,7 @@
 			<div class="hidden-xs" ng-show=" $root.showView " ng-style="{'left':getTableLeft(), 'top':getTableTop()  }" style="position:fixed; z-index:99999 ;   background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
 			 >
 					<span style="margin-right:10px;margin-left:10px;">
-						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-bars':chartVisible }" class="fa "></i> 
+						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-table':chartVisible }" class="fa "></i> 
 					</span>
 					<span  ng-hide="!chartVisible || !collapseDimensions"   style="margin-right:10px;margin-left:10px;">
 						<i ng-click="collapseDimensions = !collapseDimensions" class="fa fa-minus"></i>
