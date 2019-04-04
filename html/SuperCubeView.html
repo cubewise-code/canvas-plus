@@ -150,11 +150,16 @@
 		  
 		.table{
 			margin-bottom:0px;
+
+		}
+		.overflowhidden{
+			overflow:overlay;
+			overflow-x:hidden;
 		}
 	</style>
   
   	<div class="row"   >
-				<div style="position:fixed; z-index:99999 ; left:0px; top:145px; background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
+				<div class="hidden-xs" style="position:fixed; z-index:99999 ; left:0px; top:145px; background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
 			 >
 					<span style="margin-right:10px;margin-left:10px;">
 						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-bars':chartVisible }" class="fa "></i> 
@@ -247,10 +252,10 @@
                             ng-repeat="el in row.elements track by $index" 
                             ng-show="el.visible" 
 														colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
-														class="{{tableDimensionColumnClass}}"
+														class="{{tableDimensionColumnClass}} overflowhidden"
                             ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
-                            <span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-                            <span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+                             
+                          
                             <span ng-show="!selections.searchRows">
                                 <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                                 <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
@@ -304,14 +309,14 @@
 						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
 							<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
-									class="{{tableDimensionColumnClass}}"
+									class="{{tableDimensionColumnClass}} overflowhidden"
 									style=" border-right:1px solid #ccc; " 
 									ng-repeat="el in row.elements track by $index" 
 									ng-show="el.visible || $parent.$index === 0" 
 									colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
 									ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+								 
 									<span ng-show="!selections.searchRows">
                                         <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                                         <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
@@ -378,29 +383,44 @@
 		 <div  ng-style="{ 'left':getTableLeft(),'top':getTableTop()}" >
 			  
 		 <table class="table" style="margin-bottom:140px;" >
-				<thead>
-					<tr>
-							<th ng-show="collapseDimensions" colspan="{{row.elements.length}}" >&nbsp;</th> 
-							<th ng-show="!collapseDimensions" 	colspan="{{row.cells.length}}">&nbsp;</th>
-				 </tr>
-				</thead>
-			 
-				<tbody   >
+				<thead id="head{{tableId}}" >
+							<tr>
+								<th colspan="{{dataset.headers.rows.length}}">
+									&nbsp;
+								</th>
+							</tr>
+						<tr  id="headerContent{{tableId}}" ng-repeat="row in dataset.headers track by $index">
+							<th id="firstHeaderColHeight{{tableId}}" ng-if="collapseDimensions && (el.visible || $parent.$index === 0 )" style="border-right:1px solid #ccc; background-color: #f0efef" 
+								ng-repeat="col in row.rows track by $index"   colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+								 {{$index > 0 ? col.dimension:''}} 
+								<input ng-if="$index === 0" class="form-control" 
+								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+								style="background-color: transparent;display:inline-block;border: none;" 
+								type="text" ng-model="selections.searchRows"   
+								placeholder="Search {{col.dimension}}..."> 
+							</th>
+							 
+						 
+						</tr>
+ 
+					</thead>
+			<tbody   >
+					
 						<tr id="rowHeightElement{{$index}}" 
 						ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 						ng-repeat="row in  table.data()  track by $index" ng-init="cellArray = [];" >
 					 
 						<td 
-						ng-show="collapseDimensions && el.visible"
+						ng-show="collapseDimensions && (el.visible || $parent.$index === 0 )"
 						id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
 						class="{{tableDimensionColumnClass}}"
 						style=" border-right:1px solid #ccc; vertical-align: top;" 
 						ng-repeat="el in row.elements track by $index" 
-						ng-show="  || $parent.$index === 0 " 
+				 
 						colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
 						ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
-						<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-						<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+					 
+						 
 						<span ng-show="!selections.searchRows">
 																	<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 																	<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
@@ -409,20 +429,27 @@
 															<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{ el.element.attributes['Description'] || el.element.attributes['alias'] || el.element.name  }} </span>
 															
 				</td>
-							<td    style=" border-right:1px solid #ccc;" 
+							<td    style=" border-right:1px solid #ccc; width:80%" 
 							 
-							 	col-span="row.cells.length"
+							 	col-span="{{row.cells.length}}"
 								  class="text-right"  >
 							 
 							 <span ng-if="cell.reference().length" ng-repeat="cell in row.cells track by $index"  ng-init="cellArray[row.index][$index] = cell.value"  >  </span>
  
 								 
-								  <tm1-ui-chart ng-if="cellArray.length && chartVisible"  tm1-chart-type="line" tm1-height="100" tm1-axis-label-x="" tm1-axis-label-y="" tm1-duration="0" 
-										tm1-state="{{cellArray}}, {{collapseDimensions}}"
-										tm1-margin="{top:5,bottom:2,left:2, right:2}">
-										 <tm1-ui-chart-value ng-repeat="cell in row.cells track by $index" 
-										 tm1-series="{{ row.elements[2].element['attributes']['Description'] || row.elements[2].element.attributes['alias'] || row.elements[2].element.name }} {{ row.elements[1].element['attributes']['Description'] || row.elements[1].element.attributes['alias'] || row.elements[1].element.name }} {{ row.elements[0].element['attributes']['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].element.name }} " 
-										 tm1-order-no="{{$index+1}}" tm1-label="{{dataset.headers[0]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[1]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[2]['columns'][$index]['element']['attributes']['Caption_Default']}}" tm1-value="{{cell.value}}" tm1-color="steelblue"></tm1-ui-chart-value>
+									<tm1-ui-chart ng-if="cellArray.length && chartVisible"  tm1-chart-type="line" 
+									tm1-width="{{innerWidth}}" 
+									tm1-height="170" tm1-axis-label-x="" tm1-axis-label-y="" tm1-duration="0" 
+										tm1-state="{{cellArray}}, {{collapseDimensions}},{{chartVisible}}"
+										tm1-margin="{top:5,bottom:50,left:100, right:2}">
+										 <tm1-ui-chart-value 
+												ng-repeat="cell in row.cells track by $index" 
+												tm1-area="true"
+												tm1-series="{{ row.elements[2].element['attributes']['Description'] || row.elements[2].element.attributes['alias'] || row.elements[2].element.name }} {{ row.elements[1].element['attributes']['Description'] || row.elements[1].element.attributes['alias'] || row.elements[1].element.name }} {{ row.elements[0].element['attributes']['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].element.name }} " 
+												tm1-order-no="{{$index+1}}" tm1-label="{{dataset.headers[0]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[1]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[2]['columns'][$index]['element']['attributes']['Caption_Default']}}" 
+												tm1-value="{{cell.value}}" 
+												tm1-color="steelblue">
+										</tm1-ui-chart-value>
 										
 									</tm1-ui-chart>  
 									 
@@ -450,6 +477,7 @@
 							<button ng-show="  table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(400)}" ng-click="table.pageSize(400);  currentRowCount = 400; refresh()">400</button>
 							<button ng-show=" table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(500)}" ng-click="table.pageSize(500);  currentRowCount = 500; refresh()">500</button>
 							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh()">All</button>
+ 
 						</div>
 				</div>
 				</div>
