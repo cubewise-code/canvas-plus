@@ -375,17 +375,17 @@
 		</div>
 		<div id="stickyContainer{{tableId}}" ng-show="chartVisible"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
-		 <div  ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
+		 <div  ng-style="{ 'left':getTableLeft(),'top':getTableTop()}" >
 			  
-		 <table class="table" >
+		 <table class="table" style="margin-bottom:140px;" >
 				<thead>
 					<tr>
-							<th ng-show="collapseDimensions" colspan="{{row.elements.length}}" ></th> 
-							<th ng-show="!collapseDimensions" 	colspan="{{row.cells.length}}"></th>
+							<th ng-show="collapseDimensions" colspan="{{row.elements.length}}" >&nbsp;</th> 
+							<th ng-show="!collapseDimensions" 	colspan="{{row.cells.length}}">&nbsp;</th>
 				 </tr>
 				</thead>
 			 
-				<tbody  >
+				<tbody   >
 						<tr id="rowHeightElement{{$index}}" 
 						ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 						ng-repeat="row in  table.data()  track by $index" ng-init="cellArray = [];" >
@@ -394,7 +394,7 @@
 						ng-show="collapseDimensions && el.visible"
 						id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
 						class="{{tableDimensionColumnClass}}"
-						style=" border-right:1px solid #ccc; " 
+						style=" border-right:1px solid #ccc; vertical-align: top;" 
 						ng-repeat="el in row.elements track by $index" 
 						ng-show="  || $parent.$index === 0 " 
 						colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
@@ -421,8 +421,8 @@
 										tm1-state="{{cellArray}}, {{collapseDimensions}}"
 										tm1-margin="{top:5,bottom:2,left:2, right:2}">
 										 <tm1-ui-chart-value ng-repeat="cell in row.cells track by $index" 
-										 tm1-series="{{ row.elements[2].element['attributes']['Description'] || row.elements[2].element.attributes['alias'] || row.elements[2].element.name }} - {{ row.elements[1].element['attributes']['Description'] || row.elements[1].element.attributes['alias'] || row.elements[1].element.name }} - {{ row.elements[0].element['attributes']['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].element.name }} " 
-										 tm1-order-no="{{$index+1}}" tm1-label="{{dataset.headers[0]['columns'][$index]['element']['attributes']['Caption_Default']}}{{dataset.headers[1]['columns'][$index]['element']['attributes']['Caption_Default']}}{{dataset.headers[2]['columns'][$index]['element']['attributes']['Caption_Default']}}" tm1-value="{{cell.value}}" tm1-color="steelblue"></tm1-ui-chart-value>
+										 tm1-series="{{ row.elements[2].element['attributes']['Description'] || row.elements[2].element.attributes['alias'] || row.elements[2].element.name }} {{ row.elements[1].element['attributes']['Description'] || row.elements[1].element.attributes['alias'] || row.elements[1].element.name }} {{ row.elements[0].element['attributes']['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].element.name }} " 
+										 tm1-order-no="{{$index+1}}" tm1-label="{{dataset.headers[0]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[1]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[2]['columns'][$index]['element']['attributes']['Caption_Default']}}" tm1-value="{{cell.value}}" tm1-color="steelblue"></tm1-ui-chart-value>
 										
 									</tm1-ui-chart>  
 									 
