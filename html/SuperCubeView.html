@@ -159,7 +159,8 @@
 	</style>
   
   	<div class="row"   >
-				<div class="hidden-xs" style="position:fixed; z-index:99999 ; left:0px; top:145px; background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
+				 
+				<div class="hidden-xs" ng-style="{'left':getTableLeft(), 'top':getTableTop()  }" style="position:fixed; z-index:99999 ;   background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
 			 >
 					<span style="margin-right:10px;margin-left:10px;">
 						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-bars':chartVisible }" class="fa "></i> 
@@ -171,8 +172,7 @@
 						<i   ng-click="collapseDimensions = !collapseDimensions" class="fa fa-plus"></i>
 					</span>
 				</div>
-		
-				<div id="stickyContainer{{tableId}}" ng-hide="chartVisible"  class="stickyContainer "  
+				<div id="stickyContainer{{tableId}}" ng-show="!chartVisible"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
 				 
 					<div class="fixedFirstColHeader  "  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
@@ -380,7 +380,7 @@
 		</div>
 		<div id="stickyContainer{{tableId}}" ng-show="chartVisible"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
-		 <div  ng-style="{ 'left':getTableLeft(),'top':getTableTop()}" >
+ 
 			  
 		 <table class="table" style="margin-bottom:140px;" >
 				<thead id="head{{tableId}}" >
@@ -411,12 +411,12 @@
 						ng-repeat="row in  table.data()  track by $index" ng-init="cellArray = [];" >
 					 
 						<td 
-						ng-show="collapseDimensions && (el.visible || $parent.$index === 0 )"
+						ng-show="collapseDimensions && (el.visible || $parent.$index === 0  )"
 						id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
 						class="{{tableDimensionColumnClass}}"
 						style=" border-right:1px solid #ccc; vertical-align: top;" 
 						ng-repeat="el in row.elements track by $index" 
-				 
+				 		
 						colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
 						ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 					 
@@ -437,12 +437,13 @@
 							 <span ng-if="cell.reference().length" ng-repeat="cell in row.cells track by $index"  ng-init="cellArray[row.index][$index] = cell.value"  >  </span>
  
 								 
-									<tm1-ui-chart ng-if="cellArray.length && chartVisible"  tm1-chart-type="line" 
+									<tm1-ui-chart ng-show="cellArray.length && chartVisible"  tm1-chart-type="line" 
 									tm1-width="{{innerWidth}}" 
 									tm1-height="170" tm1-axis-label-x="" tm1-axis-label-y="" tm1-duration="0" 
 										tm1-state="{{cellArray}}, {{collapseDimensions}},{{chartVisible}}"
 										tm1-margin="{top:5,bottom:50,left:100, right:2}">
-										 <tm1-ui-chart-value 
+									 
+										<tm1-ui-chart-value 
 												ng-repeat="cell in row.cells track by $index" 
 												tm1-area="true"
 												tm1-series="{{ row.elements[2].element['attributes']['Description'] || row.elements[2].element.attributes['alias'] || row.elements[2].element.name }} {{ row.elements[1].element['attributes']['Description'] || row.elements[1].element.attributes['alias'] || row.elements[1].element.name }} {{ row.elements[0].element['attributes']['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].element.name }} " 
@@ -450,7 +451,7 @@
 												tm1-value="{{cell.value}}" 
 												tm1-color="steelblue">
 										</tm1-ui-chart-value>
-										
+									 
 									</tm1-ui-chart>  
 									 
 							</td>
@@ -480,7 +481,7 @@
  
 						</div>
 				</div>
-				</div>
+				 
 
 
 		 </div>

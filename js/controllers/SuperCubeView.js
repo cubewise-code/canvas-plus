@@ -39,9 +39,10 @@
                 scope.rowsToLoad =  $attributes.rowsToLoad;
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
+                
                 scope.chartVisible = $attributes.chartVisible;
                 scope.dateNow = new Date() ;
-            
+                scope.collapseDimensions = true;
             
                 var n = scope.dateNow.getMonth();
                 var p = scope.dateNow.getDay();
@@ -408,7 +409,14 @@
                       }
                   }
               }
-               
+              scope.setTableHeightChart= function(id){
+                if(document.getElementById(id)){
+                    var tempObjToTrack = document.getElementById(id);
+                    if(tempObjToTrack != null || tempObjToTrack != undefined ){
+                        return (((window.innerHeight - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top));
+                    }
+                }
+             }
               scope.setTableHeight = function(id){
                   if(document.getElementById(id)){
                       var tempObjToTrack = document.getElementById(id);
