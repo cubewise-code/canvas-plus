@@ -17,7 +17,8 @@
                     tableDimensionColumnClass:'@',
                     tableDataColumnClass:'@',
                    tableId:"@",
-                   rowsToLoad:'@'
+                   rowsToLoad:'@',
+                   chartVisible:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -38,7 +39,7 @@
                 scope.rowsToLoad =  $attributes.rowsToLoad;
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
-
+                scope.chartVisible = $attributes.chartVisible;
                 scope.dateNow = new Date() ;
             
             
@@ -79,6 +80,8 @@
                 scope.table = [];
                 scope.optionsNew = [];
                 scope.options = [];
+                scope.cellRef = {};
+                
                 scope.refreshNew = function(newdataset){ 
                    
  
@@ -169,7 +172,22 @@
                 }
                 scope.currentRowCount = scope.rowsToLoad;
                 scope.tablerowLength = 0;
-                
+                scope.ledgendsToUse = {
+                 
+                    "0": {
+                    "color": $rootScope.applicationHeaderColorSelect,
+                    "name": "Actual"
+                    },
+                    "1": {
+                    "color": $rootScope.applicationHeaderColorBudget,
+                    "name": "Budget"
+                    },
+                    "2": {
+                    "color":  $rootScope.applicationHeaderColorLastYear,
+                    "name": "Last Year"
+                    }
+                }
+                 
                 scope.refresh = function(){
                     
                     
