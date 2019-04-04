@@ -160,7 +160,7 @@
   
   	<div class="row"   >
 				 
-				<div class="hidden-xs" ng-style="{'left':getTableLeft(), 'top':getTableTop()  }" style="position:fixed; z-index:99999 ;   background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
+				<div class="hidden-xs" ng-show=" $root.showView " ng-style="{'left':getTableLeft(), 'top':getTableTop()  }" style="position:fixed; z-index:99999 ;   background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
 			 >
 					<span style="margin-right:10px;margin-left:10px;">
 						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-bars':chartVisible }" class="fa "></i> 
