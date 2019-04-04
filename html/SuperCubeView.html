@@ -176,7 +176,7 @@
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
 				 
 					<div class="fixedFirstColHeader  "  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
-					ng-style="{'top': ( (getContainerTop('stickyContainer'+tableId) + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'height':(getContainerHeight('headerColHeight0'))+'px', 'left':getTableLeft()} " >
+					ng-style="{'top': ( (getContainerTop('stickyContainer'+tableId) + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'height':(getContainerHeight('headerColHeight'+tableId+'0'))+'px', 'left':getTableLeft()} " >
 					
 					<div ng-style=" {'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px'} " 
 					class="text-left " 
@@ -227,7 +227,7 @@
 								{{$index > 0 ? col.dimension:''}}  
 							</div>
 							<div  ng-show="col.visible"   class="text-center center " 
-									ng-style="{'width':((getContainerWidth('headerColHeight'+$index)*(col.colspan) ))+'px','height': getContainerHeight('headerRowHeight'+tableId)+'px'} " 
+									ng-style="{'width':((getContainerWidth('headerColHeight'+tableId+''+$index)*(col.colspan) ))+'px','height': getContainerHeight('headerRowHeight'+tableId)+'px'} " 
 									ng-repeat="col in row.columns track by $index" 
 								style="background-color: #f0efef;  font-weight:600;	border: 1px solid #ddd;  border-right: 0px solid #ddd; margin: 0 auto; border-left:1px solid #ddd; float:left;">
 								 {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']:'' }}  
@@ -325,7 +325,7 @@
 																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{ el.element.attributes['Description'] || el.element.attributes['alias'] || el.name  }} </span>
 																		
 							</td>
-							<td id="headerColHeight{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+							<td id="headerColHeight{{tableId}}{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
 								ng-right-click="openRefModel(cell.reference().toString()); " 
 								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 								ng-repeat="cell in row.cells track by $index" class="text-right" >
