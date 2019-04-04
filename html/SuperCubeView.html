@@ -172,7 +172,7 @@
 						<i   ng-click="collapseDimensions = !collapseDimensions" class="fa fa-plus"></i>
 					</span>
 			</div>
-			<div id="stickyContainer{{tableId}}" ng-if="!chartVisible"  class="stickyContainer "  
+			<div id="stickyContainer{{tableId}}" ng-show="!chartVisible"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
 				 
 					<div class="fixedFirstColHeader  "  style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
@@ -407,7 +407,7 @@
 			<tbody   >
 					
 						<tr id="rowHeightElement{{$index}}" 
-						ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+						ng-show="!selections.searchRows || (selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) > -1)"
 						ng-repeat="row in  table.data()  track by $index" ng-init="cellArray = [];" >
 					 
 						<td 
