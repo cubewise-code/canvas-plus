@@ -1,18 +1,19 @@
 <div ng-controller="MDXViewCtrl" ng-if="$root.user.Name && $root.selections.year"  >
 	<style>
-		html{
+		 html{
 			overflow: hidden;
 		}
 		body{
 			overflow:hidden
 		}
-		/* 
+		 
+		/*
 		##Device = Desktops
 		##Screen = 1281px to higher resolution desktops
 		*/
 
 		@media (min-width: 1281px) {
-		.min-width250{ min-width: 250px !important;  width: 250px !important;  max-width: 250px !important; }
+		.min-width250{ min-width: 200px !important;  width: 200px !important;  max-width: 200px !important; }
 		
 		
 		}
@@ -82,28 +83,33 @@
 		 
 
 	</style>
+	 
 	<div id="one">
-			<super-cube-view 
+		
+		<super-cube-view 
 			tm1-instance = "dev"
 			cube-name = "General Ledger"
 			cube-view = "Budget Template"
 			attribute-options="{{attributeOptions}}"  
 			table-height-bottom-offset="30"
-			table-width="50%"
+			table-width="100%"
 			table-left="0"
 			table-top="145px"
 			table-dimension-column-class="min-width250"
 			table-data-column-class="min-width100"
 			table-id="one"
-			
+			rows-to-load = "30"
+			chart-visible=""
 			> 
 		</super-cube-view>	
+		 
 	</div>
-	<div id="two" >
-			 <super-cube-view 
+	<!-- <div id="two">
+		
+		<super-cube-view 
 			tm1-instance = "dev"
-			cube-name = "Retail"
-			cube-view = "Default"
+			cube-name = "General Ledger"
+			cube-view = "Budget Template"
 			attribute-options="{{attributeOptions}}"  
 			table-height-bottom-offset="30"
 			table-width="50%"
@@ -111,10 +117,14 @@
 			table-top="145px"
 			table-dimension-column-class="min-width250"
 			table-data-column-class="min-width100"
-			table-id="two" 
+			table-id="two"
+			rows-to-load = "30"
+			chart-visible=""
 			> 
-		</super-cube-view> 
-	</div>  
+		</super-cube-view>	
+		 
+	</div> -->
+	 
 
 	 	
 	 	

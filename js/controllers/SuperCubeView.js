@@ -16,7 +16,9 @@
                     tableHeightBottomOffset:'@',
                     tableDimensionColumnClass:'@',
                     tableDataColumnClass:'@',
-                   tableId:"@"
+                   tableId:"@",
+                   rowsToLoad:'@',
+                   chartVisible:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -34,12 +36,13 @@
                 scope.tableLeft = $attributes.tableLeft;
                 scope.tableTop = $attributes.tableTop;
                 scope.tableId = $attributes.tableId;
-
+                scope.rowsToLoad =  $attributes.rowsToLoad;
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
-
+                
+                scope.chartVisible = $attributes.chartVisible;
                 scope.dateNow = new Date() ;
-            
+                scope.collapseDimensions = true;
             
                 var n = scope.dateNow.getMonth();
                 var p = scope.dateNow.getDay();
@@ -78,6 +81,8 @@
                 scope.table = [];
                 scope.optionsNew = [];
                 scope.options = [];
+                scope.cellRef = {};
+                
                 scope.refreshNew = function(newdataset){ 
                    
  
@@ -166,9 +171,24 @@
                    
                      
                 }
-                scope.currentRowCount = 100;
+                scope.currentRowCount = scope.rowsToLoad;
                 scope.tablerowLength = 0;
-                
+                scope.ledgendsToUse = {
+                 
+                    "0": {
+                    "color": $rootScope.applicationHeaderColorSelect,
+                    "name": "Actual"
+                    },
+                    "1": {
+                    "color": $rootScope.applicationHeaderColorBudget,
+                    "name": "Budget"
+                    },
+                    "2": {
+                    "color":  $rootScope.applicationHeaderColorLastYear,
+                    "name": "Last Year"
+                    }
+                }
+                 
                 scope.refresh = function(){
                     
                     
@@ -389,7 +409,14 @@
                       }
                   }
               }
-               
+              scope.setTableHeightChart= function(id){
+                if(document.getElementById(id)){
+                    var tempObjToTrack = document.getElementById(id);
+                    if(tempObjToTrack != null || tempObjToTrack != undefined ){
+                        return (((window.innerHeight - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top));
+                    }
+                }
+             }
               scope.setTableHeight = function(id){
                   if(document.getElementById(id)){
                       var tempObjToTrack = document.getElementById(id);
@@ -584,7 +611,7 @@
                             }
                             scope.tableDrill = $tm1Ui.tableCreate(scope, scope.datasetDrill.rows, options);
                         
-                            scope.tableDrill.pageSize(1000)
+                            scope.tableDrill.pageSize(scope.rowsToLoad)
                         }else{
                             scope.tableDrillSource = [];
                             scope.tableDrillCol = [];
@@ -623,14 +650,25 @@
                 }
                 scope.rowsToDisplay = function(){
                     var count = 0;
-                    for(row in scope.table.data()){
-                        if(scope.selections.searchRows && ((scope.table.data()[row].elements[0].element.attributes['Description']).toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
-                          //console.log("rows to display");
+                    var obg = scope.table.data();
+                    var arrayOfAliasAndNames = [];
+                    for(row in obg){
+                        
+                        if(obg[row].elements[0].element.attributes['Description']){
+                             arrayOfAliasAndNames = obg[row].elements[0].element.attributes['Description'].toLowerCase()+" "+obg[row].elements[0].element.name +''+obg[row].elements[0].element.alias;
+                        }else{
+                            arrayOfAliasAndNames = ""+obg[row].elements[0].element.name+" ";
+                        }
+                         
+                        if(scope.selections.searchRows && (arrayOfAliasAndNames).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
+                           
                             count++;
+                           // console.log("rows to display",  arrayOfAliasAndNames, (arrayOfAliasAndNames).indexOf((scope.selections.searchRows).toLowerCase()) );
                         }else{
                             
                         }
                     }
+                   
                     return count;
                 }
                 scope.dispatchResize = function(){
