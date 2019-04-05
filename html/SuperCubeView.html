@@ -174,8 +174,8 @@
 .nvtooltip.with-3d-shadow, .with-3d-shadow .nvtooltip{
 	height:auto;
 	overflow:auto;
-	top:0px;
-	left:0px;
+	 
+	left:0px !important;
 	position:fixed;
 
 }
@@ -186,13 +186,13 @@
 			<div class="hidden-xs" ng-show=" $root.showView " ng-style="{'left':getTableLeft(), 'top':getTableTop()  }" style="position:fixed; z-index:99999 ;   background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
 			 >
 					<span style="margin-right:10px;margin-left:10px;">
-						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-table':chartVisible }" class="fa "></i> 
+						<i 	ng-click="chartVisible = !chartVisible; dispatchResize(); api.update();" ng-class="{'fa-bar-chart':!chartVisible,'fa-table':chartVisible }" class="fa "></i> 
 					</span>
-					<span  ng-hide="!chartVisible || !collapseDimensions"   style="margin-right:10px;margin-left:10px;">
-						<i ng-click="collapseDimensions = !collapseDimensions;  dispatchResize();" class="fa fa-minus"></i>
+					<span  ng-hide="!chartVisible || !consolidatedRowsOnly"   style="margin-right:10px;margin-left:10px;">
+						<i ng-click="consolidatedRowsOnly = !consolidatedRowsOnly;  refreshNew(dataset); api.update();" class="fa fa-object-ungroup "></i>
 					</span>
-					<span  ng-hide="!chartVisible || collapseDimensions"  style="margin-right:10px;margin-left:10px;">
-						<i   ng-click="collapseDimensions = !collapseDimensions;  dispatchResize();" class="fa fa-plus"></i>
+					<span  ng-hide="!chartVisible || consolidatedRowsOnly"  style="margin-right:10px;margin-left:10px;">
+						<i   ng-click="consolidatedRowsOnly = !consolidatedRowsOnly;  refreshNew(dataset); api.update();" class="fa fa-object-group "></i>
 					</span>
 			</div>
 			<div id="stickyContainer{{tableId}}" ng-show="!chartVisible"  class="stickyContainer "  
@@ -383,7 +383,7 @@
 				style="position:fixed; padding:0px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
 				 >
 					<div class="btn-group pull-left" role="group" style="font-weight:0.7em;"  >
-						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous();"><i class="fa fa-angle-left"></i></button>
+						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous(); "><i class="fa fa-angle-left"></i></button>
 						<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>
 						<button type="button" class="btn btn-default" style="font-weight:0.7em;" ng-click="table.next(); "><i class="fa fa-angle-right"></i></button>
 					</div>
@@ -407,16 +407,16 @@
 			<div id="stickyContainer{{tableId}}" ng-show="chartVisible"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
  
-					<nvd3 options="options" data="data" api="api" on-ready="callback" ></nvd3>
+					<nvd3   options="options" data="data" api="api" on-ready="callback" ></nvd3>
 									 
 		  
 				<div   ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
 				style="position:fixed; padding:0px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
 				 >
 					<div class="btn-group pull-left" role="group" style="font-weight:0.7em;"  >
-						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous();"><i class="fa fa-angle-left"></i></button>
+						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous();   "><i class="fa fa-angle-left"></i></button>
 						<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>
-						<button type="button" class="btn btn-default" style="font-weight:0.7em;" ng-click="table.next(); "><i class="fa fa-angle-right"></i></button>
+						<button type="button" class="btn btn-default" style="font-weight:0.7em;" ng-click="table.next();   "><i class="fa fa-angle-right"></i></button>
 					</div>
 					<div class="btn-group pull-right" role="group" style="font-weight:0.7em;" >
 							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh()">10</button>
