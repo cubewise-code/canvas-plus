@@ -280,6 +280,8 @@
                              
                           
                             <span ng-show="!selections.searchRows">
+																<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+																<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
                                 <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                                 <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                             </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
@@ -339,6 +341,7 @@
 									colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
 									ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
 								 
 									<span ng-show="!selections.searchRows">
                                         <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
@@ -518,8 +521,8 @@
 						<tbody>
 							<tr ng-repeat="row in tableDrill[tableId].data()" >
 								<td ng-repeat="el in row.elements" ng-if="el.visible || $parent.$index == 0" colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" ng-class="{'tm1-ui-element-consol': el.element.type == 'C'}"  >
-									<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-									<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+										<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+										<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
 									<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 									<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 									<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>

@@ -571,7 +571,7 @@
                                         for(row in scope.table.data()){
                                             var randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
                                             var cellArrayFromJson = [];
-                                            if(scope.table.data()[row].elements[jjjk].element.type === 'C'){
+                                            
                                                 jsonRowData[row] =  {"key": rowNameArray[row] ,
                                             "color": randomColor, "values":[]};
                                             
@@ -593,7 +593,7 @@
                                             var tt = JSON.stringify(cellArrayFromJson) 
                                             jsonRowData[row]["values"] = JSON.parse(tt);
                                             console.log(jsonRowData[row]) 
-                                            }
+                                           
                                              
                                         }
                                          
@@ -782,7 +782,7 @@
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
                                       
-                                       //scope.api.refresh();
+                                        scope.api.refresh();
 
                                        jsonRowData = [];
                                    } else {
