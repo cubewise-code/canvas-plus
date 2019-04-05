@@ -130,7 +130,11 @@
 			text-align: center;
 		}
 		 
-		 
+		 .myPoint{
+			  
+			 opacity:0;
+
+		 }
 		.tm1-ui-export a:last-child{
 		display:none
 		}
@@ -156,6 +160,25 @@
 			overflow:overlay;
 			overflow-x:hidden;
 		}
+		.dashed {
+    stroke-dasharray: 5,5;
+}
+
+.nvd3.nv-scatter .nv-groups .nv-point.hover,
+.nvd3 .nv-groups .nv-point.hover {
+    stroke-width: 20px !important;
+    fill-opacity: .5 !important;
+    stroke-opacity: .5 !important;
+}
+
+.nvtooltip.with-3d-shadow, .with-3d-shadow .nvtooltip{
+	height:auto;
+	overflow:auto;
+	top:0px;
+	left:0px;
+	position:fixed;
+
+}
 	</style>
   
   	<div class="row"   >
@@ -163,13 +186,13 @@
 			<div class="hidden-xs" ng-show=" $root.showView " ng-style="{'left':getTableLeft(), 'top':getTableTop()  }" style="position:fixed; z-index:99999 ;   background-color:steelblue; color:#fff; padding-top:0.5em;height:35px; width:auto; text-align:center;" 
 			 >
 					<span style="margin-right:10px;margin-left:10px;">
-						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-bars':chartVisible }" class="fa "></i> 
+						<i 	ng-click="chartVisible = !chartVisible; dispatchResize();" ng-class="{'fa-bar-chart':!chartVisible,'fa-table':chartVisible }" class="fa "></i> 
 					</span>
 					<span  ng-hide="!chartVisible || !collapseDimensions"   style="margin-right:10px;margin-left:10px;">
-						<i ng-click="collapseDimensions = !collapseDimensions" class="fa fa-minus"></i>
+						<i ng-click="collapseDimensions = !collapseDimensions;  dispatchResize();" class="fa fa-minus"></i>
 					</span>
 					<span  ng-hide="!chartVisible || collapseDimensions"  style="margin-right:10px;margin-left:10px;">
-						<i   ng-click="collapseDimensions = !collapseDimensions" class="fa fa-plus"></i>
+						<i   ng-click="collapseDimensions = !collapseDimensions;  dispatchResize();" class="fa fa-plus"></i>
 					</span>
 			</div>
 			<div id="stickyContainer{{tableId}}" ng-show="!chartVisible"  class="stickyContainer "  
@@ -381,84 +404,9 @@
 			<div id="stickyContainer{{tableId}}" ng-show="chartVisible"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
  
-			  
-		 <table class="table" style="margin-bottom:140px;" >
-				<thead id="head{{tableId}}" >
-							<tr>
-								<th colspan="{{dataset.headers.rows.length}}">
-									&nbsp;
-								</th>
-							</tr>
-						<tr  id="headerContent{{tableId}}" ng-repeat="row in dataset.headers track by $index">
-							<th id="firstHeaderColHeight{{tableId}}" ng-show="collapseDimensions && (el.visible || $parent.$index === 0 )" style="border-right:1px solid #ccc; background-color: #f0efef" 
-								ng-repeat="col in row.rows track by $index"   colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-								 {{$index > 0 ? col.dimension:''}} 
-								<input ng-show="$index === 0" class="form-control" 
-								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-								style="background-color: transparent;display:inline-block;border: none;" 
-								type="text" ng-model="selections.searchRows"   
-								placeholder="Search {{col.dimension}}..."> 
-							</th>
-							 
-						 
-						</tr>
- 
-					</thead>
-			<tbody   >
-					
-						<tr id="rowHeightElement{{$index}}" 
-						ng-show="!selections.searchRows || (selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) > -1)"
-						ng-repeat="row in  table.data()  track by $index" ng-init="cellArray = [];" >
-					 
-						<td 
-						ng-show="collapseDimensions && (el.visible || $parent.$index === 0  )"
-						id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
-						class="{{tableDimensionColumnClass}}"
-						style=" border-right:1px solid #ccc; vertical-align: top;" 
-						ng-repeat="el in row.elements track by $index" 
-				 		
-						colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
-						ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
-					 
-						 
-						<span ng-show="!selections.searchRows">
-																	<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																	<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																</span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
-														 
-															<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{ el.element.attributes['Description'] || el.element.attributes['alias'] || el.element.name  }} </span>
-															
-				</td>
-							<td    style=" border-right:1px solid #ccc; width:80%" 
-							 
-							 	col-span="{{row.cells.length}}"
-								  class="text-right"  >
-							 
-							 <span ng-show="cell.reference().length" ng-repeat="cell in row.cells track by $index"  ng-init="cellArray[row.index][$index] = cell.value"  >  </span>
- 
-								 
-								  <tm1-ui-chart ng-show="cellArray.length && chartVisible"  tm1-chart-type="line" 
-									tm1-width="{{innerWidth}}" 
-									tm1-height="170" tm1-axis-label-x="" tm1-axis-label-y="" tm1-duration="0" 
-										tm1-state="{{cellArray}}, {{collapseDimensions}},{{chartVisible}}"
-										tm1-margin="{top:5,bottom:50,left:100, right:2}">
+					<nvd3 options="options" data="data" api="api" on-ready="callback" ></nvd3>
 									 
-										<tm1-ui-chart-value 
-												ng-repeat="cell in row.cells track by $index" 
-												tm1-area="true"
-												tm1-series="{{ row.elements[2].element['attributes']['Description'] || row.elements[2].element.attributes['alias'] || row.elements[2].element.name }} {{ row.elements[1].element['attributes']['Description'] || row.elements[1].element.attributes['alias'] || row.elements[1].element.name }} {{ row.elements[0].element['attributes']['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].element.name }} " 
-												tm1-order-no="{{$index+1}}" tm1-label="{{dataset.headers[0]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[1]['columns'][$index]['element']['attributes']['Caption_Default']}} {{dataset.headers[2]['columns'][$index]['element']['attributes']['Caption_Default']}}" 
-												tm1-value="{{cell.value}}" 
-												tm1-color="steelblue">
-										</tm1-ui-chart-value>
-									 
-									</tm1-ui-chart>   
-									 
-							</td>
-						</tr>
-						
-				</tbody>
-				</table>
+		  
 				<div   ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
 				style="position:fixed; padding:0px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
 				 >

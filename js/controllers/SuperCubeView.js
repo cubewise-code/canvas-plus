@@ -43,7 +43,7 @@
                 scope.chartVisible = $attributes.chartVisible;
                 scope.dateNow = new Date() ;
                 scope.collapseDimensions = true;
-            
+                 
                 var n = scope.dateNow.getMonth();
                 var p = scope.dateNow.getDay();
                 var y = scope.dateNow.getFullYear();
@@ -53,6 +53,429 @@
                 scope.dateNumber =((scope.dateNow+"").split(":")[0]).split(' ')[2];
                 //scope.date  = (((scope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
                 
+                scope.datasetNew = [];
+                scope.dataset = []; 
+                scope.tableNew = [];
+                scope.table = [];
+                scope.optionsNew = [];
+                scope.options = [];
+                scope.cellRef = {};
+
+                
+        var chart;
+        scope.chartContainer;
+        scope.options = {
+            "chart": {
+              "type": "lineChart",
+              "height": 450,
+              "margin": {
+                "top": 20,
+                "right": 20,
+                "bottom": 40,
+                "left": 55
+              },
+              "useInteractiveGuideline": false,
+              "dispatch": {},
+              "xAxis": {
+                "axisLabel": "",
+                "dispatch": {},
+                "axisLabelDistance": 0,
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 250,
+                "orient": "bottom",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 7,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
+              },
+              "yAxis": {
+                "axisLabel": "",
+                "axisLabelDistance": -10,
+                "dispatch": {},
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 250,
+                "orient": "left",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 3,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
+              },
+              "lines": {
+                "dispatch": {},
+                "width": 960,
+                "height": 500,
+                "xDomain": null,
+                "yDomain": null,
+                "pointDomain": [
+                  16,
+                  256
+                ],
+                "xRange": null,
+                "yRange": null,
+                "pointRange": null,
+                "forceX": [],
+                "forceY": [],
+                "forcePoint": [],
+                "interactive": true,
+                "padDataOuter": 0.1,
+                "padData": false,
+                "clipEdge": true,
+                "clipVoronoi": true,
+                "showVoronoi": false,
+                "id": 53376,
+                "interactiveUpdateDelay": 300,
+                "showLabels": false,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 0,
+                "useVoronoi": true,
+                "interpolate": "linear"
+              },
+              "lines2": {
+                "dispatch": {},
+                "width": 960,
+                "height": 500,
+                "xDomain": null,
+                "yDomain": null,
+                "pointDomain": [
+                  16,
+                  256
+                ],
+                "xRange": null,
+                "yRange": null,
+                "pointRange": null,
+                "forceX": [],
+                "forceY": [],
+                "forcePoint": [],
+                "interactive": false,
+                "padDataOuter": 0.1,
+                "padData": false,
+                "clipEdge": false,
+                "clipVoronoi": true,
+                "showVoronoi": false,
+                "id": 38061,
+                "interactiveUpdateDelay": 300,
+                "showLabels": false,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 250,
+                "useVoronoi": true,
+                "interpolate": "linear"
+              },
+              "legend": {
+                "dispatch": {},
+                "width": 400,
+                "height": 20,
+                "align": true,
+                "maxKeyLength": 20,
+                "rightAlign": true,
+                "padding": 32,
+                "updateState": true,
+                "radioButtonMode": false,
+                "expanded": false,
+                "vers": "classic",
+                "margin": {
+                  "top": 5,
+                  "right": 0,
+                  "bottom": 5,
+                  "left": 0
+                }
+              },
+              "x2Axis": {
+                "dispatch": {},
+                "axisLabelDistance": 0,
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "axisLabel": null,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 250,
+                "orient": "bottom",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 5,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
+              },
+              "y2Axis": {
+                "dispatch": {},
+                "axisLabelDistance": 0,
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "axisLabel": null,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 250,
+                "orient": "left",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 3,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
+              },
+              "interactiveLayer": {
+                "dispatch": {},
+                "tooltip": {
+                  "duration": 0,
+                  "gravity": "w",
+                  "distance": 25,
+                  "snapDistance": 0,
+                  "classes": null,
+                  "chartContainer": null,
+                  "enabled": true,
+                  "hideDelay": 0,
+                  "headerEnabled": true,
+                  "fixedTop": null,
+                  "offset": {
+                    "left": 0,
+                    "top": 0
+                  },
+                  "hidden": false,
+                  "data": null,
+                  "id": "nvtooltip-70659"
+                },
+                "margin": {
+                  "left": 55,
+                  "top": 30
+                },
+                "width": null,
+                "height": null,
+                "showGuideLine": true,
+                "svgContainer": null
+              },
+              "tooltip": {
+                "duration": 100,
+                "gravity": "w",
+                "distance": 25,
+                "snapDistance": 0,
+                "classes": null,
+                "chartContainer": null,
+                "enabled": true,
+                "hideDelay": 200,
+                "headerEnabled": true,
+                "fixedTop": null,
+                "offset": {
+                  "left": 0,
+                  "top": 0
+                },
+                "hidden": true,
+                "data": null,
+                "id": "nvtooltip-52625"
+              },
+              "width": null,
+              "interpolate": "linear",
+              "clipEdge": true,
+              "duration": 250,
+              "clipVoronoi": true,
+              "forcePoint": [],
+              "forceX": [],
+              "forceY": [],
+              "interactive": true,
+              "interactiveUpdateDelay": 300,
+              "padData": false,
+              "padDataOuter": 0.1,
+              "pointDomain": [
+                16,
+                256
+              ],
+              "pointRange": null,
+              "showLabels": false,
+              "showVoronoi": false,
+              "useVoronoi": true,
+              "xDomain": null,
+              "xRange": null,
+              "yDomain": null,
+              "yRange": null,
+              "showLegend": false,
+              "legendPosition": "top",
+              "showXAxis": true,
+              "showYAxis": true,
+              "focusEnable": false,
+              "focusShowAxisX": true,
+              "focusShowAxisY": false,
+              "brushExtent": null,
+              "defaultState": null,
+              "noData": null,
+              "focusMargin": {
+                "top": 0,
+                "right": 20,
+                "bottom": 20,
+                "left": 60
+              },
+              "rightAlignYAxis": false
+            },
+            "title": {
+              "enable": false,
+              "text": "Title for Line Chart",
+              "className": "h4",
+              "css": {
+                "width": "nullpx",
+                "textAlign": "center"
+              }
+            },
+            "subtitle": {
+              "enable": false,
+              "text": "Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.",
+              "css": {
+                "width": "nullpx",
+                "textAlign": "center",
+                "text-align": "center",
+                "margin": "10px 13px 0px 7px"
+              }
+            },
+            "caption": {
+              "enable": false,
+              "text": "Figure 1. Write Your Caption text.",
+              "css": {
+                "width": "nullpx",
+                "textAlign": "center",
+                "text-align": "justify",
+                "margin": "10px 13px 0px 7px"
+              },
+              "html": "<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style=\"text-decoration: underline;\">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style=\"color: darkred;\">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec<sup>[1, <a href=\"https://github.com/krispo/angular-nvd3\" target=\"_blank\">2</a>, 3]</sup>."
+            },
+            "styles": {
+              "classes": {
+                "with-3d-shadow": true,
+                "with-transitions": true,
+                "gallery": false
+              },
+              "css": {}
+            }
+          }
+        scope.config = {
+            visible: true, // default: true
+            extended: false, // default: false
+            disabled: true, // default: false
+            refreshDataOnly: false, // default: true
+            deepWatchOptions: false, // default: true
+            deepWatchData: false, // default: true
+            deepWatchDataDepth: false, // default: 2
+            debounce: 10 // default: 10
+        };
+          scope.events = function(){
+
+          }          
+          
+         
+          scope.callback = function(scope, element){
+            // this code will be applied once directive has been created
+            // scope - is the directive internal scope
+            // element - directive DOM element
+            scope.api = scope.api;
+            scope.chart = scope.chart;
+            scope.svg = scope.svg;
+             
+            // ... do smth
+        };
+        
+          scope.highlightPoints = function(chart){
+            scope.svg.selectAll("dot")    
+            .data(data)         
+        .enter().append("circle")                               
+            .attr("r", 5)       
+            .attr("cx", function(d) { return x(d.date); })       
+            .attr("cy", function(d) { return y(d.close); })     
+            .on("mouseover", function(d) {      
+                div.transition()        
+                    .duration(200)      
+                    .style("opacity", .9);      
+                div .html(formatTime(d.date) + "<br/>"  + d.close)  
+                    .style("left", (d3.event.pageX) + "px")     
+                    .style("top", (d3.event.pageY - 28) + "px");    
+                })                  
+            .on("mouseout", function(d) {       
+                div.transition()        
+                    .duration(500)      
+                    .style("opacity", 0);   
+            });
+          }
+  
+         
+ 
+        
+                
+
                 scope.getTablePosition = function(){
                     return scope.tablePosition;
                 }
@@ -75,13 +498,7 @@
                    
                    
                 }
-                scope.datasetNew = [];
-                scope.dataset = []; 
-                scope.tableNew = [];
-                scope.table = [];
-                scope.optionsNew = [];
-                scope.options = [];
-                scope.cellRef = {};
+                
                 
                 scope.refreshNew = function(newdataset){ 
                    
@@ -110,6 +527,80 @@
                                             }
                                         }
                                         
+                                        var jsonRowData = [];
+                                        var colNameArray = [];
+                                        var rowNameArray = [];
+                                        for(ggh = 0; ggh < scope.dataset.headers.length; ggh++){
+                                            var myColObj = scope.dataset.headers[ggh];
+                                            var arrayToUse= [];
+                                             
+                                            for(jjk = 0; jjk < myColObj.columns.length; jjk++){
+                                               
+                                                    colNameArray[jjk] +=   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                 
+                                                
+                                            }
+                                        }
+
+                                        for(gggh = 0; gggh < scope.table.data().length; gggh++){
+                                            var myRowObjElement = scope.table.data()[gggh];
+                                            
+                                             
+                                            for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
+                                                if(myRowObjElement.elements[jjjk].element.attributes['Description']   ){
+                                                        if(rowNameArray[jjjk]){
+                                                            rowNameArray[jjjk] +=  ' - ' +(myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        }else{
+                                                            rowNameArray[jjjk] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        }
+                                                       
+                                                      
+                                                }else{
+                                                    if(rowNameArray[jjjk]){
+                                                        rowNameArray[jjjk] +=  ' - ' + (myRowObjElement.elements[jjjk].element['name']);
+                                                    }else{
+                                                        rowNameArray[jjjk] =   (myRowObjElement.elements[jjjk].element['name']);
+                                                    }
+                                                    
+                                                }
+                                                 
+                                                
+                                            }
+                                        }
+                                        console.log(colNameArray, "colNameArray")
+                                        for(row in scope.table.data()){
+                                            var randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            var cellArrayFromJson = [];
+                                            if(scope.table.data()[row].elements[jjjk].element.type === 'C'){
+                                                jsonRowData[row] =  {"key": rowNameArray[row] ,
+                                            "color": randomColor, "values":[]};
+                                            
+                                            for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                               
+                                                   
+                                              
+                                                 
+                                                       
+                                                        cellArrayFromJson.push({"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                    
+                                                         
+                                                     
+                                                     
+                                                  
+                                                    
+                                                    
+                                            }
+                                            var tt = JSON.stringify(cellArrayFromJson) 
+                                            jsonRowData[row]["values"] = JSON.parse(tt);
+                                            console.log(jsonRowData[row]) 
+                                            }
+                                             
+                                        }
+                                         
+                                             
+                                       
+                                       //scope.tableData = scope.table.data();
+                                       scope.data = jsonRowData;
                                        scope.getLastFocus(); 
                                        
                                 } else {
@@ -188,7 +679,7 @@
                     "name": "Last Year"
                     }
                 }
-                 
+                scope.data = [];
                 scope.refresh = function(){
                     
                     
@@ -219,10 +710,81 @@
                                         
                                         scope.table = scope.table;
                                         scope.table.refresh();
-                                        
-                                        
+                                       
+                                        var jsonRowData = [];
+                                        var colNameArray = [];
+                                        var rowNameArray = [];
+                                        for(ggh = 0; ggh < scope.dataset.headers.length; ggh++){
+                                            var myColObj = scope.dataset.headers[ggh];
+                                            var arrayToUse= [];
+                                             
+                                            for(jjk = 0; jjk < myColObj.columns.length; jjk++){
+                                                 if(colNameArray[jjk]){
+                                                    colNameArray[jjk] +=  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                 }else{
+                                                    colNameArray[jjk] +=   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                 }
+                                                
+                                            }
+                                        }
+
+                                        for(gggh = 0; gggh < scope.table.data().length; gggh++){
+                                            var myRowObjElement = scope.table.data()[gggh];
+                                            
+                                             
+                                            for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
+                                                if(myRowObjElement.elements[jjjk].element.attributes['Description']){
+                                                    if(rowNameArray[gggh]){
+                                                        rowNameArray[gggh] +=  ' - ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                      }else{
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                      }
+                                                }else{
+                                                    if(rowNameArray[gggh]){
+                                                        rowNameArray[gggh] +=  ' - ' + (myRowObjElement.elements[jjjk].element.name);
+                                                      }else{
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.name);
+                                                      }
+                                                }
+                                                   
+                                                     
+                                              
+                                            }
+                                        }
+                                        console.log(colNameArray, "colNameArray")
+                                        for(row in scope.table.data()){
+                                            var randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            var cellArrayFromJson = [];
+                                            jsonRowData[row] =  {"key": '',
+                                            "color": randomColor, "values":[]};
+                                            for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                                if(scope.table.data()[row].elements.length){
+                                                    jsonRowData[row].key = rowNameArray[row] ;
+                                                }
+                                                 
+                                                       
+                                                        cellArrayFromJson.push({"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                    
+                                                         
+                                                     
+                                                     
+                                                  
+                                                    
+                                                    
+                                            }
+                                            var tt = JSON.stringify(cellArrayFromJson) 
+                                            jsonRowData[row]["values"] = JSON.parse(tt);
+                                            console.log(jsonRowData[row]) 
+                                        }
+                                         
+                                             
+                                       
                                        //scope.tableData = scope.table.data();
-                                        
+                                       scope.data = jsonRowData;
+                                      
+                                       //scope.api.refresh();
+
+                                       jsonRowData = [];
                                    } else {
                                        scope.message = result.message;
                                        
@@ -672,8 +1234,12 @@
                     return count;
                 }
                 scope.dispatchResize = function(){
-                    
+                    $timeout(
+                        function(){
                             window.dispatchEvent(new Event('resize'));
+                        },100
+                    )
+                            
                        
                     
                 }
@@ -705,6 +1271,9 @@
                 
             };
         }]);
-        
+
+
+
+ 
    
 })();
