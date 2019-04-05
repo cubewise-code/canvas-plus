@@ -518,6 +518,7 @@
                                        scope.tableNew[scope.tableId].pageSize(scope.currentRowCount)
                                       // console.log(scope.table.data(), scope.tableNew.data());  
                                        var tableRows = scope.table.data();
+
                                         for(newrow in scope.tableNew[scope.tableId].data()){
                                             for(row in scope.table.data()){
                                                 if(scope.tableNew[scope.tableId].data()[newrow].index === scope.table.data()[row].index){
@@ -526,15 +527,18 @@
                                                 } 
                                             }
                                         }
-                                        if(scope.table.data().length < 20){
+                                        if(scope.table.data().length < 30){
                                             scope.options['chart']['useInteractiveGuideline'] = true; 
+                                            scope.options['chart']['showLegend'] = true; 
                                         }else{
                                             scope.options['chart']['useInteractiveGuideline'] = false; 
+                                            scope.options['chart']['showLegend'] = false; 
                                         }
                                        
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
+                                        var randomColor = [];
                                         for(ggh = 0; ggh < scope.dataset.headers.length; ggh++){
                                             var myColObj = scope.dataset.headers[ggh];
                                             var arrayToUse= [];
@@ -543,12 +547,13 @@
                                                  if(colNameArray[jjk]){
                                                     colNameArray[jjk] +=  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
                                                  }else{
-                                                    colNameArray[jjk] +=   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                    colNameArray[jjk] =   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
                                                  }
                                                 
                                             }
                                         }
                                         var rowNameFinalArray = [];
+
                                         for(gggh = 0; gggh < scope.table.data().length; gggh++){
                                             var myRowObjElement = scope.table.data()[gggh];
                                             
@@ -572,14 +577,23 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
+                                            if(randomColor[(rowNameFinalArray[gggh]).split('-')[0]]){
+                                                //randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                             
+                                            }else{
+                                                randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                             
+                                            }
+                                            
                                             rowNameArray = [];
                                         }
                                         console.log(colNameArray, "colNameArray")
                                         for(row in scope.table.data()){
-                                            var randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            //var randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element, "Color of element")
                                             var cellArrayFromJson = [];
                                             jsonRowData[row] =  {"key": '',
-                                            "color": randomColor, "values":[]};
+                                            "color": randomColor[(rowNameFinalArray[row]).split('-')[0]], "values":[]};
                                             for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 if(scope.table.data()[row].elements.length){
                                                     jsonRowData[row].key = rowNameFinalArray[row] ;
@@ -717,15 +731,18 @@
                                         
                                         scope.table = scope.table;
                                         scope.table.refresh();
-                                        if(scope.table.data().length < 20){
+                                        if(scope.table.data().length < 30){
                                             scope.options['chart']['useInteractiveGuideline'] = true; 
+                                            scope.options['chart']['showLegend'] = true; 
                                         }else{
                                             scope.options['chart']['useInteractiveGuideline'] = false; 
+                                            scope.options['chart']['showLegend'] = false; 
                                         }
                                        
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
+                                        var randomColor = [];
                                         for(ggh = 0; ggh < scope.dataset.headers.length; ggh++){
                                             var myColObj = scope.dataset.headers[ggh];
                                             var arrayToUse= [];
@@ -742,7 +759,6 @@
                                         var rowNameFinalArray = [];
                                         for(gggh = 0; gggh < scope.table.data().length; gggh++){
                                             var myRowObjElement = scope.table.data()[gggh];
-                                            
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
@@ -763,14 +779,21 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
+                                            if(randomColor[(rowNameFinalArray[gggh]).split('-')[0]]){
+                                                //randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            }else{
+                                                randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            
+                                            }   
                                             rowNameArray = [];
                                         }
-                                        console.log(colNameArray, "colNameArray")
+                                        console.log(colNameArray, "colNameArray", randomColor);
+                                        
                                         for(row in scope.table.data()){
-                                            var randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                             
                                             var cellArrayFromJson = [];
                                             jsonRowData[row] =  {"key": '',
-                                            "color": randomColor, "values":[]};
+                                            "color": randomColor[(rowNameFinalArray[row]).split('-')[0]], "values":[]};
                                             for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 if(scope.table.data()[row].elements.length){
                                                     jsonRowData[row].key = rowNameFinalArray[row] ;
