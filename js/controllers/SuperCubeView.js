@@ -77,7 +77,7 @@
               "useInteractiveGuideline": false,
               "dispatch": {},
               "xAxis": {
-                "axisLabel": "Time (ms)",
+                "axisLabel": "",
                 "dispatch": {},
                 "axisLabelDistance": 0,
                 "staggerLabels": false,
@@ -109,7 +109,7 @@
                 ]
               },
               "yAxis": {
-                "axisLabel": "Voltage (v)",
+                "axisLabel": "",
                 "axisLabelDistance": -10,
                 "dispatch": {},
                 "staggerLabels": false,
