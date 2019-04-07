@@ -16,9 +16,9 @@
                     tableHeightBottomOffset:'@',
                     tableDimensionColumnClass:'@',
                     tableDataColumnClass:'@',
-                   tableId:"@",
-                   rowsToLoad:'@',
-                   chartVisible:'@'
+                    tableId:"@",
+                    rowsToLoad:'@',
+                    chartVisible:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -64,21 +64,30 @@
                 
         var chart;
         scope.chartContainer; 
+        scope.chartToolTipElements = [];
         scope.options = {
             "chart": {
               "type": "lineChart",
-              "height": 450,
+              "height": (window.innerHeight/2),
               "margin": {
-                "top": 20,
-                "right": 20,
-                "bottom": 40,
-                "left": 55
+                "top": 50,
+                "right": 50,
+                "bottom": 5,
+                "left": (50)
               },
-              "useInteractiveGuideline": false,
-              "dispatch": {},
+              "valueFormat": function(d){ return d3.format(',.4f')(d); },
+              "useInteractiveGuideline": true,
+              "dispatch": {
+                //elementMouseover: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e};}else{scope.chartToolTipElements = e;}  console.log(e,'mouseover') },
+                //elementMouseout: function(e){ if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}; }else{scope.chartToolTipElements = e;}  console.log(e,'mouseout') },
+                tooltipShow: function(e){ console.log(e,'tooltipShow') },
+                tooltipHide: function(e){ console.log(e,'tooltipHide') }
+              },
               "xAxis": {
                 "axisLabel": "",
-                "dispatch": {},
+                "dispatch": {
+                  
+                },
                 "axisLabelDistance": 0,
                 "staggerLabels": false,
                 "rotateLabels": 0,
@@ -141,7 +150,14 @@
                 ]
               },
               "lines": {
-                "dispatch": {},
+                "dispatch": { 
+                 
+                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}}else{scope.chartToolTipElements = e;}  console.log(e,'click') },
+                    elementMouseover: function(e){scope.chartToolTipElements = {"0":e};  console.log(e,'mouseoer') },
+                    elementMouseout: function(e){   console.log(e,'mouseout') },
+                    renderEnd: function(e){    console.log(e,'renderEnd') }
+                 
+                },
                 "width": 960,
                 "height": 500,
                 "xDomain": null,
@@ -160,11 +176,11 @@
                 "padDataOuter": 0.1,
                 "padData": false,
                 "clipEdge": true,
-                "clipVoronoi": true,
+                "clipVoronoi": false,
                 "showVoronoi": false,
                 "id": 53376,
                 "interactiveUpdateDelay": 300,
-                "showLabels": false,
+                "showLabels": true,
                 "margin": {
                   "top": 0,
                   "right": 0,
@@ -176,7 +192,12 @@
                 "interpolate": "linear"
               },
               "lines2": {
-                "dispatch": {},
+                "dispatch": {  
+                  elementClick: function(e){ console.log(e,'click line 2') },
+                  
+                  renderEnd: function(e){  console.log(e,'renderEnd line 2') }
+               
+              },
                 "width": 960,
                 "height": 500,
                 "xDomain": null,
@@ -211,7 +232,13 @@
                 "interpolate": "linear"
               },
               "legend": {
-                "dispatch": {},
+                dispatch: {
+                  legendClick: function(e) {console.log(e, "legendClick")},
+                  legendDblclick: function(e) {console.log(e, "legendDblclick")},
+                  legendMouseover: function(e) {console.log(e, "legendMouseover")},
+                  legendMouseout: function(e) {console.log(e, "legendMouseout")},
+                  stateChange: function(e) {console.log(e, "stateChange")}
+              },
                 "width": 400,
                 "height": 20,
                 "align": true,
@@ -294,9 +321,12 @@
                 ]
               },
               "interactiveLayer": {
-                "dispatch": {},
+                "dispatch": {
+                  
+
+                },
                 "tooltip": {
-                  "duration": 0,
+                  "duration": 100,
                   "gravity": "w",
                   "distance": 25,
                   "snapDistance": 0,
@@ -366,7 +396,7 @@
               "xRange": null,
               "yDomain": null,
               "yRange": null,
-              "showLegend": false,
+              "showLegend": true,
               "legendPosition": "top",
               "showXAxis": true,
               "showYAxis": true,
@@ -426,6 +456,7 @@
           scope.charRowCount = 0;
           scope.consolidatedRowsOnly = false;
           scope.randomColor = [];
+          
         scope.config = {
             visible: true, // default: true
             extended: false, // default: false
@@ -436,9 +467,7 @@
             deepWatchDataDepth: false, // default: 2
             debounce: 10 // default: 10
         };
-          scope.events = function(){
-
-          }          
+              
           
          
           scope.callback = function(scope, element){
@@ -477,7 +506,9 @@
          
  
         
-                
+                scope.seeDataNew = function(d){
+                  console.log(d)
+                }
 
                 scope.getTablePosition = function(){
                     return scope.tablePosition;
@@ -502,7 +533,10 @@
                    
                 }
                 
-                
+                scope.getMyChartClick = function(event){
+                 // console.log(event.target.parentNode.parentNode, "EVENT CHART CLICKED ")
+                }
+                scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                    
  
@@ -531,7 +565,7 @@
                                             }
                                         }
                                          
-                                       
+                                       //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
@@ -558,13 +592,13 @@
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' - ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
                                                       }else{
                                                         rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
                                                       }
                                                 }else{
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' - ' + (myRowObjElement.elements[jjjk].element.name);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
                                                       }else{
                                                         rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.name);
                                                       }
@@ -574,90 +608,118 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
-                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]]){
-                                                //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                             
-                                            }else{
-                                                scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                             
-                                            }
                                             
+                                            if(scope.randomColor[gggh]){
+                                              //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                          }else{
+                                              scope.randomColor[gggh] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                          
+                                          }   
                                             rowNameArray = [];
                                         }
                                         
                                         //console.log(colNameArray, "colNameArray")
                                         for(row in scope.table.data()){
                                             //var scope.randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                            if(scope.consolidatedRowsOnly){
-                                              if(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'] === 'C'){
-                                                scope.charRowCount++;
+                                            if(scope.consolidatedRowsOnly === true){
+                                             // console.log(scope.consolidatedRowsOnly, scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"CONSOLEDIATED")
+                                             var makeconsolRow = [];
+                                             makeconsolRow[row] = false; 
+                                             for(el in scope.table.data()[row].elements){
+                                                 
+                                                if(scope.table.data()[row].elements[el].element['type'] === 'C'){
+                                                  makeconsolRow[row] = true;
+                                                  console.log(scope.table.data()[row].elements[el].element, "TRUE")
+                                                   
+                                                     
+                                                }else{
+                                                  
+                                                  // scope.rowTotalConsolidationArray[row] = false;
+                                                }
+                                              }
+                                              if( makeconsolRow[row] === true){
+                                                scope.rowTotalConsolidationArray[row] = true;
+                                              }else{
+                                                scope.rowTotalConsolidationArray[row] = false;
+                                              }
+                                              console.log(scope.rowTotalConsolidationArray, "scope.rowTotalConsolidationArrayscope.rowTotalConsolidationArray")
+                                              if(scope.rowTotalConsolidationArray[row] ){
+                                                
+                                                 
+
+                                        
+                                                  scope.charRowCount++;
+                                                  var cellArrayFromJson = [];
+                                                  jsonRowData[row] =  {"key": '',
+                                                  "color": scope.randomColor[row], "values":[]};
+                                                  for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                                      if(scope.table.data()[row].elements.length){
+                                                          jsonRowData[row].key = rowNameFinalArray[row] ;
+                                                      }
+                                                      
+                                                            
+                                                              cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                          
+                                                              
+                                                          
+                                                          
+                                                        
+                                                          
+                                                          
+                                                  }
+                                                  var tt = JSON.stringify(cellArrayFromJson) 
+                                                  jsonRowData[row]["values"] = JSON.parse(tt);
+                                                 
+                                              }else{
+
+                                              }
+                                               
+                                            }else{
+                                               
+                                                
                                                 var cellArrayFromJson = [];
+                                                scope.charRowCount++;
                                                 jsonRowData[row] =  {"key": '',
-                                                "color": scope.randomColor[(rowNameFinalArray[row]).split('-')[0]], "values":[]};
+                                                "color": scope.randomColor[row], "values":[]};
                                                 for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                     if(scope.table.data()[row].elements.length){
                                                         jsonRowData[row].key = rowNameFinalArray[row] ;
                                                     }
-                                                     
-                                                           
-                                                            cellArrayFromJson.push({"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                    
+                                                          
+                                                            cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
                                                         
-                                                             
-                                                         
-                                                         
+                                                            
+                                                        
+                                                        
                                                       
                                                         
                                                         
                                                 }
                                                 var tt = JSON.stringify(cellArrayFromJson) 
                                                 jsonRowData[row]["values"] = JSON.parse(tt);
-                                              }else{
-
                                               }
-                                               
-                                            }else{
-                                              var cellArrayFromJson = [];
-                                              scope.charRowCount++;
-                                              jsonRowData[row] =  {"key": '',
-                                              "color": scope.randomColor[(rowNameFinalArray[row]).split('-')[0]], "values":[]};
-                                              for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                                  if(scope.table.data()[row].elements.length){
-                                                      jsonRowData[row].key = rowNameFinalArray[row] ;
-                                                  }
-                                                   
-                                                         
-                                                          cellArrayFromJson.push({"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
-                                                      
-                                                           
-                                                       
-                                                       
-                                                    
-                                                      
-                                                      
-                                              }
-                                              var tt = JSON.stringify(cellArrayFromJson) 
-                                              jsonRowData[row]["values"] = JSON.parse(tt);
-                                            }
+                                             
                                             
                                           //  console.log(jsonRowData[row]) 
                                         }
                                         if(scope.charRowCount < 30){
-                                          scope.options['chart']['useInteractiveGuideline'] = true; 
-                                          scope.options['chart']['showLegend'] = true; 
+                                          //scope.options['chart']['useInteractiveGuideline'] = false; 
+                                          
                                       }else{
-                                          scope.options['chart']['useInteractiveGuideline'] = true; 
-                                          scope.options['chart']['showLegend'] = false; 
+                                          //scope.options['chart']['useInteractiveGuideline'] = false; 
+                                         
                                       } 
                                              
                                        
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
-                                      
-                                        scope.api.update();
-
+                                       if( scope.api){
+                                        scope.api.refreshWithTimeout(1000);
+                                       }
                                        jsonRowData = [];
                                        scope.getLastFocus(); 
-                                       
+                                        
                                 } else {
                                    scope.message = result.message; 
                                } 
@@ -665,7 +727,21 @@
                            })
                       
                 }
-           
+                 scope.updateandTimeout = function(){
+                  if( scope.api){
+                  scope.api.updateWithTimeout(1000);
+                  }
+                 }
+                scope.refreshandTimeout = function(){
+                     
+                        
+                       
+                        scope.refreshNew(scope.dataset); 
+                      
+                        scope.api.refreshWithTimeout(1000);
+                     
+                  
+                }
                 scope.getFocus = function($event) {           
                    scope.focusObj = $event.target.id;
                     
@@ -790,13 +866,13 @@
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' - ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
                                                       }else{
                                                         rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
                                                       }
                                                 }else{
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' - ' + (myRowObjElement.elements[jjjk].element.name);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
                                                       }else{
                                                         rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.name);
                                                       }
@@ -806,10 +882,10 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
-                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]]){
+                                            if(scope.randomColor[gggh]){
                                                 //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
                                             }else{
-                                                scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                                scope.randomColor[gggh] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
                                             
                                             }   
                                             rowNameArray = [];
@@ -819,20 +895,25 @@
                                         for(row in scope.table.data()){
                                          // console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes']['Color'], "Color of element")
                                          if(scope.consolidatedRowsOnly ){
-                                          if(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'] === 'C'){
+                                          console.log(scope.consolidatedRowsOnly, "CONSOLEDIATED")
+                                          if(scope.table.data()[row].elements[0].element['type'] === 'C' || scope.table.data()[row].elements[1].element['type'] === 'C'){
+                                            
+
+                                       
                                             scope.charRowCount++;
                                             console.log("CONSOLIDATED ", row,  scope.charRowCount)
                                             var cellArrayFromJson = [];
                                             jsonRowData[row] =  {"key": '',
-                                            "color": scope.randomColor[(rowNameFinalArray[row]).split('-')[0]], "values":[]};
+                                            "color": scope.randomColor[row], "values":[]};
                                             for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 if(scope.table.data()[row].elements.length){
                                                     jsonRowData[row].key = rowNameFinalArray[row] ;
-                                                }
-                                                 
-                                                       
-                                                        cellArrayFromJson.push({"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                   
                                                     
+                                                }
+                                                  cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                       
+                                                        
                                                          
                                                      
                                                      
@@ -843,51 +924,57 @@
                                             var tt = JSON.stringify(cellArrayFromJson) 
                                             jsonRowData[row]["values"] = JSON.parse(tt);
                                             console.log(jsonRowData[row]) 
+                                            
                                           }else{
 
                                           }
                                         }else{
-                                          var cellArrayFromJson = [];
-                                          scope.charRowCount++;
-                                          jsonRowData[row] =  {"key": '',
-                                          "color": scope.randomColor[(rowNameFinalArray[row]).split('-')[0]], "values":[]};
-                                          for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                              if(scope.table.data()[row].elements.length){
-                                                  jsonRowData[row].key = rowNameFinalArray[row] ;
-                                              }
-                                               
-                                                     
-                                                      cellArrayFromJson.push({"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                                           
+                                            var cellArrayFromJson = [];
+                                            scope.charRowCount++;
+                                            jsonRowData[row] =  {"key": '',
+                                            "color": scope.randomColor[row], "values":[]};
+                                            for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                                if(scope.table.data()[row].elements.length){
+                                                    jsonRowData[row].key = rowNameFinalArray[row] ;
+                                                      
+                                                        
+                                                }
+                                                  cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                    
+                                                      
+                                                        
+                                                    
+                                                    
                                                   
-                                                       
-                                                   
-                                                   
-                                                
-                                                  
-                                                  
-                                          }
-                                          var tt = JSON.stringify(cellArrayFromJson) 
-                                          jsonRowData[row]["values"] = JSON.parse(tt);
-                                          console.log(jsonRowData[row]) 
+                                                    
+                                                    
+                                            }
+                                            var tt = JSON.stringify(cellArrayFromJson) 
+                                            jsonRowData[row]["values"] = JSON.parse(tt);
+                                            console.log(jsonRowData[row]) 
                                         }
-                                        }
-                                         
-                                        if(scope.charRowCount < 30){
-                                          scope.options['chart']['useInteractiveGuideline'] = true; 
-                                          scope.options['chart']['showLegend'] = true; 
-                                      }else{
-                                          scope.options['chart']['useInteractiveGuideline'] = true; 
-                                          scope.options['chart']['showLegend'] = false; 
-                                      } 
                                         
+                                      }
+                                         
+                                      if(scope.charRowCount < 30){
+                                          //scope.options['chart']['useInteractiveGuideline'] = false; 
                                        
+                                      }else{
+                                          //scope.options['chart']['useInteractiveGuideline'] = false; 
+                                       
+                                      }  
                                        //scope.tableData = scope.table.data();
-                                       scope.data = jsonRowData;
+                                      scope.data = jsonRowData; 
+                                      $timeout(
+                                        function(){
+                                          if( scope.api){
+                                          scope.api.update();
+                                          }
+                                        },1000
+                                      )
                                       
-                                        scope.api.update();
-                                        //scope.api.refresh();
-
-                                       jsonRowData = [];
+                                      jsonRowData = [];
                                    } else {
                                        scope.message = result.message;
                                        
@@ -937,7 +1024,7 @@
                         $stickyHeader = $(el).find('#sticky-header');
                         $fixedHeader = $(el).find('.fixed-container');
                         $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
-                        //$headerContent = $(el).find('#headerContent');
+                        $chartContent = $(el).find('#chartRow'+scope.tableId);
                         $sideContent = $(el).find('#sideContent'+scope.tableId);           
                         scope.scrolling = true;
                         $($stickyHeader).css('display','block'); 
@@ -965,8 +1052,13 @@
                                 if( $($sideContent)){
                                     $($sideContent).css('display', 'block');
                                     $($sideContent).css('margin-top', -$($body).scrollTop());
-                                    
-                                    $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(157+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) )) )) + $($body).scrollTop());
+                                    if(scope.chartVisible){
+                                      console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
+                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )  )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) ) ) + $($body).scrollTop() );
+                                    }else{
+                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))  +(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) )) )) + $($body).scrollTop());
+                                    }
+                                     
                                                                     
                                 }
                                
@@ -1348,7 +1440,10 @@
                 }
 
                 $(window).resize(function() { 
-
+                  if( scope.api){
+                    scope.api.refresh()
+                  }
+                           
                             scope.innerHeight = window.innerHeight;
                             scope.innerWidth =  window.innerWidth;
                     
