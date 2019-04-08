@@ -201,9 +201,7 @@
 svg:not(:root) {
     overflow: visible;
 }
-.tick{
-	opacity:0 !important
-}
+ 
 	</style>
   
   	<div class="row"   >
@@ -211,7 +209,7 @@ svg:not(:root) {
 			<div  ng-show=" $root.showView "  style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px; width:100%; text-align:center;" 
 			 >
 					<span style="margin:5px;margin-right:10px;margin-left:10px;  float:left; left:0px;">
-						<i 	ng-click="chartVisible = !chartVisible; dispatchResize(); api.update();" ng-class="{'fa-bar-chart':!chartVisible,'fa-table':chartVisible }" class="fa "></i> 
+						<i 	ng-click="chartVisible = !chartVisible; dispatchResize(); api.update(); gotoTop()" ng-class="{'fa-bar-chart':!chartVisible,'fa-table':chartVisible }" class="fa "></i> 
 					</span>
 					<span ng-show="chartVisible" > 
 						 
@@ -224,7 +222,7 @@ svg:not(:root) {
 						</span>
 						
 						<span    style="margin : 5px;margin-right:10px;margin-left:10px; float:right; right:0px;">
-								<i   ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];  refreshNew(dataset);  dispatchResize(); api.update(); " 
+								<i   ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); " 
 								ng-class="{'fa-circle-o':!options['chart']['showLegend'],'fa-circle':options['chart']['showLegend']}" class="fa "></i>
 						</span>
 						<div class="pull-right control-group" style="margin : 5px; height:32px; top:0px;width:150px; padding:0px; margin:0px;background-color:steelblue; color:#fff;" >
@@ -455,7 +453,7 @@ svg:not(:root) {
 										 
 									</td>
 								</tr>
-								<tr class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
+								<tr style="font-weight:700" class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
 										 
 										<td    
 										ng-if="  col.visible  "  
@@ -473,7 +471,8 @@ svg:not(:root) {
 											type="text" ng-model="selections.searchRows"   
 											placeholder="Search {{col.dimension}}..."> 
 								</td>
-										<td   id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
+										<td ng-click="hideColumn[$index] = !hideColumn[$index]"   
+										id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 										style="border-right:1px solid #ccc; " 
 										ng-style="{'background-color':chartToolTipElements[0]['point']['x'] === $index ? 'steelblue':'#f0efef' , 'color':chartToolTipElements[0]['point']['x'] === $index ?'#fff':'unset'}" 
 										ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
@@ -503,7 +502,7 @@ svg:not(:root) {
 																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{ el.element.attributes['Description'] || el.element.attributes['alias'] || el.name  }} </span>
 																		
 							</td>
-							<td id="headerColHeight{{tableId}}{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+							<td   id="headerColHeight{{tableId}}{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
 								ng-right-click="openRefModel(cell.reference().toString()); " 
 								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 								ng-repeat="cell in row.cells track by $index" class="text-right" >

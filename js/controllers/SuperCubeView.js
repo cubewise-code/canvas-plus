@@ -1,6 +1,6 @@
 (function(){
         var app = angular.module('app');
-        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout', '$window', function($log, $rootScope, $tm1Ui, $timeout , $window) {
+        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout', '$window','$anchorScroll','$location', function($log, $rootScope, $tm1Ui, $timeout , $window,  $anchorScroll,  $location) {
             return {
                 templateUrl: 'html/SuperCubeView.html',
                 scope:{
@@ -398,7 +398,7 @@
               "yRange": null,
               "showLegend": true,
               "legendPosition": "top",
-              "showXAxis": true,
+              "showXAxis": false,
               "showYAxis": true,
               "focusEnable": false,
               "focusShowAxisX": true,
@@ -469,7 +469,12 @@
             debounce: 10 // default: 10
         };
               
-          
+          scope.gotoTop = function(){
+            $location.hash('chartRow'+scope.tableId);
+
+            // call $anchorScroll()
+            $anchorScroll();
+          }
          
           scope.callback = function(scope, element){
             // this code will be applied once directive has been created
@@ -746,6 +751,7 @@
                                                 jsonRowData[row] =  {"key": '',
                                                 "color": scope.randomColor[row], "values":[]};
                                                 for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                                  
                                                     if(scope.table.data()[row].elements.length){
                                                         jsonRowData[row].key = rowNameFinalArray[row] ;
                                                     }

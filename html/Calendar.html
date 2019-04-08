@@ -1,10 +1,10 @@
 
  
 <div   
-    ng-style="{'top':(defaultOffSet*2)+'px','width': ((innerWidth - (defaultOffSet)))+'px','height':$root.calendarShow ? (($root.innerHeight)-(defaultOffSet*3)-8)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"   class=" calendar-container "  >	
+    ng-style="{'top':((defaultOffSet*2)-7)+'px','width': ((innerWidth - (defaultOffSet)-7))+'px','height':$root.calendarShow ? (($root.innerHeight)-(defaultOffSet*3)-8)+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"   class=" calendar-container "  >	
     
 	<div class=" calendar-header" ng-init="showSchedule = true">
-        <h4 ng-style="{'top':(defaultOffSet),'width':innerWidth-(defaultOffSet),'height':defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
+        <h4 ng-style="{'top':(defaultOffSet-7),'width':innerWidth-(defaultOffSet),'height':(defaultOffSet-7)+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
             style="position:fixed; padding-top:15px;  left:0px; margin-top:0px; z-index:999; color:#fff;width:100%; padding-right:20px;  ">
                     
                 <span style=" width:100%; padding-left:40px; padding-right:12px;"> {{selections.year}} - Calendar  
