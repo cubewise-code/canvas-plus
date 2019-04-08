@@ -6,13 +6,8 @@
 		
 
 
-
-		 html{
-			overflow: hidden;
-		}
-		body{
-			overflow:hidden
-		}
+ 
+		 
 		 
 		/*
 		##Device = Desktops
@@ -95,15 +90,15 @@
 			tm1-instance = "dev"
 			cube-name = "General Ledger"
 			cube-view = "Budget Template"
-			attribute-options="{{attributeOptions}}"  
+			attribute-options="{{$root.attributeOptions}}"  
 			table-height-bottom-offset="30"
 			table-width="100%"
 			table-left="0"
-			table-top="145px"
+			table-top="175px"
 			table-dimension-column-class="min-width250"
 			table-data-column-class="min-width100"
 			table-id="one"
-			rows-to-load = "30"
+			rows-to-load = "50"
 			chart-visible=""
 			> 
 		</super-cube-view>	
