@@ -73,7 +73,7 @@
                 "top": 50,
                 "right": 50,
                 "bottom": 5,
-                "left": (50)
+                "left": 50
               },
               "valueFormat": function(d){ return d3.format(',.4f')(d); },
               "useInteractiveGuideline": true,
@@ -92,8 +92,8 @@
                 "staggerLabels": false,
                 "rotateLabels": 0,
                 "rotateYLabel": true,
-                "showMaxMin": true,
-                "height": 60,
+                "showMaxMin": false,
+                "height": 0,
                 "ticks": null,
                 "width": 75,
                 "margin": {
@@ -234,7 +234,7 @@
               "legend": {
                 dispatch: {
                   legendClick: function(e) {console.log(e, "legendClick"); scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
-                  legendDblclick: function(e) {console.log(e, "legendDblclick"); scope.selections.searchRows = e.key;  window.dispatchEvent(new Event('resize')); },
+                  legendDblclick: function(e) {console.log(e, "legendDblclick"); scope.selections.searchRows = (e.key).split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
                   legendMouseover: function(e) {console.log(e, "legendMouseover"); },
                   legendMouseout: function(e) {console.log(e, "legendMouseout")},
                   stateChange: function(e) {console.log(e, "stateChange")}
@@ -396,7 +396,7 @@
               "xRange": null,
               "yDomain": null,
               "yRange": null,
-              "showLegend": scope.selections.showLegend,
+              "showLegend": true,
               "legendPosition": "top",
               "showXAxis": true,
               "showYAxis": true,
@@ -1056,7 +1056,7 @@
                         $body = $(el);  
                         $stickyHeader = $(el).find('#sticky-header');
                         $fixedHeader = $(el).find('.fixed-container');
-                        $fixedHeaderContainer = $(el).find('#fixedHeaderContainer'+scope.tableId);
+                        $fixedHeaderContainer = $(el).find('#fixedFirstColHeader');
                         
                         $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
                         $chartContent = $(el).find('#chartRow'+scope.tableId);
@@ -1086,9 +1086,14 @@
                                     $($stickyHeader).css('opacity','1'); 
                                     $($stickyHeader).css('pointer-events','auto'); 
                                 }
-                                if($($fixedHeader) && $($fixedFirstColHeader)){
+                                if($($fixedHeader) && $($fixedHeaderContainer)){
                                     $($fixedHeader).css('pointer-events','auto'); 
-                                    $($fixedFirstColHeader).css('display','block !important');
+                                    $($fixedHeaderContainer).css('display','block');
+                                    
+                                     
+                                }
+                                if($($fixedFirstColHeader)){
+                                  $($fixedFirstColHeader).css('display','block');
                                 }
                                
                                
@@ -1097,9 +1102,9 @@
                                     $($sideContent).css('margin-top', -$($body).scrollTop());
                                     if(scope.chartVisible){
                                       //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
-                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )  )+(document.getElementById('firstHeaderColHeight'+scope.tableId).getBoundingClientRect().height ) ) ) + $($body).scrollTop() );
+                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )   )) ) + $($body).scrollTop() );
                                     }else{
-                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))  +(document.getElementById('firstHeaderColHeight'+scope.tableId).getBoundingClientRect().height ) )) )) + $($body).scrollTop());
+                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
                                     }
                                      
                                                                     
@@ -1108,7 +1113,7 @@
                                  
                             }else{
                               $($stickyHeader).css('display','none'); 
-                               
+                                $($fixedHeaderContainer).css('display','none'); 
                                 scope.headerOutOffView = false;
                               //console.log("hide header")
                                 if($($stickyHeader)){
@@ -1117,14 +1122,16 @@
                                     $($stickyHeader).css('opacity','0'); 
                                     $($stickyHeader).css('pointer-events','none'); 
                                 }
-                                if($($fixedHeader)){
-                                    $($fixedHeader).css('pointer-events','none'); 
-                                        $($fixedHeader).css('display','none !important'); 
-                                }
-                                if($($fixedFirstColHeader)){
+                                if($($fixedHeader) && $($fixedHeaderContainer)){
+                                  $($fixedHeader).css('pointer-events','auto'); 
+                                  $($fixedHeaderContainer).css('display','none');
+                                  
+                                   
+                              }
+                                
 
-                                    $($fixedFirstColHeader).css('display','none !important'); 
-                                }
+                                   
+                             
                                  
                                  
                                  
@@ -1207,17 +1214,20 @@
                   }
               }
               scope.addContainerHeight = function(className){
-                if(document.getElementById(className).length){
+                if( document.getElementById(className)){
+                  if(document.getElementById(className).length){
                     var tempObjTwoArray = document.getElementById(className);
                     var sumNum = 0;
                     for(var tthh = 0;  tthh < tempObjTwoArray.length; tthh++){
-                      sumNum += tempObjTwoArray[tthh].getBoundingClientRect().height;
+                      sumNum += tempObjTwoArray[tthh].getBoundingClientRect().height();
                            
                    
                     }
                     return sumNum;
                      
                 }
+                }
+                
             }
               scope.getContainerTop = function(id){
                   if(document.getElementById(id)){
@@ -1246,8 +1256,8 @@
             scope.workOutContainerHeight = function(id){
                
                          
-                        if(document.getElementById(id) && document.getElementById(id).getElementsByClassName('fixed-container').length > 0 ){
-                          //console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
+                        if(document.getElementById(id)  ){
+                         console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
                                 return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
                              
                         }
