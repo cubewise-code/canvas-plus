@@ -370,7 +370,7 @@ svg:not(:root) {
 								</tr>
 							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index"  >
-							<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-bottom':'5px solid '+(randomColor[row.elements[0].element.attributes['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].name]).toString()}"
+							<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes['Description'] || row.elements[0].element.attributes['alias'] || row.elements[0].name]).toString()}"
                             style=" border-right:0px solid #ccc; vertical-align:text-top; " 
                             ng-repeat="el in row.elements track by $index" 
 														ng-show="el.visible"  
@@ -482,7 +482,7 @@ svg:not(:root) {
 							ng-repeat="row in  table.data()  track by $index" >
 							<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
 									class="{{tableDimensionColumnClass}} overflowhidden"
-									ng-style="{ 'border-bottom':'5px solid '+(rowNameFinalArray[$index]['series'].color+'').toString()}"
+									ng-style="{ 'border-top':'5px solid '+(rowNameFinalArray[$index]['series'].color+'').toString()}"
 									style=" border-right:1px solid #ccc; " 
 									ng-repeat="el in row.elements track by $index" 
 									ng-show="el.visible || $parent.$index === 0" 
