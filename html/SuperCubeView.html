@@ -295,6 +295,7 @@
 				ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('firstHeaderColHeight'+tableId))+(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('af'+tableId), 'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'position': getTablePosition(),'left':getTableLeft()}">
 				<table  class="table ">
 					<tbody  >
+						
 							<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index"  >
 							<td   			 
@@ -314,7 +315,9 @@
                                 <i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                                 <i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
                             </span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
-														<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description'] || el.element.attributes['alias'] || el.name}}   </span>
+														<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{el.element.attributes['Description'] || el.element.attributes['alias'] || el.name}}
+															<!--{{randomColor}} -->	
+															</span>
 							</td>
 							 
 						</tr>
@@ -339,8 +342,14 @@
 								type="text" ng-model="selections.searchRows"   
 								placeholder="Search {{col.dimension}}..."> 
 							</th>
-							<th id="firstHeaderColHeight{{tableId}}"   ng-if="$index > 0 && col.visible"  style="border-right:1px solid #ccc; background-color: #f0efef" 
-								ng-repeat="col in row.rows track by $index"   colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+							<th id="firstHeaderColHeight{{tableId}}"   
+							ng-if="$index > 0 && col.visible"  
+							style="border-right:1px solid #ccc; background-color: #f0efef"
+						 
+								ng-repeat="col in row.rows track by $index"   
+								colspan="{{col.colspan}}" 
+								rowspan="{{col.rowspan}}" 
+								class="text-center" >
 								 {{col.dimension}} 
 								<input ng-if="$index === 0" class="form-control" 
 								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
@@ -349,8 +358,8 @@
 								placeholder="Search {{col.dimension}}..."> 
 							</th>
 							<th id="headerRowHeight{{tableId}}{{$index}}" 
-							style="border-right:1px solid #ccc;background-color: #f0efef" 
-						 
+							style="border-right:1px solid #ccc; " 
+							ng-style="{'background-color':chartToolTipElements[0]['point']['x'] === $index ? 'steelblue':'#f0efef' , 'color':chartToolTipElements[0]['point']['x'] === $index ?'#fff':'unset'}" 
 							ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 							<span>  {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}  </span>
 							</th>
@@ -362,7 +371,35 @@
 							<tr ng-if="chartVisible" >
 								<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" > &nbsp; </td>
 									<td id="chartRow{{tableId}}" ng-if="chartVisible"  colspan="{{table.data()[0]['cells'].length}}" style="padding:0px;">
-										
+											<div class="control-group">
+													<button type="button" class="btn btn-default dropdown-toggle dropdown-btn" 
+													data-toggle="dropdown" ng-click="showChartOptions = !showChartOptions" aria-haspopup="true" aria-expanded="false" 
+													ng-init="activeName = 'Action'">
+													{{activeName}} 
+													<i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i>
+													</button>
+													<div ng-show="showChartOptions" ng-init="activeOption = 1">
+														<option ng-click="activeOption = 1; activeName = 'Action'" class="dropdown-item" href="">
+															Action 
+															<i ng-if="activeOption == 1" class="fa fa-check dropdown-check" aria-hidden="true"></i>
+														</option>
+													 
+														<option ng-click="activeOption = 2; activeName = 'Another action'" class="dropdown-item" href="">
+															Another action
+															<i ng-if="activeOption == 2" class="fa fa-check dropdown-check" aria-hidden="true"></i>
+														</option>
+														 
+														<option ng-click="activeOption = 3; activeName = 'Something else here'" class="dropdown-item" href="">
+															Something else here 
+															<i ng-if="activeOption == 3" class="fa fa-check dropdown-check" aria-hidden="true"></i>
+														</option>
+													 
+														<option ng-click="activeOption = 4; activeName = 'Separated link'" class="dropdown-item" href="">
+															Separated link  
+														</option>
+													 
+													</div>
+											</div>   
 										<nvd3   options="options" data="data" events="events"  api="api" on-ready="callback" ></nvd3>
 										 
 									</td>
