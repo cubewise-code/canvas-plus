@@ -61,13 +61,13 @@
                 scope.options = [];
                 scope.cellRef = {};
 
-                
+                scope.activeName = 'lineChart';
         var chart;
         scope.chartContainer; 
         scope.chartToolTipElements = [];
         scope.options = {
             "chart": {
-              "type": "lineChart",
+              "type":  scope.activeName,
               "height": (window.innerHeight/2),
               "margin": {
                 "top": 50,
@@ -396,7 +396,7 @@
               "xRange": null,
               "yDomain": null,
               "yRange": null,
-              "showLegend": true,
+              "showLegend": scope.selections.showLegend,
               "legendPosition": "top",
               "showXAxis": true,
               "showYAxis": true,
@@ -453,6 +453,7 @@
               "css": {}
             }
           }
+          
           scope.charRowCount = 0;
           scope.consolidatedRowsOnly = false;
           scope.randomColor = [];
@@ -622,7 +623,14 @@
                                                 } 
                                             }
                                         }
-                                         
+                                        if(scope.activeName === 'multiBarChart'){
+                                          scope.options.chart.left = 0;
+                                          scope.options.chart.right = 0;
+                                        }
+                                        if(scope.activeName === 'lineChart'){
+                                          scope.options.chart.margin.left = 50;
+                                          scope.options.chart.margin.right = 50;
+                                        }
                                        //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                         var jsonRowData = [];
                                         var colNameArray = [];
@@ -760,7 +768,14 @@
                                           //  console.log(jsonRowData[row]) 
                                         }
                                       
-                                       
+                                        if( scope.chart && scope.activeName === 'multiBarChart'){
+                                          scope.chart.left = 0;
+                                          scope.chart.right = 0;
+                                        }
+                                        if(scope.chart && scope.activeName === 'lineChart'){
+                                          scope.chart.margin.left = 50;
+                                          scope.chart.margin.right = 50;
+                                        }
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
                                        if( scope.api){
@@ -975,6 +990,14 @@
                                       
                                        //scope.tableData = scope.table.data();
                                       scope.data = jsonRowData; 
+                                      if( scope.chart && scope.activeName === 'multiBarChart'){
+                                        scope.chart.left = 0;
+                                        scope.chart.right = 0;
+                                      }
+                                      if(scope.chart && scope.activeName === 'lineChart'){
+                                        scope.chart.margin.left = 50;
+                                        scope.chart.margin.right = 50;
+                                      }
                                       $timeout(
                                         function(){
                                           if( scope.api){
@@ -1027,28 +1050,39 @@
                     }
                     
                     angular.element(document.querySelector('#stickyContainer'+scope.tableId)).bind('scroll', function(){
-                        scope.offsetTop = 0;
+                      
+                       
                         var el = $('#stickyContainer'+scope.tableId);
                         $body = $(el);  
                         $stickyHeader = $(el).find('#sticky-header');
                         $fixedHeader = $(el).find('.fixed-container');
+                        $fixedHeaderContainer = $(el).find('#fixedHeaderContainer'+scope.tableId);
+                        
                         $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
                         $chartContent = $(el).find('#chartRow'+scope.tableId);
-                        $sideContent = $(el).find('#sideContent'+scope.tableId);           
+                        $sideContent = $(el).find('#sideContent'+scope.tableId); 
+
                         scope.scrolling = true;
-                        $($stickyHeader).css('display','block'); 
-                        $($sideContent).css('display', 'block');
+                        $($stickyHeader).css('display','none'); 
                          
                              var valuetoEval = scope.offsetTop;
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
-    
-                            if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() >= 0){
-        
+                             if(scope.chartVisible  ){
+                              scope.offsetTop = 350;
+      
+                            }else{
+                              scope.offsetTop = 1;
+                            }
+                            
+                            if($($body).scrollTop() >= parseInt(valuetoEval)  ){
+                              $($fixedHeader).css('display','block'); 
+                              $($stickyHeader).css('display','block'); 
+                              $($sideContent).css('display', 'block');
                                 scope.headerOutOffView = true;
                               //console.log("view header")
                                 if($($stickyHeader)){
-                                    $($stickyHeader).css('display','block'); 
+                                    $($stickyHeader).css('display','block !important'); 
                                     $($stickyHeader).css('opacity','1'); 
                                     $($stickyHeader).css('pointer-events','auto'); 
                                 }
@@ -1062,10 +1096,10 @@
                                     $($sideContent).css('display', 'block');
                                     $($sideContent).css('margin-top', -$($body).scrollTop());
                                     if(scope.chartVisible){
-                                      console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
-                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )  )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) ) ) + $($body).scrollTop() );
+                                      //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
+                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )  )+(document.getElementById('firstHeaderColHeight'+scope.tableId).getBoundingClientRect().height ) ) ) + $($body).scrollTop() );
                                     }else{
-                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))  +(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) )) )) + $($body).scrollTop());
+                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))  +(document.getElementById('firstHeaderColHeight'+scope.tableId).getBoundingClientRect().height ) )) )) + $($body).scrollTop());
                                     }
                                      
                                                                     
@@ -1073,17 +1107,22 @@
                                
                                  
                             }else{
-                                 
+                              $($stickyHeader).css('display','none'); 
+                               
                                 scope.headerOutOffView = false;
                               //console.log("hide header")
                                 if($($stickyHeader)){
+                                   
+                                   $($stickyHeader).css('display','none !important'); 
                                     $($stickyHeader).css('opacity','0'); 
                                     $($stickyHeader).css('pointer-events','none'); 
                                 }
                                 if($($fixedHeader)){
                                     $($fixedHeader).css('pointer-events','none'); 
+                                        $($fixedHeader).css('display','none !important'); 
                                 }
                                 if($($fixedFirstColHeader)){
+
                                     $($fixedFirstColHeader).css('display','none !important'); 
                                 }
                                  
@@ -1094,7 +1133,7 @@
                              if($($stickyHeader)){
                                 $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                              }
-                            
+                             $($sideContent).css('margin-top', -$($body).scrollTop());
                       });
                 }else{
                     if(scope.containerishere === true){
@@ -1126,7 +1165,7 @@
                         document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split('Excel').join('');
                         document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split('CSV').join('');
                         document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split(' | ').join('');
-                        document.getElementsByClassName('tm1-ui-export')[ff].innerText = '';
+                        document.getElementsByClassName('tm1-ui-export')[ff].text = '';
                         if(ff === document.getElementsByClassName('tm1-ui-export').length-1){
                             scope.scexcelReformated = true;
                         }
@@ -1167,6 +1206,19 @@
                       }
                   }
               }
+              scope.addContainerHeight = function(className){
+                if(document.getElementById(className).length){
+                    var tempObjTwoArray = document.getElementById(className);
+                    var sumNum = 0;
+                    for(var tthh = 0;  tthh < tempObjTwoArray.length; tthh++){
+                      sumNum += tempObjTwoArray[tthh].getBoundingClientRect().height;
+                           
+                   
+                    }
+                    return sumNum;
+                     
+                }
+            }
               scope.getContainerTop = function(id){
                   if(document.getElementById(id)){
                       var tempObjTop = document.getElementById(id);
@@ -1443,6 +1495,7 @@
                             window.dispatchEvent(new Event('resize'));
                         },100
                     )
+                     
                             
                        
                     
