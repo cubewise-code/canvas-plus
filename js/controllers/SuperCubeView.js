@@ -153,7 +153,7 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}}else{scope.chartToolTipElements = e;}  console.log(e,'click') },
-                    elementMouseover: function(e){scope.chartToolTipElements = {"0":e};  console.log(e,'mouseoer') },
+                    elementMouseover: function(e){  console.log(e,'mouseover') },
                     elementMouseout: function(e){   console.log(e,'mouseout') },
                     renderEnd: function(e){    console.log(e,'renderEnd') }
                  
@@ -680,13 +680,13 @@
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
                                             
-                                            if(scope.randomColor[gggh]){
-                                              //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                          }else{
-                                            var newSatColor = scope.applySaturationToHexColorapplySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50)
-                                              scope.randomColor[gggh] =  newSatColor ;
-                                          
-                                          }   
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                                //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            }else{
+                                              var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
+                                              scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                            
+                                            }   
                                             rowNameArray = [];
                                         }
                                         
@@ -723,7 +723,7 @@
                                                   scope.charRowCount++;
                                                   var cellArrayFromJson = [];
                                                   jsonRowData[row] =  {"key": '',
-                                                  "color": scope.randomColor[row], "values":[]};
+                                                  "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
                                                   for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                       if(scope.table.data()[row].elements.length){
                                                           jsonRowData[row].key = rowNameFinalArray[row] ;
@@ -749,7 +749,7 @@
                                                 var cellArrayFromJson = [];
                                                 scope.charRowCount++;
                                                 jsonRowData[row] =  {"key": '',
-                                                "color": scope.randomColor[row], "values":[]};
+                                                "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
                                                 for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                   
                                                     if(scope.table.data()[row].elements.length){
@@ -952,12 +952,13 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
-                                            if(scope.randomColor[gggh]){
-                                                //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                            }else{
-                                              var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50)
-                                              scope.randomColor[gggh] =  newSatColor ;
-                                            }   
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                              //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                          }else{
+                                            var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
+                                            scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                          
+                                          }    
                                             rowNameArray = [];
                                         }
                                         console.log(colNameArray, "colNameArray", scope.randomColor);
@@ -969,7 +970,7 @@
                                             var cellArrayFromJson = [];
                                             scope.charRowCount++;
                                             jsonRowData[row] =  {"key": '',
-                                            "color": scope.randomColor[row], "values":[]};
+                                            "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
                                             for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 if(scope.table.data()[row].elements.length){
                                                     jsonRowData[row].key = rowNameFinalArray[row] ;
@@ -1194,7 +1195,12 @@
             }
             scope.getTableWidthinPx = function(){
                 if(document.getElementById('stickyContainer'+scope.tableId)){
-                    return document.getElementById('stickyContainer'+scope.tableId).getBoundingClientRect().width - 12 ;
+                  if(scope.tableDimensionLength >0){
+                    return document.getElementById('stickyContainer'+scope.tableId).getBoundingClientRect().width +(scope.getContainerWidth('rowHieghtElement'+(scope.tableId+'')+0+'-'+0)*(scope.tableDimensionLength)) ;
+                  }else{
+                    return document.getElementById('stickyContainer'+scope.tableId).getBoundingClientRect().width +(scope.getContainerWidth('rowHieghtElement'+(scope.tableId+'')+0+'-'+0)) ;
+                  }
+                    
                 }
                  
             }
