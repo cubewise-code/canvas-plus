@@ -1,6 +1,6 @@
 (function(){
         var app = angular.module('app');
-        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout', '$window', function($log, $rootScope, $tm1Ui, $timeout , $window) {
+        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout', '$window','$anchorScroll','$location', function($log, $rootScope, $tm1Ui, $timeout , $window,  $anchorScroll,  $location) {
             return {
                 templateUrl: 'html/SuperCubeView.html',
                 scope:{
@@ -24,6 +24,7 @@
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
                     monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
                 };
+                scope.hideColumn = [];
                 scope.selections = {};
                 scope.firstDayPosition = {};
                 scope.tm1Instance = $attributes.tm1Instance;
@@ -61,19 +62,19 @@
                 scope.options = [];
                 scope.cellRef = {};
 
-                
+                scope.activeName = 'lineChart';
         var chart;
         scope.chartContainer; 
         scope.chartToolTipElements = [];
         scope.options = {
             "chart": {
-              "type": "lineChart",
+              "type":  scope.activeName,
               "height": (window.innerHeight/2),
               "margin": {
                 "top": 50,
                 "right": 50,
                 "bottom": 5,
-                "left": (50)
+                "left": 50
               },
               "valueFormat": function(d){ return d3.format(',.4f')(d); },
               "useInteractiveGuideline": true,
@@ -92,8 +93,8 @@
                 "staggerLabels": false,
                 "rotateLabels": 0,
                 "rotateYLabel": true,
-                "showMaxMin": true,
-                "height": 60,
+                "showMaxMin": false,
+                "height": 0,
                 "ticks": null,
                 "width": 75,
                 "margin": {
@@ -153,7 +154,7 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}}else{scope.chartToolTipElements = e;}  console.log(e,'click') },
-                    elementMouseover: function(e){scope.chartToolTipElements = {"0":e};  console.log(e,'mouseoer') },
+                    elementMouseover: function(e){  console.log(e,'mouseover') },
                     elementMouseout: function(e){   console.log(e,'mouseout') },
                     renderEnd: function(e){    console.log(e,'renderEnd') }
                  
@@ -233,11 +234,11 @@
               },
               "legend": {
                 dispatch: {
-                  legendClick: function(e) {console.log(e, "legendClick"); scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
-                  legendDblclick: function(e) {console.log(e, "legendDblclick"); scope.selections.searchRows = e.key;  window.dispatchEvent(new Event('resize')); },
-                  legendMouseover: function(e) {console.log(e, "legendMouseover"); },
-                  legendMouseout: function(e) {console.log(e, "legendMouseout")},
-                  stateChange: function(e) {console.log(e, "stateChange")}
+                  legendClick: function(e) { scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
+                  legendDblclick: function(e) {  scope.selections.searchRows = (e.key).split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
+                  legendMouseover: function(e) {  },
+                  legendMouseout: function(e) { },
+                  stateChange: function(e) { }
               },
                 "width": 400,
                 "height": 20,
@@ -398,7 +399,7 @@
               "yRange": null,
               "showLegend": true,
               "legendPosition": "top",
-              "showXAxis": true,
+              "showXAxis": false,
               "showYAxis": true,
               "focusEnable": false,
               "focusShowAxisX": true,
@@ -453,6 +454,7 @@
               "css": {}
             }
           }
+          
           scope.charRowCount = 0;
           scope.consolidatedRowsOnly = false;
           scope.randomColor = [];
@@ -468,7 +470,12 @@
             debounce: 10 // default: 10
         };
               
-          
+          scope.gotoTop = function(){
+            $location.hash('chartRow'+scope.tableId);
+
+            // call $anchorScroll()
+            $anchorScroll();
+          }
          
           scope.callback = function(scope, element){
             // this code will be applied once directive has been created
@@ -622,7 +629,14 @@
                                                 } 
                                             }
                                         }
-                                         
+                                        if(scope.activeName === 'multiBarChart'){
+                                          scope.options.chart.left = 0;
+                                          scope.options.chart.right = 0;
+                                        }
+                                        if(scope.activeName === 'lineChart'){
+                                          scope.options.chart.margin.left = 50;
+                                          scope.options.chart.margin.right = 50;
+                                        }
                                        //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                         var jsonRowData = [];
                                         var colNameArray = [];
@@ -633,11 +647,11 @@
                                             var arrayToUse= [];
                                              
                                             for(jjk = 0; jjk < myColObj.columns.length; jjk++){
-                                                 if(colNameArray[jjk]){
-                                                    colNameArray[jjk] +=  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }else{
-                                                    colNameArray[jjk] =   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }
+                                                if(colNameArray[jjkk] === undefined || !colNameArray){
+                                                    colNameArray[jjk] =  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                }else{
+                                                    colNameArray[jjk] +=   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                }
                                                 
                                             }
                                         }
@@ -667,84 +681,43 @@
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
                                             
-                                            if(scope.randomColor[gggh]){
-                                              //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                          }else{
-                                            var newSatColor = scope.applySaturationToHexColorapplySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50)
-                                              scope.randomColor[gggh] =  newSatColor ;
-                                          
-                                          }   
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                                //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                            }else{
+                                              var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
+                                              scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                            
+                                            }   
                                             rowNameArray = [];
                                         }
                                         
                                         //console.log(colNameArray, "colNameArray")
                                         for(row in scope.table.data()){
                                             //var scope.randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                            if(scope.consolidatedRowsOnly === true){
-                                             // console.log(scope.consolidatedRowsOnly, scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"CONSOLEDIATED")
-                                             var makeconsolRow = [];
-                                             makeconsolRow[row] = false; 
-                                             for(el in scope.table.data()[row].elements){
-                                                 
-                                                if(scope.table.data()[row].elements[el].element['type'] === 'C'){
-                                                  makeconsolRow[row] = true;
-                                                  console.log(scope.table.data()[row].elements[el].element, "TRUE")
-                                                   
-                                                     
-                                                }else{
-                                                  
-                                                  // scope.rowTotalConsolidationArray[row] = false;
-                                                }
-                                              }
-                                              if( makeconsolRow[row] === true){
-                                                scope.rowTotalConsolidationArray[row] = true;
-                                              }else{
-                                                scope.rowTotalConsolidationArray[row] = false;
-                                              }
-                                              console.log(scope.rowTotalConsolidationArray, "scope.rowTotalConsolidationArrayscope.rowTotalConsolidationArray")
- 
-                                                
-                                                 
-
-                                        
-                                                  scope.charRowCount++;
-                                                  var cellArrayFromJson = [];
-                                                  jsonRowData[row] =  {"key": '',
-                                                  "color": scope.randomColor[row], "values":[]};
-                                                  for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                                      if(scope.table.data()[row].elements.length){
-                                                          jsonRowData[row].key = rowNameFinalArray[row] ;
-                                                      }
-                                                      
-                                                            
-                                                              cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
-                                                          
-                                                              
-                                                          
-                                                          
-                                                        
-                                                          
-                                                          
-                                                  }
-                                                  var tt = JSON.stringify(cellArrayFromJson) 
-                                                  jsonRowData[row]["values"] = JSON.parse(tt);
-                                                 
-                   
-                                            }else{
+                                            
                                                
                                                 
                                                 var cellArrayFromJson = [];
                                                 scope.charRowCount++;
                                                 jsonRowData[row] =  {"key": '',
-                                                "color": scope.randomColor[row], "values":[]};
-                                                for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                                    if(scope.table.data()[row].elements.length){
-                                                        jsonRowData[row].key = rowNameFinalArray[row] ;
-                                                    }
+                                                "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
+                                                for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
+                                                   
+                                                  if( scope.hideColumn[gss] ){  
+                                                    console.log("HIDE COLUMN",gss);
                                                     
-                                                          
-                                                            cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
-                                                        
+                                                  }else{
+                                                    if(scope.table.data()[row].elements.length){
+                                                      jsonRowData[row].key = rowNameFinalArray[row] ;
+                                                  }
+                                                  cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                      
+                                               
+                                                    console.log("dont hide",gss);
+                                                  }
+                                                   
+                                                    
+                                                    
                                                             
                                                         
                                                         
@@ -754,13 +727,20 @@
                                                 }
                                                 var tt = JSON.stringify(cellArrayFromJson) 
                                                 jsonRowData[row]["values"] = JSON.parse(tt);
-                                              }
+                                               
                                              
                                             
                                           //  console.log(jsonRowData[row]) 
                                         }
                                       
-                                       
+                                        if( scope.chart && scope.activeName === 'multiBarChart'){
+                                          scope.chart.left = 0;
+                                          scope.chart.right = 0;
+                                        }
+                                        if(scope.chart && scope.activeName === 'lineChart'){
+                                          scope.chart.margin.left = 50;
+                                          scope.chart.margin.right = 50;
+                                        }
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
                                        if( scope.api){
@@ -899,12 +879,12 @@
                                             var myColObj = scope.dataset.headers[ggh];
                                             var arrayToUse= [];
                                              
-                                            for(jjk = 0; jjk < myColObj.columns.length; jjk++){
-                                                 if(colNameArray[jjk]){
-                                                    colNameArray[jjk] +=  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }else{
-                                                    colNameArray[jjk] +=   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }
+                                            for(jjkk = 0; jjkk < myColObj.columns.length; jjkk++){
+                                              if(colNameArray[jjkk] === undefined || !colNameArray){
+                                                colNameArray[jjkk] =  (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                                             }else{
+                                                colNameArray[jjkk] +=   (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                                             }
                                                 
                                             }
                                         }
@@ -931,12 +911,13 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
-                                            if(scope.randomColor[gggh]){
-                                                //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                            }else{
-                                              var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50)
-                                              scope.randomColor[gggh] =  newSatColor ;
-                                            }   
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                              //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                                          }else{
+                                            var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
+                                            scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                          
+                                          }    
                                             rowNameArray = [];
                                         }
                                         console.log(colNameArray, "colNameArray", scope.randomColor);
@@ -948,15 +929,26 @@
                                             var cellArrayFromJson = [];
                                             scope.charRowCount++;
                                             jsonRowData[row] =  {"key": '',
-                                            "color": scope.randomColor[row], "values":[]};
-                                            for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                                if(scope.table.data()[row].elements.length){
+                                            "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
+                                              for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                                
+                                                if( scope.hideColumn[gs] ){  
+                                                  console.log("HIDE COLUMN",gs);
+                                                  
+                                                }else{
+                                                  if(scope.table.data()[row].elements.length){
                                                     jsonRowData[row].key = rowNameFinalArray[row] ;
                                                       
                                                         
-                                                }
+                                                  }
                                                   cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
-                                                    
+                                                  
+                                                  console.log("dont hide",gs);
+                                                }
+                                             
+                                                  
+                                                
+                                                
                                                       
                                                         
                                                     
@@ -967,7 +959,7 @@
                                             }
                                             var tt = JSON.stringify(cellArrayFromJson) 
                                             jsonRowData[row]["values"] = JSON.parse(tt);
-                                            console.log(jsonRowData[row]) 
+                                            //console.log(jsonRowData[row]) 
                                         }
                                         
                                      
@@ -975,6 +967,14 @@
                                       
                                        //scope.tableData = scope.table.data();
                                       scope.data = jsonRowData; 
+                                      if( scope.chart && scope.activeName === 'multiBarChart'){
+                                        scope.chart.left = 0;
+                                        scope.chart.right = 0;
+                                      }
+                                      if(scope.chart && scope.activeName === 'lineChart'){
+                                        scope.chart.margin.left = 50;
+                                        scope.chart.margin.right = 50;
+                                      }
                                       $timeout(
                                         function(){
                                           if( scope.api){
@@ -1027,34 +1027,50 @@
                     }
                     
                     angular.element(document.querySelector('#stickyContainer'+scope.tableId)).bind('scroll', function(){
-                        scope.offsetTop = 0;
+                      
+                       
                         var el = $('#stickyContainer'+scope.tableId);
                         $body = $(el);  
                         $stickyHeader = $(el).find('#sticky-header');
                         $fixedHeader = $(el).find('.fixed-container');
+                        $fixedHeaderContainer = $(el).find('#fixedFirstColHeader');
+                        
                         $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
                         $chartContent = $(el).find('#chartRow'+scope.tableId);
-                        $sideContent = $(el).find('#sideContent'+scope.tableId);           
+                        $sideContent = $(el).find('#sideContent'+scope.tableId); 
+
                         scope.scrolling = true;
-                        $($stickyHeader).css('display','block'); 
-                        $($sideContent).css('display', 'block');
+                        $($stickyHeader).css('display','none'); 
                          
                              var valuetoEval = scope.offsetTop;
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
-    
-                            if($($body).scrollTop() >= parseInt(valuetoEval) || $($body).scrollLeft() >= 0){
-        
+                             if(scope.chartVisible  ){
+                              scope.offsetTop = 350;
+      
+                            }else{
+                              scope.offsetTop = 1;
+                            }
+                            
+                            if($($body).scrollTop() >= parseInt(valuetoEval)  ){
+                              $($fixedHeader).css('display','block'); 
+                              $($stickyHeader).css('display','block'); 
+                              $($sideContent).css('display', 'block');
                                 scope.headerOutOffView = true;
                               //console.log("view header")
                                 if($($stickyHeader)){
-                                    $($stickyHeader).css('display','block'); 
+                                    $($stickyHeader).css('display','block !important'); 
                                     $($stickyHeader).css('opacity','1'); 
                                     $($stickyHeader).css('pointer-events','auto'); 
                                 }
-                                if($($fixedHeader) && $($fixedFirstColHeader)){
+                                if($($fixedHeader) && $($fixedHeaderContainer)){
                                     $($fixedHeader).css('pointer-events','auto'); 
-                                    $($fixedFirstColHeader).css('display','block !important');
+                                    $($fixedHeaderContainer).css('display','block');
+                                    
+                                     
+                                }
+                                if($($fixedFirstColHeader)){
+                                  $($fixedFirstColHeader).css('display','block');
                                 }
                                
                                
@@ -1062,10 +1078,10 @@
                                     $($sideContent).css('display', 'block');
                                     $($sideContent).css('margin-top', -$($body).scrollTop());
                                     if(scope.chartVisible){
-                                      console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
-                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )  )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) ) ) + $($body).scrollTop() );
+                                      //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
+                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )   )) ) + $($body).scrollTop() );
                                     }else{
-                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))  +(document.getElementById('head'+scope.tableId).getBoundingClientRect().height ) )) )) + $($body).scrollTop());
+                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
                                     }
                                      
                                                                     
@@ -1073,19 +1089,26 @@
                                
                                  
                             }else{
-                                 
+                              $($stickyHeader).css('display','none'); 
+                                $($fixedHeaderContainer).css('display','none'); 
                                 scope.headerOutOffView = false;
                               //console.log("hide header")
                                 if($($stickyHeader)){
+                                   
+                                   $($stickyHeader).css('display','none !important'); 
                                     $($stickyHeader).css('opacity','0'); 
                                     $($stickyHeader).css('pointer-events','none'); 
                                 }
-                                if($($fixedHeader)){
-                                    $($fixedHeader).css('pointer-events','none'); 
-                                }
-                                if($($fixedFirstColHeader)){
-                                    $($fixedFirstColHeader).css('display','none !important'); 
-                                }
+                                if($($fixedHeader) && $($fixedHeaderContainer)){
+                                  $($fixedHeader).css('pointer-events','auto'); 
+                                  $($fixedHeaderContainer).css('display','none');
+                                  
+                                   
+                              }
+                                
+
+                                   
+                             
                                  
                                  
                                  
@@ -1094,7 +1117,7 @@
                              if($($stickyHeader)){
                                 $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                              }
-                            
+                             $($sideContent).css('margin-top', -$($body).scrollTop());
                       });
                 }else{
                     if(scope.containerishere === true){
@@ -1109,7 +1132,7 @@
             scope.waitTillContainerArives = function(){
                 $timeout(
                     function(){
-                        console.log("looking for freezepane");
+                        //console.log("looking for freezepane");
                         scope.setUpFreezePane();
                     },1000
                 )
@@ -1126,7 +1149,7 @@
                         document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split('Excel').join('');
                         document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split('CSV').join('');
                         document.getElementsByClassName('tm1-ui-export')[ff].innerHTML = (document.getElementsByClassName('tm1-ui-export')[ff].innerHTML+'').split(' | ').join('');
-                        document.getElementsByClassName('tm1-ui-export')[ff].innerText = '';
+                        document.getElementsByClassName('tm1-ui-export')[ff].text = '';
                         if(ff === document.getElementsByClassName('tm1-ui-export').length-1){
                             scope.scexcelReformated = true;
                         }
@@ -1142,7 +1165,12 @@
             }
             scope.getTableWidthinPx = function(){
                 if(document.getElementById('stickyContainer'+scope.tableId)){
-                    return document.getElementById('stickyContainer'+scope.tableId).getBoundingClientRect().width - 12 ;
+                  if(scope.tableDimensionLength >0){
+                    return document.getElementById('stickyContainer'+scope.tableId).getBoundingClientRect().width +(scope.getContainerWidth('rowHieghtElement'+(scope.tableId+'')+0+'-'+0)*(scope.tableDimensionLength)) ;
+                  }else{
+                    return document.getElementById('stickyContainer'+scope.tableId).getBoundingClientRect().width +(scope.getContainerWidth('rowHieghtElement'+(scope.tableId+'')+0+'-'+0)) ;
+                  }
+                    
                 }
                  
             }
@@ -1167,6 +1195,22 @@
                       }
                   }
               }
+              scope.addContainerHeight = function(className){
+                if( document.getElementById(className)){
+                  if(document.getElementById(className).length){
+                    var tempObjTwoArray = document.getElementById(className);
+                    var sumNum = 0;
+                    for(var tthh = 0;  tthh < tempObjTwoArray.length; tthh++){
+                      sumNum += tempObjTwoArray[tthh].getBoundingClientRect().height();
+                           
+                   
+                    }
+                    return sumNum;
+                     
+                }
+                }
+                
+            }
               scope.getContainerTop = function(id){
                   if(document.getElementById(id)){
                       var tempObjTop = document.getElementById(id);
@@ -1194,8 +1238,8 @@
             scope.workOutContainerHeight = function(id){
                
                          
-                        if(document.getElementById(id) && document.getElementById(id).getElementsByClassName('fixed-container').length > 0 ){
-                          //console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
+                        if(document.getElementById(id)  ){
+                        // console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
                                 return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
                              
                         }
@@ -1443,6 +1487,7 @@
                             window.dispatchEvent(new Event('resize'));
                         },100
                     )
+                     
                             
                        
                     
