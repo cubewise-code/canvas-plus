@@ -648,8 +648,8 @@ svg:not(:root) {
 
 		</div>
 
-	 <div ng-if="!tableVisible && !chartVisible" style="position:relative; left:0px; top:0px; width:100%; height:auto; " >
-			<div ng-include="'html/SuperCubeViewCustomPage.html'" ></div>
+	 <div ng-if="customPage && !tableVisible && !chartVisible" style="position:relative; left:0px; top:0px; width:100%; height:auto; " >
+			<div ng-include="'html/'+customPage+'.html'" ></div>
 	 </div>
 
 	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

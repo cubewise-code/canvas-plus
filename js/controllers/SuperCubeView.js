@@ -18,7 +18,9 @@
                     tableDataColumnClass:'@',
                     tableId:"@",
                     rowsToLoad:'@',
-                    chartVisible:'@'
+                    chartVisible:'@',
+                    tableVisible:'@',
+                    customPage:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -40,8 +42,9 @@
                 scope.rowsToLoad =  $attributes.rowsToLoad;
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
-                
+                scope.customPage = $attributes.customPage;
                 scope.chartVisible = $attributes.chartVisible;
+                scope.tableVisible= $attributes.tableVisible;
                 scope.dateNow = new Date() ;
                 scope.collapseDimensions = true;
                  

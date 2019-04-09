@@ -2,19 +2,28 @@
 
 
 
-
-<div class="col-xs-12 col-md-12" ng-show="false" ng-controller="supercubeviewcustompageCtrl" ng-style="{'padding-top':getTableTop()}">
+<style>
+#custom-page h3{
+    border-bottom:1px solid #666; padding-bottom:10px; line-height:1.3em; 
+}
+#custom-page h4{
+    border-bottom:1px solid #666; padding-bottom:10px; line-height:1.3em; 
+}
+</style>
+<div id="custom-page" class="col-xs-12 col-md-12" ng-show="customPage" ng-controller="supercubeviewcustompageCtrl" ng-style="{'padding-top':getTableTop()}">
     <div class="col-xs-12 col-md-12" > 
-        <h3 style="border-bottom:1px solid #666; padding-bottom:10px; line-height:1.3em; ">
-            <i style="padding-right:10px" class="fa fa-question"></i>Help Page
+        <h3  >
+            <i style="padding-right:10px" class="fa fa-cube"></i>Welcome to Super Cube View + Freezepane + Charts + Data Entry
         </h3>
     </div>
     <div class="col-xs-12 col-md-12"> 
             <div class="col-xs-12 col-md-6">
-                <p >Some text </p>
+                <h4 >Cube Summary</h4>
+                <p>Some Text</p>
             </div>
             <div class="col-xs-12 col-md-6">
-                <p >Some more text</p>
+                <h4 >Charts Available</h4>
+                <p>Some Text</p>
             </div>
     </div>
 
