@@ -312,8 +312,8 @@ svg:not(:root) {
 			</div>
 			<div id="stickyContainer{{tableId}}"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
-					<span ng-if=" $root.showView">
-					<style>
+					<span ng-if=" $root.showView && (tableVisible || chartVisible)">
+					<style >
 					html{
 						overflow: hidden;
 					}
@@ -443,7 +443,7 @@ svg:not(:root) {
 				</table>
 			</div>
 
-			<div  ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
+			<div ng-show="tableVisible || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
 			  
 				<table class="table" id="af1{{tableId}}">
 
@@ -648,7 +648,9 @@ svg:not(:root) {
 
 		</div>
 
-	 
+	 <div ng-if="!tableVisible && !chartVisible" style="position:relative; left:0px; top:0px; width:100%; height:auto; " >
+			<div ng-include="'html/SuperCubeViewCustomPage.html'" ></div>
+	 </div>
 
 	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	 
