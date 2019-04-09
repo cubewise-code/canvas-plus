@@ -63,6 +63,7 @@
                 scope.cellRef = {};
 
                 scope.activeName = 'lineChart';
+                scope.chartName = 'Line'
         var chart;
         scope.chartContainer; 
         scope.chartToolTipElements = [];
@@ -397,7 +398,7 @@
               "xRange": null,
               "yDomain": null,
               "yRange": null,
-              "showLegend": true,
+              "showLegend": false,
               "legendPosition": "top",
               "showXAxis": false,
               "showYAxis": true,
@@ -1046,7 +1047,7 @@
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
                              if(scope.chartVisible  ){
-                              scope.offsetTop = 350;
+                              scope.offsetTop = window.innerHeight-290;
       
                             }else{
                               scope.offsetTop = 1;
@@ -1484,7 +1485,11 @@
                 scope.dispatchResize = function(){
                     $timeout(
                         function(){
-                            window.dispatchEvent(new Event('resize'));
+                          if(scope.tableVisible){
+                            scope.options.chart.height = window.innerHeight-290;
+                          }
+                          window.dispatchEvent(new Event('resize'));
+                            
                         },100
                     )
                      
