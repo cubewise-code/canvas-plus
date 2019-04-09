@@ -332,7 +332,7 @@ svg:not(:root) {
 
 							</div>
 							<div  ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update(); dispatchResize();" ng-show="col.visible "   class="text-center center esponsive-text" 
-									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px', 'border-bottom':hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
+									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px', 'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
 									ng-repeat="col in headerrrow.columns track by $index" 
 								style="background-color: #f0efef; display:inline-block; font-weight:600;  border-left: 1px solid #ddd;   vertical-align:bottom;  margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
 								 {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}  
@@ -436,7 +436,7 @@ svg:not(:root) {
 										<td ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update();  "   
 										id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 										style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef;" 
-										ng-style="{'border-bottom':hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
+										ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
 										ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 										<span   > {{dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   </span>
 									</td>
