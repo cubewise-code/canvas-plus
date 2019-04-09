@@ -350,7 +350,7 @@ svg:not(:root) {
                       ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="display:inline-block;width:100%;background-color: rgb(240, 239, 239);display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
-											placeholder="Search {{col.dimension}}..."> 
+											placeholder="{{col.dimension}}..."> 
 									</th>
 								 
 								</tr>
@@ -411,7 +411,7 @@ svg:not(:root) {
 											ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="background-color: transparent;display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
-											placeholder="Search {{col.dimension}}..."> 
+											placeholder="{{col.dimension}}..."> 
 								</td>
 							 
 								</tr>
@@ -477,7 +477,7 @@ svg:not(:root) {
 											ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="background-color: transparent;display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
-											placeholder="Search {{col.dimension}}..."> 
+											placeholder="{{col.dimension}}..."> 
 								</td>
 										<td ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update();  "   
 										id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
