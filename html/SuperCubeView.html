@@ -99,6 +99,7 @@
 			opacity:0;
 			background-color:#fff;  
 			color:#333;
+			width:2000px;
 		}
 		.fixedFirstColHeader{
 			position:fixed;
@@ -330,10 +331,10 @@ svg:not(:root) {
 							 
 
 							</div>
-							<div   ng-show="col.visible "   class="text-center center esponsive-text" 
-									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px' } " 
+							<div  ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update(); dispatchResize();" ng-show="col.visible "   class="text-center center esponsive-text" 
+									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px', 'border-bottom':hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
 									ng-repeat="col in headerrrow.columns track by $index" 
-								style="background-color: #f0efef; display:inline-block; font-weight:600; 	border: 0px solid #ddd;   vertical-align:bottom;  margin: 0 auto; border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
+								style="background-color: #f0efef; display:inline-block; font-weight:600;  border-left: 1px solid #ddd;   vertical-align:bottom;  margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
 								 {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}  
 				 
 							</div>
@@ -400,43 +401,7 @@ svg:not(:root) {
 			  
 				<table class="table" id="af1{{tableId}}">
 
-					<thead  style="display:none;" >
-							 
-						<tr  id="headerContent{{tableId}}" ng-repeat="row in dataset.headers track by $index">
-							<th   ng-if="$index === 0 && col.visible " 
-							style="border-right:1px solid #ccc; background-color: #f0efef; opacity:0; z-index:-1" 
-								ng-repeat="col in row.rows track by $index"   colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-								 {{$index > 0 ? col.dimension:''}} 
-								<input ng-if="$index === 0" class="form-control" 
-								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-								style="background-color: transparent;display:inline-block;border: none;" 
-								type="text" ng-model="selections.searchRows"   
-								placeholder="Search {{col.dimension}}..."> 
-							</th>
-							<th    
-							ng-if="$index > 0 && col.visible"  
-							style="border-right:1px solid #ccc; background-color: #f0efef;  opacity:0;"
-						 
-								ng-repeat="col in row.rows track by $index"   
-								colspan="{{col.colspan}}" 
-								rowspan="{{col.rowspan}}" 
-								class="text-center" >
-								 {{col.dimension}} 
-								<input ng-if="$index === 0" class="form-control" 
-								ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-								style="background-color: transparent;display:inline-block;border: none;" 
-								type="text" ng-model="selections.searchRows"   
-								placeholder="Search {{col.dimension}}..."> 
-							</th>
-							<th  
-							style="border-right:1px solid #ccc; " 
-							ng-style="{'background-color':chartToolTipElements[0]['point']['x'] === $index ? 'steelblue':'#f0efef' , 'color':chartToolTipElements[0]['point']['x'] === $index ?'#fff':'unset'}" 
-							ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-							<span>  {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}  </span>
-							</th>
-						</tr>
- 
-					</thead>
+				 
 				 
 					<tbody    id="bodyContent{{tableId}}"  > 
 							<tr ng-if="chartVisible" >
@@ -461,17 +426,17 @@ svg:not(:root) {
 											rowspan="{{col.rowspan}}" 
 											class="text-center " >
 											  
-											{{col.dimension}} 
+											{{$index > 0 ? col.dimension:''}} 
 											<input ng-if="$index === 0" class="form-control" 
 											ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="background-color: transparent;display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
 											placeholder="Search {{col.dimension}}..."> 
 								</td>
-										<td ng-click="hideColumn[$index] = !hideColumn[$index]"   
+										<td ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update();  "   
 										id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
-										style="border-right:1px solid #ccc; background-color:#f0efef" 
- 
+										style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef;" 
+										ng-style="{'border-bottom':hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
 										ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 										<span   > {{dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   </span>
 									</td>

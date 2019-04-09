@@ -24,6 +24,7 @@
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
                     monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
                 };
+                scope.hideColumn = [];
                 scope.selections = {};
                 scope.firstDayPosition = {};
                 scope.tm1Instance = $attributes.tm1Instance;
@@ -233,11 +234,11 @@
               },
               "legend": {
                 dispatch: {
-                  legendClick: function(e) {console.log(e, "legendClick"); scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
-                  legendDblclick: function(e) {console.log(e, "legendDblclick"); scope.selections.searchRows = (e.key).split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
-                  legendMouseover: function(e) {console.log(e, "legendMouseover"); },
-                  legendMouseout: function(e) {console.log(e, "legendMouseout")},
-                  stateChange: function(e) {console.log(e, "stateChange")}
+                  legendClick: function(e) { scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
+                  legendDblclick: function(e) {  scope.selections.searchRows = (e.key).split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
+                  legendMouseover: function(e) {  },
+                  legendMouseout: function(e) { },
+                  stateChange: function(e) { }
               },
                 "width": 400,
                 "height": 20,
@@ -646,11 +647,11 @@
                                             var arrayToUse= [];
                                              
                                             for(jjk = 0; jjk < myColObj.columns.length; jjk++){
-                                                 if(colNameArray[jjk]){
-                                                    colNameArray[jjk] +=  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }else{
-                                                    colNameArray[jjk] =   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }
+                                                if(colNameArray[jjkk] === undefined || !colNameArray){
+                                                    colNameArray[jjk] =  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                }else{
+                                                    colNameArray[jjk] +=   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
+                                                }
                                                 
                                             }
                                         }
@@ -693,72 +694,30 @@
                                         //console.log(colNameArray, "colNameArray")
                                         for(row in scope.table.data()){
                                             //var scope.randomColor =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                                            if(scope.consolidatedRowsOnly === true){
-                                             // console.log(scope.consolidatedRowsOnly, scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"CONSOLEDIATED")
-                                             var makeconsolRow = [];
-                                             makeconsolRow[row] = false; 
-                                             for(el in scope.table.data()[row].elements){
-                                                 
-                                                if(scope.table.data()[row].elements[el].element['type'] === 'C'){
-                                                  makeconsolRow[row] = true;
-                                                  console.log(scope.table.data()[row].elements[el].element, "TRUE")
-                                                   
-                                                     
-                                                }else{
-                                                  
-                                                  // scope.rowTotalConsolidationArray[row] = false;
-                                                }
-                                              }
-                                              if( makeconsolRow[row] === true){
-                                                scope.rowTotalConsolidationArray[row] = true;
-                                              }else{
-                                                scope.rowTotalConsolidationArray[row] = false;
-                                              }
-                                              console.log(scope.rowTotalConsolidationArray, "scope.rowTotalConsolidationArrayscope.rowTotalConsolidationArray")
- 
-                                                
-                                                 
-
-                                        
-                                                  scope.charRowCount++;
-                                                  var cellArrayFromJson = [];
-                                                  jsonRowData[row] =  {"key": '',
-                                                  "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
-                                                  for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                                      if(scope.table.data()[row].elements.length){
-                                                          jsonRowData[row].key = rowNameFinalArray[row] ;
-                                                      }
-                                                      
-                                                            
-                                                              cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
-                                                          
-                                                              
-                                                          
-                                                          
-                                                        
-                                                          
-                                                          
-                                                  }
-                                                  var tt = JSON.stringify(cellArrayFromJson) 
-                                                  jsonRowData[row]["values"] = JSON.parse(tt);
-                                                 
-                   
-                                            }else{
+                                            
                                                
                                                 
                                                 var cellArrayFromJson = [];
                                                 scope.charRowCount++;
                                                 jsonRowData[row] =  {"key": '',
                                                 "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
-                                                for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                                  
-                                                    if(scope.table.data()[row].elements.length){
-                                                        jsonRowData[row].key = rowNameFinalArray[row] ;
-                                                    }
+                                                for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
+                                                   
+                                                  if( scope.hideColumn[gss] ){  
+                                                    console.log("HIDE COLUMN",gss);
                                                     
-                                                          
-                                                            cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
-                                                        
+                                                  }else{
+                                                    if(scope.table.data()[row].elements.length){
+                                                      jsonRowData[row].key = rowNameFinalArray[row] ;
+                                                  }
+                                                  cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                      
+                                               
+                                                    console.log("dont hide",gss);
+                                                  }
+                                                   
+                                                    
+                                                    
                                                             
                                                         
                                                         
@@ -768,7 +727,7 @@
                                                 }
                                                 var tt = JSON.stringify(cellArrayFromJson) 
                                                 jsonRowData[row]["values"] = JSON.parse(tt);
-                                              }
+                                               
                                              
                                             
                                           //  console.log(jsonRowData[row]) 
@@ -920,12 +879,12 @@
                                             var myColObj = scope.dataset.headers[ggh];
                                             var arrayToUse= [];
                                              
-                                            for(jjk = 0; jjk < myColObj.columns.length; jjk++){
-                                                 if(colNameArray[jjk]){
-                                                    colNameArray[jjk] +=  (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }else{
-                                                    colNameArray[jjk] +=   (myColObj.columns[jjk].element['attributes']['Caption_Default']);
-                                                 }
+                                            for(jjkk = 0; jjkk < myColObj.columns.length; jjkk++){
+                                              if(colNameArray[jjkk] === undefined || !colNameArray){
+                                                colNameArray[jjkk] =  (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                                             }else{
+                                                colNameArray[jjkk] +=   (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                                             }
                                                 
                                             }
                                         }
@@ -971,14 +930,25 @@
                                             scope.charRowCount++;
                                             jsonRowData[row] =  {"key": '',
                                             "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
-                                            for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                                                if(scope.table.data()[row].elements.length){
+                                              for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                                
+                                                if( scope.hideColumn[gs] ){  
+                                                  console.log("HIDE COLUMN",gs);
+                                                  
+                                                }else{
+                                                  if(scope.table.data()[row].elements.length){
                                                     jsonRowData[row].key = rowNameFinalArray[row] ;
                                                       
                                                         
-                                                }
+                                                  }
                                                   cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
-                                                    
+                                                  
+                                                  console.log("dont hide",gs);
+                                                }
+                                             
+                                                  
+                                                
+                                                
                                                       
                                                         
                                                     
@@ -989,7 +959,7 @@
                                             }
                                             var tt = JSON.stringify(cellArrayFromJson) 
                                             jsonRowData[row]["values"] = JSON.parse(tt);
-                                            console.log(jsonRowData[row]) 
+                                            //console.log(jsonRowData[row]) 
                                         }
                                         
                                      
@@ -1162,7 +1132,7 @@
             scope.waitTillContainerArives = function(){
                 $timeout(
                     function(){
-                        console.log("looking for freezepane");
+                        //console.log("looking for freezepane");
                         scope.setUpFreezePane();
                     },1000
                 )
@@ -1269,7 +1239,7 @@
                
                          
                         if(document.getElementById(id)  ){
-                         console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
+                        // console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
                                 return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
                              
                         }
