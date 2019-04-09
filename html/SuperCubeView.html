@@ -196,74 +196,115 @@
    -webkit-box-shadow: inset 0px 10px 10px rgba(0,0,0,0.3);
    box-shadow:         inset 0px 10px 10px rgba(0,0,0,0.3);
 }
+.out-shadow {
+   -moz-box-shadow:     0px 10px 10px rgba(0,0,0,0.3);
+   -webkit-box-shadow:  0px 10px 10px rgba(0,0,0,0.3);
+   box-shadow:          0px 10px 10px rgba(0,0,0,0.3);
+}
 .fixedFirstColHeader{
 	display:none;
 }
 svg:not(:root) {
     overflow: visible;
 }
+.dropdown-item{
+	cursor:pointer;
+	text-align: left;
+	padding-top:10px;
+	padding-bottom:10px;
+	border: 0px solid steelblue;
+	border-top:2px solid steelblue;
+}
  
 	</style>
+
   
-  	<div class="row"   >
+  	<div class="row"  ng-init="tableVisible = true;" >
 				 
 			<div  ng-show=" $root.showView "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px;   text-align:center;" 
 			 >
-					<span style="margin:5px;margin-right:10px;margin-left:10px;  float:left; left:0px;">
-						<i 	ng-click="chartVisible = !chartVisible; dispatchResize(); api.update(); gotoTop()" ng-class="{'fa-bar-chart':!chartVisible,'fa-table':chartVisible }" class="fa "></i> 
+					<span ng-click="tableVisible = !tableVisible;  dispatchResize(); api.update(); gotoTop()" ng-style="{'background-color': tableVisible ? '#fff':'transparent','color': tableVisible ? 'steelblue':'#fff' }"
+					 style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+						<i 	  class="fa fa-table"></i> Table
+					</span>
+					<span 	ng-click="chartVisible = !chartVisible; dispatchResize(); api.update(); gotoTop()"  
+					ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					style="margin:5px; margin-right:1px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+							<i    class="fa fa-bar-chart"></i> Charts
+					</span>
+					<span ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					style="margin:0px; margin-top:5px; padding:0px;  float:left; left:0px;" > 
+							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:32px; top:0px;width:150px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
+									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
+									style="width:100%; max-width:150px; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
+									data-toggle="dropdown" ng-click="showChartOptions = !showChartOptions" aria-haspopup="true" aria-expanded="false" 
+									 >
+									{{chartName}} 
+									<span class="pull-right"> <i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i></span>	
+									</button>
+									<div ng-show="showChartOptions" class="out-shadow" ng-init="activeOption = 1" 
+									style="width:100%; max-width:150px; float:left; background-color:steelblue; color:steelblue;"> 
+										
+										<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer;" 
+													ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+												 
+													Line
+													<span class="pull-right">
+															<i ng-if="activeOption == 1" class="fa fa-check dropdown-check" aria-hidden="true"></i>
+													</span>
+											 
+										</button> 
+										<button ng-show="chartName != 'Multi Bar'" style="width:100%; background-color:#fff; color:steelblue; cursor:pointer; " 
+										ng-click="activeOption = 2; activeName = 'multiBarChart'; chartName = 'Multi Bar' ; options['chart']['margin']['left'] = 0; options['chart']['margin']['right'] = 0; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+											 
+												Multi Bar 
+												<span class="pull-right">
+														<i ng-if="activeOption == 2 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
+													</span>
+	
+											 
+										</button>
+									 
+										<button ng-show="chartName != 'Stacked Area'" style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; " 
+										ng-click="activeOption = 3; activeName = 'stackedAreaChart';  chartName = 'Stacked Area' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+												 Stacked Area 
+												<span class="pull-right">
+														<i ng-if="activeOption == 3 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
+												
+													</span>
+	
+										</button>
+										<!-- <button ng-show="chartName != 'Pie'" style="width:100%;background-color:#fff; color:steelblue; " 
+										ng-click="activeOption = 4; activeName = 'pieChart'; chartName = 'Pie' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+												 Pie Chart
+												<span class="pull-right">
+														<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
+												</span>
+												
+	
+										</button> -->
+										 
+									 
+									</div>
+							</div>
 					</span>
 					<span ng-show="chartVisible" > 
 						 
-						<span     style="margin:5px;margin-right:10px;margin-left:10px;  float:right; right:0px;">
-							<i   ng-click="  api.refresh() " class="fa fa-refresh "></i>
-						</span>
-						<span    style="margin:5px;margin-right:10px;margin-left:10px; float:right; right:0px;">
-								<i   ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
+							<span ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); "  
+							 style="margin : 5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+									Legends	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
+							</span>
+						 
+						<span ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
+						style="margin : 5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+								<i  
 								ng-class="{'fa-hand-pointer-o':options.chart.useInteractiveGuideline,'fa-hand-paper-o':!options.chart.useInteractiveGuideline}" class="fa "></i>
 						</span>
 						
-						<span    style="margin : 5px;margin-right:10px;margin-left:10px; float:right; right:0px;">
-								<i   ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); " 
-								ng-class="{'fa-circle-o':!options['chart']['showLegend'],'fa-circle':options['chart']['showLegend']}" class="fa "></i>
-						</span>
-						<div class="pull-right control-group" style="margin : 5px; height:32px; top:0px;width:150px; padding:0px; margin:0px;background-color:steelblue; color:#fff;" >
-								<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   style="width:100%; max-width:150px; padding:5px; float:left; background-color:transparent !important; border:0px solid #fff !important";
-								data-toggle="dropdown" ng-click="showChartOptions = !showChartOptions" aria-haspopup="true" aria-expanded="false" 
-								 >
-								{{activeName}} 
-								<i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i>
-								</button>
-								<div ng-show="showChartOptions" ng-init="activeOption = 1" style="width:100%; max-width:150px; float:left; background-color:steelblue; color:#fff;"> 
-									
-									<button style="width:100%; background-color:steelblue; border:0px solid transparent;color:#fff; " 
-												ng-click="activeOption = 1; activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
-												<i ng-if="activeOption == 1" class="fa fa-check dropdown-check" aria-hidden="true"></i>
-												Line Chart
-										 
-									</button> 
-									<button style="width:100%; background-color:steelblue; border:0px solid transparent;color:#fff; " ng-click="activeOption = 2; activeName = 'multiBarChart';  options['chart']['margin']['left'] = 0; options['chart']['margin']['right'] = 0; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
-											<i ng-if="activeOption == 2 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
-											Multi Bar Chart 
-										 
-									</button>
-								 
-									<button style="width:100%;background-color:steelblue; border:0px solid transparent;color:#fff; " ng-click="activeOption = 3; activeName = 'stackedAreaChart'; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
-											<i ng-if="activeOption == 3 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
-											Stacked Area Chart 
-										 
-									</button>
-									<button style="width:100%;background-color:steelblue; border:0px solid transparent;color:#fff; " ng-click="activeOption = 4; activeName = 'pieChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
-											<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
-											Pie Chart
-										 
-									</button>
-									 
-								 
-								</div>
-						</div>
-
+					 
+						 
 					</span>
-					<span  class="pull-left text-left"  style="margin:5px; margin-right:10px; margin-left:0px; width:30px; font-size:0.8em; overflow:hidden;height:32px; color:#fff; float:left; left:0px; padding-left:0px;">
+					<span  class="pull-right text-left"  style="margin:5px; margin-right:10px; margin-left:0px; width:30px; font-size:0.8em; overflow:hidden;height:32px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 						<tm1-ui-export    tm1-target-id="af1{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span> 
 				</span>
@@ -271,13 +312,18 @@ svg:not(:root) {
 			</div>
 			<div id="stickyContainer{{tableId}}"  class="stickyContainer "  
 					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
-					<span ng-if=" $root.showView">
-					<style>
+					<span ng-if=" $root.showView && (tableVisible || chartVisible)">
+					<style >
 					html{
 						overflow: hidden;
 					}
 					body{
 						overflow:hidden
+					}
+					#exportModal > .tm1-ui-export a:first-child{
+						visibility: hidden;
+						position: relative;
+						color:#333 !important;
 					}
 					</style>
 					</span>
@@ -304,7 +350,7 @@ svg:not(:root) {
                       ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="display:inline-block;width:100%;background-color: rgb(240, 239, 239);display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
-											placeholder="Search {{col.dimension}}..."> 
+											placeholder="{{col.dimension}}..."> 
 									</th>
 								 
 								</tr>
@@ -316,8 +362,8 @@ svg:not(:root) {
 			</div>
 
 			<div class="fixed-container" id="fixedHeaderContainer{{tableId}}" 
-				ng-style="{'width':getTableWidthinPx(), 'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"  
-				style=" background-color:#f0efef; padding-top:8px; white-space: nowrap;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2);">
+				ng-style="{'width':getTableWidth(), 'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"  
+				style=" background-color:#f0efef; padding-top:8px; white-space: nowrap;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2); overflow:hidden;">
 					<div id="sticky-header" ng-show="selections.searchRows && rowsToDisplay() != 0 || !selections.searchRows" 	
 						class="sticky-header"   
 						ng-style="{'width': (getContainerWidth('headCol'+tableId))+'px' } " 
@@ -365,7 +411,7 @@ svg:not(:root) {
 											ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="background-color: transparent;display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
-											placeholder="Search {{col.dimension}}..."> 
+											placeholder="{{col.dimension}}..."> 
 								</td>
 							 
 								</tr>
@@ -397,7 +443,7 @@ svg:not(:root) {
 				</table>
 			</div>
 
-			<div  ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
+			<div ng-show="tableVisible || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
 			  
 				<table class="table" id="af1{{tableId}}">
 
@@ -431,11 +477,11 @@ svg:not(:root) {
 											ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="background-color: transparent;display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
-											placeholder="Search {{col.dimension}}..."> 
+											placeholder="{{col.dimension}}..."> 
 								</td>
 										<td ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update();  "   
 										id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
-										style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef;" 
+										style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer;" 
 										ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
 										ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 										<span   > {{dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   </span>
@@ -443,7 +489,7 @@ svg:not(:root) {
 									</tr>
 								 
 						<tr id="rowHeightElement{{$index}}" 
-						  ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+						  ng-hide="!tableVisible || selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 							ng-repeat="row in  table.data()  track by $index" >
 							<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
 									class="{{tableDimensionColumnClass}} overflowhidden"
@@ -602,7 +648,9 @@ svg:not(:root) {
 
 		</div>
 
-	 
+	 <div ng-if="customPage && !tableVisible && !chartVisible" style="position:relative; left:0px; top:0px; width:100%; height:auto; " >
+			<div ng-include="'html/'+customPage+'.html'" ></div>
+	 </div>
 
 	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	 
@@ -650,9 +698,9 @@ svg:not(:root) {
 						<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width:100%;">
 							<div class="btn-group" role="group" aria-label="First group" style="width:100%;">
 								<button ng-repeat="drillName in drillNames track by $index" ng-click="getDrillTable(cellreferenceArray, drillName.name)">{{drillName.name}}</button>
-								<span 	ng-show="tableDrill.length > 0 || tableDrillCol.length > 0"  class="   pull-right"  > 
+								<span style="padding:10px; background-color:steelblue; max-width:35x; overflow: hidden; color:#fff; cursor:pointer;"	ng-show="tableDrill.length > 0 || tableDrillCol.length > 0"  class="   pull-right"  > 
 								 
-									
+									<span id="exportModal" style="color:#666 !important; "> 
 										<tm1-ui-export 
 									 
 										 
@@ -661,6 +709,7 @@ svg:not(:root) {
 										m1-field-separator="" 
 										tm1-field-qualifier="" 
 										tm1-locale=""></tm1-ui-export>
+										</span> 
 							 
 								</span>
 								 
