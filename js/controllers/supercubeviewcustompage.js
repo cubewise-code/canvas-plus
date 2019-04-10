@@ -13,6 +13,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.activeCubeName = $scope.cubeName;
     $scope.activeCubeViewName =  $scope.cubeView;
     $scope.dimensionalityArray = [];
+    $scope.currentDeminsionAttributes = [];
     //console.log("CUSOM CUBEVIEW JS", $scope.tm1Instance, $scope.cubeName, $scope.cubeView);
     $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
         if(cubedata){
@@ -26,6 +27,16 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 $tm1Ui.cubeDimensionsAndHierarchies($scope.tm1Instance, $scope.activeCubeName).then( function(cubedimesionalitydata){
                     if(cubedimesionalitydata){
                         $scope.dimensionalityArray = cubedimesionalitydata;
+                        for(dim in $scope.dimensionalityArray['Dimensions']){
+                            
+                            var dimensionName = $scope.dimensionalityArray['Dimensions'][dim].Name;
+                            //console.log(dimensionName)
+                                //  $tm1Ui.dimensionAttributes($scope.tm1Instance, dimensionName).then(function(dimAttributedata){
+                                //      console.log(dimAttributedata);
+                                //      $scope.currentDeminsionAttributes[dimAttributedata.Name] = dimAttributedata;
+                                //  }) 
+                             
+                        }
                         //console.log($scope.dimensionalityArray, "DIMENSIONALITY")
                     }
                 })
@@ -43,10 +54,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 }
                 $rootScope.cubeView = $scope.activeCubeViewName;
                 $rootScope.cubeName = $scope.cubeName;
-                        
+                 
             }
         });
     }
+
     $scope.getCubeViews();
     $scope.chooseCube = function(name){
         $timeout(
@@ -60,6 +72,30 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         )
          
     }
+    $scope.getAttributesForDim = function(dimensionName, index){
+        
+        $timeout(
+            function(){
+                if(index === $scope.dimensionalityDimensionIndexClicked){
+                   
+                    $scope.currentDimensionClicked = '';
+                }else{
+                    $scope.currentDimensionClicked = dimensionName;
+                    $scope.dimensionalityDimensionIndexClicked = index;
+                    $tm1Ui.dimensionAttributes($scope.tm1Instance, dimensionName).then(function(dimAttributedata){
+                            console.log(dimAttributedata)
+                            $scope.currentDeminsionAttributes = dimAttributedata;
+                                        
+                        
+                        
+                    }) 
+                }
+                        
+            }
+        )
+         
+    }
+     
     $scope.chooseCubeView = function(name){
         $timeout(
             function(){
