@@ -62,25 +62,34 @@
                 </div>
                 <div class="col-xs-12 col-md-12"  >
                      
-                        <div ng-show="showDimensionality" style="cursor:pointer"  
-                            ng-repeat-start="dimension in dimensionalityArray['Dimensions'] track by $index">
-                            <span   >
-                                {{$index+1}} - {{dimension.Name}} 
-                                <span ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >Dimension Attributes <i ng-class="{'fa-minus':showDimensionality && dimensionalityDimensionIndexClicked === $index && currentDimensionClicked != '', 'fa-plus':showDimensionality && dimensionalityDimensionIndexClicked != $index || currentDimensionClicked === ''}" class="fa fa-plus"></i></span>
-                            </span>
-                                <br>
-                            <span>
-                            <div style="margin-right:5px;" 
-                                class="col-xs-12 col-md-12  " 
+                        <div  ng-show="showDimensionality" style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
+                            ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
+                            <h4   >
+                                {{$index+1}} - {{dimension.Name}}<br> 
+                                <small>Hierarchies:  
+                                    <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" >
+                                        {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
+                                    </span>
+                                </small>
+
+                                <span ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
+                                    Dimension Attributes 
+                                    <i ng-class="{'fa-angle-up dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked === $index && currentDimensionClicked != '', 'fa-angle-down dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked != $index || currentDimensionClicked === ''}" 
+                                    class="fa fa-plus"></i>
+                                </span>
+                            
+                                 
+                            <p>
+                            <div style="margin-right:5px; border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
+                                
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
-                                {{item.Name}} - {{item.Type}} 
+                                <small>{{item.Name}} - {{item.Type}}</small>  
                             </div> 
-                           </span>
+                            </p>
+                        </h4>
                         </div>
-                        <p ng-show="showDimensionality" style="border-bottom:1px solid #333; padding-bottom:10px;"   ng-repeat-end>
-                          Hierarchies:  <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" >{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} </span>
-                        </p>
+                        
                 </div>
                 
                  

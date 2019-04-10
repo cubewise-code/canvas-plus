@@ -77,7 +77,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $timeout(
             function(){
                 if(index === $scope.dimensionalityDimensionIndexClicked){
-                   
+                    $scope.dimensionalityDimensionIndexClicked = '';
                     $scope.currentDimensionClicked = '';
                 }else{
                     $scope.currentDimensionClicked = dimensionName;
