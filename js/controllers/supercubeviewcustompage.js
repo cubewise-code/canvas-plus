@@ -15,6 +15,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.dimensionalityArray = [];
     $scope.currentDeminsionAttributes = [];
     $scope.aliasOverName = [];
+    $scope.showDimensionality = true;
       
     $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
         if(cubedata){

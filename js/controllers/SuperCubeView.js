@@ -666,11 +666,11 @@
                                             
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
-                                                if(myRowObjElement.elements[jjjk].element.attributes['Description']){
+                                                if(myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]){
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }
                                                 }else{
                                                     if(rowNameArray[gggh]){
@@ -905,12 +905,12 @@
                                             var myRowObjElement = scope.table.data()[gggh];
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
-                                             // console.log(  myRowObjElement.elements[jjjk].element.attributes, $rootScope.attributeOptions['alias'] , myRowObjElement , "DIMENSION" );
+                                              console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }
                                                 }else{
                                                     if(rowNameArray[gggh]){
