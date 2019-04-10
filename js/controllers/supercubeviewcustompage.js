@@ -55,7 +55,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 }
                 $rootScope.cubeView = $scope.activeCubeViewName;
                 $rootScope.cubeName = $scope.cubeName;
-                if($rootScope.table['_data'].length){
+                if($rootScope.table['_data'][0].length){
                     $scope.dimensionsOnRows = $rootScope.table['_data'][0][1]['dataset']['dimensions']['rows'];
                     $scope.dimensionsOnColumns = $rootScope.table['_data'][0][1]['dataset']['dimensions']['columns'];
                     $scope.dimensionsOnTitles = $rootScope.table['_data'][0][1]['dataset']['dimensions']['titles'];

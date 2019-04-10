@@ -382,7 +382,7 @@ svg:not(:root) {
 									class="text-center center esponsive-text" 
 									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px', 'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
 									ng-repeat="col in headerrrow.columns track by $index" 
-									style="background-color: #f0efef; display:inline-block; font-weight:600;  border-left: 1px solid #ddd;   vertical-align:bottom;  margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
+									style="    white-space: initial;     padding: 8px; line-height: 1.42857143; vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600;  border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
 								  {{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
 								 
 							</div>
