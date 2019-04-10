@@ -867,14 +867,15 @@
                                             
                                        }
                                         scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
+                                        
                                         scope.table.pageSize(scope.currentRowCount)
                                         scope.tableDimensionLength =  scope.table.data()[0].elements.length;
                                       //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
-                                      
+                                       
                                         
-                                        scope.table = scope.table;
+                                        //scope.table = scope.table;
                                         scope.table.refresh();
-                                        
+                                        $rootScope.table = scope.table;
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
@@ -1081,9 +1082,10 @@
                                 if( $($sideContent)){
                                     $($sideContent).css('display', 'block');
                                     $($sideContent).css('margin-top', -$($body).scrollTop());
+                                    
                                     if(scope.chartVisible){
                                       //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
-                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )   )) ) + $($body).scrollTop() );
+                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) ) + $($body).scrollTop() );
                                     }else{
                                       $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
                                     }
@@ -1091,7 +1093,7 @@
                                                                     
                                 }
                                
-                                 
+                                window.dispatchEvent(new Event('resize')); 
                             }else{
                               $($stickyHeader).css('display','none'); 
                                 $($fixedHeaderContainer).css('display','none'); 
@@ -1244,7 +1246,7 @@
                          
                         if(document.getElementById(id)  ){
                         // console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
-                                return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
+                               // return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
                              
                         }
                     

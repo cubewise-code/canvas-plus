@@ -20,7 +20,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.showView = true; 
     //$rootScope.calendarShow = true ;
    
-    $rootScope.attributeOptions = {"alias": {"Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description'}}
+    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description'}}
     
 }]);
 app.directive('ngRightClick', ['$parse', function($parse) {

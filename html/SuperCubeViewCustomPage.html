@@ -65,15 +65,19 @@
                         <div  ng-show="showDimensionality" style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
                             <h4   >
-                                {{$index+1}} - {{dimension.Name}}<br> 
+                                {{$index+1}} - {{dimension.Name}}
+                                <span class="pull-right"> {{(dimensionsOnRows).indexOf(dimension.Name) > -1 ? 'Row #'+((dimensionsOnRows).indexOf(dimension.Name)+1):((dimensionsOnColumns).indexOf(dimension.Name) > -1 ? 'Column #'+((dimensionsOnColumns).indexOf(dimension.Name)+1):'')}}</span>
+                                <br> 
                                 <small>Hierarchies:  
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" >
                                         {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
                                     </span>
                                 </small>
 
-                                <span ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
-                                    {{$root.attributeOptions['alias'][dimension.Name] ? 'Attribute set:': 'Setup Attributes'}} {{$root.attributeOptions['alias'][dimension.Name] ? $root.attributeOptions['alias'][dimension.Name]:''}}
+                                <span ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'green':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
+                                    style="padding:5px;"
+                                    ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
+                                    <small ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> {{$root.attributeOptions['alias'][dimension.Name] ? 'Alias:': 'Set Alias'}} {{$root.attributeOptions['alias'][dimension.Name] ? $root.attributeOptions['alias'][dimension.Name]:''}}</small>
                                     <i ng-class="{'fa-angle-up dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked === $index && currentDimensionClicked != '', 'fa-angle-down dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked != $index || currentDimensionClicked === ''}" 
                                     class="fa fa-plus"></i>
                                 </span>
@@ -82,11 +86,13 @@
                             <p>
                             <div style="margin:10px; border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
                                 ng-click="selectAliasToUse(dimension.Name, item.Name)"
-                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                ng-mouseover="aliasOverName[dimension.Name] = item.Name"
+                                ng-mouseut="aliasOverName = ''"
+                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small style="padding:10px;"
-                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
                                 >{{item.Name}} - {{item.Type}}</small>  
                             </div> 
                             </p>
