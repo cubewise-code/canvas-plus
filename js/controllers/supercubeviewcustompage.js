@@ -23,7 +23,20 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $tm1Ui.cubeViews($scope.tm1Instance, $scope.activeCubeName).then( function(cubeviewdata){
             if(cubeviewdata){
                 $scope.cubesViewsAvailable = cubeviewdata;
-                console.log("CUSOM CUBEVIEW JS",$scope.cubesViewsAvailable);
+                var cubeViewNamesArrayTemp = []
+                for(view in $scope.cubesViewsAvailable){
+                    cubeViewNamesArrayTemp.push($scope.cubesViewsAvailable[view].Name)
+                }
+
+                if((cubeViewNamesArrayTemp).indexOf($scope.activeCubeViewName) > -1){
+                     
+                }else{
+                    $scope.activeCubeViewName = cubeViewNamesArrayTemp[0]
+                    console.log("CUSOM CUBEVIEW JS",$scope.cubesViewsAvailable);
+                }
+                $rootScope.cubeView = $scope.activeCubeViewName;
+                $rootScope.cubeName = $scope.cubeName;
+                 
             }
         });
     }
@@ -33,7 +46,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             function(){
                 $scope.activeCubeName = name;
                 $scope.cubeName = $scope.activeCubeName;
-                $rootScope.cubeName = $scope.cubeName;
+                 
                 $scope.getCubeViews();
                  
             }
