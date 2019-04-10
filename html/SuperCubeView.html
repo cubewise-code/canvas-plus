@@ -376,12 +376,12 @@ svg:not(:root) {
 							 
 
 							</div>
-							<div  ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update(); dispatchResize();" ng-show="col.visible "   class="text-center center esponsive-text" 
+							<div ng-init="seeDataNew(dataset.headers[$parent.$index]['columns'][$index]['dimension'] )"  ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update(); dispatchResize();" ng-show="col.visible "   class="text-center center esponsive-text" 
 									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px', 'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
 									ng-repeat="col in headerrrow.columns track by $index" 
 								style="background-color: #f0efef; display:inline-block; font-weight:600;  border-left: 1px solid #ddd;   vertical-align:bottom;  margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
-								 {{dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}  
-				 
+								  {{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
+								 
 							</div>
 						</span>
 					
@@ -484,7 +484,7 @@ svg:not(:root) {
 										style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer;" 
 										ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
 										ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-										<span   > {{dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Description']:( dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   </span>
+										<span   >  {{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}    </span>
 									</td>
 									</tr>
 								 
@@ -584,86 +584,7 @@ svg:not(:root) {
 		</div>
 			</div>
 			 
-			<!-- <div   ng-show="chartVisible"     
-					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': 'relative','left':getTableLeft(),'top':getTableTop()}"> 
- 
-					 
-					<div   style="padding-left:55px; padding-right:55px; padding-bottom:150px;"> 
-					<table id="tableHeader{{tableId}}" class="table table-condensed"   >
-
-						<thead   >
-								 
-							<tr  ng-repeat="row in dataset.headers track by $index">
-							 
-
-								<th  ng-style="{'background-color':chartToolTipElements[0]['point']['x'] === $index ? 'steelblue':'#f0efef' , 'color':chartToolTipElements[0]['point']['x'] === $index ?'#fff':'unset'}"
-								style="border-right:1px solid #ccc;   " 
-							 
-								ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center responsive-text" >
-								<span>   {{col['element']['attributes']['Description'] ? col['element']['attributes']['Description']:( col['element']['attributes']['Caption_Default']  ? col['element']['attributes']['Caption_Default'] : col['element'].key )}}  </span>
-								</th>
-							</tr>
-	 
-						</thead>
-					 
-				 
-				 
-						
-
-						<tbody   >
-								 
-							<tr  ng-repeat="row in chartToolTipElements track by $index">
-							 
-								 
-								<td ng-repeat="col in (row['series'].key).split(' :- ') track by $index"
-									ng-if="row['series'].color && row['point'].y != 0 " 
-									ng-style="{ 'border-bottom':'5px solid '+(row['series'].color+'').toString()}"
-								style="border-right:1px solid #ccc; background-color:#fff;  " 
-								ng-class="{'tm1-ui-element-consol':row['point'].type === 'C'}"	
-								class="text-left " >
-							  {{col}}  
-							 
-								</td>
-								<td ng-if="row['series'].color && row['point'].y != 0 " 
-								ng-style="{ 'border-bottom':'5px solid '+(row['series'].color+'').toString()}"
-									style="border-right:1px solid #ccc; background-color:#fff;  " 
-									ng-class="{'tm1-ui-element-consol':row['point'].type === 'C'}"	
-									class="text-right" >
-								 
-								<span  class="pull-right  "> {{row['point'].y | formatNumber:0}}</span>
-								</td>
-								
-							</tr>
-	 
-						</tbody>
-					</table>
-					</div>
-						 
-				</div>
-		  
-				<div   ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
-				style="position:fixed; padding:0px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
-				 >
-					<div class="btn-group pull-right" role="group" style="font-weight:0.7em;"  >
-						<button type="button" class="btn btn-default"  style="font-weight:0.7em;"  ng-click="table.previous();   "><i class="fa fa-angle-left"></i></button>
-						<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>
-						<button type="button" class="btn btn-default" style="font-weight:0.7em;" ng-click="table.next();   "><i class="fa fa-angle-right"></i></button>
-					</div>
-					<div class="btn-group pull-right" role="group" style="font-weight:0.7em;" >
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh(); consolidatedRowsOnly = false;    api.update();">10</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15); currentRowCount = 15; refresh(); consolidatedRowsOnly = false;    api.update();">15</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30); currentRowCount = 30; refresh(); consolidatedRowsOnly = false;    api.update();">30</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50); currentRowCount = 50; refresh(); consolidatedRowsOnly = false;    api.update();">50</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(100);  currentRowCount = 100;  refresh(); consolidatedRowsOnly = false;    api.update();">100</button>
-							<button ng-show="  table.isPageSize(100) || table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(200)}" ng-click="table.pageSize(200);  currentRowCount = 200;  refresh(); consolidatedRowsOnly = false;    api.update();">200</button>
-							<button ng-show="  table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(300)}" ng-click="table.pageSize(300);  currentRowCount = 300;  refresh(); consolidatedRowsOnly = false;    api.update();">300</button>
-							<button ng-show=" table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(400)}" ng-click="table.pageSize(400);  currentRowCount = 400; refresh(); consolidatedRowsOnly = false;    api.update();">400</button>
-							<button ng-show=" table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(500)}" ng-click="table.pageSize(500);  currentRowCount = 500; refresh(); consolidatedRowsOnly = false;    api.update();">500</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh(); consolidatedRowsOnly = false;    api.update();">All</button>
- 
-						</div>
-				</div> -->
-				 
+		 
 
 
 		</div>
