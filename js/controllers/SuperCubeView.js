@@ -844,14 +844,14 @@
                     }
                 }
                 scope.data = [];
-                scope.refresh = function(){
+                scope.refresh = function(cube,cubeview){
                     
                     
                   scope.charRowCount = 0;
-                               $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName, scope.cubeView).then(function(result){
+                               $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,cubeview).then(function(result){
                                    if(!result.failed){
                                         
-                                       scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
+                                       scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                                       
                                        scope.options[scope.tableId] = {preload: false, watch: false};
                                        if(scope.table){
@@ -947,7 +947,7 @@
                                                   }
                                                   cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
                                                   
-                                                  console.log("dont hide",gs);
+                                                  //console.log("dont hide",gs);
                                                 }
                                              
                                                   
@@ -1393,7 +1393,7 @@
                    
                    scope.sendCellSetPutArray.push(request);
            }
-            scope.refresh();
+            scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
                
            scope.drillNames = [];
@@ -1524,6 +1524,33 @@
                        
                                 
                     })
+                    scope.$watch(function () {
+                      return $attributes.cubeView;
+                      
+                      }, function (newValue, oldValue) { 
+                          if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                             console.log(newValue, "cube View has changed inside watch");
+                              scope.cubeView = newValue;
+                              scope.refresh(scope.cubeName, scope.cubeView)
+                          }
+                         
+                                  
+                      })
+
+                      scope.$watch(function () {
+                        return $attributes.cubeName;
+                        
+                        }, function (newValue, oldValue) { 
+                            if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                               console.log(newValue, "cube Name has changed inside watch");
+                               scope.cubeName = newValue;
+                               scope.refresh(scope.cubeName, scope.cubeView)
+                            }
+                           
+                                    
+                        })
+
+
  
                 }
 

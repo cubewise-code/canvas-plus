@@ -8,8 +8,48 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     * 
     *     For more information: https://github.com/cubewise-code/canvas-best-practice
     */
-    
-     console.log("CUSOM CUBEVIEW JS");
-     
+    $scope.cubesAvailable = [];
+    $scope.cubesViewsAvailable = [];
+    $scope.activeCubeName = $scope.cubeName;
+    $scope.activeCubeViewName =  $scope.cubeView;
+    //console.log("CUSOM CUBEVIEW JS", $scope.tm1Instance, $scope.cubeName, $scope.cubeView);
+    $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
+        if(cubedata){
+            $scope.cubesAvailable = cubedata;
+            console.log("CUSOM CUBEVIEW JS",$scope.cubesAvailable);
+        }
+    });
+    $scope.getCubeViews = function(){
+        $tm1Ui.cubeViews($scope.tm1Instance, $scope.activeCubeName).then( function(cubeviewdata){
+            if(cubeviewdata){
+                $scope.cubesViewsAvailable = cubeviewdata;
+                console.log("CUSOM CUBEVIEW JS",$scope.cubesViewsAvailable);
+            }
+        });
+    }
+    $scope.getCubeViews();
+    $scope.chooseCube = function(name){
+        $timeout(
+            function(){
+                $scope.activeCubeName = name;
+                $scope.cubeName = $scope.activeCubeName;
+                $scope.getCubeViews();
+                 
+            }
+        )
+         
+    }
+    $scope.chooseCubeView = function(name){
+        $timeout(
+            function(){
+                $scope.activeCubeViewName = name;
+                $rootScope.cubeView = $scope.activeCubeViewName;
+                console.log('new cubeview to load', $scope.cubeView)
+                 
+                 
+            }
+        )
+         
+    }
 
 }]);

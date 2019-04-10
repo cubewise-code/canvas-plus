@@ -547,16 +547,16 @@ svg:not(:root) {
 						<button type="button" class="btn btn-default" style="font-weight:0.7em;" ng-click="table.next(); "><i class="fa fa-angle-right"></i></button>
 					</div>
 					<div class="btn-group pull-right" role="group" style="font-weight:0.7em;" >
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh(); consolidatedRowsOnly = false;    api.update();">10</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15); currentRowCount = 15; refresh(); consolidatedRowsOnly = false;    api.update();">15</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30); currentRowCount = 30; refresh(); consolidatedRowsOnly = false;    api.update();">30</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50); currentRowCount = 50; refresh(); consolidatedRowsOnly = false;    api.update();">50</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(100);  currentRowCount = 100;  refresh(); consolidatedRowsOnly = false;    api.update();">100</button>
-							<button ng-show=" table.isPageSize(100) || table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(200)}" ng-click="table.pageSize(200);  currentRowCount = 200;  refresh(); consolidatedRowsOnly = false;    api.update();">200</button>
-							<button ng-show=" table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(300)}" ng-click="table.pageSize(300);  currentRowCount = 300;  refresh(); consolidatedRowsOnly = false;    api.update();">300</button>
-							<button ng-show="  table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(400)}" ng-click="table.pageSize(400);  currentRowCount = 400; refresh(); consolidatedRowsOnly = false;    api.update();">400</button>
-							<button ng-show=" table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(500)}" ng-click="table.pageSize(500);  currentRowCount = 500; refresh(); consolidatedRowsOnly = false;    api.update();">500</button>
-							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh(); consolidatedRowsOnly = false;    api.update();">All</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">10</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15); currentRowCount = 15; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">15</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30); currentRowCount = 30; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">30</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50); currentRowCount = 50; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">50</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(100);  currentRowCount = 100;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">100</button>
+							<button ng-show=" table.isPageSize(100) || table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(200)}" ng-click="table.pageSize(200);  currentRowCount = 200;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">200</button>
+							<button ng-show=" table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(300)}" ng-click="table.pageSize(300);  currentRowCount = 300;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">300</button>
+							<button ng-show="  table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(400)}" ng-click="table.pageSize(400);  currentRowCount = 400; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">400</button>
+							<button ng-show=" table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(500)}" ng-click="table.pageSize(500);  currentRowCount = 500; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">500</button>
+							<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">All</button>
 						</div>
 				</div>
 			
@@ -648,7 +648,7 @@ svg:not(:root) {
 
 		</div>
 
-	 <div ng-if="customPage && !tableVisible && !chartVisible" style="position:relative; left:0px; top:0px; width:100%; height:auto; " >
+	 <div ng-show="customPage && !tableVisible && !chartVisible" style="position:relative; left:0px; top:0px; width:100%; height:auto; " >
 			<div ng-include="'html/'+customPage+'.html'" ></div>
 	 </div>
 
