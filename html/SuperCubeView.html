@@ -510,7 +510,7 @@ svg:not(:root) {
 																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{ el.element.attributes['Description'] || el.element.attributes['alias'] || el.name  }} </span>
 																		
 							</td>
-							<td   id="headerColHeight{{tableId}}{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+							<td  ng-init="seeDataNew(row.cells[$index])" id="headerColHeight{{tableId}}{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
 								ng-right-click="openRefModel(cell.reference().toString()); " 
 								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 								ng-repeat="cell in row.cells track by $index" class="text-right" >
@@ -519,7 +519,7 @@ svg:not(:root) {
 									cellref="{{(cell.reference()).toString()}}" 
 									contenteditable='true'  
 									id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-									ng-if="!cell.isReadOnly" 
+									ng-if="!cell.isReadOnly && row.cells[$index].isNumeric === true" 
 									type="text" 
 									class="form-control text-right" 
 									tm1-ui-format-number="0" 
@@ -529,10 +529,27 @@ svg:not(:root) {
 									ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:0) : (cell.value | formatNumber:0)" 
 									ng-focus="getFocus($event);  " 
 									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+
+									<input  
+									cellref="{{(cell.reference()).toString()}}" 
+									contenteditable='true'  
+									id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
+									ng-if="!cell.isReadOnly && row.cells[$index].isNumeric === false" 
+									type="text" 
+									class="form-control text-left" 
+								 
+									ng-attr-tabindex="{{row.index}}" 
+									ng-model="cell.value " 
+									ng-paste="handlePaste($event)"
+									ng-value="cell.value" 
+									ng-focus="getFocus($event);  " 
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
 								<!--cell.update(query)-->
 							 
-								<span ng-if="cell.isReadOnly && cell.value < 0 " style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-								<span ng-if="cell.isReadOnly && cell.value >= 0" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+						 
+								<span ng-if="row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
+								<span ng-if="row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+								<span ng-if="row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
 							</td>
 						</tr>
 					</tbody>

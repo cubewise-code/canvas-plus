@@ -777,7 +777,7 @@
                 }
                 scope.getFocus = function($event) {           
                    scope.focusObj = $event.target.id;
-                    
+                   
                    scope.focusedInputElementArray =  document.getElementById(scope.focusObj).getAttribute('cellref')
                  //console.log("add paste event listener",$event.target.id,scope.focusedInputElementArray )
                 }
