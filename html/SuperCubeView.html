@@ -223,14 +223,14 @@ svg:not(:root) {
 				 
 			<div  ng-show=" $root.showView "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px;   text-align:center;" 
 			 >
-					<span ng-click="tableVisible = !tableVisible;  dispatchResize(); api.update(); gotoTop()" ng-style="{'background-color': tableVisible ? '#fff':'transparent','color': tableVisible ? 'steelblue':'#fff' }"
+					<span ng-click="tableVisible = !tableVisible;  dispatchResize(); api.update(); gotoTop()"  
 					 style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-						<i 	  class="fa fa-table"></i> Table
+						 Table <i ng-class="{'fa-toggle-off':!tableVisible,'fa-toggle-on':tableVisible}" class="fa "></i>
 					</span>
 					<span 	ng-click="chartVisible = !chartVisible; dispatchResize(); api.update(); gotoTop()"  
-					ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					 
 					style="margin:5px; margin-right:1px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-							<i    class="fa fa-bar-chart"></i> Charts
+							 Charts  <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
 					<span ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px; padding:0px;  float:left; left:0px;" > 
@@ -297,8 +297,7 @@ svg:not(:root) {
 						 
 						<span ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
 						style="margin : 5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-								<i  
-								ng-class="{'fa-hand-pointer-o':options.chart.useInteractiveGuideline,'fa-hand-paper-o':!options.chart.useInteractiveGuideline}" class="fa "></i>
+							Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
 						</span>
 						
 					 
@@ -510,7 +509,7 @@ svg:not(:root) {
 																		<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">{{ el.element.attributes['Description'] || el.element.attributes['alias'] || el.name  }} </span>
 																		
 							</td>
-							<td  ng-init="seeDataNew(row.cells[$index])" id="headerColHeight{{tableId}}{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+							<td    id="headerColHeight{{tableId}}{{$index}}"  style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
 								ng-right-click="openRefModel(cell.reference().toString()); " 
 								ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 								ng-repeat="cell in row.cells track by $index" class="text-right" >
