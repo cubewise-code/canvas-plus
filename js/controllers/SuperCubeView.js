@@ -876,6 +876,13 @@
                                         //scope.table = scope.table;
                                         scope.table.refresh();
                                         $rootScope.table = scope.table;
+                                        if($rootScope.table['_data']){
+
+                                        }
+                                        $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
+                                        $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
+                                        $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
+                                        console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
@@ -898,6 +905,7 @@
                                             var myRowObjElement = scope.table.data()[gggh];
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
+                                             // console.log(  myRowObjElement.elements[jjjk].element.attributes, $rootScope.attributeOptions['alias'] , myRowObjElement , "DIMENSION" );
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
                                                     if(rowNameArray[gggh]){
                                                         rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
@@ -984,6 +992,7 @@
                                         function(){
                                           if( scope.api){
                                           scope.api.update();
+                                          
                                           }
                                         },1000
                                       )
