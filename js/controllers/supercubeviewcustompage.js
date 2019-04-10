@@ -8,8 +8,105 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     * 
     *     For more information: https://github.com/cubewise-code/canvas-best-practice
     */
-    
-     console.log("CUSOM CUBEVIEW JS");
+    $scope.cubesAvailable = [];
+    $scope.cubesViewsAvailable = [];
+    $scope.activeCubeName = $scope.cubeName;
+    $scope.activeCubeViewName =  $scope.cubeView;
+    $scope.dimensionalityArray = [];
+    $scope.currentDeminsionAttributes = [];
+    //console.log("CUSOM CUBEVIEW JS", $scope.tm1Instance, $scope.cubeName, $scope.cubeView);
+    $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
+        if(cubedata){
+            $scope.cubesAvailable = cubedata;
+           // console.log("CUSOM CUBEVIEW JS",$scope.cubesAvailable);
+        }
+    });
+    $scope.getCubeViews = function(){
+        $tm1Ui.cubeViews($scope.tm1Instance, $scope.activeCubeName).then( function(cubeviewdata){
+            if(cubeviewdata){
+                $tm1Ui.cubeDimensionsAndHierarchies($scope.tm1Instance, $scope.activeCubeName).then( function(cubedimesionalitydata){
+                    if(cubedimesionalitydata){
+                        $scope.dimensionalityArray = cubedimesionalitydata;
+                        for(dim in $scope.dimensionalityArray['Dimensions']){
+                            
+                            var dimensionName = $scope.dimensionalityArray['Dimensions'][dim].Name;
+                            //console.log(dimensionName)
+                                //  $tm1Ui.dimensionAttributes($scope.tm1Instance, dimensionName).then(function(dimAttributedata){
+                                //      console.log(dimAttributedata);
+                                //      $scope.currentDeminsionAttributes[dimAttributedata.Name] = dimAttributedata;
+                                //  }) 
+                             
+                        }
+                        //console.log($scope.dimensionalityArray, "DIMENSIONALITY")
+                    }
+                })
+                $scope.cubesViewsAvailable = cubeviewdata;
+                var cubeViewNamesArrayTemp = []
+                for(view in $scope.cubesViewsAvailable){
+                    cubeViewNamesArrayTemp.push($scope.cubesViewsAvailable[view].Name)
+                }
+
+                if((cubeViewNamesArrayTemp).indexOf($scope.activeCubeViewName) > -1){
+                    
+                }else{
+                    $scope.activeCubeViewName = cubeViewNamesArrayTemp[0]
+                   // console.log("CUSOM CUBEVIEW JS",$scope.cubesViewsAvailable);
+                }
+                $rootScope.cubeView = $scope.activeCubeViewName;
+                $rootScope.cubeName = $scope.cubeName;
+                 
+            }
+        });
+    }
+
+    $scope.getCubeViews();
+    $scope.chooseCube = function(name){
+        $timeout(
+            function(){
+                $scope.activeCubeName = name;
+                $scope.cubeName = $scope.activeCubeName;
+                 
+                $scope.getCubeViews();
+                 
+            }
+        )
+         
+    }
+    $scope.getAttributesForDim = function(dimensionName, index){
+        
+        $timeout(
+            function(){
+                if(index === $scope.dimensionalityDimensionIndexClicked){
+                    $scope.dimensionalityDimensionIndexClicked = '';
+                    $scope.currentDimensionClicked = '';
+                }else{
+                    $scope.currentDimensionClicked = dimensionName;
+                    $scope.dimensionalityDimensionIndexClicked = index;
+                    $tm1Ui.dimensionAttributes($scope.tm1Instance, dimensionName).then(function(dimAttributedata){
+                            console.log(dimAttributedata)
+                            $scope.currentDeminsionAttributes = dimAttributedata;
+                                        
+                        
+                        
+                    }) 
+                }
+                        
+            }
+        )
+         
+    }
      
+    $scope.chooseCubeView = function(name){
+        $timeout(
+            function(){
+                $scope.activeCubeViewName = name;
+                $rootScope.cubeView = $scope.activeCubeViewName;
+               // console.log('new cubeview to load', $scope.cubeView)
+                 
+                 
+            }
+        )
+         
+    }
 
 }]);
