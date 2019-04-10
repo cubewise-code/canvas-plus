@@ -310,7 +310,7 @@ svg:not(:root) {
 
 			</div>
 			<div id="stickyContainer{{tableId}}"  class="stickyContainer "  
-					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidth(),'position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
+					ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':(getTableWidthinPx()-(1))+'px','position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
 					<span ng-if=" $root.showView && (tableVisible || chartVisible)">
 					<style >
 					html{
