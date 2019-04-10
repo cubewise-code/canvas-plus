@@ -33,6 +33,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             function(){
                 $scope.activeCubeName = name;
                 $scope.cubeName = $scope.activeCubeName;
+                $rootScope.cubeName = $scope.cubeName;
                 $scope.getCubeViews();
                  
             }

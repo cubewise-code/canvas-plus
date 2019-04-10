@@ -1531,7 +1531,7 @@
                           if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                              console.log(newValue, "cube View has changed inside watch");
                               scope.cubeView = newValue;
-                              scope.refresh(scope.cubeName, scope.cubeView)
+                              scope.refresh(scope.cubeName, newValue)
                           }
                          
                                   
@@ -1544,7 +1544,7 @@
                             if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                                console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
-                               scope.refresh(scope.cubeName, scope.cubeView)
+                               scope.refresh(newValue, scope.cubeView)
                             }
                            
                                     
