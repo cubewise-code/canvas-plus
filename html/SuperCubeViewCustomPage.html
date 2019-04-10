@@ -44,6 +44,11 @@
                                 </div>
                 </h4>
                 <p>Select Cube</p>
+                <h4>{{dimensionalityArray['Name']}} Dimensions</h4>
+                <p ng-repeat-start="dimension in dimensionalityArray['Dimensions'] track by $index">{{$index+1}} - {{dimension.Name}} </p>
+                <p style="border-bottom:1px solid #333;"   ng-repeat-end>
+                      Hierarchies:  <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" >{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} </span>
+                </p>
             </div>
             <div class="col-xs-12 col-md-6">
                 <h4 ><button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
