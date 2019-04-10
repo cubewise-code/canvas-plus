@@ -80,11 +80,14 @@
                             
                                  
                             <p>
-                            <div style="margin-right:5px; border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
+                            <div style="margin:10px; border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
                                 ng-click="selectAliasToUse(dimension.Name, item.Name)"
+                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name ? '#fff':'steelblue'  }"
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
-                                <small>{{item.Name}} - {{item.Type}}</small>  
+                                <small style="padding:10px;"
+                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                >{{item.Name}} - {{item.Type}}</small>  
                             </div> 
                             </p>
                         </h4>
