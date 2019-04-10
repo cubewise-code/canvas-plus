@@ -73,7 +73,7 @@
                                 </small>
 
                                 <span ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
-                                    Dimension Attributes 
+                                    Setup Attributes
                                     <i ng-class="{'fa-angle-up dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked === $index && currentDimensionClicked != '', 'fa-angle-down dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked != $index || currentDimensionClicked === ''}" 
                                     class="fa fa-plus"></i>
                                 </span>
@@ -81,7 +81,7 @@
                                  
                             <p>
                             <div style="margin-right:5px; border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
-                                
+                                ng-click="selectAliasToUse(dimension.Name, item.Name)"
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small>{{item.Name}} - {{item.Type}}</small>  

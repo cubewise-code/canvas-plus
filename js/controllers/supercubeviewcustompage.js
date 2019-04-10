@@ -95,7 +95,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         )
          
     }
-     
+    $scope.selectAliasToUse = function(dimensionName, aliasName ){
+        console.log(dimensionName, aliasName, $rootScope.attributeOptions['alias'][dimensionName]);
+        $rootScope.attributeOptions['alias'][dimensionName] = aliasName;
+        
+    }
     $scope.chooseCubeView = function(name){
         $timeout(
             function(){

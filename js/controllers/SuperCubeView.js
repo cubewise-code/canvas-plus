@@ -1511,7 +1511,18 @@
                     
                 });
                 
- 
+                scope.$watch(function () {
+                  return $attributes.attributeOptions;
+                  
+                  }, function (newValue, oldValue) { 
+                      if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                        console.log(newValue, "attribute changes inside directive");
+                        scope.attributeOptions = newValue;
+                        scope.refresh(scope.cubeName, scope.cubeView)
+                      }
+                     
+                              
+                  })
 
                 scope.$watch(function () {
                     return $attributes.tableWidth;
