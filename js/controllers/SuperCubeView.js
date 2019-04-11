@@ -1508,7 +1508,7 @@
                     $timeout(
                         function(){
                           if(scope.tableVisible){
-                            scope.options.chart.height = window.innerHeight-290;
+                            scope.options.chart.height = window.innerHeight/2;
                           }
                           window.dispatchEvent(new Event('resize'));
                             
