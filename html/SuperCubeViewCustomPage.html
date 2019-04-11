@@ -99,13 +99,13 @@
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) === -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) === -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
-                            <div class="col-xs-12 col-md-2 col-xlg-2 out-shadow" >
+                            <div class="col-xs-12 col-md-2 col-xlg-2 out-shadow" style="min-height:70px !important">
                                <span ng-click=" getAttributesForDim(dimension.Name, $index)">{{dimension.Name}}</span> 
                                 <span class="pull-right"> </span>
                                 <br> 
-                                <small>Hierarchies:  
+                                <small>   
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" >
-                                        {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
+                                        {{dimension.Name}}:{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
                                     </span>
                                 </small>
     
@@ -144,13 +144,13 @@
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) > -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) === -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
-                            <div style="border-right:1px solid #333;"  class="col-xs-12 col-md-4 out-shadow" >
+                            <div style="border-right:1px solid #333;"  class="col-xs-12 col-md-4 out-shadow"  style="min-height:70px !important">
                                 <span ng-click=" getAttributesForDim(dimension.Name, $index)"> {{dimension.Name}}</span>
                                 <span class="pull-right">  </span>
                                 <br> 
-                                <small>Hierarchies:  
+                                <small> 
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" >
-                                        {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
+                                            {{dimension.Name}}:{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
                                     </span>
                                 </small>
     
@@ -189,13 +189,13 @@
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) === -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) > -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
-                            <div style="border-right:1px solid #333;" class="col-xs-12 col-md-4 out-shadow" >
+                            <div style="border-right:1px solid #333;" class="col-xs-12 col-md-4 out-shadow"  style="min-height:70px !important">
                                <span  ng-click=" getAttributesForDim(dimension.Name, $index)">{{dimension.Name}}</span>
                                 
                                 <br> 
-                                <small>Hierarchies:  
+                                <small> 
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" >
-                                        {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
+                                            {{dimension.Name}}:{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} 
                                     </span>
                                 </small>
     
