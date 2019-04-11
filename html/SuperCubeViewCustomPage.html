@@ -92,16 +92,9 @@
                 </div>
                 
             </div>
-            <div class="col-xs-12 col-md-12"> 
-                <h4 ng-click="showDimensionality = !showDimensionality" style="padding-left:10px; padding-bottom:10px; padding-top:10px; background-color: white; ">Dimensionailty
-                    <span class="pull-right" style="padding-right:10px;">
-                        <i ng-class="{'fa-angle-down dropdown-arrow':!showDimensionality, 'fa-angle-up dropdown-arrow':showDimensionality}" class="fa  " aria-hidden="true"></i>
-                    </span>
-                    
-                </h4>
-            </div>
              
-            <div ng-show="showDimensionality" class="col-xs-12 col-md-12" style="margin-bottom:20px;" >
+             
+            <div   class="col-xs-12 col-md-12" style="margin-bottom:20px;" >
                     <h4 style="padding-bottom:10px; padding-top:10px;">Titles</h4>
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) === -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) === -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
