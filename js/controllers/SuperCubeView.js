@@ -483,10 +483,16 @@
         };
               
           scope.gotoTop = function(){
-            $location.hash('chartRow'+scope.tableId);
-
-            // call $anchorScroll()
-            $anchorScroll();
+            if(scope.tableVisible){
+              $location.search('tableView', 'true') 
+            }else{
+              $location.search('tableView', 'false') 
+            } 
+            if(scope.chartVisible){
+              $location.search('chartView', 'true') 
+            }else{
+              $location.search('chartView', 'false') 
+            }
           }
          
           scope.callback = function(scope, element){
