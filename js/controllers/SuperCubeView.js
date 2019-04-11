@@ -666,11 +666,11 @@
                                             
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
-                                                if(myRowObjElement.elements[jjjk].element.attributes['Description']){
+                                                if(myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]){
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }
                                                 }else{
                                                     if(rowNameArray[gggh]){
@@ -685,11 +685,11 @@
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
                                             
-                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]]){
                                                 //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
                                             }else{
                                               var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
-                                              scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                              scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
                                             
                                             }   
                                             rowNameArray = [];
@@ -867,14 +867,22 @@
                                             
                                        }
                                         scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
+                                        
                                         scope.table.pageSize(scope.currentRowCount)
                                         scope.tableDimensionLength =  scope.table.data()[0].elements.length;
                                       //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
-                                      
+                                       
                                         
-                                        scope.table = scope.table;
+                                        //scope.table = scope.table;
                                         scope.table.refresh();
-                                        
+                                        $rootScope.table = scope.table;
+                                        if($rootScope.table['_data']){
+
+                                        }
+                                        $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
+                                        $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
+                                        $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
+                                        console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
@@ -897,11 +905,12 @@
                                             var myRowObjElement = scope.table.data()[gggh];
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
+                                              console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
                                                     if(rowNameArray[gggh]){
-                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes['Description']);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                       }
                                                 }else{
                                                     if(rowNameArray[gggh]){
@@ -915,11 +924,11 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
-                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]]){
                                               //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
                                           }else{
                                             var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
-                                            scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                            scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
                                           
                                           }    
                                             rowNameArray = [];
@@ -983,6 +992,7 @@
                                         function(){
                                           if( scope.api){
                                           scope.api.update();
+                                          
                                           }
                                         },1000
                                       )
@@ -1045,7 +1055,10 @@
 
                         scope.scrolling = true;
                         $($stickyHeader).css('display','none'); 
-                         
+                        if(scope.tableVisible){
+                          $($sideContent).css('display', 'block');
+                        }
+                        $($sideContent).css('display', 'block');
                              var valuetoEval = scope.offsetTop;
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
@@ -1081,17 +1094,22 @@
                                 if( $($sideContent)){
                                     $($sideContent).css('display', 'block');
                                     $($sideContent).css('margin-top', -$($body).scrollTop());
+                                    
                                     if(scope.chartVisible){
                                       //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
-                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height )   )) ) + $($body).scrollTop() );
+                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) ) + $($body).scrollTop() );
                                     }else{
-                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
+                                       
+                                       
                                     }
                                      
                                                                     
                                 }
-                               
-                                 
+                                if(scope.tableVisible){
+                                  $($sideContent).css('display', 'block');
+                                  $($sideContent).css('height', (((window.innerHeight -  (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
+                                }
+                                window.dispatchEvent(new Event('resize')); 
                             }else{
                               $($stickyHeader).css('display','none'); 
                                 $($fixedHeaderContainer).css('display','none'); 
@@ -1244,7 +1262,7 @@
                          
                         if(document.getElementById(id)  ){
                         // console.log(((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) ))
-                                return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
+                               // return  ((document.getElementById(id).getBoundingClientRect().height - document.getElementById(id).getElementsByClassName('fixed-container')[0].getBoundingClientRect().height)  +  Math.abs(scope.scrollAmountTop) )+'px';
                              
                         }
                     
@@ -1511,7 +1529,18 @@
                     
                 });
                 
- 
+                scope.$watch(function () {
+                  return $attributes.attributeOptions;
+                  
+                  }, function (newValue, oldValue) { 
+                      if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                        console.log(newValue, "attribute changes inside directive");
+                        scope.attributeOptions = newValue;
+                        scope.refresh(scope.cubeName, scope.cubeView)
+                      }
+                     
+                              
+                  })
 
                 scope.$watch(function () {
                     return $attributes.tableWidth;

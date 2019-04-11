@@ -14,7 +14,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.activeCubeViewName =  $scope.cubeView;
     $scope.dimensionalityArray = [];
     $scope.currentDeminsionAttributes = [];
-    //console.log("CUSOM CUBEVIEW JS", $scope.tm1Instance, $scope.cubeName, $scope.cubeView);
+    $scope.aliasOverName = [];
+    $scope.showDimensionality = true;
+      
     $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
         if(cubedata){
             $scope.cubesAvailable = cubedata;
@@ -30,6 +32,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                         for(dim in $scope.dimensionalityArray['Dimensions']){
                             
                             var dimensionName = $scope.dimensionalityArray['Dimensions'][dim].Name;
+                            
                             //console.log(dimensionName)
                                 //  $tm1Ui.dimensionAttributes($scope.tm1Instance, dimensionName).then(function(dimAttributedata){
                                 //      console.log(dimAttributedata);
@@ -54,7 +57,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 }
                 $rootScope.cubeView = $scope.activeCubeViewName;
                 $rootScope.cubeName = $scope.cubeName;
-                 
+               
+                
+               // console.log("CUSOM CUBEVIEW JS", $scope.tm1Instance, $scope.cubeName, $scope.cubeView, $rootScope.table['_data'][0][1]['dataset']['dimensions']);
             }
         });
     }
@@ -63,6 +68,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.chooseCube = function(name){
         $timeout(
             function(){
+                $scope.showCubeList = !$scope.showCubeList
                 $scope.activeCubeName = name;
                 $scope.cubeName = $scope.activeCubeName;
                  
@@ -95,10 +101,15 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         )
          
     }
-     
+    $scope.selectAliasToUse = function(dimensionName, aliasName ){
+        console.log(dimensionName, aliasName, $rootScope.attributeOptions['alias'][dimensionName]);
+        $rootScope.attributeOptions['alias'][dimensionName] = aliasName;
+        
+    }
     $scope.chooseCubeView = function(name){
         $timeout(
             function(){
+                $scope.showViewCubeList = !$scope.showViewCubeList
                 $scope.activeCubeViewName = name;
                 $rootScope.cubeView = $scope.activeCubeViewName;
                // console.log('new cubeview to load', $scope.cubeView)
