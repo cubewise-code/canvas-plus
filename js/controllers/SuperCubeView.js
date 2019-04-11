@@ -46,8 +46,9 @@
                 scope.chartVisible = $attributes.chartVisible;
                 scope.tableVisible= $attributes.tableVisible;
                 scope.dateNow = new Date() ;
+                $rootScope.parametersVisible = true;
                 scope.collapseDimensions = true;
-                 
+                scope.innerHeight = window.innerHeight;
                 var n = scope.dateNow.getMonth();
                 var p = scope.dateNow.getDay();
                 var y = scope.dateNow.getFullYear();

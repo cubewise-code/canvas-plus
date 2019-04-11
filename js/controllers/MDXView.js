@@ -16,7 +16,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.pageTitle = "Super Cube View + Freezepane";
     $rootScope.cubeName = "General Ledger"
     $rootScope.cubeView = "Default"
-     
+    
     $rootScope.showView = true; 
     //$rootScope.calendarShow = true ;
    
