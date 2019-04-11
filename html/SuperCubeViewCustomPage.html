@@ -22,7 +22,7 @@
     </div>
     <div class="col-xs-12 col-md-12"> 
             <div class="col-xs-12 col-md-6">
-                <div class="col-xs-12 col-md-12">     
+                <div class="col-xs-12 col-md-12 nopadding" >     
                     <p class="label label-primary">Current Cube</p>
                     <h4 > 
                          
@@ -41,7 +41,7 @@
                                             ng-mouseout="cubeNameOver = ''; "
                                             ng-style="{'background-color': cubeNameOver === cube.Name ? 'steelblue':'#fff', 'color':cubeNameOver === cube.Name ? '#fff':'steelblue'}"
                                             style="width:100%;  cursor:pointer;" 
-                                            ng-click="  chooseCube(cube.Name);   " class="dropdown-item"  >
+                                            ng-click="  chooseCube(cube.Name);  showCubeList = !showCubeList " class="dropdown-item"  >
                                             <span class="pull-left" style="margin-right:10px;">
                                                     <i ng-if="activeCubeName === cube.Name" class="fa fa-check dropdown-check" aria-hidden="true"></i>
                                             </span>
@@ -60,7 +60,7 @@
             </div>
 
             <div class="col-xs-12 col-md-6" >
-                <div class="col-xs-12 col-md-12">     
+                <div class="col-xs-12 col-md-12 nopadding">     
                 <p  class="label label-primary">Current View</p>
                 <h4 ><button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
                     style=" background-color:transparent !important; width:100%; font-size:1em; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
@@ -77,7 +77,7 @@
                                 ng-mouseout="cubeViewOver = ''; "
                                 ng-style="{'background-color': cubeViewOver === cubeview.Name ? 'steelblue':'#fff', 'color':cubeViewOver === cubeview.Name ? '#fff':'steelblue'}"
                                 style="width:100%;   cursor:pointer;" 
-                                ng-click="  chooseCubeView(cubeview.Name);   " class="dropdown-item"  >
+                                ng-click="  chooseCubeView(cubeview.Name); showViewCubeList = !showViewCubeList  " class="dropdown-item"  >
                                 <span class="pull-left" style="margin-right:10px;">
                                         <i ng-if="activeCubeViewName === cubeview.Name" class="fa fa-check dropdown-check" aria-hidden="true"></i>
                                 </span>
@@ -106,7 +106,7 @@
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
                             <h4   >
-                                {{$index+1}} - {{dimension.Name}}
+                                <span ng-click=" getAttributesForDim(dimension.Name, $index)">{{$index+1}} - {{dimension.Name}}</span>
                                 <span class="pull-right">  </span>
                                 <br> 
                                 <small>Hierarchies:  
@@ -115,7 +115,9 @@
                                     </span>
                                 </small>
     
-                                <span ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
+                                <span
+                                    ng-click=" getAttributesForDim(dimension.Name, $index)"
+                                    ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
                                     style="padding:5px;"
                                     ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
                                     <small ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> 
@@ -148,7 +150,7 @@
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
                             <h4   >
-                                {{$index+1}} - {{dimension.Name}}
+                               <span  ng-click=" getAttributesForDim(dimension.Name, $index)">{{$index+1}} - {{dimension.Name}}</span>
                                 
                                 <br> 
                                 <small>Hierarchies:  
@@ -157,9 +159,11 @@
                                     </span>
                                 </small>
     
-                                <span ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
+                                <span
+                                    ng-click=" getAttributesForDim(dimension.Name, $index)" 
+                                    ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
                                     style="padding:5px;"
-                                    ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
+                                     class="pull-right" >
                                     <small ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> 
                                         {{$root.attributeOptions['alias'][dimension.Name] ? 'Alias:': 'Set Alias'}} {{$root.attributeOptions['alias'][dimension.Name] ? $root.attributeOptions['alias'][dimension.Name]:''}}</small>
                                     <i ng-class="{'fa-angle-up dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked === $index && currentDimensionClicked != '', 'fa-angle-down dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked != $index || currentDimensionClicked === ''}" 
@@ -191,7 +195,7 @@
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
                             <h4   >
-                                {{$index+1}} - {{dimension.Name}}
+                               <span ng-click=" getAttributesForDim(dimension.Name, $index)">{{$index+1}} - {{dimension.Name}}</span> 
                                 <span class="pull-right"> </span>
                                 <br> 
                                 <small>Hierarchies:  
@@ -200,7 +204,8 @@
                                     </span>
                                 </small>
     
-                                <span ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
+                                <span ng-click=" getAttributesForDim(dimension.Name, $index)"
+                                    ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
                                     style="padding:5px;"
                                     ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
                                     <small ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> 

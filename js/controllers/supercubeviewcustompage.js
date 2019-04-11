@@ -68,6 +68,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.chooseCube = function(name){
         $timeout(
             function(){
+                $scope.showCubeList = !$scope.showCubeList
                 $scope.activeCubeName = name;
                 $scope.cubeName = $scope.activeCubeName;
                  
@@ -108,6 +109,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.chooseCubeView = function(name){
         $timeout(
             function(){
+                $scope.showViewCubeList = !$scope.showViewCubeList
                 $scope.activeCubeViewName = name;
                 $rootScope.cubeView = $scope.activeCubeViewName;
                // console.log('new cubeview to load', $scope.cubeView)

@@ -685,11 +685,11 @@
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
                                             
-                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]]){
                                                 //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
                                             }else{
                                               var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
-                                              scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                              scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
                                             
                                             }   
                                             rowNameArray = [];
@@ -924,11 +924,11 @@
                                               
                                             }
                                             rowNameFinalArray[gggh] = rowNameArray[gggh];
-                                            if(scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]]){
+                                            if(scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]]){
                                               //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
                                           }else{
                                             var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
-                                            scope.randomColor[(rowNameFinalArray[gggh]).split(' :- ')[0]] =  newSatColor ;
+                                            scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
                                           
                                           }    
                                             rowNameArray = [];
@@ -1055,7 +1055,10 @@
 
                         scope.scrolling = true;
                         $($stickyHeader).css('display','none'); 
-                         
+                        if(scope.tableVisible){
+                          $($sideContent).css('display', 'block');
+                        }
+                        $($sideContent).css('display', 'block');
                              var valuetoEval = scope.offsetTop;
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
