@@ -223,12 +223,15 @@ svg:not(:root) {
 				 
 			<div  ng-show=" $root.showView "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px;   text-align:center;" 
 			 >
-					<span ng-click="tableVisible = !tableVisible;  dispatchResize(); api.update(); gotoTop()"  
+					<span ng-click="$root.parametersVisible = !$root.parametersVisible;  dispatchResize(); api.update(); gotoTop()"  
+					style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+						Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
+					</span>
+			 		<span ng-click="$root.parametersVisible = false; tableVisible = !tableVisible;  dispatchResize(); api.update(); gotoTop()"  
 					 style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						 Table <i ng-class="{'fa-toggle-off':!tableVisible,'fa-toggle-on':tableVisible}" class="fa "></i>
 					</span>
-					<span 	ng-click="chartVisible = !chartVisible; dispatchResize(); api.update(); gotoTop()"  
-					 
+					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible; dispatchResize(); api.update(); gotoTop()"   
 					style="margin:5px; margin-right:1px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 							 Charts  <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
@@ -311,7 +314,7 @@ svg:not(:root) {
 			</div>
 			<div id="stickyContainer{{tableId}}"  class="stickyContainer "  
 				ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
-				<span ng-if=" $root.showView && (tableVisible || chartVisible)">
+				<span  >
 				<style >
 				html{
 					overflow: hidden;
@@ -336,7 +339,7 @@ svg:not(:root) {
 							<thead >
 								<tr ng-repeat="row in dataset.headers track by $index" >
 									<th  
-									ng-style="{'height':(getContainerHeight('firstHeaderColHeightNew' )*(col.rowspan))+'px'}"
+									ng-style="{'height':(getContainerHeight('sticky-header') )+'px'}"
 									style="border-right:1px solid #ccc; background-color: #f0efef; " 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible || $parent.$index === 0 " colspan="{{col.colspan}}" 
@@ -587,10 +590,7 @@ svg:not(:root) {
 				</div>
 			</div> 
 		</div>
-
-	 <div ng-show="customPage && !tableVisible && !chartVisible" style="position:relative; left:0px; top:0px; width:100%; height:auto; " >
-			<div ng-include="'html/'+customPage+'.html'" ></div>
-	 </div>
+ 
 
 	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	 
@@ -711,4 +711,10 @@ svg:not(:root) {
 			</div>
 		</div>
 	</div>
+
+	
+	<div ng-style="{'height':((innerHeight))+'px'}" style="z-index:33; background-color:#fff; display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
+	ng-if="$root.parametersVisible === true" ng-show="customPage  || (!tableVisible && !chartVisible)"   >
+ <div ng-include="'html/'+customPage+'.html'" ></div>
+</div>
 	
