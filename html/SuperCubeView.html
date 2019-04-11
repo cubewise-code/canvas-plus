@@ -219,7 +219,7 @@ svg:not(:root) {
 	</style>
 
   
-  	<div class="row"  ng-init="tableVisible = true;" >
+  	<div class="row"   >
 				 
 			<div  ng-show=" $root.showView "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px;   text-align:center;" 
 			 >
@@ -497,7 +497,8 @@ svg:not(:root) {
 							<tr id="rowHeightElement{{$index}}" 
 								ng-hide="!tableVisible || selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
 								ng-repeat="row in  table.data()  track by $index" >
-								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"  
+								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
+										ng-init="seeDataNew(el)"
 										class="{{tableDimensionColumnClass}} overflowhidden"
 										ng-style="{ 'border-top':'5px solid '+(rowNameFinalArray[$index]['series'].color+'').toString()}"
 										style=" border-right:1px solid #ccc; " 

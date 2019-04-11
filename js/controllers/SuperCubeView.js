@@ -43,10 +43,17 @@
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
                 scope.customPage = $attributes.customPage;
-                scope.chartVisible = $attributes.chartVisible;
-                scope.tableVisible= $attributes.tableVisible;
+                scope.tableUrlValue = $location.search()['tableView'];
+                scope.chartUrlValue = $location.search()['chartView'];
+                 
+               
+                 
+                
+                  
+                
+                 
                 scope.dateNow = new Date() ;
-                $rootScope.parametersVisible = true;
+                 
                 scope.collapseDimensions = true;
                 scope.innerHeight = window.innerHeight;
                 var n = scope.dateNow.getMonth();
@@ -476,10 +483,16 @@
         };
               
           scope.gotoTop = function(){
-            $location.hash('chartRow'+scope.tableId);
-
-            // call $anchorScroll()
-            $anchorScroll();
+            if(scope.tableVisible){
+              $location.search('tableView', 'true') 
+            }else{
+              $location.search('tableView', 'false') 
+            } 
+            if(scope.chartVisible){
+              $location.search('chartView', 'true') 
+            }else{
+              $location.search('chartView', 'false') 
+            }
           }
          
           scope.callback = function(scope, element){
@@ -1034,7 +1047,26 @@
            scope.scrollAmountTop = 0;
             scope.setUpFreezePane = function(){
               //console.log("setting up freeze pane", scope.tableId, document.querySelector('#stickyContainer'))
-            
+              if(scope.tableUrlValue  ){
+                console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
+                scope.tableVisible= true;  
+                
+                $rootScope.parametersVisible = false;
+              }else{
+                scope.tableVisible= $attributes.tableVisible;
+                
+               
+              }
+              if(scope.chartUrlValue  ){
+                console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
+                scope.chartVisible= true;  
+                
+                $rootScope.parametersVisible = false;
+              }else{
+                scope.chartVisible= $attributes.chartVisible;
+                
+               
+              }
                 if( document.querySelector('#stickyContainer'+scope.tableId)){
                     scope.containerishere = true;
                     if(scope.excelReformated === false){
@@ -1411,13 +1443,14 @@
                    }
                    
                    scope.sendCellSetPutArray.push(request);
-           }
-            scope.refresh(scope.cubeName,scope.cubeView);
-            scope.setUpFreezePane();
-               
-           scope.drillNames = [];
+          }
+          scope.refresh(scope.cubeName,scope.cubeView);
+          scope.setUpFreezePane();
+          
+          scope.drillNames = [];
            
-           scope.getCellDrill = function(cubeElements){
+          
+          scope.getCellDrill = function(cubeElements){
             scope.drillNames = [];
             $tm1Ui.cellGetDrillNames(scope.tm1Instance,scope.cubeName,cubeElements).then(function(data){
                 scope.tableDrillSource = [];
@@ -1508,7 +1541,7 @@
                     $timeout(
                         function(){
                           if(scope.tableVisible){
-                            scope.options.chart.height = window.innerHeight-290;
+                            scope.options.chart.height = window.innerHeight/2;
                           }
                           window.dispatchEvent(new Event('resize'));
                             
