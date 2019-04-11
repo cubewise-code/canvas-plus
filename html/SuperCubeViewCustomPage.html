@@ -104,7 +104,7 @@
                                 
                                
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index"  style="margin-bottom:10px;">
-                                       <strong>{{dimension.Name}}</strong>  : <small>{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} </small>
+                                       {{dimension.Name}} : {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }}  
                                     </span>
                                
     
@@ -147,7 +147,7 @@
                             <div style="border-right:1px solid #333;"  class="col-xs-12 col-md-4 out-shadow"   >
                                 
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index"  style="margin-bottom:10px;" >
-                                            <strong>{{dimension.Name}}</strong> : <small>{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} </small>
+                                          {{dimension.Name}} : {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }}  
                                     </span>
                                  
     
@@ -189,7 +189,7 @@
                             <div style="border-right:1px solid #333;" class="col-xs-12 col-md-4 out-shadow"   >
                                 
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" style="margin-bottom:10px;" >
-                                            <strong>{{dimension.Name}}</strong> : <small>{{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }} </small>
+                                          {{dimension.Name}} : {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }}  
                                     </span>
                                  
     
