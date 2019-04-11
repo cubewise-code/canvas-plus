@@ -1099,12 +1099,16 @@
                                       //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
                                       $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) ) + $($body).scrollTop() );
                                     }else{
-                                      $($sideContent).css('height', (((window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
+                                       
+                                       
                                     }
                                      
                                                                     
                                 }
-                               
+                                if(scope.tableVisible){
+                                  $($sideContent).css('display', 'block');
+                                  $($sideContent).css('height', (((window.innerHeight -  (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
+                                }
                                 window.dispatchEvent(new Event('resize')); 
                             }else{
                               $($stickyHeader).css('display','none'); 
