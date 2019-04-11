@@ -336,7 +336,7 @@ svg:not(:root) {
 							<thead >
 								<tr ng-repeat="row in dataset.headers track by $index" >
 									<th  
-									ng-style="{'height':(getContainerHeight('firstHeaderColHeightNew' )*(col.rowspan))+'px'}"
+									ng-style="{'height':(getContainerHeight('sticky-header') )+'px'}"
 									style="border-right:1px solid #ccc; background-color: #f0efef; " 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible || $parent.$index === 0 " colspan="{{col.colspan}}" 
