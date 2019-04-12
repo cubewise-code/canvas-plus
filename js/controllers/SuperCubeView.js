@@ -531,8 +531,8 @@
          
  
         
-                scope.seeDataNew = function(d){
-                  console.log(d)
+                scope.seeDataNew = function(d, n){
+                  console.log(d, n)
                 }
 
                 scope.getTablePosition = function(){
@@ -864,13 +864,13 @@
                   scope.charRowCount = 0;
                                $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,cubeview).then(function(result){
                                    if(!result.failed){
-                                        
+                                    console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                                       
                                        scope.options[scope.tableId] = {preload: false, watch: false};
                                        if(scope.table){
                                            if(scope.table.options){
-                                            console.log(scope.table, "scope.tablescope.table")
+                                            //console.log(scope.table, "scope.tablescope.table")
                                             scope.options[scope.tableId].index = scope.table.options.index;
                                             scope.options[scope.tableId].pageSize = scope.table.options.pageSize;
                                             scope.tablerowLength = scope.table.data().length;
@@ -896,7 +896,7 @@
                                         $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
                                         $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
                                         $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
-                                        console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
+                                        //console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
@@ -919,7 +919,7 @@
                                             var myRowObjElement = scope.table.data()[gggh];
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
-                                              console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
+                                              //console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
                                                     if(rowNameArray[gggh]){
                                                         rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
@@ -947,7 +947,7 @@
                                           }    
                                             rowNameArray = [];
                                         }
-                                        console.log(colNameArray, "colNameArray", scope.randomColor);
+                                       // console.log(colNameArray, "colNameArray", scope.randomColor);
                                          
                                         for(row in scope.table.data()){
                                          // console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes']['Color'], "Color of element")
@@ -960,7 +960,7 @@
                                               for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 
                                                 if( scope.hideColumn[gs] ){  
-                                                  console.log("HIDE COLUMN",gs);
+                                                 // console.log("HIDE COLUMN",gs);
                                                   
                                                 }else{
                                                   if(scope.table.data()[row].elements.length){
@@ -1029,7 +1029,7 @@
                 
                 
                 scope.seeNewData = function(data){
-                    //console.log(data)
+                    console.log(data)
                 }
                 scope.getColType = function(data){
                     return data;
