@@ -1120,6 +1120,7 @@
                         $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
                         $chartContent = $(el).find('#chartRow'+scope.tableId);
                         $sideContent = $(el).find('#sideContent'+scope.tableId); 
+                        $tableContent = $(el).find('#af1'+scope.tableId); 
 
                         scope.scrolling = true;
                         $($stickyHeader).css('display','none'); 
@@ -1211,7 +1212,16 @@
                       });
                       $timeout(
                         function(){
-                      window.dispatchEvent(new Event('resize'));
+                          var ele = $('#stickyContainer'+scope.tableId);
+                          $chartContent = $(ele).find('#chartRow'+scope.tableId);
+                          $tableContent = $(ele).find('#af1'+scope.tableId); 
+                           if( $tableContent){
+                            console.log($tableContent.css('width'))
+                           // scope.options.chart.width = parseInt(($tableContent.css('width')+'').split('px'));
+                            $($chartContent).css('width',  $tableContent.css('width') ); 
+                           }
+                            
+                          
                         },1000)
                 }else{
                     if(scope.containerishere === true){

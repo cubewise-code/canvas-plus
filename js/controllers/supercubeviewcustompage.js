@@ -10,8 +10,20 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     */
     $scope.cubesAvailable = [];
     $scope.cubesViewsAvailable = [];
-    $scope.activeCubeName = $scope.cubeName;
-    $scope.activeCubeViewName =  $scope.cubeView;
+    $scope.cubeNUrlValue = decodeURI($location.search()['cubeName']);
+    $scope.cubeVUrlValue = decodeURI($location.search()['cubeView']);
+    if($scope.cubeNUrlValue){
+        $scope.activeCubeName = decodeURI($location.search()['cubeName']);
+    }else{
+        $scope.activeCubeName = $scope.cubeName;
+    }
+    if($scope.cubeVUrlValue){
+        $scope.activeCubeViewName =  decodeURI($location.search()['cubeView']);
+    }else{
+        $scope.activeCubeViewName =  $scope.cubeView;
+    }
+
+    
     $scope.dimensionalityArray = [];
     $scope.currentDeminsionAttributes = [];
     $scope.aliasOverName = [];
