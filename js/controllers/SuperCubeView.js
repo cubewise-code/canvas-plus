@@ -724,7 +724,7 @@
                                                     if(rowNameArray[gggh]){
                                                         rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.name);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.key);
                                                       }
                                                 }
                                                    
@@ -964,7 +964,7 @@
                                                     if(rowNameArray[gggh]){
                                                         rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.name);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.key);
                                                       }
                                                 }
                                                    
