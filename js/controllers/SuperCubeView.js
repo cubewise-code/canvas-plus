@@ -1746,6 +1746,7 @@
                           if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                              console.log(newValue, "cube View has changed inside watch");
                               scope.cubeView = newValue;
+                              scope.selections.searchRows = '';
                               scope.refresh(scope.cubeName, newValue)
                           }
                          
@@ -1759,6 +1760,7 @@
                             if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                                console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
+                               scope.selections.searchRows = '';
                                scope.refresh(newValue, scope.cubeView)
                             }
                            
