@@ -1216,9 +1216,15 @@
                           $chartContent = $(ele).find('#chartRow'+scope.tableId);
                           $tableContent = $(ele).find('#af1'+scope.tableId); 
                            if( $tableContent){
-                            console.log($tableContent.css('width'))
-                           // scope.options.chart.width = parseInt(($tableContent.css('width')+'').split('px'));
-                            $($chartContent).css('width',  $tableContent.css('width') ); 
+                            console.log($tableContent.css('width'));
+                            if($rootScope.isPrinting){
+                              scope.options.chart.width = parseInt(($tableContent.css('width')+'').split('px'));
+                            }else{
+                              $($chartContent).css('width',  $tableContent.css('width') );
+                            }
+                             
+                            
+                         
                            }
                             
                           
