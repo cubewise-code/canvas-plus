@@ -99,7 +99,7 @@
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) === -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) === -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
-                            <div class="col-xs-12 col-md-2 col-xlg-2 out-shadow"  >
+                            <div class="col-xs-12 col-md-2 col-xlg-2 out-shadow" style="margin:10px; padding-top:10px; border-top:1px solid#666"  >
                                 
                                 
                                
@@ -111,7 +111,7 @@
                                 <span class="col-xs-12 col-md-12"
                                     ng-click=" getAttributesForDim(dimension.Name, $index)"
                                     ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
-                                    style="padding:5px;"
+                                    style="padding:5px; margin-top:10px;"
                                     ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
                                     <small ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> 
                                         {{$root.attributeOptions['alias'][dimension.Name] ? 'Alias:': 'Set Alias'}} {{$root.attributeOptions['alias'][dimension.Name] ? $root.attributeOptions['alias'][dimension.Name]:''}}</small>
@@ -120,30 +120,31 @@
                                 </span>
                             
                                 
-                            <p>
+                            <div class="col-xs-12 col=md-12 nopadding">
                             <div
                                 
                                 style="margin:0px; border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
                                  
                                 ng-mouseover="aliasOverName[dimension.Name] = item.Name"
                                 ng-mouseut="aliasOverName = ''"
-                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] != '' && $root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff'   }"
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small style="padding:10px;"
-                                    ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                    ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] != '' && $root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
                                 >
-                                    <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
-                                    <span class="pull-right">
-                                        <i 
-                                        ng-click="$root.attributeOptions['alias'][dimension.Name] = ''" 
-                                        style="color:#fff; margin-right:10px;" 
-                                        ng-if="$root.attributeOptions['alias'][dimension.Name] === item.Name " 
-                                        class="fa fa-times "></i>
+                                <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
+                                <span style="position:absolute; margin:0 auto; background-color:transparent; width:80%; left:0px;   height:2.5em;" ng-click="selectAliasToUse(dimension.Name, item.Name)"></span>
+                                <span class="pull-right">
+                                    <i 
+                                    ng-click="$root.attributeOptions['alias'][dimension.Name] = ''" 
+                                    style="color:#fff; margin-right:10px; z-index:2;" 
+                                    ng-if="$root.attributeOptions['alias'][dimension.Name] === item.Name " 
+                                    class="fa fa-times "></i>
                                     </span>
                                 </small>  
                             </div> 
-                            </p>
+                        </div>
                         </div>
                     </div>
                            
@@ -153,7 +154,7 @@
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) > -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) === -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
-                            <div style="border-right:1px solid #333;"  class="col-xs-12 col-md-4 out-shadow"   >
+                            <div  class="col-xs-12 col-md-4 out-shadow"  style="margin:10px; padding-top:10px; border-top:1px solid#666"  >
                                 
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index"  style="margin-bottom:10px;" >
                                           {{dimension.Name}} : {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }}  
@@ -161,39 +162,41 @@
                                  
     
                                 <span class="col-xs-12 col-md-12"
-                                    ng-click=" getAttributesForDim(dimension.Name, $index)"
+                                ng-click=" getAttributesForDim(dimension.Name, $index)" 
                                     ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
-                                    style="padding:5px;"
-                                    ng-click=" getAttributesForDim(dimension.Name, $index)" class="pull-right" >
-                                    <small ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> 
+                                    style="padding:5px; margin-top:10px;"
+                                    class="pull-right" >
+                                    <small  ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> 
                                         {{$root.attributeOptions['alias'][dimension.Name] ? 'Alias:': 'Set Alias'}} {{$root.attributeOptions['alias'][dimension.Name] ? $root.attributeOptions['alias'][dimension.Name]:''}}</small>
                                         <span class="pull-right"><i ng-class="{'fa-angle-up dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked === $index && currentDimensionClicked != '', 'fa-angle-down dropdown-arrow':showDimensionality && dimensionalityDimensionIndexClicked != $index || currentDimensionClicked === ''}" 
                                     class="fa fa-plus"></i></span>
                                 </span>
                             
                                 
-                            <p>
+                            <div class="col-xs-12 col=md-12 nopadding">
                             <div  
                                 style=" border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
                                  
                                 ng-mouseover="aliasOverName[dimension.Name] = item.Name"
                                 ng-mouseut="aliasOverName = ''"
-                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] != '' && $root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff' }"
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small style="padding:10px;"
-                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
-                                > <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
+                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] != '' && $root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                > 
+                                <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
+                                <span style="position:absolute; margin:0 auto; background-color:transparent; width:80%; left:0px;   height:2.5em;" ng-click="selectAliasToUse(dimension.Name, item.Name)"></span>
                                 <span class="pull-right">
                                     <i 
                                     ng-click="$root.attributeOptions['alias'][dimension.Name] = ''" 
-                                    style="color:#fff; margin-right:10px;" 
+                                    style="color:#fff; margin-right:10px; z-index:2;" 
                                     ng-if="$root.attributeOptions['alias'][dimension.Name] === item.Name " 
                                     class="fa fa-times "></i>
                                 </span>
                             </small>  
                             </div> 
-                            </p>
+                        </div>
                         </div>
                     </div>
                             
@@ -203,7 +206,7 @@
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) === -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) > -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
-                            <div style="border-right:1px solid #333;" class="col-xs-12 col-md-4 out-shadow"   >
+                            <div  style="margin:10px; padding-top:10px; border-top:1px solid#666" class="col-xs-12 col-md-4 out-shadow"   >
                                 
                                     <span ng-repeat="hierarchy in dimension['Hierarchies'] track by $index" style="margin-bottom:10px;" >
                                           {{dimension.Name}} : {{$index === (dimension['Hierarchies'].length-1) ? hierarchy.Name+'':hierarchy.Name+' | ' }}  
@@ -213,7 +216,7 @@
                                 <span class="col-xs-12 col-md-12"
                                     ng-click=" getAttributesForDim(dimension.Name, $index)" 
                                     ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}" 
-                                    style="padding:5px;"
+                                    style="padding:5px; margin-top:10px;"
                                      class="pull-right" >
                                     <small ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] ? '#fff':'#333'}"> 
                                         {{$root.attributeOptions['alias'][dimension.Name] ? 'Alias:': 'Set Alias'}} {{$root.attributeOptions['alias'][dimension.Name] ? $root.attributeOptions['alias'][dimension.Name]:''}}</small>
@@ -222,28 +225,29 @@
                                 </span>
                             
                                 
-                            <p>
+                            <div class="col-xs-12 col=md-12 nopadding">
                             <div 
                                 style="  border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
                                 
                                 ng-mouseover="aliasOverName[dimension.Name] = item.Name"
                                 ng-mouseut="aliasOverName = ''"
-                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] != '' && $root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff'  }"
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small style="padding:10px;"
-                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] != '' && $root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
                                 > 
                                 <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
+                                <span style="position:absolute; margin:0 auto; background-color:transparent; width:80%; left:0px;   height:2.5em;" ng-click="selectAliasToUse(dimension.Name, item.Name)"></span>
                                 <span class="pull-right">
                                     <i 
                                     ng-click="$root.attributeOptions['alias'][dimension.Name] = ''" 
-                                    style="color:#fff; margin-right:10px;" 
+                                    style="color:#fff; margin-right:10px; z-index:2;" 
                                     ng-if="$root.attributeOptions['alias'][dimension.Name] === item.Name " 
                                     class="fa fa-times "></i>
                                 </span></small>  
                             </div> 
-                            </p>
+                        </div>
                         </div>
                     </div>
                            
