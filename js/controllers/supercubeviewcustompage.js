@@ -16,7 +16,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.currentDeminsionAttributes = [];
     $scope.aliasOverName = [];
     $scope.showDimensionality = true;
-      
+     
+
     $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
         if(cubedata){
             $scope.cubesAvailable = cubedata;
@@ -57,7 +58,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 }
                 $rootScope.cubeView = $scope.activeCubeViewName;
                 $rootScope.cubeName = $scope.cubeName;
-               
+                $location.search('cubeName',  $rootScope.cubeName) 
+                $location.search('cubeView', $rootScope.cubeView) 
                 
                // console.log("CUSOM CUBEVIEW JS", $scope.tm1Instance, $scope.cubeName, $scope.cubeView, $rootScope.table['_data'][0][1]['dataset']['dimensions']);
             }
@@ -113,7 +115,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 $scope.activeCubeViewName = name;
                 $rootScope.cubeView = $scope.activeCubeViewName;
                // console.log('new cubeview to load', $scope.cubeView)
-                 
+               $location.search('cubeView', name) 
                  
             }
         )

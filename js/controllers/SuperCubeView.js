@@ -30,8 +30,24 @@
                 scope.selections = {};
                 scope.firstDayPosition = {};
                 scope.tm1Instance = $attributes.tm1Instance;
-                scope.cubeView = $attributes.cubeView;
-                scope.cubeName = $attributes.cubeName;
+                if(scope.cubeNameUrlValue  ){
+                  console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                  scope.cubeName = scope.cubeNameUrlValue ; 
+                  
+                  
+                } else{
+                  scope.cubeName = $attributes.cubeName;
+                }
+                if(scope.cubeViewUrlValue){
+                  console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                  scope.cubeView = scope.cubeViewUrlValue ; 
+                  
+                  
+                } else{
+                  scope.cubeView = $attributes.cubeView;
+                }
+                
+                
                 scope.attributeOptions = $attributes.attributeOptions;
                 scope.tableWidth = $attributes.tableWidth; 
                 scope.innerWidth = window.innerWidth;
@@ -45,8 +61,26 @@
                 scope.customPage = $attributes.customPage;
                 scope.tableUrlValue = $location.search()['tableView'];
                 scope.chartUrlValue = $location.search()['chartView'];
-                 
-               
+                scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
+                scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
+                
+                if(scope.cubeNameUrlValue  ){
+                    console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                    scope.cubeName = scope.cubeNameUrlValue ; 
+                    
+                    
+                  } else{
+                    scope.cubeName = $attributes.cubeName;
+                  }
+                  if(scope.cubeViewUrlValue){
+                    console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                    scope.cubeView = scope.cubeViewUrlValue ; 
+                    
+                    
+                  } else{
+                    scope.cubeView = $attributes.cubeView;
+                  }
+                  
                  
                 
                   
@@ -115,7 +149,7 @@
                   "bottom": 0,
                   "left": 0
                 },
-                "duration": 250,
+                "duration": 0,
                 "orient": "bottom",
                 "tickValues": null,
                 "tickSubdivide": 0,
@@ -1005,8 +1039,8 @@
                                       $timeout(
                                         function(){
                                           if( scope.api){
-                                          scope.api.update();
-                                          
+                                            scope.api.update();
+                                             
                                           }
                                         },1000
                                       )
@@ -1067,6 +1101,7 @@
                 
                
               }
+                
                 if( document.querySelector('#stickyContainer'+scope.tableId)){
                     scope.containerishere = true;
                     if(scope.excelReformated === false){
@@ -1174,6 +1209,10 @@
                              }
                              $($sideContent).css('margin-top', -$($body).scrollTop());
                       });
+                      $timeout(
+                        function(){
+                      window.dispatchEvent(new Event('resize'));
+                        },1000)
                 }else{
                     if(scope.containerishere === true){
 
@@ -1189,7 +1228,7 @@
                     function(){
                         //console.log("looking for freezepane");
                         scope.setUpFreezePane();
-                    },1000
+                    },100
                 )
                 
             }
@@ -1524,6 +1563,22 @@
                    }
                    
                    scope.sendCellSetPutArray.push(request);
+          }
+          if(scope.cubeNameUrlValue){
+            console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+            scope.cubeName = scope.cubeNameUrlValue ; 
+            
+            
+          } else{
+            scope.cubeName = $attributes.cubeName;
+          }
+          if(scope.cubeViewUrlValue){
+            console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+            scope.cubeView = (scope.cubeViewUrlValue) ; 
+            
+            
+          } else{
+            scope.cubeView = $attributes.cubeView;
           }
           scope.refresh(scope.cubeName,scope.cubeView);
           scope.setUpFreezePane();
