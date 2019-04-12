@@ -29,6 +29,7 @@
                 scope.hideColumn = [];
                 scope.selections = {};
                 scope.firstDayPosition = {};
+               
                 scope.tm1Instance = $attributes.tm1Instance;
                 if(scope.cubeNameUrlValue  ){
                   console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
@@ -874,7 +875,12 @@
                    
                      
                 }
-                scope.currentRowCount = scope.rowsToLoad;
+                if($rootScope.isPrinting){
+                  scope.currentRowCount = 10000;
+                 }else{
+                  scope.currentRowCount = scope.rowsToLoad;
+                 }
+                 
                 scope.tablerowLength = 0;
                 scope.ledgendsToUse = {
                  
@@ -1747,6 +1753,11 @@
                              console.log(newValue, "cube View has changed inside watch");
                               scope.cubeView = newValue;
                               scope.selections.searchRows = '';
+                              if($rootScope.isPrinting){
+                                scope.currentRowCount = 10000;
+                               }else{
+                                scope.currentRowCount = $attributes.rowsToLoad;
+                               }
                               scope.refresh(scope.cubeName, newValue)
                           }
                          
@@ -1761,6 +1772,12 @@
                                console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
                                scope.selections.searchRows = '';
+                               if($rootScope.isPrinting){
+                                scope.currentRowCount = 10000;
+                               }else{
+                                scope.currentRowCount = $attributes.rowsToLoad;
+                               }
+                               
                                scope.refresh(newValue, scope.cubeView)
                             }
                            
