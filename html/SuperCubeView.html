@@ -548,21 +548,39 @@ svg:not(:root) {
 										cellref="{{(cell.reference()).toString()}}" 
 										contenteditable='true'  
 										id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-										ng-if="(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 && !cell.isReadOnly && row.cells[$index].isNumeric === false" 
+										ng-if="  !cell.isReadOnly && row.cells[$index].isNumeric === false" 
 										type="text" 
 										class="form-control text-left"  
 										ng-attr-tabindex="{{row.index}}" 
 										ng-model="cell.value " 
-										ng-paste="handlePaste($event)"
+										ng-paste="handlePasteText($event)"
 										ng-value="cell.value" 
 										ng-focus="getFocus($event);  " 
 										ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
 									<!--cell.update(query)-->
-								
+
+									<input 
+										cellref="{{(cell.reference()).toString()}}" 
+										contenteditable='true'  
+										id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
+										ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) && !cell.isReadOnly && row.cells[$index].isNumeric === true" 
+										type="text" 
+										class="form-control text-right" 
+										tm1-ui-format-number="0" 
+										ng-attr-tabindex="{{row.index}}" 
+										ng-model="cell.value " 
+										ng-paste="handlePaste($event)"
+										ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:2) : (cell.value | formatPercentage:2)" 
+										ng-focus="getFocus($event);  " 
+										ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+
+								 
 							
 									<span ng-if="row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
-									<span ng-if="(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-									<span ng-if="(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 ) && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+
+								 
 									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0 " style="padding-right: 10px; color:darkred"> {{cell.value | formatPercentage:2}} </span>
 									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" style="padding-right: 10px;"> {{cell.value | formatPercentage:2}}   </span>
 

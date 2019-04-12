@@ -124,15 +124,24 @@
                             <div
                                 
                                 style="margin:0px; border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
-                                ng-click="selectAliasToUse(dimension.Name, item.Name)"
+                                 
                                 ng-mouseover="aliasOverName[dimension.Name] = item.Name"
                                 ng-mouseut="aliasOverName = ''"
                                 ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
                                 ng-if="currentDimensionClicked === dimension.Name" 
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small style="padding:10px;"
-                                ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
-                                >{{item.Name}} - {{item.Type}}</small>  
+                                    ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
+                                >
+                                    <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
+                                    <span class="pull-right">
+                                        <i 
+                                        ng-click="$root.attributeOptions['alias'][dimension.Name] = ''" 
+                                        style="color:#fff; margin-right:10px;" 
+                                        ng-if="$root.attributeOptions['alias'][dimension.Name] === item.Name " 
+                                        class="fa fa-times "></i>
+                                    </span>
+                                </small>  
                             </div> 
                             </p>
                         </div>
@@ -166,7 +175,7 @@
                             <p>
                             <div  
                                 style=" border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
-                                ng-click="selectAliasToUse(dimension.Name, item.Name)"
+                                 
                                 ng-mouseover="aliasOverName[dimension.Name] = item.Name"
                                 ng-mouseut="aliasOverName = ''"
                                 ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
@@ -174,7 +183,15 @@
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small style="padding:10px;"
                                 ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
-                                >{{item.Name}} - {{item.Type}}</small>  
+                                > <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
+                                <span class="pull-right">
+                                    <i 
+                                    ng-click="$root.attributeOptions['alias'][dimension.Name] = ''" 
+                                    style="color:#fff; margin-right:10px;" 
+                                    ng-if="$root.attributeOptions['alias'][dimension.Name] === item.Name " 
+                                    class="fa fa-times "></i>
+                                </span>
+                            </small>  
                             </div> 
                             </p>
                         </div>
@@ -208,7 +225,7 @@
                             <p>
                             <div 
                                 style="  border-top:1px solid #666; padding-bottom:5px; padding-top:5px;" 
-                                ng-click="selectAliasToUse(dimension.Name, item.Name)"
+                                
                                 ng-mouseover="aliasOverName[dimension.Name] = item.Name"
                                 ng-mouseut="aliasOverName = ''"
                                 ng-style="{'background-color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? 'steelblue':'#fff', 'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
@@ -216,7 +233,15 @@
                                 ng-repeat="item in currentDeminsionAttributes track by $index">
                                 <small style="padding:10px;"
                                 ng-style="{'color':$root.attributeOptions['alias'][dimension.Name] === item.Name || aliasOverName[dimension.Name] === item.Name ? '#fff':'steelblue'  }"
-                                >{{item.Name}} - {{item.Type}}</small>  
+                                > 
+                                <span ng-click="selectAliasToUse(dimension.Name, item.Name)">{{item.Name}} - {{item.Type}}</span>
+                                <span class="pull-right">
+                                    <i 
+                                    ng-click="$root.attributeOptions['alias'][dimension.Name] = ''" 
+                                    style="color:#fff; margin-right:10px;" 
+                                    ng-if="$root.attributeOptions['alias'][dimension.Name] === item.Name " 
+                                    class="fa fa-times "></i>
+                                </span></small>  
                             </div> 
                             </p>
                         </div>

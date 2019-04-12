@@ -718,7 +718,7 @@
                                                 var cellArrayFromJson = [];
                                                 scope.charRowCount++;
                                                 jsonRowData[row] =  {"key": '',
-                                                "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
+                                                "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
                                                 for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                    
                                                   if( scope.hideColumn[gss] ){  
@@ -956,7 +956,7 @@
                                             var cellArrayFromJson = [];
                                             scope.charRowCount++;
                                             jsonRowData[row] =  {"key": '',
-                                            "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
+                                            "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
                                               for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 
                                                 if( scope.hideColumn[gs] ){  
@@ -1346,10 +1346,11 @@
                 scope.handlePaste = function($event) {
                    var clipboardData, pastedData;
                    var mainArrayObj = [];
+                   scope.sendCellSetPutArray = [];
                    // Stop data actually being pasted into div
                    $event.stopPropagation();
                    $event.preventDefault();
-                   //console.log(scope.focusObj)
+                   console.log(scope.focusObj)
                    var startRow = (scope.focusObj+'').split('-')[2];
                    var columnRow = (scope.focusObj+'').split('-')[3];
                    // Get pasted data via clipboard API
@@ -1379,7 +1380,7 @@
 
                              if(document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))){
                                 var tempElement = document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))
-                                //console.log((parseInt(startRow)+parseInt(item)), (parseInt(columnRow)+parseInt(cell)), aray[cell] )
+                                 //console.log((parseInt(startRow)+parseInt(item)), (parseInt(columnRow)+parseInt(cell)), aray[cell] )
                                // console.log(tempElement);
                                 if(tempElement != undefined && tempElement != null){
                                     //console.log(tempElement.getAttribute("cellref") );
@@ -1421,6 +1422,86 @@
            
                     
            }
+           scope.handlePasteText = function($event) {
+            var clipboardData, pastedData;
+            var mainArrayObj = [];
+            scope.sendCellSetPutArray = [];
+            // Stop data actually being pasted into div
+            $event.stopPropagation();
+            $event.preventDefault();
+            console.log(scope.focusObj)
+            var startRow = (scope.focusObj+'').split('-')[2];
+            var columnRow = (scope.focusObj+'').split('-')[3];
+            // Get pasted data via clipboard API
+            
+            clipboardData = $event.clipboardData || window.clipboardData || $event.originalEvent.clipboardData;
+            if(clipboardData ){
+              newpasteDataArray = [];
+             pastedData = clipboardData.getData('Text');
+             newpasteDataArray = pastedData.split(String.fromCharCode(13));
+
+             // split rows into columns
+         
+             
+             //var newpasteDataArray = (pastedData).split(/\r\n|\r|\n/g)
+             
+             // Do whatever with pasteddata
+             for (i=0; i<newpasteDataArray.length; i++) {
+                 
+                 newpasteDataArray[i] = (newpasteDataArray[i]).split(String.fromCharCode(9));
+                  
+             }
+              
+             for (pp=0; pp<newpasteDataArray.length; pp++) {
+                 
+                var aray = newpasteDataArray[pp]
+                
+                 for (cell=0; cell< aray.length; cell++) {
+
+                      if(document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))){
+                         var tempElement = document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))
+                          //console.log((parseInt(startRow)+parseInt(item)), (parseInt(columnRow)+parseInt(cell)), aray[cell] )
+                        // console.log(tempElement);
+                         if(tempElement != undefined && tempElement != null){
+                             //console.log(tempElement.getAttribute("cellref") );
+                             var elementArrayToUse = tempElement.getAttribute("cellref")
+                             scope.addRequest(aray,cell,tempElement)
+                         }else{
+                         row = scope.nextAvailable(parseInt(startRow)+parseInt(pp), (parseInt(columnRow)+parseInt(cell)) )
+                         if(row === 'none'){
+         
+                         }else{
+                                 var tempElement = document.getElementById('input-'+scope.tableId+'-'+(row)+'-'+(parseInt(columnRow)+parseInt(cell)))
+                                 if(tempElement != undefined && tempElement != null){
+                                 scope.addRequest(aray,cell,tempElement)
+                                 }
+                         }
+                         
+                         }
+                      }
+                      
+                      
+                      
+                 }
+                  
+             }
+     
+             $tm1Ui.cellsetPut(scope.sendCellSetPutArray).then(function(result){
+                 // console.log(result, "######## saved")
+                  if(result.success){
+                      
+                     
+                     scope.refreshNew(scope.dataset);
+         
+                  }else{
+     
+                  }
+             });
+            }
+            
+    
+             
+    }
            scope.nextAvailable = function(row, col){
                var tempElementTwo = document.getElementById('input-'+scope.tableId+'-'+(row+1)+'-'+col )
                if(tempElementTwo === undefined && tempElementTwo === null){
