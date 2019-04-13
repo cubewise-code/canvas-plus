@@ -26,7 +26,18 @@
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
                     monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
                 };
-                scope.hideColumn = [];
+                scope.hideCol = $location.search()['hideCol'];
+                if(scope.hideCol != null && scope.hideCol != 'undefined'){
+                  if( (scope.hideCol+'').split('-').length > 0){
+                    scope.hideColumn = [];
+                    console.log((scope.hideCol+'').split('-')[0], "#####");
+                    scope.hideColumn[(scope.hideCol+'').split('-')[0]] = [(scope.hideCol+'').split('-')[1]];
+                  }
+                  
+                }else{
+                  scope.hideColumn = [];
+                }
+                
                 scope.selections = {};
                 scope.firstDayPosition = {};
                
@@ -564,7 +575,9 @@
           }
   
          
- 
+            scope.changeUrl = function(hideCol, index ){
+              $location.search('hideCol', index+'-'+hideCol);
+            }
         
                 scope.seeDataNew = function(d, n){
                   console.log(d, n)
