@@ -31,7 +31,12 @@
                   if( (scope.hideCol+'').split('-').length > 0){
                     scope.hideColumn = [];
                     console.log((scope.hideCol+'').split('-')[0], "#####");
-                    scope.hideColumn[(scope.hideCol+'').split('-')[0]] = [(scope.hideCol+'').split('-')[1]];
+                    if((scope.hideCol+'').split('-')[1] === 'true'){
+                      scope.hideColumn[(scope.hideCol+'').split('-')[0]] = true;
+                    }else{
+                      scope.hideColumn[(scope.hideCol+'').split('-')[0]] = false;
+                    }
+                  
                   }
                   
                 }else{
