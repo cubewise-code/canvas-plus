@@ -1,6 +1,6 @@
 <!-- This gets appended at the top for each page  -->
   
-<div id="page-header"  ng-controller="headerCtrl"   >
+<div ng-show="$root.isPrinting ? false:true" id="page-header"  ng-controller="headerCtrl"   >
  
     <div ng-show='false'>
         <tm1-ui-user  ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
@@ -92,7 +92,7 @@
    
 </div>
  
-<div   
+<div   ng-show="$root.isPrinting ? false:true"
     class="nav" 
     ng-if="$root.defaults.region && $root.selections.region" 
     id="header" 
@@ -286,10 +286,10 @@
   
  
  
-<div class="right-hand-nav" id="righthandsidebar"  
-ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" 
-style="z-index:9999;"
-ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
+    <div class="right-hand-nav" id="righthandsidebar"  
+    ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" 
+    style="z-index:9999;"
+    ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
     ng-style="{'margin-left':$root.topOffSet != $root.defaultOffSet ? '-300px':'0px' }"  
     >
              
@@ -357,34 +357,34 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
             </div>
 
 
- <div class="col-xlg-12 col-xs-12">
-<h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
-    <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
-        style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
-         Dark Mode <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
+            <div class="col-xlg-12 col-xs-12">
+                <h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
+                <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
+                    style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
+                    Dark Mode <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
 
-    </span>
+                </span>
 
-</div>
+            </div>
 
 
- </div>
-<div  class="col-md-12 col-xs-12 nopadding titleArea" 
-    ng-if="$root.selections.year && $root.selections.region && $root.selections.department"
-    ng-style="{'top':(($root.defaultOffSet*2)-5)+'px', 'margin-top':'0px'}" 
->
-    <h4 style="   width:100%; " 
-    class="text-left pull-left">
-        {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}} <i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i>
-       
-        <span class="hidden-xs pull-right text-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
-            
-
-         {{$root.defaults.year}} | 
-        <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
-        <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
+        </div>
+        <div  class="col-md-12 col-xs-12 nopadding titleArea" 
+            ng-if="$root.selections.year && $root.selections.region && $root.selections.department"
+            ng-style="{'top':(($root.defaultOffSet*2)-5)+'px', 'margin-top':'0px'}" 
+        >
+        <h4 style="   width:100%; " 
+        class="text-left pull-left">
+          {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}} <i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i>
         
-    </span>
+          <span class="hidden-xs pull-right text-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
+            
+ 
+            {{$root.defaults.year}} | 
+            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
+            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
+            
+        </span>
       
     </h4>
 </div>

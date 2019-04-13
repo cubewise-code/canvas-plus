@@ -221,7 +221,7 @@ svg:not(:root) {
   
   	<div class="row"   >
 				 
-			<div  ng-show=" $root.showView "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px;   text-align:center;" 
+			<div  ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px;   text-align:center;" 
 			 >
 					<span ng-click="$root.parametersVisible = !$root.parametersVisible;  dispatchResize(); api.update(); gotoTop()"  
 					style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
@@ -422,7 +422,7 @@ svg:not(:root) {
 									</tr>
 								<tr 	ng-show="decideRowToHideFreezePane(!tableVisible,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
-								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
+								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString(), 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 															style=" border-right:0px solid #ccc; vertical-align:text-top; "                                                              
 															ng-repeat="el in row.elements track by $index" 
 															ng-show="el.visible"  
@@ -449,7 +449,9 @@ svg:not(:root) {
 						</tbody>
 					</table>
 				</div>
-
+		 
+			
+				 
 				<div ng-show="tableVisible || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
 					
 					<table class="table" id="af1{{tableId}}">
@@ -457,24 +459,25 @@ svg:not(:root) {
 					
 					
 						<tbody    id="bodyContent{{tableId}}"  > 
-								<tr ng-if="chartVisible" >
+								<tr ng-if="chartVisible"  >
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
 										
 									</td>
-										
-										<td id="chartRow{{tableId}}" ng-if="chartVisible"  colspan="{{table.data()[0]['cells'].length}}" style="padding:0px;">
+										<td class="{{tableDimensionColumnClass}} overflowhidden"  ng-repeat="columnrem in hideColumn track by $index" ng-if="hideColumn[$index] && $index <= (table.data()[0]['cells'].length)/2 "></td>
+										<td id="chartRow{{tableId}}" ng-if="chartVisible"  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
 											<nvd3   options="options" data="data" events="events"  api="api" on-ready="callback" ></nvd3>
 											
 										</td>
+										 
 									</tr>
-									<tr style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
+									<tr style="page-break-before: always;" style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
 											
 											<td    
 
-											ng-if="  col.visible  "  
-											style="border-right:1px solid #ccc; background-color: #f0efef"
-											id="searchColumn{{tableId}}"
+												ng-if="  col.visible  "  
+												style="border-right:1px solid #ccc; background-color: #f0efef"
+												id="searchColumn{{tableId}}"
 												ng-repeat="col in headerrow.rows track by $index"   
 												colspan="{{col.colspan}}" 
 												rowspan="{{col.rowspan}}" 
@@ -502,7 +505,7 @@ svg:not(:root) {
 								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
 										 
 										class="{{tableDimensionColumnClass}} overflowhidden"
-										ng-style="{ 'border-top':'5px solid '+(rowNameFinalArray[$index]['series'].color+'').toString()}"
+										ng-style="{'border-left':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString(), 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 										style=" border-right:1px solid #ccc; " 
 										ng-repeat="el in row.elements track by $index" 
 										ng-show="el.visible || $parent.$index === 0" 
@@ -623,7 +626,7 @@ svg:not(:root) {
 						</tbody>
 					</table>
 					
-					<div   ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
+					<div ng-hide="$root.isPrinting"  ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
 					style="position:fixed; padding:0px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
 					>
 						<div class="btn-group pull-right" role="group" style="font-weight:0.7em;"  >

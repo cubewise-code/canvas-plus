@@ -118,7 +118,7 @@
               "type":  scope.activeName,
               "height": (window.innerHeight/2),
               "margin": {
-                "top": 90,
+                "top": 20,
                 "right": 50,
                 "bottom": 5,
                 "left": 50
