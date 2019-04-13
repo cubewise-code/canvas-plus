@@ -459,7 +459,7 @@ svg:not(:root) {
 					
 					
 						<tbody    id="bodyContent{{tableId}}"  > 
-								<tr ng-if="chartVisible"  >
+								<tr ng-if="chartVisible "  >
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
 										
 									</td>
@@ -474,14 +474,14 @@ svg:not(:root) {
 									<tr style="page-break-before: always;" style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
 											
 											<td    
-
+										
 												ng-if="  col.visible  "  
 												style="border-right:1px solid #ccc; background-color: #f0efef"
 												id="searchColumn{{tableId}}"
 												ng-repeat="col in headerrow.rows track by $index"   
 												colspan="{{col.colspan}}" 
 												rowspan="{{col.rowspan}}" 
-												class="text-center " >
+												class="text-center {{tableDimensionColumnClass}} overflowhidden" >
 													
 												{{$index > 0 ? col.dimension:''}} 
 												<input ng-if="$index === 0" class="form-control" 

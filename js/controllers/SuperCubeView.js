@@ -216,7 +216,7 @@
               "lines": {
                 "dispatch": { 
                  
-                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}}else{scope.chartToolTipElements = e;}  console.log(e,'click') },
+                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}  console.log(e,'click') },
                     elementMouseover: function(e){  console.log(e,'mouseover') },
                     elementMouseout: function(e){   console.log(e,'mouseout') },
                     renderEnd: function(e){    console.log(e,'renderEnd') }
@@ -298,7 +298,7 @@
               "legend": {
                 dispatch: {
                   legendClick: function(e) { scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
-                  legendDblclick: function(e) {  scope.selections.searchRows = (e.key).split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
+                  legendDblclick: function(e) {  scope.selections.searchRows = (e.key+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
                   legendMouseover: function(e) {  },
                   legendMouseout: function(e) { },
                   stateChange: function(e) { }
