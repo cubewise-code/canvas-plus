@@ -1,6 +1,6 @@
 (function(){
         var app = angular.module('app');
-        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout', '$window','$anchorScroll','$location', function($log, $rootScope, $tm1Ui, $timeout , $window,  $anchorScroll,  $location) {
+        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout','filterFilter', '$window','$anchorScroll','$location', function($log, $rootScope, $tm1Ui, $timeout , $window, filterFilter, $anchorScroll,  $location) {
             return {
                 templateUrl: 'html/SuperCubeView.html',
                 scope:{
@@ -31,7 +31,7 @@
                 scope.firstDayPosition = {};
                
                 scope.tm1Instance = $attributes.tm1Instance;
-                if(scope.cubeNameUrlValue  ){
+                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
                   console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                   scope.cubeName = scope.cubeNameUrlValue ; 
                   
@@ -39,7 +39,7 @@
                 } else{
                   scope.cubeName = $attributes.cubeName;
                 }
-                if(scope.cubeViewUrlValue){
+                if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue!= 'undefined'){
                   console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
                   scope.cubeView = scope.cubeViewUrlValue ; 
                   
@@ -65,7 +65,7 @@
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
                 
-                if(scope.cubeNameUrlValue  ){
+                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' ){
                     console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                     scope.cubeName = scope.cubeNameUrlValue ; 
                     
@@ -73,7 +73,7 @@
                   } else{
                     scope.cubeName = $attributes.cubeName;
                   }
-                  if(scope.cubeViewUrlValue){
+                  if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue != 'undefined'){
                     console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
                     scope.cubeView = scope.cubeViewUrlValue ; 
                     
@@ -118,7 +118,7 @@
               "type":  scope.activeName,
               "height": (window.innerHeight/2),
               "margin": {
-                "top": 50,
+                "top": 90,
                 "right": 50,
                 "bottom": 5,
                 "left": 50
@@ -845,11 +845,16 @@
                   // document.getElementById(focusObjOut).removeEventListener('paste', scope.handlePaste);
            
                 }   
-           
+                scope.updateDimensionElementWidth = function(elid){
+                  if(document.getElementById(elid)){
+                    scope.dimensionElementWidth = document.getElementById(elid).getBoundingClientRect().width+'px';
+                  }
+                 
+                }
                 scope.getContainerWidthClass = function(idName){
                     if(document.getElementsByClassName(idName).length > 0){
                         var tempObj = document.getElementsByClassName(idName)[0];
-                        if(tempObj != null || tempObj != undefined ){
+                        if(tempObj != null || tempObj != 'undefined' ){
                            return tempObj.getBoundingClientRect().width;
                         }
                     } 
@@ -1008,9 +1013,23 @@
                                                       
                                                         
                                                   }
-                                                  cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                  console.log((scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%'),         scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]         );
+
+
+                                                  if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]   ){
+
+                                                    if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%') > -1){
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                                    }else{
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                    }
+                                                  } 
+
+
+                                                   
+                                                   
                                                   
-                                                  //console.log("dont hide",gs);
+                                                  //console.log("dont hide",gs); $rootScope.attributeOptions[] 
                                                 }
                                              
                                                   
@@ -1074,7 +1093,14 @@
                 scope.getColType = function(data){
                     return data;
                 }
-                
+                scope.formatPercentage = function(total){
+                  return  parseFloat(total*100).toFixed(2); 
+                   
+                }
+                scope.formatPercentageString = function(total, d){
+                  return  parseFloat(total*100).toFixed(d)+'%'; 
+                   
+                }
                 scope.seeData = function(rowindex,table){
                     
                     scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][0]]['element'].toggle();
@@ -1254,7 +1280,56 @@
                 )
                 
             }
-             
+            scope.decideRowToHideRow = function(tableinview, searchfield, searchexists){
+
+               // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
+                if(tableinview){
+                   
+                    return true;
+                
+                   
+                 
+                }else{
+                  if(scope.selections.searchRows != null && scope.selections.searchRows !='undefined' && ((searchexists+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) === -1){
+                   // console.log("hide row")
+                    return true;
+                  }else{
+                    //console.log("show row")
+                    return false;
+                  }
+                 
+                }
+                 
+                 
+            }
+            scope.decideRowToHideFreezePane = function(tableinviewfreeze, searchfieldfreeze, searchexistsfreeze){
+
+              // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
+               if(tableinviewfreeze){
+                  
+                   return true;
+               
+                  
+                
+               }else{
+                 if(scope.selections.searchRows != null && scope.selections.searchRows !='undefined' ){
+                    
+                    if( ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
+                      console.log("show row with same name as", scope.selections.searchRows,  searchexistsfreeze, ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()));
+                      return true;
+                    }else{
+                      return false
+                    }
+                
+                 }else{
+                   //console.log("show row")
+                   return true;
+                 }
+                
+               }
+                
+                
+           }
             scope.formatUploadButton = function(){
                 
                 if(document.getElementsByClassName('tm1-ui-export').length){
@@ -1586,7 +1661,7 @@
                    
                    scope.sendCellSetPutArray.push(request);
           }
-          if(scope.cubeNameUrlValue){
+          if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
             console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
             scope.cubeName = scope.cubeNameUrlValue ; 
             
@@ -1594,7 +1669,7 @@
           } else{
             scope.cubeName = $attributes.cubeName;
           }
-          if(scope.cubeViewUrlValue){
+          if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
             console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
             scope.cubeView = (scope.cubeViewUrlValue) ; 
             

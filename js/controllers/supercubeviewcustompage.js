@@ -12,12 +12,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.cubesViewsAvailable = [];
     $scope.cubeNUrlValue = decodeURI($location.search()['cubeName']);
     $scope.cubeVUrlValue = decodeURI($location.search()['cubeView']);
-    if($scope.cubeNUrlValue){
+    if($scope.cubeNUrlValue != 'undefined'){
         $scope.activeCubeName = decodeURI($location.search()['cubeName']);
     }else{
         $scope.activeCubeName = $scope.cubeName;
     }
-    if($scope.cubeVUrlValue){
+    if($scope.cubeVUrlValue  != 'undefined'){
         $scope.activeCubeViewName =  decodeURI($location.search()['cubeView']);
     }else{
         $scope.activeCubeViewName =  $scope.cubeView;

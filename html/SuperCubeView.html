@@ -397,7 +397,7 @@ svg:not(:root) {
 				<div  id="sideContent{{tableId}}" 
 					class="fixed-container-side" 
 					style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
-					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('stickyContainer'+tableId), 'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'position': getTablePosition(),'left':getTableLeft()}">
+					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('stickyContainer'+tableId), 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
 					<table  class="table ">
 						<tbody  >
 								<tr  id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index" 
@@ -420,7 +420,7 @@ svg:not(:root) {
 									</td>
 								
 									</tr>
-								<tr ng-hide="selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+								<tr 	ng-show="decideRowToHideFreezePane(!tableVisible,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
 								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 															style=" border-right:0px solid #ccc; vertical-align:text-top; "                                                              
@@ -430,7 +430,7 @@ svg:not(:root) {
 															class="{{tableDimensionColumnClass}} overflowhidden"
 															ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 															
-														
+														 
 															<span ng-show="!selections.searchRows">
 																	<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 																	<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
@@ -471,9 +471,10 @@ svg:not(:root) {
 									<tr style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
 											
 											<td    
+
 											ng-if="  col.visible  "  
 											style="border-right:1px solid #ccc; background-color: #f0efef"
-										
+											id="searchColumn{{tableId}}"
 												ng-repeat="col in headerrow.rows track by $index"   
 												colspan="{{col.colspan}}" 
 												rowspan="{{col.rowspan}}" 
@@ -495,11 +496,11 @@ svg:not(:root) {
 										</td>
 										</tr>
 									
-							<tr id="rowHeightElement{{$index}}" 
-								ng-hide="!tableVisible || selections.searchRows && ((row.elements[0].element.attributes['Description']+' '+ row.elements[0].element.name).toLowerCase()).indexOf((selections.searchRows).toLowerCase()) === -1"
+							<tr id="rowHeightElement{{$index}}"  
+								ng-hide="decideRowToHideRow(!tableVisible,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index" >
 								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
-									 
+										 
 										class="{{tableDimensionColumnClass}} overflowhidden"
 										ng-style="{ 'border-top':'5px solid '+(rowNameFinalArray[$index]['series'].color+'').toString()}"
 										style=" border-right:1px solid #ccc; " 
@@ -509,7 +510,7 @@ svg:not(:root) {
 										ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 										<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 										<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
-									
+									 
 										<span ng-show="!selections.searchRows">
 																					<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 																					<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
@@ -599,16 +600,16 @@ svg:not(:root) {
 										
 									
 									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
-												 style="padding-right: 10px; color:darkred"> {{cell.value | formatPercentage:2}} </span>
+												 style="padding-right: 10px; color:darkred"> {{formatPercentageString(cell.value, 2)}} </span>
 									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1 )&& row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
-													 style="padding-right: 10px;"> {{cell.value | formatPercentage:2}}   </span>
+													 style="padding-right: 10px;"> {{ formatPercentageString(cell.value, 2)}}   </span>
 
 		 
 
 									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
-																style="padding-right: 10px; color:darkred"> {{cell.value | formatPercentage:2}} </span>
+																style="padding-right: 10px; color:darkred"> {{formatPercentageString(cell.value, 2)}} </span>
 									<span ng-if="((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 ||  (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
-																	style="padding-right: 10px;"> {{cell.value | formatPercentage:2}}   </span>
+																	style="padding-right: 10px;"> {{formatPercentageString(cell.value, 2)}}   </span>
 		
 									
 										 
