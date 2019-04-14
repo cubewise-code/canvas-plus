@@ -380,9 +380,9 @@ svg:not(:root) {
 
 							</div>
 							<div  
-									ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); api.update(); dispatchResize();" 
+									ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); " 
 									ng-show="col.visible "   
-									class="text-center center esponsive-text" 
+									class="text-center center responsive-text" 
 									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px', 'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
 									ng-repeat="col in headerrrow.columns track by $index" 
 									style="    white-space: initial;     padding: 8px; line-height: 1.42857143; vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600;  border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
@@ -420,7 +420,7 @@ svg:not(:root) {
 									</td>
 								
 									</tr>
-								<tr 	ng-show="decideRowToHideFreezePane(!tableVisible,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								<tr ng-show="decideRowToHideFreezePane(!tableVisible,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
 								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString(), 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 															style=" border-right:0px solid #ccc; vertical-align:text-top; "                                                              
@@ -463,7 +463,7 @@ svg:not(:root) {
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
 										
 									</td>
-										<td class="{{tableDimensionColumnClass}} overflowhidden"  ng-repeat="columnrem in hideColumn track by $index" ng-if="hideColumn[$index] && $index <= (table.data()[0]['cells'].length)/2 "></td>
+										<td class="overflowhidden"  ng-repeat="columnrem in hideColumn track by $index" ng-if="hideColumn[$index] && $index <= (table.data()[0]['cells'].length)/2 "></td>
 										<td id="chartRow{{tableId}}" ng-if="chartVisible"  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
 											<nvd3   options="options" data="data" events="events"  api="api" on-ready="callback" ></nvd3>
@@ -490,7 +490,7 @@ svg:not(:root) {
 												type="text" ng-model="selections.searchRows"   
 												placeholder="{{col.dimension}}..."> 
 									</td>
-											<td ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset); api.update();  "   
+											<td ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);   "   
 											id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 											style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer;" 
 											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
@@ -574,9 +574,9 @@ svg:not(:root) {
 										ng-attr-tabindex="{{row.index}}" 
 										ng-model="cell.value " 
 										ng-paste="handlePaste($event)"
-										ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:2) : (cell.value | formatPercentage:2)" 
+										ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? ((cell.value) | formatPercentage:2) : (cell.value | formatPercentage:2)" 
 										ng-focus="getFocus($event);  " 
-										ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+										ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
 
 								 
 							

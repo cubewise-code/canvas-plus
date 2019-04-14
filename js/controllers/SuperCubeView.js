@@ -30,7 +30,7 @@
                 if(scope.hideCol != null && scope.hideCol != 'undefined'){
                   if( (scope.hideCol+'').split('-').length > 0){
                     scope.hideColumn = [];
-                    console.log((scope.hideCol+'').split('-')[0], "#####");
+                  //console.log((scope.hideCol+'').split('-')[0], "#####");
                     if((scope.hideCol+'').split('-')[1] === 'true'){
                       scope.hideColumn[(scope.hideCol+'').split('-')[0]] = true;
                     }else{
@@ -48,7 +48,7 @@
                
                 scope.tm1Instance = $attributes.tm1Instance;
                 if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
-                  console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                   scope.cubeName = scope.cubeNameUrlValue ; 
                   
                   
@@ -56,7 +56,7 @@
                   scope.cubeName = $attributes.cubeName;
                 }
                 if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue!= 'undefined'){
-                  console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
                   scope.cubeView = scope.cubeViewUrlValue ; 
                   
                   
@@ -82,15 +82,16 @@
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
                 
                 if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' ){
-                    console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                  //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                     scope.cubeName = scope.cubeNameUrlValue ; 
                     
                     
                   } else{
                     scope.cubeName = $attributes.cubeName;
                   }
+
                   if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue != 'undefined'){
-                    console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                  //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
                     scope.cubeView = scope.cubeViewUrlValue ; 
                     
                     
@@ -98,7 +99,8 @@
                     scope.cubeView = $attributes.cubeView;
                   }
                   
-                 
+                 $rootScope.cubeName = scope.cubeName;
+                 $rootScope.cubeView = scope.cubeView;
                 
                   
                 
@@ -213,10 +215,11 @@
                   1
                 ]
               },
+              "yAxis2": {},
               "lines": {
                 "dispatch": { 
                  
-                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}  console.log(e,'click') },
+                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}  console.log(e,'click') },
                     elementMouseover: function(e){  console.log(e,'mouseover') },
                     elementMouseout: function(e){   console.log(e,'mouseout') },
                     renderEnd: function(e){    console.log(e,'renderEnd') }
@@ -294,6 +297,70 @@
                 "duration": 250,
                 "useVoronoi": true,
                 "interpolate": "linear"
+              },
+              "x2Axis": {
+                "dispatch": {},
+                "axisLabelDistance": 0,
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "axisLabel": null,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 0,
+                "orient": "bottom",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 5,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
+              },
+              "y2Axis": {
+                "dispatch": {},
+                "axisLabelDistance": 0,
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "axisLabel": null,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 250,
+                "orient": "left",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 3,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
               },
               "legend": {
                 dispatch: {
@@ -676,7 +743,7 @@
                 scope.refreshNew = function(newdataset){ 
                    
  
-                            $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName, scope.cubeView).then(function(result){
+                            $tm1Ui.cubeExecuteView(scope.tm1Instance,$rootScope.cubeName, $rootScope.cubeView).then(function(result){
                                 if(!result.failed){
                                      
                                     scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -1031,12 +1098,12 @@
                                                       
                                                         
                                                   }
-                                                  console.log((scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%'),         scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]         );
+                                                  //console.log((scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%'),         scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]         );
 
 
-                                                  if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]   ){
+                                                  if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]  ){
 
-                                                    if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%') > -1){
+                                                    if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']] ).indexOf('%') > -1 ){
                                                       cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
                                                     }else{
                                                       cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
@@ -1333,7 +1400,7 @@
                  if(scope.selections.searchRows != null && scope.selections.searchRows !='undefined' ){
                     
                     if( ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
-                      console.log("show row with same name as", scope.selections.searchRows,  searchexistsfreeze, ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()));
+                      //console.log("show row with same name as", scope.selections.searchRows,  searchexistsfreeze, ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()));
                       return true;
                     }else{
                       return false
@@ -1504,7 +1571,7 @@
                    // Stop data actually being pasted into div
                    $event.stopPropagation();
                    $event.preventDefault();
-                   console.log(scope.focusObj)
+                 //console.log(scope.focusObj)
                    var startRow = (scope.focusObj+'').split('-')[2];
                    var columnRow = (scope.focusObj+'').split('-')[3];
                    // Get pasted data via clipboard API
@@ -1583,7 +1650,7 @@
             // Stop data actually being pasted into div
             $event.stopPropagation();
             $event.preventDefault();
-            console.log(scope.focusObj)
+          //console.log(scope.focusObj)
             var startRow = (scope.focusObj+'').split('-')[2];
             var columnRow = (scope.focusObj+'').split('-')[3];
             // Get pasted data via clipboard API
@@ -1680,7 +1747,7 @@
                    scope.sendCellSetPutArray.push(request);
           }
           if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
-            console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+          //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
             scope.cubeName = scope.cubeNameUrlValue ; 
             
             
@@ -1688,7 +1755,7 @@
             scope.cubeName = $attributes.cubeName;
           }
           if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
-            console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+          //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
             scope.cubeView = (scope.cubeViewUrlValue) ; 
             
             
@@ -1819,7 +1886,7 @@
                   
                   }, function (newValue, oldValue) { 
                       if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                        console.log(newValue, "attribute changes inside directive");
+                      //console.log(newValue, "attribute changes inside directive");
                         scope.attributeOptions = newValue;
                         scope.refresh(scope.cubeName, scope.cubeView)
                       }
@@ -1843,7 +1910,7 @@
                       
                       }, function (newValue, oldValue) { 
                           if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                             console.log(newValue, "cube View has changed inside watch");
+                           //console.log(newValue, "cube View has changed inside watch");
                               scope.cubeView = newValue;
                               scope.selections.searchRows = '';
                               if($rootScope.isPrinting){
@@ -1862,7 +1929,7 @@
                         
                         }, function (newValue, oldValue) { 
                             if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                               console.log(newValue, "cube Name has changed inside watch");
+                             //console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
                                scope.selections.searchRows = '';
                                if($rootScope.isPrinting){
