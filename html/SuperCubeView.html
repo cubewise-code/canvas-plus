@@ -215,9 +215,41 @@ svg:not(:root) {
 	border: 0px solid steelblue;
 	border-top:2px solid steelblue;
 }
+@page {
+
+  margin: 0;
+  padding-top:100px;
+
+}
+@media print {
+	table { page-break-inside:auto } 
+	tr { page-break-inside:avoid; page-break-after:auto; page-break-before:auto } 
+	thead { display:table-header-group } 
+	tfoot { display:table-footer-group }
+  footer {
+    position: fixed;
+    bottom: 0;
+		right:0px;
+		text-align:right;
+  }
  
+  header {
+		
+		text-align:left;
+		left:0px;
+    position: fixed;
+    top: 0;
+  }
+}
 	</style>
 
+
+<header>
+		Custom Header
+	 
+	</header>
+	 
+ 
   
   	<div class="row"   >
 				 
@@ -269,7 +301,7 @@ svg:not(:root) {
 										</button>
 									 
 										<button ng-show="chartName != 'Stacked Area'" style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; " 
-										ng-click="activeOption = 3; activeName = 'stackedAreaChart';  chartName = 'Stacked Area' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+										ng-click="activeOption = 3; activeName = 'stackedAreaChart';  chartName = 'Stacked Area' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
 												 Stacked Area 
 												<span class="pull-right">
 														<i ng-if="activeOption == 3 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
@@ -298,7 +330,7 @@ svg:not(:root) {
 									Legends	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
 							</span>
 						 
-						<span ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
+						<span ng-if="options['chart']['showLegend'] && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
 						style="margin : 5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 							Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
 						</span>
@@ -330,9 +362,9 @@ svg:not(:root) {
 				</style>
 				</span>
 				<div class="fixedFirstColHeader  "  id="fixedFirstColHeader" style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
-				ng-style="{'top': ( (getContainerTop('stickyContainer'+tableId) + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px', 'height':(getContainerHeight('headCol'+tableId))+'px', 'left':getTableLeft()} " >
+				ng-style="{'top': ( (getContainerTop('stickyContainer'+tableId) + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'height':(getContainerHeight('headCol'+tableId))+'px', 'left':getTableLeft()} " >
 				
-					<div ng-style=" {'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px' } " 
+					<div ng-style=" {'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px' } " 
 						class="text-left " 
 						style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
 						<table class="table  "  >
@@ -352,7 +384,12 @@ svg:not(:root) {
 											ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="display:inline-block;width:100%;background-color: rgb(240, 239, 239);display:inline-block;border: none;" 
 											type="text" ng-model="selections.searchRows"   
-											placeholder="{{col.dimension}}..."> 
+											placeholder="{{col.dimension}}...">
+											
+											<span ng-if="$index === 0 && selections.searchRows" ng-style="{'left':(getContainerWidth('searchColumn'+tableId)-35)+'px'}" 
+											style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc;" >
+												<i ng-click="selections.searchRows = ''" class="fa fa-times"></i>
+											</span> 
 									</th>
 								
 								</tr>
@@ -370,7 +407,7 @@ svg:not(:root) {
 							class="sticky-header"   style="display:inline-block; float:left; margin:0 auto;"
 							ng-style="{'width': 'auto' } " 
 						>
-						<span   ng-style="{'width': (getContainerWidth('headCol'+tableId))+'px',  'left':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0)*(table.data()[0].elements.length))+'px' }"
+						<span   ng-style="{'width': (getContainerWidth('headCol'+tableId))+'px',  'left':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px' }"
 								style="padding:0px; margin:0 auto; position:relative; display:inline-block;  white-space: nowrap; top:0px; float:left; background-color:#f0efef" 
 								ng-repeat="headerrrow in dataset.headers track by $index">
 								<div    ng-if="  col.visible "  ng-repeat="col in headerrrow.rows track by $index" 
@@ -380,21 +417,28 @@ svg:not(:root) {
 
 							</div>
 							<div  
-									ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; refreshNew(dataset); " 
+								 
 									ng-show="col.visible "   
-									class="text-center center responsive-text" 
+									class="text-center center " 
 									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index)-4)+'px', 'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
 									ng-repeat="col in headerrrow.columns track by $index" 
 									style="    white-space: initial;     padding: 8px; line-height: 1.42857143; vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600;  border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; padding:4px;">
-								  {{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
-								 
+								  <span>{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
+								</span>	<span ng-show="!hideColumn[$index] && chartVisible" class="pull-right">
+											<small> <i 	ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset); "   
+											class="fa fa-minus"></i></small>
+										</span>
+										<span ng-show="hideColumn[$index] && chartVisible" class="pull-right">
+												<small> 	<i ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " 
+												class="fa fa-times"></i></small>
+										</span>
 							</div>
 						</span>
 					
 					</div>
 				</div>
 
-				<div  id="sideContent{{tableId}}" 
+				<div  id="sideContent{{tableId}}" ng-hide="!tableVisible"
 					class="fixed-container-side" 
 					style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
 					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('stickyContainer'+tableId), 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
@@ -417,6 +461,10 @@ svg:not(:root) {
 												style="background-color: transparent;display:inline-block;border: none;" 
 												type="text" ng-model="selections.searchRows"   
 												placeholder="{{col.dimension}}..."> 
+												<span ng-if="$index === 0 && selections.searchRows" ng-style="{'left':(getContainerWidth('searchColumn'+tableId)-35)+'px'}" 
+												style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc;" >
+													<i ng-click="selections.searchRows = ''" class="fa fa-times"></i>
+												</span> 
 									</td>
 								
 									</tr>
@@ -463,7 +511,7 @@ svg:not(:root) {
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
 										
 									</td>
-										<td class="overflowhidden"  ng-repeat="columnrem in hideColumn track by $index" ng-if="hideColumn[$index] && $index <= (table.data()[0]['cells'].length)/2 "></td>
+										<td class="overflowhidden"  ng-repeat="columnrem in hideColumn track by $index" ng-if="hideColumn[$index]  && $index <= (table.data()[0]['cells'].length) "></td>
 										<td id="chartRow{{tableId}}" ng-if="chartVisible"  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
 											<nvd3   options="options" data="data" events="events"  api="api" on-ready="callback" ></nvd3>
@@ -471,7 +519,7 @@ svg:not(:root) {
 										</td>
 										 
 									</tr>
-									<tr style="page-break-before: always;" style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
+									<tr   style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}" ng-repeat="headerrow in dataset.headers track by $index">
 											
 											<td    
 										
@@ -489,13 +537,24 @@ svg:not(:root) {
 												style="background-color: transparent;display:inline-block;border: none;" 
 												type="text" ng-model="selections.searchRows"   
 												placeholder="{{col.dimension}}..."> 
+												 
 									</td>
-											<td ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);   "   
+											<td   
 											id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 											style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer;" 
 											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
 											ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-											<span>  {{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}    </span>
+											<span>  
+												{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   
+											</span>
+											<span ng-show="!hideColumn[$index] && chartVisible" class="pull-right">
+												<small> <i ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);   "   
+												class="fa fa-minus"></i></small>
+											</span>
+											<span ng-show="hideColumn[$index] && chartVisible" class="pull-right">
+													<small> 	<i ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " 
+													class="fa fa-times"></i></small>
+											</span>
 										</td>
 										</tr>
 									
@@ -652,7 +711,9 @@ svg:not(:root) {
 				</div>
 			</div> 
 		</div>
- 
+		<footer>
+				Footer Content
+			</footer>
 
 	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	 

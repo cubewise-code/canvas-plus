@@ -31,11 +31,15 @@
                   if( (scope.hideCol+'').split('-').length > 0){
                     scope.hideColumn = [];
                   //console.log((scope.hideCol+'').split('-')[0], "#####");
-                    if((scope.hideCol+'').split('-')[1] === 'true'){
-                      scope.hideColumn[(scope.hideCol+'').split('-')[0]] = true;
-                    }else{
-                      scope.hideColumn[(scope.hideCol+'').split('-')[0]] = false;
+                    for(var urlcount = 0; urlcount < (scope.hideCol+'').split('-')[0];urlcount++){
+                      
+                      scope.hideColumn[urlcount] = true;
                     }
+                    //  if((scope.hideCol+'').split('-')[1] === 'true'){
+                    //   scope.hideColumn[(scope.hideCol+'').split('-')[0]] = true;
+                    // }else{
+                    //   scope.hideColumn[(scope.hideCol+'').split('-')[0]] = false;
+                    // }
                   
                   }
                   
@@ -219,10 +223,10 @@
               "lines": {
                 "dispatch": { 
                  
-                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}  console.log(e,'click') },
-                    elementMouseover: function(e){  console.log(e,'mouseover') },
-                    elementMouseout: function(e){   console.log(e,'mouseout') },
-                    renderEnd: function(e){    console.log(e,'renderEnd') }
+                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
+                    elementMouseover: function(e){   },
+                    elementMouseout: function(e){   },
+                    renderEnd: function(e){    }
                  
                 },
                 "width": 960,
@@ -260,9 +264,9 @@
               },
               "lines2": {
                 "dispatch": {  
-                  elementClick: function(e){ console.log(e,'click line 2') },
+                  elementClick: function(e){   },
                   
-                  renderEnd: function(e){  console.log(e,'renderEnd line 2') }
+                  renderEnd: function(e){   }
                
               },
                 "width": 960,
@@ -652,7 +656,7 @@
             }
         
                 scope.seeDataNew = function(d, n){
-                  console.log(d, n)
+          //console.log(d, n)
                 }
 
                 scope.getTablePosition = function(){
@@ -842,7 +846,7 @@
                                                 for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                    
                                                   if( scope.hideColumn[gss] ){  
-                                                    console.log("HIDE COLUMN",gss);
+                                                    //console.log("HIDE COLUMN",gss);
                                                     
                                                   }else{
                                                     if(scope.table.data()[row].elements.length){
@@ -851,7 +855,7 @@
                                                   cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
                                                       
                                                
-                                                    console.log("dont hide",gss);
+                                                   // console.log("dont hide",gss);
                                                   }
                                                    
                                                     
@@ -868,7 +872,7 @@
                                                
                                              
                                             
-                                          //  console.log(jsonRowData[row]) 
+                                          ////console.log(jsonRowData[row]) 
                                         }
                                       
                                         if( scope.chart && scope.activeName === 'multiBarChart'){
@@ -994,7 +998,7 @@
                   scope.charRowCount = 0;
                                $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,cubeview).then(function(result){
                                    if(!result.failed){
-                                    console.log(result, "scope.tablescope.table")
+                                  //console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                                       
                                        scope.options[scope.tableId] = {preload: false, watch: false};
@@ -1173,7 +1177,7 @@
                 
                 
                 scope.seeNewData = function(data){
-                    console.log(data)
+                  //console.log(data)
                 }
                 scope.getColType = function(data){
                     return data;
@@ -1199,7 +1203,7 @@
             scope.setUpFreezePane = function(){
               //console.log("setting up freeze pane", scope.tableId, document.querySelector('#stickyContainer'))
               if(scope.tableUrlValue  ){
-                console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
+              //console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
                 scope.tableVisible= true;  
                 
                 $rootScope.parametersVisible = false;
@@ -1209,7 +1213,7 @@
                
               }
               if(scope.chartUrlValue  ){
-                console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
+              //console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
                 scope.chartVisible= true;  
                 
                 $rootScope.parametersVisible = false;
@@ -1333,12 +1337,10 @@
                           $chartContent = $(ele).find('#chartRow'+scope.tableId);
                           $tableContent = $(ele).find('#af1'+scope.tableId); 
                            if( $tableContent){
-                            console.log($tableContent.css('width'));
-                            if($rootScope.isPrinting){
-                              scope.options.chart.width = parseInt(($tableContent.css('width')+'').split('px'));
-                            }else{
+                          //console.log($tableContent.css('width'));
+                             
                               $($chartContent).css('width',  $tableContent.css('width') );
-                            }
+                             
                              
                             
                          
