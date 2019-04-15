@@ -856,7 +856,7 @@
                                        scope.data = jsonRowData;
                                        console.log(scope.data)
                                        if( scope.api){
-                                        scope.api.refreshWithTimeout(1000);
+                                        scope.api.refresh();
                                        }
                                        jsonRowData = [];
                                        scope.getLastFocus(); 
@@ -1228,7 +1228,7 @@
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
                              if(scope.chartVisible  ){
-                              scope.offsetTop = window.innerHeight-290;
+                              scope.offsetTop = (window.innerHeight/2)+(scope.tableTop);
       
                             }else{
                               scope.offsetTop = 1;

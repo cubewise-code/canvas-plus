@@ -225,6 +225,7 @@ svg:not(:root) {
 	 
 	 
 }
+ 
 	</style>
  
 
@@ -360,6 +361,7 @@ svg:not(:root) {
 					-moz-box-shadow: 0px 0px 4px #222;  
 					background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
 				}
+			 
 				</style>
 				</span>
 				<div class="fixedFirstColHeader  "  id="fixedFirstColHeader" style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
@@ -507,7 +509,7 @@ svg:not(:root) {
 
 					
 					
-						<tbody ng-click="showChartOptions = false;" ng-mousemove="columnDrag($event)" ng-mouseup="finishDrag($event)"  id="bodyContent{{tableId}}"  > 
+						<tbody ng-click="showChartOptions = false;" id="bodyContent{{tableId}}"  > 
 								<tr ng-show="chartVisible"  >
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
 										
@@ -591,7 +593,7 @@ svg:not(:root) {
 																			
 								</td>
 								<td    id="headerColHeight{{tableId}}{{$index}}"  
-									ng-style="{'max-width':dataWidth+'px ', 'width':dataWidth+'px ', 'min-width':dataWidth+'px ' ,  'border-right':'1px solid #ccc'}" 
+									ng-style="{  'width':dataWidth+'px ', 'min-width':dataWidth+'px ' ,  'border-right':'1px solid #ccc'}" 
 									ng-right-click="openRefModel(cell.reference().toString()); " 
 									ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 									ng-repeat="cell in row.cells track by $index" class="text-right" >
