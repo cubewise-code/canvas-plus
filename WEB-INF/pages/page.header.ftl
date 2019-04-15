@@ -12,7 +12,7 @@
    
  
     <div ng-init=" $root.printOpened = false;" 
-        style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
+        style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; padding-right:50px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
 
         <span ng-init=" $rootScope.getWeather($root.user.Name); "></span>
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
@@ -39,13 +39,17 @@
             </li>
             <li 
                 style="color:#fff !important; z-index:99999; background-color:transparent !important;">
-                <div style="display:block; z-index:99999; cursor:pointer;" ng-click="showPrint()"   >
-                  <i class="fa fa-print fa-fw"></i>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
-                </div>
-                <div ng-style="{'top':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary, 'right': !$root.printOpened ? '-300px':'0px'}" 
+                         
+            </li>
+            
+
+             
+    </ul>
+     
+    <div ng-style="{'top':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary, 'right': !$root.printOpened ? '-300px':'0px'}" 
                       
                      style="width:300px; padding:10px; position:fixed;    width:300px; float:right;  color:#333;  -webkit-transition:right 1s; transition-property:right; ">
-                  <div class="paddingtop10"   >                    
+                  <div class="paddingtop10"  style="padding-bottom:10px; border-bottom:1px solid #fff;" >                    
                     <span>
                       <select ng-model="print.pageOrientation" class="form-control printpageformat">
                         <option>Landscape</option>
@@ -68,12 +72,12 @@
                     <#if settings.getPrinterVersion() == "1">
                     <a style="color:#fff !important;"  href="print.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
                     <#else>
-                    <a style="color:#fff !important;"  href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}&output-type={{print.outputType}}" target="_blank">
+                    <a style="color:#fff !important; margin-top:5px;  margin-bottom:5px;"  href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}&output-type={{print.outputType}}" target="_blank">
                     </#if>
-                        <i style="color:#fff !important;"  class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
+                        <i style="color:#fff !important; margin-top:5px;  margin-bottom:5px;"  class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
                     </a>
                   </div>
-                  <div style="border-color:#fff !important; role="separator" class="divider"></div>
+                  <div style="border-color:#fff !important; margin-bottom:10px;" role="separator" class="divider"></div>
                   <div style="color:#fff !important;">
                       <a style="color:#fff !important;"  href="" ngclipboard data-clipboard-text="{{pageUrl()}}" ngclipboard-success="copySuccess(e);">
                         <i class="fa fa-clipboard fa-fw marginright15"  ></i> <span translate="COPYTOCLIPBOARD"></span>
@@ -82,14 +86,7 @@
                         </span>
                       </a>
                   </div>
-                </div>                  
-            </li>
-            
-
-             
-    </ul>
-     
-   
+                </div> 
 </div>
  
 <div   ng-show="$root.isPrinting ? false:true"
@@ -127,7 +124,7 @@
     <div   style="-webkit-transition:padding-top 1s; transition-property:padding-top; transition-duration: 1s; width:100%; position:fixed; left:0px; top:0px; float:left; z-index:999999; padding-top:0px;  "  >
           
          
-        <div style="position:fixed; display:block; top:0px; left:0px; width:100%;">
+        <div style="position:fixed; display:block; top:0px; left:0px; width:80%;">
         <a href="#">
             <img src="images/logo.svg" 
             title="Your Logo Here" 
@@ -278,7 +275,11 @@
             style="  -webkit-transition:top 1s; transition-property:top; transition-duration: 1s;    position:fixed; top:50px; padding-top:1em; cursor:pointer;right:0px;  z-index:999; width:45px; height:50px;">
         <i   class="fa fa-calendar" area-hidden="true"> </i> 
         </div> 
-   
+          <div   class=" pull-right text-center " 
+            style="  -webkit-transition:top 1s; transition-property:top; transition-duration: 1s;    position:fixed; top:0px; padding-top:1em; cursor:pointer;right:0px; background-color:steelblue;  z-index:999; width:45px; height:50px;" ng-click="showPrint()"   >
+                  <i  style=" color:#fff !important;" class="fa fa-print fa-fw"></i>  
+                </div>
+                
 
     </div>
      

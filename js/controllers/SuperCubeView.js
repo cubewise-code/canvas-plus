@@ -19,7 +19,7 @@
                     tableId:"@",
                     rowsToLoad:'@',
                     chartVisible:'@',
-                    tableVisible:'@',
+                    tableHide:'@',
                     customPage:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
@@ -80,7 +80,7 @@
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
                 scope.customPage = $attributes.customPage;
-                scope.tableUrlValue = $location.search()['tableView'];
+                scope.tableUrlValue = $location.search()['tableHide'];
                 scope.chartUrlValue = $location.search()['chartView'];
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
@@ -102,7 +102,33 @@
                   } else{
                     scope.cubeView = $attributes.cubeView;
                   }
-                  
+
+                  if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
+                    //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                    if(scope.chartUrlValue === 'true'){
+                      scope.chartVisible = true; 
+                    }else{
+                      scope.chartVisible = false ; 
+                    }
+                      
+                      
+                      
+                    } else{
+                      scope.chartVisible = false ; 
+                    }
+                    if(scope.tableUrlValue === 'true'){
+                        
+                    
+                        console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
+                        scope.tableHide = true ; 
+                        
+                       
+                        
+                      } else{
+                        scope.tableHide = false ; 
+                      }
+  
+                     
                  $rootScope.cubeName = scope.cubeName;
                  $rootScope.cubeView = scope.cubeView;
                 
@@ -605,16 +631,18 @@
         };
               
           scope.gotoTop = function(){
-            if(scope.tableVisible){
-              $location.search('tableView', 'true') 
+            scope.tableHide = !scope.tableHide;
+            if(scope.tableHide != null && scope.tableHide != 'undefned' && !scope.tableHide){
+              $location.search('tableHide', 'true') 
             }else{
-              $location.search('tableView', 'false') 
+              $location.search('tableHide', 'false') 
             } 
-            if(scope.chartVisible){
+            if(scope.chartVisible != null && scope.tableHide != 'undefined' && !scope.tableHide){
               $location.search('chartView', 'true') 
             }else{
               $location.search('chartView', 'false') 
             }
+             
           }
          
           scope.callback = function(scope, element){
@@ -1202,19 +1230,23 @@
            scope.scrollAmountTop = 0;
             scope.setUpFreezePane = function(){
               //console.log("setting up freeze pane", scope.tableId, document.querySelector('#stickyContainer'))
-              if(scope.tableUrlValue  ){
+              if(scope.tableUrlValue != null &&  scope.tableUrlValue != 'undefined'  ){
               //console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
-                scope.tableVisible= true;  
+                //scope.tableHide= scope.tableUrlValue;  
                 
                 $rootScope.parametersVisible = false;
               }else{
-                scope.tableVisible= $attributes.tableVisible;
+                //scope.tableHide= $attributes.tableHide;
                 
                
               }
-              if(scope.chartUrlValue  ){
+              if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
               //console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
-                scope.chartVisible= true;  
+              if(scope.chartUrlValue === 'true'){
+                scope.chartVisible = true;
+              }else{
+                scope.chartVisible = false;  
+              }
                 
                 $rootScope.parametersVisible = false;
               }else{
@@ -1245,7 +1277,7 @@
 
                         scope.scrolling = true;
                         $($stickyHeader).css('display','none'); 
-                        if(scope.tableVisible){
+                        if(scope.tableHide){
                           $($sideContent).css('display', 'block');
                         }
                         $($sideContent).css('display', 'block');
@@ -1295,7 +1327,7 @@
                                      
                                                                     
                                 }
-                                if(scope.tableVisible){
+                                if(scope.tableHide){
                                   $($sideContent).css('display', 'block');
                                   $($sideContent).css('height', (((window.innerHeight -  (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
                                 }
@@ -1336,7 +1368,7 @@
                           var ele = $('#stickyContainer'+scope.tableId);
                           $chartContent = $(ele).find('#chartRow'+scope.tableId);
                           $tableContent = $(ele).find('#af1'+scope.tableId); 
-                           if( $tableContent){
+                           if( $tableContent && $chartContent){
                           //console.log($tableContent.css('width'));
                              
                               $($chartContent).css('width',  $tableContent.css('width') );
@@ -1370,7 +1402,7 @@
             scope.decideRowToHideRow = function(tableinview, searchfield, searchexists){
 
                // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
-                if(tableinview){
+                if(tableinview === true){
                    
                     return true;
                 
@@ -1392,7 +1424,7 @@
             scope.decideRowToHideFreezePane = function(tableinviewfreeze, searchfieldfreeze, searchexistsfreeze){
 
               // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
-               if(tableinviewfreeze){
+               if(tableinviewfreeze === false){
                   
                    return true;
                
@@ -1764,8 +1796,58 @@
           } else{
             scope.cubeView = $attributes.cubeView;
           }
-          scope.refresh(scope.cubeName,scope.cubeView);
-          scope.setUpFreezePane();
+          scope.dispatchResize = function(){
+            $timeout(
+                function(){
+                  if(scope.tableHide){
+                    scope.options.chart.height = window.innerHeight/2;
+                  }
+                  window.dispatchEvent(new Event('resize'));
+                    
+                },100
+            )
+             
+                    
+               
+            
+          }
+          $(document).ready(function(){
+            // Wrap each tr and td's content within a div
+            // (todo: add logic so we only do this when printing)
+            scope.refresh(scope.cubeName,scope.cubeView);
+            scope.setUpFreezePane();
+            scope.dispatchResize();
+            
+
+        })
+          scope.updateUrlChart = function(){
+            $timeout(
+              function(){
+                if(scope.chartVisible  ){
+                   $location.search('chartView', 'true');
+                }else{
+                  $location.search('chartView', 'false');
+                }
+              },100
+            )
+            
+            
+
+          }
+          scope.updateUrlTable = function(decider){
+           
+                 console.log(decider);
+                 if(!decider){
+                   $location.search('tableHide', decider+'');
+                 }else{
+                  $location.search('tableHide', 'true');
+                 }
+                   
+               
+            
+
+          }
+          
           
           scope.drillNames = [];
            
@@ -1857,21 +1939,7 @@
                    
                     return count;
                 }
-                scope.dispatchResize = function(){
-                    $timeout(
-                        function(){
-                          if(scope.tableVisible){
-                            scope.options.chart.height = window.innerHeight/2;
-                          }
-                          window.dispatchEvent(new Event('resize'));
-                            
-                        },100
-                    )
-                     
-                            
-                       
-                    
-                }
+                 
 
                 $(window).resize(function() { 
                   if( scope.api){

@@ -1,5 +1,5 @@
 
-  <style>
+  <style  type="text/css">
 	.tm1-ui-element-consol{
 		background-color: #f8f8f8;
 
@@ -216,21 +216,23 @@ svg:not(:root) {
 	border-top:2px solid steelblue;
 }
 @page {
-
+ 
   margin: 0;
-  padding-top:100px;
+   
 
 }
 @media print {
-	table { page-break-inside:auto } 
-	tr { page-break-inside:avoid; page-break-after:auto; page-break-before:auto } 
-	thead { display:table-header-group } 
-	tfoot { display:table-footer-group }
+	table { page-break-after:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  td    { page-break-inside:avoid; page-break-after:auto }
+  thead { display:table-header-group }
+  tfoot { display:table-footer-group }
   footer {
     position: fixed;
     bottom: 0;
 		right:0px;
 		text-align:right;
+	 
   }
  
   header {
@@ -238,16 +240,19 @@ svg:not(:root) {
 		text-align:left;
 		left:0px;
     position: fixed;
+		width:100%;
+		height:auto;
+		background-color:#ccc;
+		color:#333;
     top: 0;
+		
   }
 }
 	</style>
+ 
 
 
-<header>
-		Custom Header
-	 
-	</header>
+ 
 	 
  
   
@@ -259,11 +264,11 @@ svg:not(:root) {
 					style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
-			 		<span ng-click="$root.parametersVisible = false; tableVisible = !tableVisible;  dispatchResize(); api.update(); gotoTop()"  
+			 		<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
 					 style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-						 Table <i ng-class="{'fa-toggle-off':!tableVisible,'fa-toggle-on':tableVisible}" class="fa "></i>
+						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i>
 					</span>
-					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible; dispatchResize(); api.update(); gotoTop()"   
+					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  dispatchResize(); api.update(); updateUrlChart();"   
 					style="margin:5px; margin-right:1px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 							 Charts  <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
@@ -327,7 +332,7 @@ svg:not(:root) {
 						 
 							<span ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); "  
 							 style="margin : 5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-									Legends	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
+									Options	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
 							</span>
 						 
 						<span ng-if="options['chart']['showLegend'] && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
@@ -438,7 +443,7 @@ svg:not(:root) {
 					</div>
 				</div>
 
-				<div  id="sideContent{{tableId}}" ng-hide="!tableVisible"
+				<div  id="sideContent{{tableId}}" ng-hide="tableHide"
 					class="fixed-container-side" 
 					style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
 					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('stickyContainer'+tableId), 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
@@ -468,7 +473,7 @@ svg:not(:root) {
 									</td>
 								
 									</tr>
-								<tr ng-show="decideRowToHideFreezePane(!tableVisible,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								<tr ng-show="decideRowToHideFreezePane(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
 								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString(), 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 															style=" border-right:0px solid #ccc; vertical-align:text-top; "                                                              
@@ -500,14 +505,14 @@ svg:not(:root) {
 		 
 			
 				 
-				<div ng-show="tableVisible || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
+				<div ng-show="!tableHide" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
 					
 					<table class="table" id="af1{{tableId}}">
 
 					
 					
 						<tbody    id="bodyContent{{tableId}}"  > 
-								<tr ng-if="chartVisible "  >
+								<tr ng-show="chartVisible"  >
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
 										
 									</td>
@@ -559,7 +564,7 @@ svg:not(:root) {
 										</tr>
 									
 							<tr id="rowHeightElement{{$index}}"  
-								ng-hide="decideRowToHideRow(!tableVisible,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								ng-hide="decideRowToHideRow(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index" >
 								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
 										 
@@ -711,7 +716,26 @@ svg:not(:root) {
 				</div>
 			</div> 
 		</div>
-		<footer>
+		<header ng-if="$root.isPrinting"  >
+			 
+							<div style="min-width:100px !important; width:100px;" ng-repeat="row in dataset.headers track by $index" >
+							 
+								<div
+											 
+											style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer;" 
+											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
+											ng-repeat="col in headerrow.columns" ng-if="col.visible"  class="text-center" >
+										 
+												{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   
+											 
+											 
+											 
+										</div>
+							
+									</div>
+					 
+		</header>
+		<footer ng-if="$root.isPrinting" >
 				Footer Content
 			</footer>
 
@@ -837,7 +861,7 @@ svg:not(:root) {
 
 	
 	<div ng-style="{'height':((innerHeight))+'px'}" style="z-index:33; background-color:#fff; display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
-	ng-if="$root.parametersVisible === true" ng-show="customPage  || (!tableVisible && !chartVisible)"   >
+	ng-if="$root.parametersVisible === true" ng-show="customPage  || (!tableHide && !chartVisible)"   >
  <div ng-include="'html/'+customPage+'.html'" ></div>
 </div>
 	
