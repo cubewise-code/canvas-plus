@@ -1,6 +1,6 @@
 (function(){
         var app = angular.module('app');
-        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout', '$window','$anchorScroll','$location', function($log, $rootScope, $tm1Ui, $timeout , $window,  $anchorScroll,  $location) {
+        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout','filterFilter', '$window','$anchorScroll','$location', function($log, $rootScope, $tm1Ui, $timeout , $window, filterFilter, $anchorScroll,  $location) {
             return {
                 templateUrl: 'html/SuperCubeView.html',
                 scope:{
@@ -19,19 +19,56 @@
                     tableId:"@",
                     rowsToLoad:'@',
                     chartVisible:'@',
-                    tableVisible:'@',
+                    tableHide:'@',
                     customPage:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
                     monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
                 };
-                scope.hideColumn = [];
+                scope.hideCol = $location.search()['hideCol'];
+                if(scope.hideCol != null && scope.hideCol != 'undefined'){
+                  if( (scope.hideCol+'').split('-').length > 0){
+                    scope.hideColumn = [];
+                  //console.log((scope.hideCol+'').split('-')[0], "#####");
+                    for(var urlcount = 0; urlcount < (scope.hideCol+'').split('-')[0];urlcount++){
+                      
+                      scope.hideColumn[urlcount] = true;
+                    }
+                    //  if((scope.hideCol+'').split('-')[1] === 'true'){
+                    //   scope.hideColumn[(scope.hideCol+'').split('-')[0]] = true;
+                    // }else{
+                    //   scope.hideColumn[(scope.hideCol+'').split('-')[0]] = false;
+                    // }
+                  
+                  }
+                  
+                }else{
+                  scope.hideColumn = [];
+                }
+                
                 scope.selections = {};
                 scope.firstDayPosition = {};
+               
                 scope.tm1Instance = $attributes.tm1Instance;
-                scope.cubeView = $attributes.cubeView;
-                scope.cubeName = $attributes.cubeName;
+                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
+                //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                  scope.cubeName = scope.cubeNameUrlValue ; 
+                  
+                  
+                } else{
+                  scope.cubeName = $attributes.cubeName;
+                }
+                if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue!= 'undefined'){
+                //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                  scope.cubeView = scope.cubeViewUrlValue ; 
+                  
+                  
+                } else{
+                  scope.cubeView = $attributes.cubeView;
+                }
+                
+                
                 scope.attributeOptions = $attributes.attributeOptions;
                 scope.tableWidth = $attributes.tableWidth; 
                 scope.innerWidth = window.innerWidth;
@@ -43,11 +80,57 @@
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
                 scope.customPage = $attributes.customPage;
-                scope.tableUrlValue = $location.search()['tableView'];
+                scope.tableUrlValue = $location.search()['tableHide'];
                 scope.chartUrlValue = $location.search()['chartView'];
-                 
-               
-                 
+                scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
+                scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
+                
+                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' ){
+                  //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                    scope.cubeName = scope.cubeNameUrlValue ; 
+                    
+                    
+                  } else{
+                    scope.cubeName = $attributes.cubeName;
+                  }
+
+                  if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue != 'undefined'){
+                  //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                    scope.cubeView = scope.cubeViewUrlValue ; 
+                    
+                    
+                  } else{
+                    scope.cubeView = $attributes.cubeView;
+                  }
+
+                  if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
+                    //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                    if(scope.chartUrlValue === 'true'){
+                      scope.chartVisible = true; 
+                    }else{
+                      scope.chartVisible = false ; 
+                    }
+                      
+                      
+                      
+                    } else{
+                      scope.chartVisible = false ; 
+                    }
+                    if(scope.tableUrlValue === 'true'){
+                        
+                    
+                        console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
+                        scope.tableHide = true ; 
+                        
+                       
+                        
+                      } else{
+                        scope.tableHide = false ; 
+                      }
+  
+                     
+                 $rootScope.cubeName = scope.cubeName;
+                 $rootScope.cubeView = scope.cubeView;
                 
                   
                 
@@ -83,7 +166,7 @@
               "type":  scope.activeName,
               "height": (window.innerHeight/2),
               "margin": {
-                "top": 50,
+                "top": 20,
                 "right": 50,
                 "bottom": 5,
                 "left": 50
@@ -115,7 +198,7 @@
                   "bottom": 0,
                   "left": 0
                 },
-                "duration": 250,
+                "duration": 0,
                 "orient": "bottom",
                 "tickValues": null,
                 "tickSubdivide": 0,
@@ -162,13 +245,14 @@
                   1
                 ]
               },
+              "yAxis2": {},
               "lines": {
                 "dispatch": { 
                  
-                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}}else{scope.chartToolTipElements = e;}  console.log(e,'click') },
-                    elementMouseover: function(e){  console.log(e,'mouseover') },
-                    elementMouseout: function(e){   console.log(e,'mouseout') },
-                    renderEnd: function(e){    console.log(e,'renderEnd') }
+                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
+                    elementMouseover: function(e){   },
+                    elementMouseout: function(e){   },
+                    renderEnd: function(e){    }
                  
                 },
                 "width": 960,
@@ -206,9 +290,9 @@
               },
               "lines2": {
                 "dispatch": {  
-                  elementClick: function(e){ console.log(e,'click line 2') },
+                  elementClick: function(e){   },
                   
-                  renderEnd: function(e){  console.log(e,'renderEnd line 2') }
+                  renderEnd: function(e){   }
                
               },
                 "width": 960,
@@ -244,10 +328,74 @@
                 "useVoronoi": true,
                 "interpolate": "linear"
               },
+              "x2Axis": {
+                "dispatch": {},
+                "axisLabelDistance": 0,
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "axisLabel": null,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 0,
+                "orient": "bottom",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 5,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
+              },
+              "y2Axis": {
+                "dispatch": {},
+                "axisLabelDistance": 0,
+                "staggerLabels": false,
+                "rotateLabels": 0,
+                "rotateYLabel": true,
+                "showMaxMin": true,
+                "axisLabel": null,
+                "height": 60,
+                "ticks": null,
+                "width": 75,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 250,
+                "orient": "left",
+                "tickValues": null,
+                "tickSubdivide": 0,
+                "tickSize": 6,
+                "tickPadding": 3,
+                "domain": [
+                  0,
+                  1
+                ],
+                "range": [
+                  0,
+                  1
+                ]
+              },
               "legend": {
                 dispatch: {
                   legendClick: function(e) { scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
-                  legendDblclick: function(e) {  scope.selections.searchRows = (e.key).split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
+                  legendDblclick: function(e) {  scope.selections.searchRows = (e.key+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
                   legendMouseover: function(e) {  },
                   legendMouseout: function(e) { },
                   stateChange: function(e) { }
@@ -483,16 +631,18 @@
         };
               
           scope.gotoTop = function(){
-            if(scope.tableVisible){
-              $location.search('tableView', 'true') 
+            scope.tableHide = !scope.tableHide;
+            if(scope.tableHide != null && scope.tableHide != 'undefned' && !scope.tableHide){
+              $location.search('tableHide', 'true') 
             }else{
-              $location.search('tableView', 'false') 
+              $location.search('tableHide', 'false') 
             } 
-            if(scope.chartVisible){
+            if(scope.chartVisible != null && scope.tableHide != 'undefined' && !scope.tableHide){
               $location.search('chartView', 'true') 
             }else{
               $location.search('chartView', 'false') 
             }
+             
           }
          
           scope.callback = function(scope, element){
@@ -529,10 +679,12 @@
           }
   
          
- 
+            scope.changeUrl = function(hideCol, index ){
+              $location.search('hideCol', index+'-'+hideCol);
+            }
         
-                scope.seeDataNew = function(d){
-                  console.log(d)
+                scope.seeDataNew = function(d, n){
+          //console.log(d, n)
                 }
 
                 scope.getTablePosition = function(){
@@ -623,7 +775,7 @@
                 scope.refreshNew = function(newdataset){ 
                    
  
-                            $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName, scope.cubeView).then(function(result){
+                            $tm1Ui.cubeExecuteView(scope.tm1Instance,$rootScope.cubeName, $rootScope.cubeView).then(function(result){
                                 if(!result.failed){
                                      
                                     scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -690,7 +842,7 @@
                                                     if(rowNameArray[gggh]){
                                                         rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.name);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.key);
                                                       }
                                                 }
                                                    
@@ -718,11 +870,11 @@
                                                 var cellArrayFromJson = [];
                                                 scope.charRowCount++;
                                                 jsonRowData[row] =  {"key": '',
-                                                "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
+                                                "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
                                                 for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                    
                                                   if( scope.hideColumn[gss] ){  
-                                                    console.log("HIDE COLUMN",gss);
+                                                    //console.log("HIDE COLUMN",gss);
                                                     
                                                   }else{
                                                     if(scope.table.data()[row].elements.length){
@@ -731,7 +883,7 @@
                                                   cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
                                                       
                                                
-                                                    console.log("dont hide",gss);
+                                                   // console.log("dont hide",gss);
                                                   }
                                                    
                                                     
@@ -748,7 +900,7 @@
                                                
                                              
                                             
-                                          //  console.log(jsonRowData[row]) 
+                                          ////console.log(jsonRowData[row]) 
                                         }
                                       
                                         if( scope.chart && scope.activeName === 'multiBarChart'){
@@ -810,11 +962,16 @@
                   // document.getElementById(focusObjOut).removeEventListener('paste', scope.handlePaste);
            
                 }   
-           
+                scope.updateDimensionElementWidth = function(elid){
+                  if(document.getElementById(elid)){
+                    scope.dimensionElementWidth = document.getElementById(elid).getBoundingClientRect().width+'px';
+                  }
+                 
+                }
                 scope.getContainerWidthClass = function(idName){
                     if(document.getElementsByClassName(idName).length > 0){
                         var tempObj = document.getElementsByClassName(idName)[0];
-                        if(tempObj != null || tempObj != undefined ){
+                        if(tempObj != null || tempObj != 'undefined' ){
                            return tempObj.getBoundingClientRect().width;
                         }
                     } 
@@ -840,7 +997,12 @@
                    
                      
                 }
-                scope.currentRowCount = scope.rowsToLoad;
+                if($rootScope.isPrinting){
+                  scope.currentRowCount = 10000;
+                 }else{
+                  scope.currentRowCount = scope.rowsToLoad;
+                 }
+                 
                 scope.tablerowLength = 0;
                 scope.ledgendsToUse = {
                  
@@ -864,13 +1026,13 @@
                   scope.charRowCount = 0;
                                $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,cubeview).then(function(result){
                                    if(!result.failed){
-                                        
+                                  //console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                                       
                                        scope.options[scope.tableId] = {preload: false, watch: false};
                                        if(scope.table){
                                            if(scope.table.options){
-                                            console.log(scope.table, "scope.tablescope.table")
+                                            //console.log(scope.table, "scope.tablescope.table")
                                             scope.options[scope.tableId].index = scope.table.options.index;
                                             scope.options[scope.tableId].pageSize = scope.table.options.pageSize;
                                             scope.tablerowLength = scope.table.data().length;
@@ -896,7 +1058,7 @@
                                         $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
                                         $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
                                         $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
-                                        console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
+                                        //console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
                                         var jsonRowData = [];
                                         var colNameArray = [];
                                         var rowNameArray = [];
@@ -919,7 +1081,7 @@
                                             var myRowObjElement = scope.table.data()[gggh];
                                              
                                             for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
-                                              console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
+                                              //console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
                                                 if(myRowObjElement.elements[jjjk].element.attributes['Description']){
                                                     if(rowNameArray[gggh]){
                                                         rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
@@ -930,7 +1092,7 @@
                                                     if(rowNameArray[gggh]){
                                                         rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
                                                       }else{
-                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.name);
+                                                        rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.key);
                                                       }
                                                 }
                                                    
@@ -947,7 +1109,7 @@
                                           }    
                                             rowNameArray = [];
                                         }
-                                        console.log(colNameArray, "colNameArray", scope.randomColor);
+                                       // console.log(colNameArray, "colNameArray", scope.randomColor);
                                          
                                         for(row in scope.table.data()){
                                          // console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes']['Color'], "Color of element")
@@ -956,11 +1118,11 @@
                                             var cellArrayFromJson = [];
                                             scope.charRowCount++;
                                             jsonRowData[row] =  {"key": '',
-                                            "color": scope.randomColor[((rowNameFinalArray[row]).split(' :- ')[0])], "values":[]};
+                                            "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
                                               for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 
                                                 if( scope.hideColumn[gs] ){  
-                                                  console.log("HIDE COLUMN",gs);
+                                                 // console.log("HIDE COLUMN",gs);
                                                   
                                                 }else{
                                                   if(scope.table.data()[row].elements.length){
@@ -968,9 +1130,23 @@
                                                       
                                                         
                                                   }
-                                                  cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                  //console.log((scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%'),         scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]         );
+
+
+                                                  if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]  ){
+
+                                                    if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                                    }else{
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                    }
+                                                  } 
+
+
+                                                   
+                                                   
                                                   
-                                                  //console.log("dont hide",gs);
+                                                  //console.log("dont hide",gs); $rootScope.attributeOptions[] 
                                                 }
                                              
                                                   
@@ -1005,8 +1181,8 @@
                                       $timeout(
                                         function(){
                                           if( scope.api){
-                                          scope.api.update();
-                                          
+                                            scope.api.update();
+                                             
                                           }
                                         },1000
                                       )
@@ -1029,12 +1205,19 @@
                 
                 
                 scope.seeNewData = function(data){
-                    //console.log(data)
+                  //console.log(data)
                 }
                 scope.getColType = function(data){
                     return data;
                 }
-                
+                scope.formatPercentage = function(total){
+                  return  parseFloat(total*100).toFixed(2); 
+                   
+                }
+                scope.formatPercentageString = function(total, d){
+                  return  parseFloat(total*100).toFixed(d)+'%'; 
+                   
+                }
                 scope.seeData = function(rowindex,table){
                     
                     scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][0]]['element'].toggle();
@@ -1047,19 +1230,23 @@
            scope.scrollAmountTop = 0;
             scope.setUpFreezePane = function(){
               //console.log("setting up freeze pane", scope.tableId, document.querySelector('#stickyContainer'))
-              if(scope.tableUrlValue  ){
-                console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
-                scope.tableVisible= true;  
+              if(scope.tableUrlValue != null &&  scope.tableUrlValue != 'undefined'  ){
+              //console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
+                //scope.tableHide= scope.tableUrlValue;  
                 
                 $rootScope.parametersVisible = false;
               }else{
-                scope.tableVisible= $attributes.tableVisible;
+                //scope.tableHide= $attributes.tableHide;
                 
                
               }
-              if(scope.chartUrlValue  ){
-                console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
-                scope.chartVisible= true;  
+              if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
+              //console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
+              if(scope.chartUrlValue === 'true'){
+                scope.chartVisible = true;
+              }else{
+                scope.chartVisible = false;  
+              }
                 
                 $rootScope.parametersVisible = false;
               }else{
@@ -1067,6 +1254,7 @@
                 
                
               }
+                
                 if( document.querySelector('#stickyContainer'+scope.tableId)){
                     scope.containerishere = true;
                     if(scope.excelReformated === false){
@@ -1085,10 +1273,11 @@
                         $fixedFirstColHeader = $(el).find('.fixedFirstColHeader');
                         $chartContent = $(el).find('#chartRow'+scope.tableId);
                         $sideContent = $(el).find('#sideContent'+scope.tableId); 
+                        $tableContent = $(el).find('#af1'+scope.tableId); 
 
                         scope.scrolling = true;
                         $($stickyHeader).css('display','none'); 
-                        if(scope.tableVisible){
+                        if(scope.tableHide){
                           $($sideContent).css('display', 'block');
                         }
                         $($sideContent).css('display', 'block');
@@ -1138,7 +1327,7 @@
                                      
                                                                     
                                 }
-                                if(scope.tableVisible){
+                                if(scope.tableHide){
                                   $($sideContent).css('display', 'block');
                                   $($sideContent).css('height', (((window.innerHeight -  (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
                                 }
@@ -1174,6 +1363,23 @@
                              }
                              $($sideContent).css('margin-top', -$($body).scrollTop());
                       });
+                      $timeout(
+                        function(){
+                          var ele = $('#stickyContainer'+scope.tableId);
+                          $chartContent = $(ele).find('#chartRow'+scope.tableId);
+                          $tableContent = $(ele).find('#af1'+scope.tableId); 
+                           if( $tableContent && $chartContent){
+                          //console.log($tableContent.css('width'));
+                             
+                              $($chartContent).css('width',  $tableContent.css('width') );
+                             
+                             
+                            
+                         
+                           }
+                            
+                          
+                        },1000)
                 }else{
                     if(scope.containerishere === true){
 
@@ -1189,11 +1395,60 @@
                     function(){
                         //console.log("looking for freezepane");
                         scope.setUpFreezePane();
-                    },1000
+                    },100
                 )
                 
             }
-             
+            scope.decideRowToHideRow = function(tableinview, searchfield, searchexists){
+
+               // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
+                if(tableinview === true){
+                   
+                    return true;
+                
+                   
+                 
+                }else{
+                  if(scope.selections.searchRows != null && scope.selections.searchRows !='undefined' && ((searchexists+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) === -1){
+                   // console.log("hide row")
+                    return true;
+                  }else{
+                    //console.log("show row")
+                    return false;
+                  }
+                 
+                }
+                 
+                 
+            }
+            scope.decideRowToHideFreezePane = function(tableinviewfreeze, searchfieldfreeze, searchexistsfreeze){
+
+              // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
+               if(tableinviewfreeze === false){
+                  
+                   return true;
+               
+                  
+                
+               }else{
+                 if(scope.selections.searchRows != null && scope.selections.searchRows !='undefined' ){
+                    
+                    if( ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
+                      //console.log("show row with same name as", scope.selections.searchRows,  searchexistsfreeze, ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()));
+                      return true;
+                    }else{
+                      return false
+                    }
+                
+                 }else{
+                   //console.log("show row")
+                   return true;
+                 }
+                
+               }
+                
+                
+           }
             scope.formatUploadButton = function(){
                 
                 if(document.getElementsByClassName('tm1-ui-export').length){
@@ -1346,10 +1601,11 @@
                 scope.handlePaste = function($event) {
                    var clipboardData, pastedData;
                    var mainArrayObj = [];
+                   scope.sendCellSetPutArray = [];
                    // Stop data actually being pasted into div
                    $event.stopPropagation();
                    $event.preventDefault();
-                   //console.log(scope.focusObj)
+                 //console.log(scope.focusObj)
                    var startRow = (scope.focusObj+'').split('-')[2];
                    var columnRow = (scope.focusObj+'').split('-')[3];
                    // Get pasted data via clipboard API
@@ -1379,7 +1635,7 @@
 
                              if(document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))){
                                 var tempElement = document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))
-                                //console.log((parseInt(startRow)+parseInt(item)), (parseInt(columnRow)+parseInt(cell)), aray[cell] )
+                                 //console.log((parseInt(startRow)+parseInt(item)), (parseInt(columnRow)+parseInt(cell)), aray[cell] )
                                // console.log(tempElement);
                                 if(tempElement != undefined && tempElement != null){
                                     //console.log(tempElement.getAttribute("cellref") );
@@ -1421,6 +1677,86 @@
            
                     
            }
+           scope.handlePasteText = function($event) {
+            var clipboardData, pastedData;
+            var mainArrayObj = [];
+            scope.sendCellSetPutArray = [];
+            // Stop data actually being pasted into div
+            $event.stopPropagation();
+            $event.preventDefault();
+          //console.log(scope.focusObj)
+            var startRow = (scope.focusObj+'').split('-')[2];
+            var columnRow = (scope.focusObj+'').split('-')[3];
+            // Get pasted data via clipboard API
+            
+            clipboardData = $event.clipboardData || window.clipboardData || $event.originalEvent.clipboardData;
+            if(clipboardData ){
+              newpasteDataArray = [];
+             pastedData = clipboardData.getData('Text');
+             newpasteDataArray = pastedData.split(String.fromCharCode(13));
+
+             // split rows into columns
+         
+             
+             //var newpasteDataArray = (pastedData).split(/\r\n|\r|\n/g)
+             
+             // Do whatever with pasteddata
+             for (i=0; i<newpasteDataArray.length; i++) {
+                 
+                 newpasteDataArray[i] = (newpasteDataArray[i]).split(String.fromCharCode(9));
+                  
+             }
+              
+             for (pp=0; pp<newpasteDataArray.length; pp++) {
+                 
+                var aray = newpasteDataArray[pp]
+                
+                 for (cell=0; cell< aray.length; cell++) {
+
+                      if(document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))){
+                         var tempElement = document.getElementById('input-'+scope.tableId+'-'+(parseInt(startRow)+parseInt(pp))+'-'+(parseInt(columnRow)+parseInt(cell)))
+                          //console.log((parseInt(startRow)+parseInt(item)), (parseInt(columnRow)+parseInt(cell)), aray[cell] )
+                        // console.log(tempElement);
+                         if(tempElement != undefined && tempElement != null){
+                             //console.log(tempElement.getAttribute("cellref") );
+                             var elementArrayToUse = tempElement.getAttribute("cellref")
+                             scope.addRequest(aray,cell,tempElement)
+                         }else{
+                         row = scope.nextAvailable(parseInt(startRow)+parseInt(pp), (parseInt(columnRow)+parseInt(cell)) )
+                         if(row === 'none'){
+         
+                         }else{
+                                 var tempElement = document.getElementById('input-'+scope.tableId+'-'+(row)+'-'+(parseInt(columnRow)+parseInt(cell)))
+                                 if(tempElement != undefined && tempElement != null){
+                                 scope.addRequest(aray,cell,tempElement)
+                                 }
+                         }
+                         
+                         }
+                      }
+                      
+                      
+                      
+                 }
+                  
+             }
+     
+             $tm1Ui.cellsetPut(scope.sendCellSetPutArray).then(function(result){
+                 // console.log(result, "######## saved")
+                  if(result.success){
+                      
+                     
+                     scope.refreshNew(scope.dataset);
+         
+                  }else{
+     
+                  }
+             });
+            }
+            
+    
+             
+    }
            scope.nextAvailable = function(row, col){
                var tempElementTwo = document.getElementById('input-'+scope.tableId+'-'+(row+1)+'-'+col )
                if(tempElementTwo === undefined && tempElementTwo === null){
@@ -1444,8 +1780,74 @@
                    
                    scope.sendCellSetPutArray.push(request);
           }
-          scope.refresh(scope.cubeName,scope.cubeView);
-          scope.setUpFreezePane();
+          if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
+          //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+            scope.cubeName = scope.cubeNameUrlValue ; 
+            
+            
+          } else{
+            scope.cubeName = $attributes.cubeName;
+          }
+          if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
+          //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+            scope.cubeView = (scope.cubeViewUrlValue) ; 
+            
+            
+          } else{
+            scope.cubeView = $attributes.cubeView;
+          }
+          scope.dispatchResize = function(){
+            $timeout(
+                function(){
+                  if(scope.tableHide){
+                    scope.options.chart.height = window.innerHeight/2;
+                  }
+                  window.dispatchEvent(new Event('resize'));
+                    
+                },1000
+            )
+             
+                    
+               
+            
+          }
+          $(document).ready(function(){
+            // Wrap each tr and td's content within a div
+            // (todo: add logic so we only do this when printing)
+            scope.refresh(scope.cubeName,scope.cubeView);
+            scope.setUpFreezePane();
+            scope.dispatchResize();
+            
+
+        })
+          scope.updateUrlChart = function(){
+            $timeout(
+              function(){
+                if(scope.chartVisible  ){
+                   $location.search('chartView', 'true');
+                }else{
+                  $location.search('chartView', 'false');
+                }
+              },100
+            )
+            
+            
+
+          }
+          scope.updateUrlTable = function(decider){
+           
+                 console.log(decider);
+                 if(!decider){
+                   $location.search('tableHide', decider+'');
+                 }else{
+                  $location.search('tableHide', 'true');
+                 }
+                   
+               
+            
+
+          }
+          
           
           scope.drillNames = [];
            
@@ -1537,21 +1939,7 @@
                    
                     return count;
                 }
-                scope.dispatchResize = function(){
-                    $timeout(
-                        function(){
-                          if(scope.tableVisible){
-                            scope.options.chart.height = window.innerHeight/2;
-                          }
-                          window.dispatchEvent(new Event('resize'));
-                            
-                        },100
-                    )
-                     
-                            
-                       
-                    
-                }
+                 
 
                 $(window).resize(function() { 
                   if( scope.api){
@@ -1568,7 +1956,7 @@
                   
                   }, function (newValue, oldValue) { 
                       if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                        console.log(newValue, "attribute changes inside directive");
+                      //console.log(newValue, "attribute changes inside directive");
                         scope.attributeOptions = newValue;
                         scope.refresh(scope.cubeName, scope.cubeView)
                       }
@@ -1592,8 +1980,14 @@
                       
                       }, function (newValue, oldValue) { 
                           if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                             console.log(newValue, "cube View has changed inside watch");
+                           //console.log(newValue, "cube View has changed inside watch");
                               scope.cubeView = newValue;
+                              scope.selections.searchRows = '';
+                              if($rootScope.isPrinting){
+                                scope.currentRowCount = 10000;
+                               }else{
+                                scope.currentRowCount = $attributes.rowsToLoad;
+                               }
                               scope.refresh(scope.cubeName, newValue)
                           }
                          
@@ -1605,8 +1999,15 @@
                         
                         }, function (newValue, oldValue) { 
                             if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                               console.log(newValue, "cube Name has changed inside watch");
+                             //console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
+                               scope.selections.searchRows = '';
+                               if($rootScope.isPrinting){
+                                scope.currentRowCount = 10000;
+                               }else{
+                                scope.currentRowCount = $attributes.rowsToLoad;
+                               }
+                               
                                scope.refresh(newValue, scope.cubeView)
                             }
                            

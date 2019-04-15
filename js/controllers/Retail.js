@@ -34,7 +34,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         "visualiseChartValues":true,
         "debugJson":false,
         "totalColumnElement":"Year",
-        "rowDimension":{"name":"Product", "subset":"All Elements","attributes":"Description"},
+        "rowDimension":{"name":"Product", "subset":"Default","attributes":"Description"},
         "rowElementFormat":false,
         "rowElementFormatAttributes":"}FormatType",
         "colDimension":{"name":"Period",  "subset":"All Months","attributes":"Short Description"},

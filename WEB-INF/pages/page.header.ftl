@@ -1,6 +1,6 @@
 <!-- This gets appended at the top for each page  -->
   
-<div id="page-header"  ng-controller="headerCtrl"   >
+<div ng-show="$root.isPrinting ? false:true" id="page-header"  ng-controller="headerCtrl"   >
  
     <div ng-show='false'>
         <tm1-ui-user  ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
@@ -12,7 +12,7 @@
    
  
     <div ng-init=" $root.printOpened = false;" 
-        style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
+        style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; padding-right:50px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
 
         <span ng-init=" $rootScope.getWeather($root.user.Name); "></span>
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
@@ -39,13 +39,17 @@
             </li>
             <li 
                 style="color:#fff !important; z-index:99999; background-color:transparent !important;">
-                <div style="display:block; z-index:99999; cursor:pointer;" ng-click="showPrint()"   >
-                  <i class="fa fa-print fa-fw"></i>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
-                </div>
-                <div ng-style="{'top':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary, 'right': !$root.printOpened ? '-300px':'0px'}" 
+                         
+            </li>
+            
+
+             
+    </ul>
+     
+    <div ng-style="{'top':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary, 'right': !$root.printOpened ? '-300px':'0px'}" 
                       
                      style="width:300px; padding:10px; position:fixed;    width:300px; float:right;  color:#333;  -webkit-transition:right 1s; transition-property:right; ">
-                  <div class="paddingtop10"   >                    
+                  <div class="paddingtop10"  style="padding-bottom:10px; border-bottom:1px solid #fff;" >                    
                     <span>
                       <select ng-model="print.pageOrientation" class="form-control printpageformat">
                         <option>Landscape</option>
@@ -68,12 +72,12 @@
                     <#if settings.getPrinterVersion() == "1">
                     <a style="color:#fff !important;"  href="print.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}" target="_blank">
                     <#else>
-                    <a style="color:#fff !important;"  href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}&output-type={{print.outputType}}" target="_blank">
+                    <a style="color:#fff !important; margin-top:5px;  margin-bottom:5px;"  href="print-v2.pdf?url={{pageUrlEncoded()}}&orientation={{print.pageOrientation}}&page-size={{print.pageSize}}&output-type={{print.outputType}}" target="_blank">
                     </#if>
-                        <i style="color:#fff !important;"  class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
+                        <i style="color:#fff !important; margin-top:5px;  margin-bottom:5px;"  class="fa fa-print fa-fw marginright15"></i> <span translate="PRINT" class="marginright15"></span>
                     </a>
                   </div>
-                  <div style="border-color:#fff !important; role="separator" class="divider"></div>
+                  <div style="border-color:#fff !important; margin-bottom:10px;" role="separator" class="divider"></div>
                   <div style="color:#fff !important;">
                       <a style="color:#fff !important;"  href="" ngclipboard data-clipboard-text="{{pageUrl()}}" ngclipboard-success="copySuccess(e);">
                         <i class="fa fa-clipboard fa-fw marginright15"  ></i> <span translate="COPYTOCLIPBOARD"></span>
@@ -82,22 +86,15 @@
                         </span>
                       </a>
                   </div>
-                </div>                  
-            </li>
-            
-
-             
-    </ul>
-     
-   
+                </div> 
 </div>
  
-<div   
+<div   ng-show="$root.isPrinting ? false:true"
     class="nav" 
     ng-if="$root.defaults.region && $root.selections.region" 
     id="header" 
     ng-init="animatePadding($root.defaultOffSet); $root.colortouse = $root.findColorByHr($root.applicationHeaderColor)"  
-    ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '50px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight - 50)+'px':'100%')}" 
+    ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '98px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight )+'px':'100%')}" 
     style=" -webkit-transition:padding-top 1s; transition-property:padding-top;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;   transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;      background-position: center;  " ng-mouseover="$root.top = 65"   > 
     <span >
     <div ng-if="$root.showClouds "  ng-style="{'background-color':$root.colortouse}" style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
@@ -127,7 +124,7 @@
     <div   style="-webkit-transition:padding-top 1s; transition-property:padding-top; transition-duration: 1s; width:100%; position:fixed; left:0px; top:0px; float:left; z-index:999999; padding-top:0px;  "  >
           
          
-        <div style="position:fixed; display:block; top:0px; left:0px; width:100%;">
+        <div style="position:fixed; display:block; top:0px; left:0px; width:80%;">
         <a href="#">
             <img src="images/logo.svg" 
             title="Your Logo Here" 
@@ -176,7 +173,7 @@
     </div>
      
     <ul class="navbuttons"   
-        style="z-index:99999999; vertical-align: bottom !important; margin:0px; padding-left:0px; background-color:transparent  " 
+        style="z-index:99999999; vertical-align: top !important; margin:0px; top:50px !important; position:fixed; padding-left:0px; background-color:transparent  " 
         ng-mouseleave = "status.isopen = false;" >
         <li   ng-click="  $root.showView = false; $root.scheduleShow = false; $root.calendarShow = false;  $root.applicationTriggerFindUser();  "   
             ng-show="!$root.subPathBoolean"
@@ -278,7 +275,11 @@
             style="  -webkit-transition:top 1s; transition-property:top; transition-duration: 1s;    position:fixed; top:50px; padding-top:1em; cursor:pointer;right:0px;  z-index:999; width:45px; height:50px;">
         <i   class="fa fa-calendar" area-hidden="true"> </i> 
         </div> 
-   
+          <div   class=" pull-right text-center " 
+            style="  -webkit-transition:top 1s; transition-property:top; transition-duration: 1s;    position:fixed; top:0px; padding-top:1em; cursor:pointer;right:0px; background-color:steelblue;  z-index:999; width:45px; height:50px;" ng-click="showPrint()"   >
+                  <i  style=" color:#fff !important;" class="fa fa-print fa-fw"></i>  
+                </div>
+                
 
     </div>
      
@@ -286,10 +287,10 @@
   
  
  
-<div class="right-hand-nav" id="righthandsidebar"  
-ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" 
-style="z-index:9999;"
-ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
+    <div class="right-hand-nav" id="righthandsidebar"  
+    ng-if="$root.user.FriendlyName && $root.user.FriendlyName != undefined" 
+    style="z-index:9999;"
+    ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
     ng-style="{'margin-left':$root.topOffSet != $root.defaultOffSet ? '-300px':'0px' }"  
     >
              
@@ -357,34 +358,34 @@ ng-init="  animatePaddingTopSideBar($root.defaultOffSet); sideOpened = false;"
             </div>
 
 
- <div class="col-xlg-12 col-xs-12">
-<h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
-    <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
-        style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
-         Dark Mode <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
+            <div class="col-xlg-12 col-xs-12">
+                <h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
+                <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
+                    style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
+                    Dark Mode <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
 
-    </span>
+                </span>
 
-</div>
+            </div>
 
 
- </div>
-<div  class="col-md-12 col-xs-12 nopadding titleArea" 
-    ng-if="$root.selections.year && $root.selections.region && $root.selections.department"
-    ng-style="{'top':(($root.defaultOffSet*2)-5)+'px', 'margin-top':'0px'}" 
->
-    <h4 style="   width:100%; " 
-    class="text-left pull-left">
-        {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}} <i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i>
-       
-        <span class="hidden-xs pull-right text-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
-            
-
-         {{$root.defaults.year}} | 
-        <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
-        <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
+        </div>
+        <div  class="col-md-12 col-xs-12 nopadding titleArea" 
+            ng-if="$root.selections.year && $root.selections.region && $root.selections.department"
+            ng-style="{'top':(($root.defaultOffSet*2)-5)+'px', 'margin-top':'0px'}" 
+        >
+        <h4 style="   width:100%; " 
+        class="text-left pull-left">
+          {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}} <i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i>
         
-    </span>
+          <span class="hidden-xs pull-right text-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
+            
+ 
+            {{$root.defaults.year}} | 
+            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
+            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
+            
+        </span>
       
     </h4>
 </div>

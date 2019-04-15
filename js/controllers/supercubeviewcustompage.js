@@ -10,13 +10,26 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     */
     $scope.cubesAvailable = [];
     $scope.cubesViewsAvailable = [];
-    $scope.activeCubeName = $scope.cubeName;
-    $scope.activeCubeViewName =  $scope.cubeView;
+    $scope.cubeNUrlValue = decodeURI($location.search()['cubeName']);
+    $scope.cubeVUrlValue = decodeURI($location.search()['cubeView']);
+    if($scope.cubeNUrlValue  != null && $scope.cubeNUrlValue != 'undefined'){
+        $scope.activeCubeName = decodeURI($location.search()['cubeName']);
+    }else{
+        $scope.activeCubeName = $scope.cubeName;
+    }
+    if($scope.cubeVUrlValue  != null && $scope.cubeVUrlValue  != 'undefined'){
+        $scope.activeCubeViewName =  decodeURI($location.search()['cubeView']);
+    }else{
+        $scope.activeCubeViewName =  $scope.cubeView;
+    }
+
+    
     $scope.dimensionalityArray = [];
     $scope.currentDeminsionAttributes = [];
     $scope.aliasOverName = [];
     $scope.showDimensionality = true;
-      
+     
+
     $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
         if(cubedata){
             $scope.cubesAvailable = cubedata;
@@ -57,7 +70,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 }
                 $rootScope.cubeView = $scope.activeCubeViewName;
                 $rootScope.cubeName = $scope.cubeName;
-               
+                $location.search('cubeName',  $rootScope.cubeName) 
+                $location.search('cubeView', $rootScope.cubeView) 
                 
                // console.log("CUSOM CUBEVIEW JS", $scope.tm1Instance, $scope.cubeName, $scope.cubeView, $rootScope.table['_data'][0][1]['dataset']['dimensions']);
             }
@@ -113,7 +127,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 $scope.activeCubeViewName = name;
                 $rootScope.cubeView = $scope.activeCubeViewName;
                // console.log('new cubeview to load', $scope.cubeView)
-                 
+               $location.search('cubeView', name) 
                  
             }
         )
