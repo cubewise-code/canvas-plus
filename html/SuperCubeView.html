@@ -505,7 +505,7 @@ svg:not(:root) {
 		 
 			
 				 
-				<div ng-show="!tableHide" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
+				<div ng-show="!tableHide || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
 					
 					<table class="table" id="af1{{tableId}}">
 
@@ -564,7 +564,7 @@ svg:not(:root) {
 										</tr>
 									
 							<tr id="rowHeightElement{{$index}}"  
-								ng-hide="decideRowToHideRow(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								ng-hide=" decideRowToHideRow(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index" >
 								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
 										 
