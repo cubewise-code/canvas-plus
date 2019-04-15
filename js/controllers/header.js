@@ -264,7 +264,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
           // $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
           
             globals.updateSettings(values, defaults, selections, parameter, options); 
-            $rootScope.getWeather($rootScope.userName);
+            
             
             // $rootScope.refreshCalendar();
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
@@ -409,6 +409,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                          }  
                  }    
             } ); 
+            $rootScope.getWeather($rootScope.userName);
      });
 
     $rootScope.createCSSSelector = function(selector, style) {

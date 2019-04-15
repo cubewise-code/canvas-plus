@@ -1,4 +1,4 @@
-<div ng-controller="NamedMdxCtrl" ng-if="$root.user.Name && $root.selections.year"   >
+<div ng-controller="NamedMdxCtrl" ng-if="$root.user.Name && $root.selections.year && $root.selections.region && $root.selections.department"   >
 	 
 
 		<style>
@@ -84,12 +84,13 @@
 			 
 		</style>
 		 
-		<div id="one">
+		<div id="one" ng-init="startAllFiltersAreHere()">
 			
-			<super-cube-view 
+			<super-cube-view ng-if="$root.mdxParameters"
 				tm1-instance = "dev"
 				cube-name = "{{$root.cubeName}}" 
 				cube-mdx = "{{$root.mdxId}}"
+				cube-mdx-params = "{{$root.mdxParameters}}"
 				attribute-options="{{$root.attributeOptions}}"  
 				table-height-bottom-offset="30"
 				table-width="100%"

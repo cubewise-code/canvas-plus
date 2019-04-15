@@ -238,7 +238,7 @@ svg:not(:root) {
 				 
 			<div  ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:35px;   text-align:center;" 
 			 >
-					<span ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
+					<span ng-if="scope.customPage"  ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
 					style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>

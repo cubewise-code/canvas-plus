@@ -21,7 +21,8 @@
                     rowsToLoad:'@',
                     chartVisible:'@',
                     tableHide:'@',
-                    customPage:'@'
+                    customPage:'@',
+                    cubeMdxParams:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -51,6 +52,7 @@
                   scope.hideColumn = [];
                 }
                 scope.cubeMdx = $attributes.cubeMdx;
+                scope.cubeMdxParams = JSON.parse($attributes.cubeMdxParams);
                 scope.selections = {};
                 scope.firstDayPosition = {};
                
@@ -715,7 +717,7 @@
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                             if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
-                              $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx).then(function(result){
+                              $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                                 if(!result.failed){
                                      
                                   scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -1112,7 +1114,7 @@
                     
                   if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
                     scope.charRowCount = 0;
-                    $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx).then(function(result){
+                    $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                         if(!result.failed){
                        //console.log(result, "scope.tablescope.table")
                             scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
@@ -2249,6 +2251,19 @@
                               
                   })
 
+                  scope.$watch(function () {
+                    return $attributes.cubeMdxParams;
+                    
+                    }, function (newValue, oldValue) { 
+                      if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                         console.log(newValue, "mdx attributes changed inside directive");
+                          
+                          scope.cubeMdxParams = JSON.parse(newValue)
+                          scope.refresh(scope.cubeName, scope.cubeMdx)
+                      }
+                                
+                    })
+  
                 scope.$watch(function () {
                     return $attributes.tableWidth;
                     
