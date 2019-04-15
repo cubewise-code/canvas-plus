@@ -1228,7 +1228,7 @@
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
                              if(scope.chartVisible  ){
-                              scope.offsetTop = (window.innerHeight/2)+(scope.tableTop);
+                              scope.offsetTop = ((window.innerHeight/2) );
       
                             }else{
                               scope.offsetTop = 1;
@@ -1902,7 +1902,13 @@
                   if( scope.api){
                     scope.api.refresh()
                   }
-                           
+                  if(scope.chartVisible  ){
+                    scope.offsetTop = ((window.innerHeight/2) );
+
+                  }else{
+                    scope.offsetTop = 1;
+                  }
+                  
                             scope.innerHeight = window.innerHeight;
                             scope.innerWidth =  window.innerWidth;
                     
