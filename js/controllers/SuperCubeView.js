@@ -1760,9 +1760,23 @@
             scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
             scope.dispatchResize();
-            
+            scope.dragStated = false;
 
         })
+        
+        
+        scope.increaseDataWidth = function(){
+          scope.dataWidth += (20);
+          console.log(scope.dataWidth , "stat drag");
+
+        }
+        scope.reduceDataWidth = function(){
+          
+           
+          scope.dataWidth -= (20);
+          console.log(scope.dataWidth , "stat drag");
+
+        }
           scope.updateUrlChart = function(){
             $timeout(
               function(){
