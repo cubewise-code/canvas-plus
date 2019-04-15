@@ -236,7 +236,7 @@ svg:not(:root) {
   
   	<div class="row"   >
 				 
-			<div  ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:39px;   text-align:center;" 
+			<div  ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:35px;   text-align:center;" 
 			 >
 					<span ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
 					style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
@@ -510,7 +510,9 @@ svg:not(:root) {
 					
 					
 						<tbody ng-click="showChartOptions = false;" id="bodyContent{{tableId}}"  > 
+								 
 								<tr ng-show="chartVisible"  >
+										 
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
 										
 									</td>

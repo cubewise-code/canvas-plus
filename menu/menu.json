@@ -41,5 +41,13 @@
       "page": "mdxview"
     },
     "expanded": false
+  },
+  {
+    "label": "NamedMdx",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "namedmdx"
+    },
+    "expanded": false
   }
 ]
