@@ -222,31 +222,8 @@ svg:not(:root) {
 
 }
 @media print {
-	table { page-break-after:auto }
-  tr    { page-break-inside:avoid; page-break-after:auto }
-  td    { page-break-inside:avoid; page-break-after:auto }
-  thead { display:table-header-group }
-  tfoot { display:table-footer-group }
-  footer {
-    position: fixed;
-    bottom: 0;
-		right:0px;
-		text-align:right;
 	 
-  }
- 
-  header {
-		
-		text-align:left;
-		left:0px;
-    position: fixed;
-		width:100%;
-		height:auto;
-		background-color:#ccc;
-		color:#333;
-    top: 0;
-		
-  }
+	 
 }
 	</style>
  
@@ -314,15 +291,15 @@ svg:not(:root) {
 													</span>
 	
 										</button>
-										<!-- <button ng-show="chartName != 'Pie'" style="width:100%;background-color:#fff; color:steelblue; " 
-										ng-click="activeOption = 4; activeName = 'pieChart'; chartName = 'Pie' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
-												 Pie Chart
+										 <!-- <button ng-show="chartName != 'Multi'" style="width:100%;background-color:#fff; color:steelblue; " 
+										ng-click="activeOption = 4; activeName = 'multiChart'; chartName = 'Multi' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+												 Multi Chart
 												<span class="pull-right">
 														<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
 												</span>
 												
 	
-										</button> -->
+										</button>  -->
 										 
 									 
 									</div>
@@ -363,6 +340,25 @@ svg:not(:root) {
 					visibility: hidden;
 					position: relative;
 					color:#333 !important;
+				}
+				#content {
+						display: table;
+				}
+
+				#pageFooter {
+						display: table-footer-group;
+				}
+
+				#pageFooter:after {
+					counter-increment: page;
+					content:"Page " counter(page);
+					left: 0; 
+					top: 100%;
+					white-space: nowrap; 
+					z-index: 20;
+					-moz-border-radius: 5px; 
+					-moz-box-shadow: 0px 0px 4px #222;  
+					background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
 				}
 				</style>
 				</span>
@@ -590,7 +586,7 @@ svg:not(:root) {
 																			
 								</td>
 								<td    id="headerColHeight{{tableId}}{{$index}}"  
-									style="max-width:100px; width:100px !important; min-width:100px ; width:100px;border-right:1px solid #ccc;" 
+									ng-style="{'max-width':dataWidth+'px', 'width':dataWidth+'px !important', 'min-width':dataWidth+'px !important' ,  'border-right':'1px solid #ccc'}" 
 									ng-right-click="openRefModel(cell.reference().toString()); " 
 									ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 									ng-repeat="cell in row.cells track by $index" class="text-right" >
@@ -716,28 +712,11 @@ svg:not(:root) {
 				</div>
 			</div> 
 		</div>
-		<header ng-if="$root.isPrinting"  >
-			 
-							<div style="min-width:100px !important; width:100px;" ng-repeat="row in dataset.headers track by $index" >
-							 
-								<div
-											 
-											style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer;" 
-											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
-											ng-repeat="col in headerrow.columns" ng-if="col.visible"  class="text-center" >
-										 
-												{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   
-											 
-											 
-											 
-										</div>
-							
-									</div>
-					 
-		</header>
-		<footer ng-if="$root.isPrinting" >
-				Footer Content
-			</footer>
+	 
+		<div id="content">
+				<div id="pageFooter">Page </div>
+				multi-page content here...
+			</div>
 
 	<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	 
