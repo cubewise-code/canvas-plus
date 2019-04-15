@@ -260,7 +260,7 @@ svg:not(:root) {
 				 
 			<div  ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; z-index:99 ; left:0px;  top:145px; background-color:steelblue; color:#fff; padding-top:0px;height:32px;   text-align:center;" 
 			 >
-					<span ng-click="$root.parametersVisible = !$root.parametersVisible;  dispatchResize(); api.update(); gotoTop()"  
+					<span ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update(); gotoTop(); dispatchResize();"  
 					style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
@@ -268,7 +268,7 @@ svg:not(:root) {
 					 style="margin:5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i>
 					</span>
-					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  dispatchResize(); api.update(); updateUrlChart();"   
+					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
 					style="margin:5px; margin-right:1px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 							 Charts  <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
@@ -473,7 +473,7 @@ svg:not(:root) {
 									</td>
 								
 									</tr>
-								<tr ng-show="decideRowToHideFreezePane(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								<tr ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
 								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString(), 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 															style=" border-right:0px solid #ccc; vertical-align:text-top; "                                                              
