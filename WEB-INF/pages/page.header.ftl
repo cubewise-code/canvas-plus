@@ -360,7 +360,7 @@
 
             <div class="col-xlg-12 col-xs-12">
                 <h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
-                <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
+                <span class="pull-left"  ng-click="changeBg()" 
                     style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
                     Dark Mode <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
 

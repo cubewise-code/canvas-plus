@@ -214,7 +214,16 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
 
 
-    $rootScope.nightTime = false; 
+    $rootScope.nightTime = false;
+    $scope.changeBg = function(){
+        $rootScope.nightTime = !$rootScope.nightTime;
+        if($rootScope.nightTime){
+            $rootScope.colortouse  =  '#000000c9' ;
+        } else{
+            $rootScope.colortouse  = 'transparent'; 
+        }
+         
+    } 
      $rootScope.findColorByHr = function(color){
              var m = moment($rootScope.overRideDate);
             //console.log(m);

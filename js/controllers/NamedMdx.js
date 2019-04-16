@@ -15,14 +15,14 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.values = {};
     $rootScope.pageTitle = "Super Named MDX + Freezepane";
     $rootScope.cubeName = "General Ledger"
-    $rootScope.mdxId = "P&L"
+    $rootScope.mdxId = "Data Entry"
      
     $rootScope.showView = true; 
     //$rootScope.calendarShow = true ;
      
     $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description'}}
     $scope.startAllFiltersAreHere = function(){
-        $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region}}
+        $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
         console.log($rootScope.mdxParameters);
     }
@@ -33,7 +33,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
             if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
              console.log(newValue, "mdx attributes changed inside directive");
               
-             $rootScope.mdxParameters =  {parameters: {Year:newValue, Region:$rootScope.selections.region}}
+             $rootScope.mdxParameters =  {parameters: {Year:newValue, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
             }
                     
@@ -45,11 +45,23 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                 if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                  console.log(newValue, "mdx attributes changed inside directive");
                   
-                 $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:newValue}}
+                 $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:newValue, Department:$rootScope.selections.department}}
     
                 }
                         
             })
+            $scope.$watch(function () {
+                return $rootScope.selections.department;
+                
+                }, function (newValue, oldValue) { 
+                    if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                     console.log(newValue, "mdx attributes changed inside directive");
+                      
+                     $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region, Department:newValue}}
+        
+                    }
+                            
+                })
 }]);
 app.directive('ngRightClick', ['$parse', function($parse) {
     return function(scope, element, attrs) {
