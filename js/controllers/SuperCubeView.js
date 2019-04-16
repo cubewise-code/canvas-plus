@@ -52,7 +52,10 @@
                   scope.hideColumn = [];
                 }
                 scope.cubeMdx = $attributes.cubeMdx;
-                scope.cubeMdxParams = JSON.parse($attributes.cubeMdxParams);
+                if($attributes.cubeMdxParams != null && $attributes.cubeMdxParams != 'undefined' ){
+                  scope.cubeMdxParams = JSON.parse($attributes.cubeMdxParams);
+                }
+                
                 scope.selections = {};
                 scope.firstDayPosition = {};
                
