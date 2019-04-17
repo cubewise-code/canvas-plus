@@ -876,7 +876,7 @@
                               })
                             }else{
  
-                            $tm1Ui.cubeExecuteView(scope.tm1Instance,$rootScope.cubeName, $rootScope.cubeMdx).then(function(result){
+                            $tm1Ui.cubeExecuteView(scope.tm1Instance,$rootScope.cubeName, $rootScope.cubeView).then(function(result){
                                 if(!result.failed){
                                      
                                     scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -1293,7 +1293,7 @@
 
                   
                                 scope.charRowCount = 0;
-                               $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,cubeview).then(function(result){
+                               $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,$rootScope.cubeView).then(function(result){
                                    if(!result.failed){
                                   //console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
@@ -1803,7 +1803,7 @@
                 if(document.getElementById(id)){
                     var tempObjToTrack = document.getElementById(id);
                     if(tempObjToTrack != null || tempObjToTrack != undefined ){
-                        return (((window.innerHeight - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top));
+                        return (((window.innerHeight - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top) );
                     }
                 }
              }

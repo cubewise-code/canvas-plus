@@ -30,7 +30,7 @@ app.controller('summaryCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', '$tm1Ui
 $scope.getHeight= function() {
    var top = document.getElementById("table").getBoundingClientRect().top;
    //console.log(top);
-   return ((window.innerHeight) - ((top)+100));
+   return ((window.outerHeight) - ((top)+100));
 }
   
   

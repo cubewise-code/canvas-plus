@@ -245,7 +245,7 @@ function($scope, $rootScope, $log, $tm1Ui,$timeout) {
         if(document.getElementById(id)){
             var tempObjToTrack = document.getElementById(id);
             if(tempObjToTrack != null || tempObjToTrack != undefined ){
-                return ((window.innerHeight - tempObjToTrack.getBoundingClientRect().top));
+                return ((window.outerHeight - tempObjToTrack.getBoundingClientRect().top));
             }
         }
     }

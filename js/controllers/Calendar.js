@@ -25,32 +25,32 @@
                 scope.hasNum = [];
                 scope.innerHeight = window.innerHeight;
                 scope.innerWidth = window.innerWidth ;
-    scope.setYear = '2019'; 
-    scope.itemList = [];
-    scope.selections.dateToSee = false;
-    scope.selections.dateCreateNew = false;
-    scope.days = [];
-    scope.firstDayPosition = [];
-    scope.daysRemainingValue = [];
-    scope.overRideDate = '';
-   
-    scope.eventName = [];
-    if(scope.overRideDate != '' && scope.overRideDate){
-        scope.dateNow = new Date(scope.overRideDate) ;
-    }else{
-        scope.dateNow = new Date() ;
-    }
+                scope.setYear = '2019'; 
+                scope.itemList = [];
+                scope.selections.dateToSee = false;
+                scope.selections.dateCreateNew = false;
+                scope.days = [];
+                scope.firstDayPosition = [];
+                scope.daysRemainingValue = [];
+                scope.overRideDate = '';
+            
+                scope.eventName = [];
+                if(scope.overRideDate != '' && scope.overRideDate){
+                    scope.dateNow = new Date(scope.overRideDate) ;
+                }else{
+                    scope.dateNow = new Date() ;
+                }
     
-    var n = scope.dateNow.getMonth();
-    var p = scope.dateNow.getDay();
-    var y = scope.dateNow.getFullYear();
-    scope.monthNow = n;
-    scope.dayNow = p;
-    scope.yearNow =  y; 
-    scope.dateNumber =((scope.dateNow+"").split(":")[0]).split(' ')[2];
-    scope.date  = (((scope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
-      
-    
+                var n = scope.dateNow.getMonth();
+                var p = scope.dateNow.getDay();
+                var y = scope.dateNow.getFullYear();
+                scope.monthNow = n;
+                scope.dayNow = p;
+                scope.yearNow =  y; 
+                scope.dateNumber =((scope.dateNow+"").split(":")[0]).split(' ')[2];
+                scope.date  = (((scope.dateNow+"").split(":")[0]).split(',').join('')).split(' ').join('');
+                
+                
      
     
     

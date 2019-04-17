@@ -17,7 +17,7 @@
     "id": "Data Entry",
     "mdx": [
       "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS,",
-      "NON EMPTY {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS",
+      "{TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS",
       "FROM [General Ledger]",
       "WHERE ([Year].&[{{Year}}], [Region].&[{{Region}}], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[{{Department}}])" 
     ],

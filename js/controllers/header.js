@@ -20,8 +20,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.showView = true;
     $rootScope.activeSubTab = 0;
     $rootScope.subPathBoolean = false;
-    $rootScope.innerHeight = window.innerHeight;
-    $rootScope.innerWidth = window.innerWidth ;
+    $rootScope.innerHeight = window.outerHeight;
+    $rootScope.innerWidth = window.outerWidth ;
     $rootScope.defaultOffSet = 50;
     $rootScope.topOffSet = $rootScope.defaultOffSet ;
     $rootScope.selectedsubParentPage = '';
@@ -214,14 +214,29 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
 
 
-    $rootScope.nightTime = false;
+    $scope.nightTime = false;
     $scope.changeBg = function(){
-        $rootScope.nightTime = !$rootScope.nightTime;
-        if($rootScope.nightTime){
-            $rootScope.colortouse  =  '#000000c9' ;
+      
+     
+       
+        if($scope.nightTime != null && $scope.nightTime != 'undefined'  ){
+            if($scope.nightTime === true){ 
+               console.log("color to use", "DARK") 
+               $scope.nightTime = false;  
+                $rootScope.colortouse  =  '#000000c9' ;
+            }else{
+                if($scope.nightTime === false){  
+                    $scope.nightTime = true; 
+                    console.log("color to use", "WHITE")  
+                   $rootScope.colortouse  = 'transparent'; 
+                }
+            }
+            
         } else{
+            console.log("color to use", "WHITE")  
             $rootScope.colortouse  = 'transparent'; 
         }
+    
          
     } 
      $rootScope.findColorByHr = function(color){
@@ -289,7 +304,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     if(document.getElementById(idname) ){
       // //console.log(document.getElementById(idname).getBoundingClientRect().left  );
         if(document.getElementById("pop-over-body")){
-            document.getElementById("pop-over-body").style.left = document.getElementById(idname).getBoundingClientRect().left +"px";
+            document.getElementById("pop-over-body").style.left = ((document.getElementById(idname).getBoundingClientRect().left)*0.75) +"px";
         }
         
     }
@@ -638,7 +653,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         if(document.getElementById(id)){
             var tempObjToTrack = document.getElementById(id);
             if(tempObjToTrack != null || tempObjToTrack != undefined ){
-                return (( (window.innerHeight) - (tempObjToTrack.getBoundingClientRect().top)-bottomOffset ));
+                return (( (window.outerHeight) - (tempObjToTrack.getBoundingClientRect().top)-bottomOffset ));
             }
         }
     }
@@ -650,14 +665,14 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $(window).resize(function() { 
         $timeout(
             function(){
-        $rootScope.innerHeight = window.innerHeight;
-        $rootScope.innerWidth = window.innerWidth ;
+        $rootScope.innerHeight = window.outerHeight;
+        $rootScope.innerWidth = window.outerWidth ;
             }
         )
     });
 
     // number of drops created.
-    var nbDrop = $rootScope.innerHeight/10; 
+    var nbDrop = window.outerHeight/10; 
 
     // function to generate a random number range.
     $rootScope.randRange = function ( minNum, maxNum) {
@@ -669,8 +684,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.createRain = function(show) {
         if(show){
             for( i=1;i<nbDrop;i++) {
-            var dropLeft = $rootScope.randRange(0,$rootScope.innerWidth);
-            var dropTop = $rootScope.randRange(-$rootScope.innerHeight,$rootScope.innerHeight);
+            var dropLeft = $rootScope.randRange(0,window.outerWidth);
+            var dropTop = $rootScope.randRange(-window.outerHeight,window.outerHeight);
 
             $('.rain').append('<div class="drop" id="drop'+i+'"></div>');
             $('#drop'+i).css('left',dropLeft);
