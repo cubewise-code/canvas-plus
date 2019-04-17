@@ -21,6 +21,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.activeSubTab = 0;
     $rootScope.subPathBoolean = false;
     $rootScope.innerHeight = window.outerHeight;
+    $scope.innerHeight = window.innerHeight;
     $rootScope.innerWidth = window.outerWidth ;
     $rootScope.defaultOffSet = 50;
     $rootScope.topOffSet = $rootScope.defaultOffSet ;
@@ -666,6 +667,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $(window).resize(function() { 
         $timeout(
             function(){
+                $scope.innerHeight = window.innerHeight;
         $rootScope.innerHeight = window.outerHeight;
         $rootScope.innerWidth = window.outerWidth ;
             }

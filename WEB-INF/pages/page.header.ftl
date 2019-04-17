@@ -94,7 +94,7 @@
     ng-if="$root.defaults.region && $root.selections.region" 
     id="header" 
     ng-init="animatePadding($root.defaultOffSet);   "  
-    ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '98px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight )+'px':'100%')}" 
+    ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '98px': (!$root.showView && $root.user.FriendlyName ? (($root.innerHeight)*(1.3) )+'px':'100%')}" 
     style=" -webkit-transition:padding-top 1s; transition-property:padding-top;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;   transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;      background-position: center;  " ng-mouseover="$root.top = 65"   > 
     <span >
     <div   ng-style="{'background-color':$root.colortouse}" 
