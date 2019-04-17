@@ -19,11 +19,11 @@
             
             <li class="dropdown "  style="color:#fff !important; background-color:transparent !important;" >
                 <span id="opened"  > 
-                    <span class="inline-block-left" style="margin-right:5px;">
-                    
-                    {{mouseOverUserClose && !$root.userLoggedOut ? 'Sign Out: '+($root.user.Name)+'': (!$root.userLoggedOut ? 'User: '+$root.user.Name+'' : '')}} </span> 
+                    <span class="inline-block-left" style="margin-right:5px;"> 
+                        <small style="font-size:0.7em;">{{mouseOverUserClose && !$root.userLoggedOut ? 'Sign Out: '+($root.user.Name)+'': (!$root.userLoggedOut ? 'User: '+$root.user.Name+'' : '')}} </small>
+                    </span> 
                          <span class="inline-block" >
-                            <a href="" style="color:#fff;" 
+                            <a href="" style="color:#fff; font-size:0.7em;" 
                             ng-mouseleave="mouseOverUserClose = false" 
                             ng-mouseover="mouseOverUserClose = true;" 
                             ng-click=" closeApplication($root.showView)" >
