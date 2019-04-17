@@ -24,7 +24,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.currentDeminsionAttributes = [];
     $scope.aliasOverName = [];
     $scope.showDimensionality = true;
-     
+    $rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM [General Ledger] WHERE ([Year].&[2018], [Region].&[1], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
 
     $tm1Ui.cubes($scope.tm1Instance).then( function(cubedata){
         if(cubedata){

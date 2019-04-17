@@ -15,7 +15,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.values = {};
     $rootScope.pageTitle = "Super Named MDX + Freezepane";
     $rootScope.cubeName = "General Ledger"
-    $rootScope.mdxId = "Data Entry"
+    $rootScope.mdxId = "P&L"
      
     $rootScope.showView = true; 
     //$rootScope.calendarShow = true ;

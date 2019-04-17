@@ -720,6 +720,9 @@
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                             if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
+                              if(scope.useMdx){
+                                $rootScope.setMdx($rootScope.mdxString);
+                              }else{
                               $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                                 if(!result.failed){
                                      
@@ -874,8 +877,9 @@
                              } 
                             
                               })
+                            }
                             }else{
- 
+                              
                             $tm1Ui.cubeExecuteView(scope.tm1Instance,$rootScope.cubeName, $rootScope.cubeView).then(function(result){
                                 if(!result.failed){
                                      
@@ -1117,6 +1121,11 @@
                     
                   if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
                     scope.charRowCount = 0;
+                    if(scope.useMdx){
+                      $rootScope.setMdx($rootScope.mdxString);
+                    }else{
+
+                    
                     $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                         if(!result.failed){
                        //console.log(result, "scope.tablescope.table")
@@ -1289,9 +1298,10 @@
                         }		
                        
                     })
+                  }
                   }else{
 
-                  
+
                                 scope.charRowCount = 0;
                                $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,$rootScope.cubeView).then(function(result){
                                    if(!result.failed){
@@ -1719,6 +1729,184 @@
                 
                 
            }
+            
+           $rootScope.setMdx = function(mdxPassed){
+             scope.useMdx = true;
+            $tm1Ui.cubeExecuteMdx(scope.tm1Instance,mdxPassed).then(function(result){
+              if(!result.failed){
+                //console.log(result, "scope.tablescope.table")
+                     scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
+                    
+                     scope.options[scope.tableId] = {preload: false, watch: false};
+                     if(scope.table){
+                         if(scope.table.options){
+                          //console.log(scope.table, "scope.tablescope.table")
+                          scope.options[scope.tableId].index = scope.table.options.index;
+                          scope.options[scope.tableId].pageSize = scope.table.options.pageSize;
+                          scope.tablerowLength = scope.table.data().length;
+                         }
+                         
+                          
+                       
+                          
+                     }
+                      scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
+                      
+                      scope.table.pageSize(scope.currentRowCount)
+                      scope.tableDimensionLength =  scope.table.data()[0].elements.length;
+                    //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
+                     
+                      
+                      //scope.table = scope.table;
+                      scope.table.refresh();
+                      $rootScope.table = scope.table;
+                      if($rootScope.table['_data']){
+
+                      }
+                      $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
+                      $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
+                      $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
+                      //console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
+                      var jsonRowData = [];
+                      var colNameArray = [];
+                      var rowNameArray = [];
+          
+                      for(ggh = 0; ggh < scope.dataset.headers.length; ggh++){
+                          var myColObj = scope.dataset.headers[ggh];
+                          var arrayToUse= [];
+                           
+                          for(jjkk = 0; jjkk < myColObj.columns.length; jjkk++){
+                            if(colNameArray[jjkk] === undefined || !colNameArray){
+                              colNameArray[jjkk] =  (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                           }else{
+                              colNameArray[jjkk] +=   (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                           }
+                              
+                          }
+                      }
+                      var rowNameFinalArray = [];
+                      for(gggh = 0; gggh < scope.table.data().length; gggh++){
+                          var myRowObjElement = scope.table.data()[gggh];
+                           
+                          for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
+                            //console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
+                              if(myRowObjElement.elements[jjjk].element.attributes['Description']){
+                                  if(rowNameArray[gggh]){
+                                      rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
+                                    }else{
+                                      rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
+                                    }
+                              }else{
+                                  if(rowNameArray[gggh]){
+                                      rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
+                                    }else{
+                                      rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.key);
+                                    }
+                              }
+                                 
+                                   
+                            
+                          }
+                          rowNameFinalArray[gggh] = rowNameArray[gggh];
+                          if(scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]]){
+                            //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                        }else{
+                          var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
+                          scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
+                        
+                        }    
+                          rowNameArray = [];
+                      }
+                     // console.log(colNameArray, "colNameArray", scope.randomColor);
+                       
+                      for(row in scope.table.data()){
+                       // console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes']['Color'], "Color of element")
+                       
+                                                         
+                          var cellArrayFromJson = [];
+                          scope.charRowCount++;
+                          jsonRowData[row] =  {"key": '',
+                          "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                            for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                              
+                              if( scope.hideColumn[gs] ){  
+                               // console.log("HIDE COLUMN",gs);
+                                
+                              }else{
+                                if(scope.table.data()[row].elements.length){
+                                  jsonRowData[row].key = rowNameFinalArray[row] ;
+                                    
+                                      
+                                }
+                                //console.log((scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%'),         scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]         );
+
+
+                                if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]  ){
+
+                                  if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
+                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                   // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']], "headers if percentage")
+                                  }else{
+                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                  }
+                                } 
+
+
+                                 
+                                 
+                                
+                                //console.log("dont hide",gs); $rootScope.attributeOptions[] 
+                              }
+                           
+                                
+                              
+                              
+                                    
+                                      
+                                  
+                                  
+                                
+                                  
+                                  
+                          }
+                          var tt = JSON.stringify(cellArrayFromJson) 
+                          jsonRowData[row]["values"] = JSON.parse(tt);
+                          //console.log(jsonRowData[row]) 
+                      }
+                      
+                   
+                       
+                    
+                     //scope.tableData = scope.table.data();
+                    scope.data = jsonRowData; 
+                    if( scope.chart && scope.activeName === 'multiBarChart'){
+                      scope.chart.left = 0;
+                      scope.chart.right = 0;
+                    }
+                    if(scope.chart && scope.activeName === 'lineChart'){
+                      scope.chart.margin.left = 50;
+                      scope.chart.margin.right = 50;
+                    }
+                    $timeout(
+                      function(){
+                        if( scope.api){
+                          scope.api.update();
+                           
+                        }
+                      },1000
+                    )
+                    
+                    jsonRowData = [];
+                 } else {
+                     scope.message = result.message;
+                     
+                    
+                 }		
+                
+             })
+          }
+
+
             scope.formatUploadButton = function(){
                 
                 if(document.getElementsByClassName('tm1-ui-export').length){
