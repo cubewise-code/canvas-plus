@@ -214,28 +214,25 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
 
 
-    $scope.nightTime = false;
+  
     $scope.changeBg = function(){
-      
-     
        
-        if($scope.nightTime != null && $scope.nightTime != 'undefined'  ){
-            if($scope.nightTime === true){ 
-               console.log("color to use", "DARK") 
-               $scope.nightTime = false;  
-                $rootScope.colortouse  =  '#000000c9' ;
+       $timeout(
+           function(){
+            if(!$rootScope.nightTime){ 
+                console.log("color to use", "WHITE")  
+                $rootScope.colortouse  = 'transparent'; 
             }else{
-                if($scope.nightTime === false){  
-                    $scope.nightTime = true; 
-                    console.log("color to use", "WHITE")  
-                   $rootScope.colortouse  = 'transparent'; 
-                }
+               console.log("color to use", "DARK") 
+               
+                $rootScope.colortouse  =  '#000000c9' ;
+              
+                   
+              
             }
+        });
             
-        } else{
-            console.log("color to use", "WHITE")  
-            $rootScope.colortouse  = 'transparent'; 
-        }
+  
     
          
     } 
@@ -252,11 +249,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
            //console.log(currentHour)
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
                 g = "transparent";
+                $rootScope.nightTime = false;
                
             } else if(currentHour >= split_evening) {
                 $rootScope.nightTime = true;
                 g = "#000000"+"c9";
             } else {
+                $rootScope.nightTime = false;
                 g ="transparent";
                 
             }
@@ -328,7 +327,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
      //console.log("element:", element);
   }
   $transitions.onSuccess({}, function ($transitions) {
+
        $scope.initializeVariables();
+       $rootScope.colortouse = $rootScope.findColorByHr($rootScope.applicationHeaderColor);
     $rootScope.pathToUse = $transitions._targetState._identifier.name;
       //$rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
       if($transitions._targetState._identifier.navigable){

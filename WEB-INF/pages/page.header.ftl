@@ -93,11 +93,11 @@
     class="nav" 
     ng-if="$root.defaults.region && $root.selections.region" 
     id="header" 
-    ng-init="animatePadding($root.defaultOffSet); $root.colortouse = $root.findColorByHr($root.applicationHeaderColor)"  
+    ng-init="animatePadding($root.defaultOffSet);   "  
     ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '98px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight )+'px':'100%')}" 
     style=" -webkit-transition:padding-top 1s; transition-property:padding-top;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;   transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;      background-position: center;  " ng-mouseover="$root.top = 65"   > 
     <span >
-    <div ng-show=" $root.showClouds" ng-style="{'background-color':$root.colortouse}" 
+    <div   ng-style="{'background-color':$root.colortouse}" 
     style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
             <section ng-show="!$root.showView" class="rain"></section>
 
@@ -361,9 +361,9 @@
 
             <div class="col-xlg-12 col-xs-12">
                 <h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
-                <span class="pull-left"  ng-click="changeBg(); " 
+                <span class="pull-left"  ng-click="$root.nightTime = !$root.nightTime; changeBg(); " 
                     style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
-                    Dark Mode <i ng-class="{'fa-toggle-on':nightTime === false, 'fa-toggle-off':nightTime === true}" class="fa fa-toggle-on"></i>
+                    Dark Mode <i ng-class="{'fa-toggle-on': $root.nightTime  , 'fa-toggle-off': !$root.nightTime  }" class="fa  "></i>
 
                 </span>
 
