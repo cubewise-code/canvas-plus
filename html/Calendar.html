@@ -47,9 +47,9 @@
                          
                           <span ng-show="selections.dateToSee"  class="pull-right" > 
                                 <div   
-                                    style="background-color:orange !important; cursor:pointer;padding:10px; border:0px solid orange !important; position: absolute; right: 15px; top: 0px; border-radius: 0px;"
+                                    style="background-color:orange !important; cursor:pointer;padding:10px; font-size:0.7em; border:0px solid orange !important; position: absolute; right: 15px; top: 0px; border-radius: 0px;"
                                     ng-click="hasNum = []; selections.dateToSee = false; openEventCreate = false; selections.dateCreateNew = false; loadcalendarYearIsHere()" 
-                                    ><i class="fa fa-times"></i></div>
+                                    ><i style="font-size:1em; font-weight:700;" class="fa fa-angle-up"></i></div>
                             </span>
                      </span>
                       
@@ -120,8 +120,8 @@
                                       <div ng-if="selections.dateToSee && calendarMonthSelected === includeZeroForNum($index+1)" 
                                         ng-show="openEventCreate"
                                             style="  top:0px; vertical-align:top; right:0px; width:auto; ">
-                                            <div ng-click="   createEvent(eventName) " class="btn btn-warning" style=" background-color:darkorange !important; border-radius:0px;">
-                                            <i ng-if="openEventCreate" class="fa fa-times" area-hidden="true"></i>
+                                            <div ng-click="   createEvent(eventName) " class="btn btn-warning" style=" background-color:transparent !important; border-radius:0px; border:none !important">
+                                            <i ng-if="openEventCreate" style="font-size:1em;" class="fa fa-times" area-hidden="true"></i>
                                             </div>
                                         </div>
                             </span>
