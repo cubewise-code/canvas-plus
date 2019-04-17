@@ -675,9 +675,7 @@ svg:not(:root) {
 													style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
 									<span ng-if=" !$root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
 													style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-									<span ng-if=" !$root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ] && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" 
-													 style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
-									 
+								 
 								 
 									<span ng-if=" !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']]  && row.cells[$index].isNumeric  && cell.isReadOnly && cell.value < 0 " 
 														style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>

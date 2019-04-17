@@ -23,7 +23,7 @@
                         <small style="font-size:0.7em;">{{mouseOverUserClose && !$root.userLoggedOut ? 'Sign Out: '+($root.user.Name)+'': (!$root.userLoggedOut ? 'User: '+$root.user.Name+'' : '')}} </small>
                     </span> 
                          <span class="inline-block" >
-                            <a href="" style="color:#fff; font-size:0.7em;" 
+                            <a  style="color:#fff; font-size:0.7em;" 
                             ng-mouseleave="mouseOverUserClose = false" 
                             ng-mouseover="mouseOverUserClose = true;" 
                             ng-click=" closeApplication($root.showView)" >

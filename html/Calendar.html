@@ -6,11 +6,11 @@
  </style>
 <div   
     ng-style="{'top':((defaultOffSet*2))+'px', 'height':$root.calendarShow ? ((innerHeight)-(defaultOffSet*2))+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"  
-     class=" calendar-container " style="width:100%; font-size:0.7em;" >	
+     class=" calendar-container " style="width:100%; font-size:0.7em; z-index:99;" >	
     
 	<div class=" calendar-header"   >
         <h4   ng-style="{'top':'73px', 'height':(defaultOffSet-18)+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
-            style="position:fixed; pointer-events:none; width:100%; padding-top:15px; font-size:1em; left:0px; margin-top:0px; z-index:999999; color:#fff;width:100%; padding-right:20px;  ">
+            style="position:fixed;  width:100%; padding-top:15px; font-size:1em; left:0px; margin-top:0px; z-index:999999; color:#fff;width:100%; padding-right:20px;  ">
                     
                 <span style=" width:100%; padding-left:40px; padding-right:12px;"> <strong>{{selections.year}} </strong>
 

@@ -33,7 +33,7 @@
                 scope.firstDayPosition = [];
                 scope.daysRemainingValue = [];
                 scope.overRideDate = '';
-            
+                scope.showSchedule = true;
                 scope.eventName = [];
                 if(scope.overRideDate != '' && scope.overRideDate){
                     scope.dateNow = new Date(scope.overRideDate) ;
