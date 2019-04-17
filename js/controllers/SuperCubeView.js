@@ -630,7 +630,7 @@
             }
         
                 scope.seeDataNew = function(d, n){
-          //console.log(d, n)
+                  console.log(d, n)
                 }
 
                 scope.getTablePosition = function(){

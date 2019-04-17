@@ -703,3 +703,16 @@ div.tm1-subnm-hierarchy-style {
 .table{
     font-size:0.7em;
 }
+.tm1-ui-login  {
+   zoom:70%;
+  }
+  .input-group .form-control {
+    position: relative;
+    z-index: unset;  
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.tm1-select-plain-style{
+    z-index:1 !important;
+}
