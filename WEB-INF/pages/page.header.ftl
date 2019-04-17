@@ -12,18 +12,18 @@
    
  
     <div ng-init=" $root.printOpened = false;" 
-        style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; padding-right:50px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
+        style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; padding-right:0px; margin-right:50px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
 
         <span ng-init=" $rootScope.getWeather($root.user.Name); "></span>
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
             <li class="dropdown "  style="color:#fff !important; background-color:transparent !important;" >
                 <span id="opened"  > 
-                    <span class="inline-block-left" style="margin-right:5px;">
-                    
-                    {{mouseOverUserClose && !$root.userLoggedOut ? 'Sign Out: '+($root.user.Name)+'': (!$root.userLoggedOut ? 'User: '+$root.user.Name+'' : '')}} </span> 
+                    <span class="inline-block-left" style="margin-right:5px;"> 
+                        <small style="font-size:0.7em;">{{mouseOverUserClose && !$root.userLoggedOut ? 'Sign Out: '+($root.user.Name)+'': (!$root.userLoggedOut ? 'User: '+$root.user.Name+'' : '')}} </small>
+                    </span> 
                          <span class="inline-block" >
-                            <a href="" style="color:#fff;" 
+                            <a  style="color:#fff; font-size:0.7em;" 
                             ng-mouseleave="mouseOverUserClose = false" 
                             ng-mouseover="mouseOverUserClose = true;" 
                             ng-click=" closeApplication($root.showView)" >
@@ -46,9 +46,9 @@
              
     </ul>
      
-    <div ng-style="{'top':$root.defaultOffSet+'px', 'background-color':$root.applicationHeaderColorSecondary, 'right': !$root.printOpened ? '-300px':'0px'}" 
+    <div ng-style="{'top':'36px', 'background-color':$root.applicationHeaderColorSecondary, 'right': !$root.printOpened ? '-300px':'0px'}" 
                       
-                     style="width:300px; padding:10px; position:fixed;    width:300px; float:right;  color:#333;  -webkit-transition:right 1s; transition-property:right; ">
+                     style="width:300px; padding:10px; position:fixed;  font-size:0.7em;  width:300px; float:right;  color:#333;  -webkit-transition:right 1s; transition-property:right; ">
                   <div class="paddingtop10"  style="padding-bottom:10px; border-bottom:1px solid #fff;" >                    
                     <span>
                       <select ng-model="print.pageOrientation" class="form-control printpageformat">
@@ -93,11 +93,12 @@
     class="nav" 
     ng-if="$root.defaults.region && $root.selections.region" 
     id="header" 
-    ng-init="animatePadding($root.defaultOffSet); $root.colortouse = $root.findColorByHr($root.applicationHeaderColor)"  
-    ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '98px': (!$root.showView && $root.user.FriendlyName ? ($root.innerHeight )+'px':'100%')}" 
+    ng-init="animatePadding($root.defaultOffSet);   "  
+    ng-style="{'background-image': 'url(images/'+$root.defaults.region+'.png)','background-color':$root.applicationHeaderColor, 'padding-top':$root.showView && $root.user.FriendlyName ? '98px': (!$root.showView && $root.user.FriendlyName ? (($root.innerHeight)*(1.3) )+'px':'100%')}" 
     style=" -webkit-transition:padding-top 1s; transition-property:padding-top;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;   transition-duration: 1s; vertical-align: bottom !important;  z-index:999;   position:fixed; top:0px; left:0px; width:100%;      background-position: center;  " ng-mouseover="$root.top = 65"   > 
     <span >
-    <div ng-if="$root.showClouds "  ng-style="{'background-color':$root.colortouse}" style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
+    <div   ng-style="{'background-color':$root.colortouse}" 
+    style="pointer-events:none;width:100%; height:100%; display:block; position:absolute; top:0px; left:0px; z-index:-1;">
             <section ng-show="!$root.showView" class="rain"></section>
 
     </div> 
@@ -295,7 +296,7 @@
     >
              
             <div id="filterbtn" class=" btn btn-primary  " 
-            style="color:#fff !important;padding:1.1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px;   margin-left:-45px;"  
+            style="color:#fff !important; padding:1.1em; padding-left:1.3em; padding-right:1.3em; position:absolute; z-index:999; border-radius:0px;  border:none; left:0px;   top:0px;   margin-left:-45px;"  
                 ng-style="{'background-color':$root.applicationHeaderColorSecondary }"
                 ng-click="sideOpened = !sideOpened; $root.topOffSet = $root.defaultOffSet; $root.topOffSetPageView = ($root.topOffSet); animateSideBar($root.topOffSet, $root.defaultOffSet, sideOpened); $root.triggerResize()" 
                 ng-if="$root.topOffSet != $root.defaultOffSet"
@@ -360,9 +361,9 @@
 
             <div class="col-xlg-12 col-xs-12">
                 <h4 class="text-left" style="margin-bottom:0px; border-bottom:1px solid #fff; color:#fff;">User Preferences</h4>
-                <span class="pull-left"  ng-click="$root.nightTime = ! $root.nightTime; $root.colortouse  = $root.nightTime ?  '#000000c9' : 'transparent' " 
+                <span class="pull-left"  ng-click="$root.nightTime = !$root.nightTime; changeBg(); " 
                     style="color:#fff; display:inline-block; padding-left:0px; padding-top:10px;">
-                    Dark Mode <i ng-class="{'fa-toggle-on':$root.nightTime === false, 'fa-toggle-off':$root.nightTime === true}" class="fa fa-toggle-on"></i>
+                    Dark Mode <i ng-class="{'fa-toggle-on': $root.nightTime  , 'fa-toggle-off': !$root.nightTime  }" class="fa  "></i>
 
                 </span>
 
@@ -370,7 +371,7 @@
 
 
         </div>
-        <div  class="col-md-12 col-xs-12 nopadding titleArea" 
+        <div id="page-title" class="col-md-12 col-xs-12 nopadding titleArea" 
             ng-if="$root.selections.year && $root.selections.region && $root.selections.department"
             ng-style="{'top':(($root.defaultOffSet*2)-5)+'px', 'margin-top':'0px'}" 
         >
@@ -399,7 +400,7 @@
 <ul ng-mouseleave = "$root.indexOver =  ''   " 
     id="pop-over-body" 
     ng-if="$root.showView && $root.menuData[0]['children'][$root.indexOver].children.length > 0" 
-    style="top:100px !important; margin-top:0px;"  class="popOverContainer" >
+    style="top:75px !important; font-size:0.7em; margin-top:0px;"  class="popOverContainer" >
     <li ng-repeat="subitem in $root.menuData[0]['children'][$root.indexOver].children track by $index" role="menuitem" ng-click="status.isopen = false; $root.indexOver = '';  " style="cursor:pointer; margin:0px; text-decorations:none; padding:0px; padding:1em; border-bottom:thin solid #777; ">
         <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} 
         <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  

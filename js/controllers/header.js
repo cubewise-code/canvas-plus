@@ -20,8 +20,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.showView = true;
     $rootScope.activeSubTab = 0;
     $rootScope.subPathBoolean = false;
-    $rootScope.innerHeight = window.innerHeight;
-    $rootScope.innerWidth = window.innerWidth ;
+    $rootScope.innerHeight = window.outerHeight;
+    $scope.innerHeight = window.innerHeight;
+    $rootScope.innerWidth = window.outerWidth ;
     $rootScope.defaultOffSet = 50;
     $rootScope.topOffSet = $rootScope.defaultOffSet ;
     $rootScope.selectedsubParentPage = '';
@@ -214,7 +215,28 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
 
 
-    $rootScope.nightTime = false; 
+  
+    $scope.changeBg = function(){
+       
+       $timeout(
+           function(){
+            if(!$rootScope.nightTime){ 
+                console.log("color to use", "WHITE")  
+                $rootScope.colortouse  = 'transparent'; 
+            }else{
+               console.log("color to use", "DARK") 
+               
+                $rootScope.colortouse  =  '#000000c9' ;
+              
+                   
+              
+            }
+        });
+            
+  
+    
+         
+    } 
      $rootScope.findColorByHr = function(color){
              var m = moment($rootScope.overRideDate);
             //console.log(m);
@@ -228,11 +250,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
            //console.log(currentHour)
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
                 g = "transparent";
+                $rootScope.nightTime = false;
                
             } else if(currentHour >= split_evening) {
                 $rootScope.nightTime = true;
                 g = "#000000"+"c9";
             } else {
+                $rootScope.nightTime = false;
                 g ="transparent";
                 
             }
@@ -264,7 +288,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
           // $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
           
             globals.updateSettings(values, defaults, selections, parameter, options); 
-            $rootScope.getWeather($rootScope.userName);
+            
             
             // $rootScope.refreshCalendar();
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
@@ -280,7 +304,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     if(document.getElementById(idname) ){
       // //console.log(document.getElementById(idname).getBoundingClientRect().left  );
         if(document.getElementById("pop-over-body")){
-            document.getElementById("pop-over-body").style.left = document.getElementById(idname).getBoundingClientRect().left +"px";
+            document.getElementById("pop-over-body").style.left = ((document.getElementById(idname).getBoundingClientRect().left)*0.75) +"px";
         }
         
     }
@@ -304,7 +328,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
      //console.log("element:", element);
   }
   $transitions.onSuccess({}, function ($transitions) {
+
        $scope.initializeVariables();
+       $rootScope.colortouse = $rootScope.findColorByHr($rootScope.applicationHeaderColor);
     $rootScope.pathToUse = $transitions._targetState._identifier.name;
       //$rootScope.pathArray = $transitions._targetState._identifier.navigable.path;
       if($transitions._targetState._identifier.navigable){
@@ -409,6 +435,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                          }  
                  }    
             } ); 
+            $rootScope.getWeather($rootScope.userName);
      });
 
     $rootScope.createCSSSelector = function(selector, style) {
@@ -628,7 +655,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         if(document.getElementById(id)){
             var tempObjToTrack = document.getElementById(id);
             if(tempObjToTrack != null || tempObjToTrack != undefined ){
-                return (( (window.innerHeight) - (tempObjToTrack.getBoundingClientRect().top)-bottomOffset ));
+                return (( (window.outerHeight) - (tempObjToTrack.getBoundingClientRect().top)-bottomOffset ));
             }
         }
     }
@@ -640,14 +667,15 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $(window).resize(function() { 
         $timeout(
             function(){
-        $rootScope.innerHeight = window.innerHeight;
-        $rootScope.innerWidth = window.innerWidth ;
+                $scope.innerHeight = window.innerHeight;
+        $rootScope.innerHeight = window.outerHeight;
+        $rootScope.innerWidth = window.outerWidth ;
             }
         )
     });
 
     // number of drops created.
-    var nbDrop = $rootScope.innerHeight/10; 
+    var nbDrop = window.outerHeight/10; 
 
     // function to generate a random number range.
     $rootScope.randRange = function ( minNum, maxNum) {
@@ -659,8 +687,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.createRain = function(show) {
         if(show){
             for( i=1;i<nbDrop;i++) {
-            var dropLeft = $rootScope.randRange(0,$rootScope.innerWidth);
-            var dropTop = $rootScope.randRange(-$rootScope.innerHeight,$rootScope.innerHeight);
+            var dropLeft = $rootScope.randRange(0,window.outerWidth);
+            var dropTop = $rootScope.randRange(-window.outerHeight,window.outerHeight);
 
             $('.rain').append('<div class="drop" id="drop'+i+'"></div>');
             $('#drop'+i).css('left',dropLeft);

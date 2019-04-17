@@ -24,3 +24,9 @@ export.js
 js/client.startup.js
 WEB-INF/pages/Archive.zip
 ._.DS_Store*
+WEB-INF/logs/application.log.*
+/WEB-INF/logs/application.log.1
+/WEB-INF/logs/application.log.2
+/WEB-INF/logs/application.log.3
+/WEB-INF/logs/application.log.4
+/WEB-INF/logs/application.log.5

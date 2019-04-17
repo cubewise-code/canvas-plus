@@ -24,8 +24,18 @@ display:none !important;
 
 html{
     overflow:auto;
+     
+       
 }
- 
+ #header{
+     zoom:75%;
+ }
+#page-title{
+    zoom:75%;
+}
+#righthandsidebar{
+    zoom:75%;
+}
 
 /* tab system */
 
@@ -201,9 +211,29 @@ td > .form-control .input {
      border-radius: 0px;   
 }
 .form-control {
-   
-    border-radius: 0px;   
-}
+    display: block;
+    width: 100%;
+    height: auto !important;
+    padding: 6px 6px;
+    font-size: inherit;
+    line-height: inherit;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+         -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  }
+  .form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+  }
 #bodyContent .tm1-ui-dbr-input-simple {
     text-align:right;
 }
@@ -668,4 +698,21 @@ div.tm1-subnm-hierarchy-style {
 }
 @-moz-keyframes fall {
     to {margin-top:900px;}
+}
+
+.table{
+    font-size:0.7em;
+}
+.tm1-ui-login  {
+   zoom:70%;
+  }
+  .input-group .form-control {
+    position: relative;
+    z-index: unset;  
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.tm1-select-plain-style{
+    z-index:1 !important;
 }

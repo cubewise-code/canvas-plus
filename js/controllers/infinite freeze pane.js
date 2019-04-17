@@ -380,7 +380,7 @@ $scope.getHeight= function() {
         }
     }
                 
-   return ((window.innerHeight) - ((top)+60));
+   return ((window.outerHeight) - ((top)+60));
 }
   
 
@@ -394,7 +394,7 @@ $scope.getHeight= function() {
 		$sidebar = $(el).find('.fixedTable-sidebar table');
 		$header = $(el).find('.fixedTable-header table');
         var top = document.getElementById("dynamic-table").getBoundingClientRect().top;
-        $scope.config.itemsDisplayedInList = Math.round(((window.innerHeight) - ((top)+60))/37)+2;
+        $scope.config.itemsDisplayedInList = Math.round(((window.outerHeight) - ((top)+60))/37)+2;
         console.log('height container', $scope.config.itemsDisplayedInList);
           
  
@@ -667,8 +667,8 @@ $scope.getHeight= function() {
             }
         }
         var top = document.getElementById("dynamic-table").getBoundingClientRect().top;
-        if(Math.round((((window.innerHeight) - ((top)+60))/37)+2) > $scope.config.itemsDisplayedInList   ){
-               $scope.config.itemsDisplayedInList = Math.round(((window.innerHeight) - ((top)+60))/37)+2;
+        if(Math.round((((window.outerHeight) - ((top)+60))/37)+2) > $scope.config.itemsDisplayedInList   ){
+               $scope.config.itemsDisplayedInList = Math.round(((window.outerHeight) - ((top)+60))/37)+2;
         }
       
         console.log($( window ).width(), "RESIZE       ######");

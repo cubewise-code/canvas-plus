@@ -18,5 +18,9 @@
   "mdxview": {
     "url": "/mdxview",
     "templateUrl": "html/MDXView.html"
+  },
+  "namedmdx": {
+    "url": "/namedmdx",
+    "templateUrl": "html/NamedMdx.html"
   }
 }

@@ -3,18 +3,33 @@
 
 
 <style>
+    #custom-page{
+        font-size:0.7em;
+    }
 #custom-page h3{
+    font-size:1.3em !important;
     border-bottom:1px solid #666; padding-bottom:10px; line-height:1.3em; 
 }
 #custom-page h4{
+    
     border-bottom:1px solid #666; padding-bottom:10px; line-height:1.3em; 
 }
 #custom-page h4{
+    
     padding-left:10px;
     background-color: #f0efef;
-    border-bottom:1px solid #666; padding-bottom:10px; line-height:1.3em; 
+    border-bottom:1px solid #666; 
+    padding-bottom:10px;
+    line-height:1.3em; 
 }
-
+.dropdown-item{
+	cursor:pointer;
+	text-align: left;
+	padding-top:0px;
+	padding-bottom:0px;
+	border: 0px solid steelblue;
+	border-top:2px solid steelblue;
+}
 </style>
 <div id="custom-page" class="col-xs-12 col-md-12" ng-show="customPage" ng-controller="supercubeviewcustompageCtrl" ng-style="{'padding-top':(((getTableTop()+'').split('px').join(''))-35)+'px'}">
     <div class="col-xs-12 col-md-12" > 
@@ -29,7 +44,7 @@
                     <h4 style="padding-left:0px; padding-bottom:10px; padding-top:10px; margin:0px; background-color: #fff;  border-bottom:0px solid #fff;"> 
                          
                                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
-                                style=" background-color:steelblue !important; width:100%; font-size:1em; color:#fff; border-radius:0px; border:1px solid steelblue !important; text-align:left; cursor:pointer;";
+                                style=" background-color:steelblue !important; width:100%; font-size:0.7em; color:#fff; border-radius:0px; border:1px solid steelblue !important; text-align:left; cursor:pointer;";
                                 data-toggle="dropdown" ng-click="showCubeList = !showCubeList" aria-haspopup="true" aria-expanded="false" 
                                  >
                                 {{activeCubeName}} 
@@ -42,7 +57,7 @@
                                             ng-mouseover="cubeNameOver = cube.Name; "
                                             ng-mouseout="cubeNameOver = ''; "
                                             ng-style="{'background-color': cubeNameOver === cube.Name ? 'steelblue':'#fff', 'color':cubeNameOver === cube.Name ? '#fff':'steelblue'}"
-                                            style="width:100%;  cursor:pointer;" 
+                                            style="width:100%; font-size:0.7em;   cursor:pointer;" 
                                             ng-click="  chooseCube(cube.Name);   " class="dropdown-item"  >
                                             <span class="pull-left" style="margin-right:10px;">
                                                     <i ng-if="activeCubeName === cube.Name" class="fa fa-check dropdown-check" aria-hidden="true"></i>
@@ -65,7 +80,7 @@
                 <div class="col-xs-12 col-md-12 nopadding">     
                  
                 <h4 style="padding-left:0px; padding-bottom:10px; padding-top:10px; margin:0px; background-color: #fff; border-bottom:0px solid #fff;"><button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
-                    style=" background-color:steelblue !important; width:100%; font-size:1em; color:#fff; border-radius:0px; border:1px solid steelblue !important; text-align:left; cursor:pointer;";
+                    style=" background-color:steelblue !important; width:100%;  font-size:0.7em;  color:#fff; border-radius:0px; border:1px solid steelblue !important; text-align:left; cursor:pointer;";
                     data-toggle="dropdown" ng-click="showViewCubeList = !showViewCubeList" aria-haspopup="true" aria-expanded="false" 
                      >
                     {{activeCubeViewName}} 
@@ -78,12 +93,12 @@
                                 ng-mouseover="cubeViewOver = cubeview.Name; "
                                 ng-mouseout="cubeViewOver = ''; "
                                 ng-style="{'background-color': cubeViewOver === cubeview.Name ? 'steelblue':'#fff', 'color':cubeViewOver === cubeview.Name ? '#fff':'steelblue'}"
-                                style="width:100%;   cursor:pointer;" 
+                                style="width:100%;  font-size:0.7em;   cursor:pointer;" 
                                 ng-click="  chooseCubeView(cubeview.Name);    " class="dropdown-item"  >
                                 <span class="pull-left" style="margin-right:10px;">
                                         <i ng-if="activeCubeViewName === cubeview.Name" class="fa fa-check dropdown-check" aria-hidden="true"></i>
                                 </span>
-                                <span style="padding-left:10px;">{{cubeview.Name}}</span>
+                                <span style="padding-left:10px;  font-size:1em;">{{cubeview.Name}}</span>
                                      
                              
                         </button>  
@@ -96,7 +111,7 @@
              
             <div   class="col-xs-12 col-md-12" style="margin-bottom:20px;" >
                     <div  class="col-xs-12 col-md-12 nopadding" style="border:1px solid #ccc;" > 
-                    <h4 style="padding-bottom:10px; padding-top:10px; margin-top:0px;">Titles</h4>
+                    <h4 style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;">Titles</h4>
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) === -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) === -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
@@ -153,7 +168,7 @@
             </div>
             <div ng-show="showDimensionality" class="col-xs-12 col-md-6"  >
                     <div  class="col-xs-12 col-md-12 nopadding" style="border:1px solid #ccc;" > 
-                    <h4 style="padding-bottom:10px; padding-top:10px; margin-top:0px;">Rows</h4>
+                    <h4 style="padding-bottom:10px; padding-top:10px; margin-top:0px;  font-size:1em;">Rows</h4>
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) > -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) === -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">
@@ -206,7 +221,7 @@
             </div>
             <div ng-show="showDimensionality" class="col-xs-12 col-md-6"  >
                     <div  class="col-xs-12 col-md-12 nopadding"  style="border:1px solid #ccc;" > 
-                    <h4 style="padding-bottom:10px; padding-top:10px; margin-top:0px;">Columns</h4>
+                    <h4 style="padding-bottom:10px; padding-top:10px; margin-top:0px;  font-size:1em;">Columns</h4>
                     <div ng-show="showDimensionality && ($root.dimensionsOnRows).indexOf(dimension.Name) === -1 &&  ($root.dimensionsOnColumns).indexOf(dimension.Name) > -1 "
                         style="cursor:pointer" style="padding-bottom:10px; padding-top:10px;" 
                             ng-repeat="dimension in dimensionalityArray['Dimensions'] track by $index">

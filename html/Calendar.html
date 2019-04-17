@@ -1,14 +1,18 @@
 
- 
+ <style>
+     #calendarConatiner > h4{
+         font-size:0.7em;
+     }
+ </style>
 <div   
-    ng-style="{'top':((defaultOffSet*2)+30)+'px','width': ((innerWidth - (defaultOffSet)))+'px','height':$root.calendarShow ? (($root.innerHeight)-(defaultOffSet*3))+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"  
-     class=" calendar-container "  >	
+    ng-style="{'top':((defaultOffSet*2))+'px', 'height':$root.calendarShow ? ((innerHeight)-(defaultOffSet*2))+'px':'0px','opacity':$root.calendarShow ? '1':'0' , 'transition-delay':$root.calendarShow ? '1s':'0s'}"  
+     class=" calendar-container " style="width:100%; font-size:0.7em; z-index:99;" >	
     
 	<div class=" calendar-header"   >
-        <h4   ng-style="{'top':(defaultOffSet+40),'width':innerWidth-(defaultOffSet),'height':(defaultOffSet-7)+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
-            style="position:fixed; pointer-events:none; padding-top:15px;  left:0px; margin-top:0px; z-index:999999; color:#fff;width:100%; padding-right:20px;  ">
+        <h4   ng-style="{'top':'73px', 'height':(defaultOffSet-18)+'px', 'background-color':$root.applicationHeaderColorSecondary}" 
+            style="position:fixed;  width:100%; padding-top:15px; font-size:1em; left:0px; margin-top:0px; z-index:999999; color:#fff;width:100%; padding-right:20px;  ">
                     
-                <span style=" width:100%; padding-left:40px; padding-right:12px;"> {{selections.year}} 
+                <span style=" width:100%; padding-left:40px; padding-right:12px;"> <strong>{{selections.year}} </strong>
 
                     <span ng-show="selections.dateToSee" ng-click="showSchedule = !showSchedule" 
                         class="pull-right" style="cursor:pointer">
@@ -21,16 +25,16 @@
         </h4>
               
                
-        <div ng-class="{'col-xs-12 col-md-6 col-xlg-6':scheduleShow && selections.dateToSee , 'col-xs-12 col-md-12 col-xlg-12':!scheduleShow && selections.dateToSee , 'col-xlg-12 col-md-12 col-xs-12':!scheduleShow  && !selections.dateToSee }">
+        <div id="calendarContainer" ng-class="{'col-xs-12 col-md-6 col-xlg-6':scheduleShow && selections.dateToSee , 'col-xs-12 col-md-12 col-xlg-12':!scheduleShow && selections.dateToSee , 'col-xlg-12 col-md-12 col-xs-12':!scheduleShow  && !selections.dateToSee }">
             <div    
              
              ng-class="{'col-xs-12 col-md-12 col-xlg-12': selections.dateToSee , 'col-xlg-2 col-md-2 col-xs-12':!selections.dateToSee }"
              ng-init="getDaysInMonth($index, selections.year);  "
              ng-if="!loading"
              ng-hide="selections.dateToSee && calendarMonthSelected != includeZeroForNum($index+1)"
-             ng-style="{'top':(defaultOffSet+10)+'px'}"
+         
 				ng-repeat="month in defaults.months track by $index"  
-				style=" z-index:22;  margin:0 auto;    border-radius:0px; min-height:278px;"  >
+				style=" z-index:22;  margin:0 auto;   top:10px; border-radius:0px; min-height:250px;"  >
                
                     
                 
@@ -38,7 +42,7 @@
                      ng-style="{'border-top':calendarMonthSelected === includeZeroForNum($index+1) && selections.year == setYear  ? '5px solid orange':'1px solid transparent'}" >
                   
                      
-                    <h4 style="color:#fff;" >
+                    <h4 style="color:#fff; font-size:1.2em;" >
                     <strong style="display:inline-block" >
                     {{month}}  
                     
@@ -47,9 +51,9 @@
                          
                           <span ng-show="selections.dateToSee"  class="pull-right" > 
                                 <div   
-                                    style="background-color:orange !important; cursor:pointer;padding:10px; border:0px solid orange !important; position: absolute; right: 15px; top: 0px; border-radius: 0px;"
+                                    style="background-color:orange !important; cursor:pointer;padding:10px; font-size:0.7em; border:0px solid orange !important; position: absolute; right: 15px; top: 0px; border-radius: 0px;"
                                     ng-click="hasNum = []; selections.dateToSee = false; openEventCreate = false; selections.dateCreateNew = false; loadcalendarYearIsHere()" 
-                                    ><i class="fa fa-times"></i></div>
+                                    ><i style="font-size:1em; font-weight:700;" class="fa fa-angle-up"></i></div>
                             </span>
                      </span>
                       
@@ -115,13 +119,13 @@
                         </h4>-->
                         <div ng-show="openEventCreate" class="full-width" style="padding-left:15px; padding-right:15px; color:#fff;">
                            
-                        <h4 >Create Event {{'#'+(itemDeleted+1)}}
+                        <h4 style=" font-size:1.3em;">Create Event {{'#'+(itemDeleted+1)}}
                             <span class="pull-right">
                                       <div ng-if="selections.dateToSee && calendarMonthSelected === includeZeroForNum($index+1)" 
                                         ng-show="openEventCreate"
                                             style="  top:0px; vertical-align:top; right:0px; width:auto; ">
-                                            <div ng-click="   createEvent(eventName) " class="btn btn-warning" style=" background-color:darkorange !important; border-radius:0px;">
-                                            <i ng-if="openEventCreate" class="fa fa-times" area-hidden="true"></i>
+                                            <div ng-click="   createEvent(eventName) " class="btn btn-warning" style=" background-color:transparent !important; border-radius:0px; border:none !important">
+                                            <i ng-if="openEventCreate" style="font-size:1em;" class="fa fa-times" area-hidden="true"></i>
                                             </div>
                                         </div>
                             </span>
