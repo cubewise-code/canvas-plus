@@ -270,7 +270,7 @@ svg:not(:root) {
 									style="width:100%; max-width:150px;  float:left; background-color:steelblue; color:steelblue;"> 
 										
 										<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer;" 
-													ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+													ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item"  >
 												 
 													Line
 													<span class="pull-right">
@@ -279,7 +279,7 @@ svg:not(:root) {
 											 
 										</button> 
 										<button ng-show="chartName != 'Multi Bar'" style="width:100%; background-color:#fff; color:steelblue; cursor:pointer; " 
-										ng-click="activeOption = 2; activeName = 'multiBarChart'; chartName = 'Multi Bar' ; options['chart']['margin']['left'] = 0; options['chart']['margin']['right'] = 0; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+										ng-click="activeOption = 2; activeName = 'multiBarChart'; chartName = 'Multi Bar' ; options['chart']['margin']['left'] = 0; options['chart']['margin']['right'] = 0; options.chart.type = activeName;  api.update()" class="dropdown-item" >
 											 
 												Multi Bar 
 												<span class="pull-right">
@@ -290,7 +290,7 @@ svg:not(:root) {
 										</button>
 									 
 										<button ng-show="chartName != 'Stacked Area'" style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; " 
-										ng-click="activeOption = 3; activeName = 'stackedAreaChart';  chartName = 'Stacked Area' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+										ng-click="activeOption = 3; activeName = 'stackedAreaChart';  chartName = 'Stacked Area' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" >
 												 Stacked Area 
 												<span class="pull-right">
 														<i ng-if="activeOption == 3 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
@@ -299,7 +299,7 @@ svg:not(:root) {
 	
 										</button>
 										 <!-- <button ng-show="chartName != 'Multi'" style="width:100%;background-color:#fff; color:steelblue; " 
-										ng-click="activeOption = 4; activeName = 'multiChart'; chartName = 'Multi' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item" href="">
+										ng-click="activeOption = 4; activeName = 'multiChart'; chartName = 'Multi' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item"  >
 												 Multi Chart
 												<span class="pull-right">
 														<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
