@@ -683,12 +683,13 @@ svg:not(:root) {
 										 
 										ng-paste="handlePaste($event)"
 										cellref="{{(cell.reference()).toString()}}" 
-										 ng-if="!$root.useDbr && !$root.useMdxNow && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
+										 ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
 										 tm1-instance="{{tm1Instance}}"
 										 tm1-cube="{{cubeName}}"
 										 tm1-elements='{{(cell.reference()).toString()}}' 
 										 >
 									</tm1-ui-dbr>
+									
 									<span ng-if="  !$root.useDbr && $root.useMdxNow && $root.useMdxNow === true " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
 								 
 									<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>

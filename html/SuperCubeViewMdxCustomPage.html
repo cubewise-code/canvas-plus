@@ -49,10 +49,10 @@ textarea.ng-valid {
             <i style="padding-right:10px" class="fa fa-cube"></i>MDX Parameters
              
             <span class="pull-right"  >   
-                    <button style="font-size:0.7em; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;" class="btn btn-primary" ng-click="$root.useMdx ? $root.setMdx($root.mdxString) : $root.setMdxId()"><i style="color:#fff;" class="fa fa-flash"></i></button>
+                    <button style="font-size:0.7em; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;" class="btn btn-primary" ng-click="$root.useMdxNow ? $root.setMdx($root.mdxString) : $root.setMdxId()"><i style="color:#fff;" class="fa fa-flash"></i></button>
                 </span>
                 <span class="pull-right"  >   
-                        <span style="font-size:1em; color:steelblue; background-color:transparent; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;"   ng-click="$root.useMdx = !$root.useMdx"> MDX <i    ng-class="{ 'fa-toggle-on':$root.useMdx,'fa-toggle-off':!$root.useMdx }" class="fa "></i></span>
+                        <span style="font-size:1em; color:steelblue; background-color:transparent; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;"   ng-click="$root.useMdxNow = !$root.useMdxNow"> MDX <i    ng-class="{ 'fa-toggle-on':$root.useMdxNow,'fa-toggle-off':!$root.useMdxNow }" class="fa "></i></span>
                     </span>
         </h3>
     </div>
@@ -88,17 +88,17 @@ textarea.ng-valid {
                                 </div>
                 </h4>
                 </div>    
-        <div class="col-xs-12 col-md-12 nopadding" ng-if="$root.useMdx" >    
-                    <h3 ng-if="$root.useMdx" >
+        <div class="col-xs-12 col-md-12 nopadding" ng-if="$root.useMdxNow" >    
+                    <h3 ng-if="$root.useMdxNow" >
                             Execute Mdx:
                         </h3>  
                 <textarea style="width:100%;" ng-model="$root.mdxString" required></textarea>
             </div>
             <div class="col-xs-12 col-md-12 nopadding" >  
-                <h3 ng-if="!$root.useMdx" >
+                <h3 ng-if="!$root.useMdxNow" >
                     Named Mdx Id:
                 </h3>  
-                    <textarea  ng-if="!$root.useMdx"   style="width:100%; min-height:40px; border:1px solid steelblue" ng-model="$root.mdxId" ></textarea>
+                    <textarea  ng-if="!$root.useMdxNow"   style="width:100%; min-height:40px; border:1px solid steelblue" ng-model="$root.mdxId" ></textarea>
 
             </div>
             
