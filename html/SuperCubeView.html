@@ -297,7 +297,7 @@ svg:not(:root) {
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						 Read Only Cells <i class="fa fa-info-circle" aria-hidden="true"></i>
 					</span>
-					<span class="pull-right label-warning" ng-if="!tableHide && $root.useDbr " 
+					<span class="pull-right label-warning" ng-if="!tableHide && $root.useDbr ||  table.data().length >= 300  " 
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						Slow Loading <i class="fa fa-info-circle" aria-hidden="true"></i>
 					</span>
@@ -379,7 +379,7 @@ svg:not(:root) {
 					counter-increment: page;
 					content:"Page " counter(page);
 					left: 0; 
-					top: 100%;
+					bottom: 0px;
 					white-space: nowrap; 
 					z-index: 20;
 					-moz-border-radius: 5px; 
