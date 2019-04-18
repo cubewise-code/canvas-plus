@@ -16,8 +16,11 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.pageTitle = "Super Cube View + Freezepane";
     $rootScope.cubeName = "General Ledger"
     $rootScope.cubeView = "Budget Template"
-    
+    $rootScope.useMdx = false;
+    $rootScope.useMdxNow = false; 
+    $rootScope.useDbr = false;
     $rootScope.showView = true; 
+
     //$rootScope.calendarShow = true ;
    
     $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description'}}
