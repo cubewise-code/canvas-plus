@@ -659,17 +659,29 @@ svg:not(:root) {
 
 										 
 										<tm1-ui-dbr 
-										 
-
-										 ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr  "
+										ng-paste="handlePaste($event)"
+										cellref="{{(cell.reference()).toString()}}" 
+										 ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1) "
 										 tm1-instance="{{tm1Instance}}"
 										 tm1-cube="{{cubeName}}"
 										 tm1-elements='{{(cell.reference()).toString()}}' 
 										 >
 									</tm1-ui-dbr>	 
+									<tm1-ui-dbr  
+									ng-paste="handlePaste($event)"
+									cellref="{{(cell.reference()).toString()}}" 
+											ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) "
+											tm1-instance="{{tm1Instance}}"
+											tm1-cube="{{cubeName}}"
+											tm1-elements='{{(cell.reference()).toString()}}' 
+											tm1-data-decimal="2"
+											tm1-format-percentage="true"
+											>
+									</tm1-ui-dbr>	 
 										<tm1-ui-dbr 
 										 
-
+										ng-paste="handlePaste($event)"
+										cellref="{{(cell.reference()).toString()}}" 
 										 ng-if="!$root.useDbr && !$root.useMdx && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
 										 tm1-instance="{{tm1Instance}}"
 										 tm1-cube="{{cubeName}}"
