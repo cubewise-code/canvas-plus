@@ -246,7 +246,7 @@ svg:not(:root) {
 			 >
 					<span ng-if="customPage"  ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
 					style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-						Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
+					 	Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
 					 
 					<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
@@ -293,7 +293,7 @@ svg:not(:root) {
 					 
 						 
 					</span>
-					<span class="pull-right" ng-if="!tableHide && $root.useMdx && !$root.useDbr " 
+					<span class="pull-right" ng-if="!tableHide && $root.useMdxNow && !$root.useDbr " 
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						 Read Only Cells, No Format Used <i class="fa fa-info-circle" aria-hidden="true"></i>
 					</span>
@@ -617,7 +617,7 @@ svg:not(:root) {
 										cellref="{{(cell.reference()).toString()}}" 
 										contenteditable='true'  
 										id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-										ng-if=" !$root.useDbr && !$root.useMdx && !cell.isReadOnly && row.cells[$index].isNumeric === true && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 " 
+										ng-if=" !$root.useDbr && !$root.useMdxNow && !cell.isReadOnly && row.cells[$index].isNumeric === true && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 " 
 										type="text"  
 										class="form-control text-right" 
 										tm1-ui-format-number="0" 
@@ -632,7 +632,7 @@ svg:not(:root) {
 										cellref="{{(cell.reference()).toString()}}" 
 										contenteditable='true'  
 										id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-										ng-if=" !$root.useDbr && !$root.useMdx &&  !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false" 
+										ng-if=" !$root.useDbr && !$root.useMdxNow &&  !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false" 
 										type="text" 
 										class="form-control text-left"  
 										ng-attr-tabindex="{{row.index}}" 
@@ -647,7 +647,7 @@ svg:not(:root) {
 										cellref="{{(cell.reference()).toString()}}" 
 										contenteditable='true'  
 										id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-										ng-if="!$root.useDbr && !$root.useMdx && !cell['HasPicklist'] && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) && !cell.isReadOnly && row.cells[$index].isNumeric === true" 
+										ng-if="!$root.useDbr && !$root.useMdxNow && !cell['HasPicklist'] && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) && !cell.isReadOnly && row.cells[$index].isNumeric === true" 
 										type="text" 
 										class="form-control text-right" 
 										tm1-ui-format-number="0" 
@@ -683,21 +683,21 @@ svg:not(:root) {
 										 
 										ng-paste="handlePaste($event)"
 										cellref="{{(cell.reference()).toString()}}" 
-										 ng-if="!$root.useDbr && !$root.useMdx && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
+										 ng-if="!$root.useDbr && !$root.useMdxNow && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
 										 tm1-instance="{{tm1Instance}}"
 										 tm1-cube="{{cubeName}}"
 										 tm1-elements='{{(cell.reference()).toString()}}' 
 										 >
 									</tm1-ui-dbr>
-									<span ng-if="  !$root.useDbr && $root.useMdx  " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
-									
+									<span ng-if="  !$root.useDbr && $root.useMdxNow && $root.useMdxNow === true " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
+								 
 									<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
 									
 								   <!-- {{ $root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]   }} | {{dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']}} :{{!$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] ? 'NOTHING':'' }} | {{(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%')}} {{(dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%')}}   -->
 								 
-									<span ng-if="!$root.useDbr && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
+									<span ng-if=" !$root.useDbr && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
 												 style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-									<span ng-if="!$root.useDbr && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" 
+									<span ng-if="  !$root.useDbr && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" 
 													style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
 									<span ng-if=" !$root.useDbr && !$root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
 													style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
@@ -755,7 +755,7 @@ svg:not(:root) {
 								</td>
 								<td ng-repeat="cell in row.cells" class="text-right" >
 							 
-										<span ng-if=" $root.useDbr || $root.useMdx  " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
+										<span ng-if=" $root.useDbr || $root.useMdxNow  " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
 									
 									<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
 									
