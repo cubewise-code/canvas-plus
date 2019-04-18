@@ -2121,6 +2121,16 @@
                   
            
               }
+              scope.getContainerLeft = function(idName){
+                if(document.getElementById(idName)){
+                    var tempObj = document.getElementById(idName);
+                    if(tempObj != null || tempObj != undefined ){
+                        return tempObj.getBoundingClientRect().left;
+                    }
+                }
+                
+         
+            }
            
               scope.getContainerHeight = function(idName){
                   if(document.getElementById(idName)){

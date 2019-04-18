@@ -242,26 +242,31 @@ svg:not(:root) {
   
   	<div class="row"   >
 				 
-			<div ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  top:110px; background-color:steelblue; color:#fff; padding-top:0px;height:29px;   text-align:center;" 
+			<div ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  top:110px; background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:auto;  text-align:center;" 
 			 >
 					<span ng-if="customPage"  ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
-					style="margin:2px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+					style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
-			 		<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
-					 style="margin:2px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i>
+					 
+					<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
+					 style="margin:2px; padding:5px; display:inline-block;  padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i> 
 					</span>
+					 
 					<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "  
-					 style="margin:2px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						 Use DBR <i ng-class="{'fa-toggle-off':!$root.useDbr ,'fa-toggle-on': $root.useDbr }" class="fa "></i>
 					</span>
+					<span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
+							<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+					</span>  
 					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
-					style="margin:2px; margin-right:1px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-							 Charts  <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
+					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+						 Charts  <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
-					<span ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
-					style="margin:0px; margin-top:5px; padding:0px;  float:left; left:0px;" > 
+					<span id="chartDrop" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
 							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:150px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
 									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
 									style="width:100%; max-width:150px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
@@ -270,6 +275,33 @@ svg:not(:root) {
 									{{chartName}} 
 									<span class="pull-right"> <i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i></span>	
 									</button>
+									 
+							</div>
+					</span>
+					<span ng-show="chartVisible" > 
+						 
+							<span ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); "  
+							 style="margin : 5px; margin-bottom:0px; margin-top:0px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+									Options	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
+							</span>
+						 
+						<span ng-if="options['chart']['showLegend'] && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
+						style="margin : 5px; margin-bottom:0px; margin-top:0px; display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+							Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
+						</span>
+						
+					 
+						 
+					</span>
+					 
+				</span>
+
+			</div>
+	 
+							<div class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop')+20)+'px','left': getContainerLeft('chartDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:200px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
+							  
+								 
 									<div ng-show="showChartOptions" class="out-shadow" ng-init="activeOption = 1" 
 									style="width:100%; max-width:150px;  float:left; background-color:steelblue; color:steelblue;"> 
 										
@@ -302,41 +334,12 @@ svg:not(:root) {
 													</span>
 	
 										</button>
-										 <!-- <button ng-show="chartName != 'Multi'" style="width:100%;background-color:#fff; color:steelblue; " 
-										ng-click="activeOption = 4; activeName = 'multiChart'; chartName = 'Multi' ; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  api.update()" class="dropdown-item"  >
-												 Multi Chart
-												<span class="pull-right">
-														<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
-												</span>
-												
-	
-										</button>  -->
+										 
 										 
 									 
 									</div>
 							</div>
-					</span>
-					<span ng-show="chartVisible" > 
-						 
-							<span ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); "  
-							 style="margin : 5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-									Options	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
-							</span>
-						 
-						<span ng-if="options['chart']['showLegend'] && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
-						style="margin : 5px; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-							Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
-						</span>
-						
-					 
-						 
-					</span>
-					<span  class="pull-right text-left"  style="margin:5px; margin-right:10px; margin-left:0px; width:30px; font-size:0.8em; overflow:hidden;height:32px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-						<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
-					</span> 
-				</span>
-
-			</div>
+				 
 			<div id="stickyContainer{{tableId}}"  class="stickyContainer "  
 				ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
 				<span  >
@@ -754,7 +757,40 @@ svg:not(:root) {
 								</td>
 								<td ng-repeat="cell in row.cells" class="text-right" >
 							 
-									<span   style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
+										<span ng-if=" $root.useDbr || $root.useMdx  " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
+									
+									<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
+									
+								   <!-- {{ $root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]   }} | {{dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']}} :{{!$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] ? 'NOTHING':'' }} | {{(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%')}} {{(dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%')}}   -->
+								 
+									<span ng-if="  (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
+												 style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+									<span ng-if="  (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" 
+													style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+									<span ng-if="   !$root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
+													style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+								 
+								 
+									<span ng-if="   !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']]  && row.cells[$index].isNumeric  && cell.isReadOnly && cell.value < 0 " 
+														style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+									 <span ng-if="  !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value >= 0" 
+														 style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+ 
+									 
+									 
+									
+									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
+												 style="padding-right: 10px; color:darkred"> {{formatPercentageString(cell.value, 2)}} </span>
+									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1 )&& row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
+													 style="padding-right: 10px;"> {{ formatPercentageString(cell.value, 2)}}   </span>
+
+		 
+
+									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
+																style="padding-right: 10px; color:darkred"> {{formatPercentageString(cell.value, 2)}} </span>
+									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 ||  (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
+																	style="padding-right: 10px;"> {{formatPercentageString(cell.value, 2)}}   </span>
+		
 								</td>
 							</tr>
 						</tbody>
