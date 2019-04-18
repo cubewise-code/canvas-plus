@@ -293,6 +293,18 @@ svg:not(:root) {
 					 
 						 
 					</span>
+					<span class="pull-right" ng-if="!tableHide && $root.useMdx && !$root.useDbr " 
+					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+						 Read Only Cells <i class="fa fa-info-circle" aria-hidden="true"></i>
+					</span>
+					<span class="pull-right label-warning" ng-if="!tableHide && $root.useDbr " 
+					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+						Slow Loading <i class="fa fa-info-circle" aria-hidden="true"></i>
+					</span>
+					<span class="pull-right  label-danger" ng-if="!tableHide && $root.useDbr && table.data().length >= 200 " 
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+					Warning: Reduce Rows DBR Used  <i class="fa fa-info-circle" aria-hidden="true"></i>
+				 </span>
 					 
 				</span>
 
