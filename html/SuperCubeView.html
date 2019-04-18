@@ -293,24 +293,25 @@ svg:not(:root) {
 					 
 						 
 					</span>
-					<span class="pull-right" ng-if="!tableHide && $root.useMdxNow && !$root.useDbr " 
-					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-						 Read Only Cells, No Format Used <i class="fa fa-info-circle" aria-hidden="true"></i>
-					</span>
-					<span class="pull-right label-warning" ng-if="!tableHide && $root.useDbr ||  table.data().length >= 300  " 
-					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-						Slow Loading <i class="fa fa-info-circle" aria-hidden="true"></i>
-					</span>
-					<span class="pull-right  label-danger" ng-if="!tableHide && $root.useDbr && table.data().length >= 200 " 
-					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-					Warning: Reduce Rows DBR Used <i class="fa fa-info-circle" aria-hidden="true"></i>
-				 </span>
+					<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right" ng-if="!tableHide && $root.useMdxNow && !$root.useDbr " 
+					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
+					 <span ng-show="!$root.warningOff"> <i class="fa fa-info-circle" aria-hidden="true"></i> Read Only Cells, No Format Used {{$root.warningOff}}<i   class="fa fa-times" aria-hidden="true"></i></span>
+				</div>
+					<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right " ng-if="!tableHide && $root.useDbr ||  table.data().length >= 300  " 
+					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
+					 <span ng-show="!$root.warningOff"><i class="fa fa-info-circle" aria-hidden="true"></i>	DBR's with extra functionality {{$root.warningOff}}<i   class="fa fa-times" aria-hidden="true"></i></span>
+					</div>
+					<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right  " ng-if="!tableHide && $root.useDbr && table.data().length >= 200  " 
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
+					<span ng-show="!$root.warningOff">
+						<i class="fa fa-info-circle" aria-hidden="true"></i>	Warning: Reduce Rows <i   class="fa fa-times" aria-hidden="true"></i>
+				</span>	</div>
 					 
-				</span>
+				 
 
 			</div>
 	 
-							<div class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop')+20)+'px','left': getContainerLeft('chartDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+			<div class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop')+20)+'px','left': getContainerLeft('chartDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:200px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
 							  
 								 
@@ -350,7 +351,7 @@ svg:not(:root) {
 										 
 									 
 									</div>
-							</div>
+			</div>
 				 
 			<div id="stickyContainer{{tableId}}"  class="stickyContainer "  
 				ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
