@@ -328,7 +328,7 @@ svg:not(:root) {
 						 
 					</span>
 					<span  class="pull-right text-left"  style="margin:5px; margin-right:10px; margin-left:0px; width:30px; font-size:0.8em; overflow:hidden;height:32px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-						<tm1-ui-export    tm1-target-id="af1{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+						<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span> 
 				</span>
 
@@ -600,20 +600,20 @@ svg:not(:root) {
 																			</span>
 																			
 								</td>
-								<td   ng-init="seeDataNew(cell)" id="headerColHeight{{tableId}}{{$index}}"  
+								<td    id="headerColHeight{{tableId}}{{$index}}"  
 									ng-style="{  'width':dataWidth+'px ', 'min-width':dataWidth+'px ' ,  'border-right':'1px solid #ccc'}" 
 									ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); " 
 									ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 									ng-repeat="cell in row.cells track by $index" class="text-right" >
 									
-							 
-
+								 
+								 
 										<input style="font-size:1em !important;"
 										cellref="{{(cell.reference()).toString()}}" 
 										contenteditable='true'  
 										id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-										ng-if="!cell['HasPicklist'] && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 && !cell.isReadOnly && row.cells[$index].isNumeric === true" 
-										type="text" 
+										ng-if="  !cell.isReadOnly && row.cells[$index].isNumeric === true && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 " 
+										type="text"  
 										class="form-control text-right" 
 										tm1-ui-format-number="0" 
 										ng-attr-tabindex="{{row.index}}" 
@@ -627,7 +627,7 @@ svg:not(:root) {
 										cellref="{{(cell.reference()).toString()}}" 
 										contenteditable='true'  
 										id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-										ng-if=" !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false" 
+										ng-if="   !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false" 
 										type="text" 
 										class="form-control text-left"  
 										ng-attr-tabindex="{{row.index}}" 
@@ -653,12 +653,12 @@ svg:not(:root) {
 										ng-focus="getFocus($event);  " 
 										ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
 
-
-									 
+										 
+										 
 										<tm1-ui-dbr 
 										 
 
-										 ng-if="!$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly "
+										 ng-if=" !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly "
 										 tm1-instance="{{tm1Instance}}"
 										 tm1-cube="{{cubeName}}"
 										 tm1-elements='{{(cell.reference()).toString()}}' 
@@ -699,11 +699,37 @@ svg:not(:root) {
 		
 									
 										 
-						 
+					 
 		
 							 
 								 
 									 
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table ng-show="false" class="table" id="af{{tableId}}">
+
+						<thead>
+							<tr ng-repeat="row in dataset.headers">
+								<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+									{{col.dimension}}
+								</th>
+								<th ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+									{{col.name}}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="row in table.data()" >
+								<td ng-repeat="el in row.elements"     >
+								 
+									{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
+								</td>
+								<td ng-repeat="cell in row.cells" class="text-right" >
+							 
+									<span   style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
 								</td>
 							</tr>
 						</tbody>
@@ -713,21 +739,21 @@ svg:not(:root) {
 					style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
 					>
 						<div class="btn-group pull-right" role="group" style="padding-top:3px;"   >
-							<button type="button" class="btn btn-default"     ng-click="table.previous(); "><i class="fa fa-angle-left"></i></button>
+							<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default"     ng-click="table.previous(); "><i class="fa fa-angle-left"></i></button>
 							<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>
-							<button type="button" class="btn btn-default"   ng-click="table.next(); "><i class="fa fa-angle-right"></i></button>
+							<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default"   ng-click="table.next(); "><i class="fa fa-angle-right"></i></button>
 						</div>
 						<div class="btn-group pull-right" role="group" style="padding-top:3px;" >
-								<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">10</button>
-								<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15); currentRowCount = 15; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">15</button>
-								<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30); currentRowCount = 30; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">30</button>
-								<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50); currentRowCount = 50; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">50</button>
-								<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(100);  currentRowCount = 100;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">100</button>
-								<button ng-show=" table.isPageSize(100) || table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(200)}" ng-click="table.pageSize(200);  currentRowCount = 200;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">200</button>
-								<button ng-show=" table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(300)}" ng-click="table.pageSize(300);  currentRowCount = 300;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">300</button>
-								<button ng-show="  table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(400)}" ng-click="table.pageSize(400);  currentRowCount = 400; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">400</button>
-								<button ng-show=" table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(500)}" ng-click="table.pageSize(500);  currentRowCount = 500; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">500</button>
-								<button type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">All</button>
+								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">10</button>
+								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15); currentRowCount = 15; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">15</button>
+								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30); currentRowCount = 30; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">30</button>
+								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50); currentRowCount = 50; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">50</button>
+								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(100);  currentRowCount = 100;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">100</button>
+								<button  ng-disabled="$root.isLoading" ng-show=" table.isPageSize(100) || table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(200)}" ng-click="table.pageSize(200);  currentRowCount = 200;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">200</button>
+								<button  ng-disabled="$root.isLoading" ng-show=" table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(300)}" ng-click="table.pageSize(300);  currentRowCount = 300;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">300</button>
+								<button  ng-disabled="$root.isLoading" ng-show="  table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(400)}" ng-click="table.pageSize(400);  currentRowCount = 400; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">400</button>
+								<button  ng-disabled="$root.isLoading" ng-show=" table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(500)}" ng-click="table.pageSize(500);  currentRowCount = 500; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">500</button>
+								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">All</button>
 							</div>
 					</div>
 				
