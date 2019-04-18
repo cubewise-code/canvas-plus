@@ -44,20 +44,22 @@ textarea.ng-valid {
     <div class="col-xs-12 col-md-12" > 
         <h3  >
             <i style="padding-right:10px" class="fa fa-cube"></i>Cube View MDX Parameters
-            <span class="pull-right"  >   
-                <button style="font-size:0.7em; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;" ng-class="{'btn-primary':$root.useMdx,'btn-default':!$root.useMdx }" class="btn  " ng-click="$root.useMdx = !$root.useMdx"><i   ng-style="{'color':$root.useMdx ? '#fff':'steelblue'}" ng-class="{ 'fa-key':$root.useMdx,'fa-code':!$root.useMdx }" class="fa "></i></button>
-            </span>
+             
             <span class="pull-right"  >   
                     <button style="font-size:0.7em; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;" class="btn btn-primary" ng-click="$root.useMdx ? $root.setMdx($root.mdxString) : $root.setMdxId()"><i style="color:#fff;" class="fa fa-flash"></i></button>
                 </span>
+                <span class="pull-right"  >   
+                        <span style="font-size:1em; color:steelblue; background-color:transparent; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;"   ng-click="$root.useMdx = !$root.useMdx"> MDX <i    ng-class="{ 'fa-toggle-on':$root.useMdx,'fa-toggle-off':!$root.useMdx }" class="fa "></i></span>
+                    </span>
         </h3>
     </div>
     <div class="col-xs-12 col-md-12"> 
             <div class="col-xs-12 col-md-12 nopadding" ng-if="$root.useMdx" >    
-                <textarea style="width:100%;" ng-model="$root.mdxString" required>
+                <textarea style="width:100%;" ng-model="$root.mdxString" required></textarea>
             </div>
             <div class="col-xs-12 col-md-6 nopadding" >    
-          
+                    <textarea  ng-if="!$root.useMdx"   style="width:100%; min-height:40px; border:1px solid steelblue" ng-model="$root.mdxId" ></textarea>
+
             </div>
             <div class="col-xs-12 col-md-6 nopadding" >    
                 

@@ -53,6 +53,7 @@
                   scope.hideColumn = [];
                 }
                 scope.cubeMdx = $attributes.cubeMdx;
+                
                 if($attributes.cubeMdxParams != null && $attributes.cubeMdxParams != 'undefined' ){
                   scope.cubeMdxParams = JSON.parse($attributes.cubeMdxParams);
                 }
@@ -1291,7 +1292,11 @@
                     if($rootScope.useMdx){
                       $rootScope.setMdx($rootScope.mdxString);
                     }else{
-
+                      if(scope.cubeMdx != $rootScope.mdxId ){
+                        scope.cubeMdx = $rootScope.mdxId;
+                      }else{
+                        
+                      }
                     
                     $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                         if(!result.failed){
