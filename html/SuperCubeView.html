@@ -469,6 +469,7 @@ svg:not(:root) {
 												rowspan="{{col.rowspan}}" 
 												class="text-center " >
 												{{$index != 0 ? col.dimension:''}} 
+												
 												<input ng-if="$index === 0" class="form-control" 
 												ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 												style="background-color: transparent;display:inline-block;border: none; font-size:1em;" 
@@ -495,9 +496,9 @@ svg:not(:root) {
 															<span ng-show="!selections.searchRows">
 																	<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 																	<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
-																	<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																	<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-															</span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
+																	<i ng-if="el.element.type == 'C' && !el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+																	<i ng-if="el.element.type == 'C' && el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+															</span>    
 															<span   ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
 																{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
  

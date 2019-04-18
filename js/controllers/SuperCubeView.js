@@ -721,7 +721,7 @@
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                             if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
-                              if(scope.useMdx){
+                              if($rootScope.useMdx){
                                 $tm1Ui.cubeExecuteMdx(scope.tm1Instance,$rootScope.mdxString ).then(function(result){
                                   if(!result.failed){
                                      
@@ -1288,7 +1288,7 @@
                     
                   if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
                     scope.charRowCount = 0;
-                    if(scope.useMdx){
+                    if($rootScope.useMdx){
                       $rootScope.setMdx($rootScope.mdxString);
                     }else{
 
@@ -1898,7 +1898,7 @@
            }
             
            $rootScope.setMdx = function(mdxPassed){
-             scope.useMdx = true;
+             $rootScope.useMdx = true;
             $tm1Ui.cubeExecuteMdx(scope.tm1Instance,mdxPassed).then(function(result){
               if(!result.failed){
                 //console.log(result, "scope.tablescope.table")
@@ -2392,6 +2392,9 @@
     
              
     }
+    $rootScope.setMdxId = function(){
+      scope.refresh(scope.cubeName,scope.cubeView);
+    }
            scope.nextAvailable = function(row, col){
                var tempElementTwo = document.getElementById('input-'+scope.tableId+'-'+(row+1)+'-'+col )
                if(tempElementTwo === undefined && tempElementTwo === null){
@@ -2449,7 +2452,7 @@
           $(document).ready(function(){
             // Wrap each tr and td's content within a div
             // (todo: add logic so we only do this when printing)
-            scope.useMdx = true;
+            $rootScope.useMdx = true;
             scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
             scope.dispatchResize();
