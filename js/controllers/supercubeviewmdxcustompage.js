@@ -31,5 +31,19 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
            // console.log("CUSOM CUBEVIEW JS",$scope.cubesAvailable);
         }
     });
+    $scope.chooseCube = function(name){
+        $rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM ["+name+"] WHERE ([Year].&[2018], [Region].&[England], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
+        $timeout(
+            function(){
+                $scope.showCubeList = !$scope.showCubeList
+                $scope.activeCubeName = name;
+                $scope.cubeName = $scope.activeCubeName;
+                 
+                 
+                 
+            }
+        )
+         
+    }
  
 }]);
