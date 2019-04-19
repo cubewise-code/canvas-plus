@@ -240,7 +240,7 @@ svg:not(:root) {
 	 
  
   
-  	<div class="row"   >
+  	<div class="row"    >
 				 
 			<div ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  top:110px; background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:auto;  text-align:center;" 
 			 >
@@ -258,6 +258,10 @@ svg:not(:root) {
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						 DBR's <i ng-class="{'fa-toggle-off':!$root.useDbr ,'fa-toggle-on': $root.useDbr }" class="fa "></i>
 					</span>
+					<span ng-if="!tableHide  " ng-click="   $root.colorHide = !$root.colorHide;   "  
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+						Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
+				 </span>
 					<span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 							<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span>  
@@ -485,7 +489,7 @@ svg:not(:root) {
 									</tr>
 								<tr ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
-								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString(), 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
+								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(!$root.colorHide ? ( randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString():'#ccc'), 'border-top':'5px solid '+(!$root.colorHide && randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 															style=" border-right:0px solid #ccc; vertical-align:text-top; "                                                              
 															ng-repeat="el in row.elements track by $index" 
 															ng-show="el.visible"  
@@ -586,7 +590,7 @@ svg:not(:root) {
 								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
 										 
 										class="{{tableDimensionColumnClass}} overflowhidden"
-										ng-style="{'border-left':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString(), 'border-top':'5px solid '+(randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
+										ng-style="{'border-left':'5px solid '+(!$root.colorHide ? ( randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString():'#ccc'), 'border-top':'5px solid '+(!$root.colorHide && randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 										style=" border-right:1px solid #ccc; " 
 										ng-repeat="el in row.elements track by $index" 
 										ng-show="el.visible || $parent.$index === 0" 
