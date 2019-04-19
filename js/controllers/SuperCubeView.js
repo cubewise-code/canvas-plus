@@ -1670,9 +1670,10 @@
                   return  parseFloat(total*100).toFixed(d)+'%'; 
                    
                 }
-                scope.seeData = function(rowindex,table){
-                    
-                    scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][0]]['element'].toggle();
+                scope.seeData = function(rowindex, index,table){
+                   
+                    scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][index]]['element'].toggle();
+                    //console.log( scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][index]]['element'].collapsed)
                     scope.table.refresh();
                     scope.refreshNew(scope.dataset);
             

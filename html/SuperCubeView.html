@@ -263,7 +263,7 @@ svg:not(:root) {
 						Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
 				 </span>
 					<span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-							<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+							<tm1-ui-export    tm1-target-id="af1{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span>  
 					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
@@ -462,12 +462,12 @@ svg:not(:root) {
 					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('stickyContainer'+tableId), 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
 					<table  class="table ">
 						<tbody  >
-								<tr  id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index" 
+								<tr   id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index" 
 								ng-style="{'min-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'max-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px '}">
 											
 									<td    class="firstHeaderColHeight" id="firstHeaderColHeight{{tableId}}{{$index}}"
 											ng-if="  col.visible  "  
-											style="border-right:1px solid #ccc;  font-weight:700; text-align:center;  vertical-align: bottom; background-color: #f0efef"
+											style=" border:0px solid transparent; border-right:1px solid #ccc;  font-weight:700; text-align:center;  vertical-align: bottom; background-color: #f0efef"
 										
 												ng-repeat="col in headerrow.rows track by $index"   
 												colspan="{{col.colspan}}" 
@@ -487,26 +487,25 @@ svg:not(:root) {
 									</td>
 								
 									</tr>
-								<tr ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								<tr    ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
-								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(!$root.colorHide ? ( randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString():'#ccc'), 'border-top':'5px solid '+(!$root.colorHide && randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
-															style=" border-right:0px solid #ccc; vertical-align:text-top; "                                                              
-															ng-repeat="el in row.elements track by $index" 
-															ng-show="el.visible"  
-															colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
+								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px', 'border-left':'5px solid '+(el.visible && $index != 0  && !$root.colorHide ? ( randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString():'#ccc'), 'border-top':'5px solid '+(el.visible  && !$root.colorHide && randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
+															style=" border:0px solid transparent; border-right:0px solid #ccc; vertical-align:text-top; "                                                              
+															ng-repeat="el in row.elements track by $index"  
+															colspan="{{el.colspan}}" 
 															class="{{tableDimensionColumnClass}} overflowhidden"
 															ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 															
 														 
-															<span ng-show="!selections.searchRows">
-																	<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-																	<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
-																	<i ng-if="el.element.type == 'C' && !el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																	<i ng-if="el.element.type == 'C' && el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+															<span ng-show="!selections.searchRows && el.visible">
+																	<span ng-show="el.visible" class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+																	<span ng-show="el.visible" ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+																	<i ng-show="el.visible" ng-if="el.element.type == 'C' && !el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, $index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+																	<i ng-show="el.visible" ng-if="el.element.type == 'C' && el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, $index,table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 															</span>    
-															<span   ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
-																{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
- 
+															<span ng-show="el.visible"   ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
+															<span ng-show="el.visible"  >	{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
+ 															</span>
 																<!--{{randomColor}} -->	
 																</span>
 								</td>
@@ -593,8 +592,8 @@ svg:not(:root) {
 										ng-style="{'border-left':'5px solid '+(!$root.colorHide ? ( randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString():'#ccc'), 'border-top':'5px solid '+(!$root.colorHide && randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString()}"
 										style=" border-right:1px solid #ccc; " 
 										ng-repeat="el in row.elements track by $index" 
-										ng-show="el.visible || $parent.$index === 0" 
-										colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" 
+										 
+										colspan="{{el.colspan}}"  
 										ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 										<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 										<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
@@ -741,64 +740,7 @@ svg:not(:root) {
 						</tbody>
 					</table>
 
-					<table ng-show="false" class="table" id="af{{tableId}}">
-
-						<thead>
-							<tr ng-repeat="row in dataset.headers">
-								<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-									{{col.dimension}}
-								</th>
-								<th ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-									{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="row in table.data()" >
-								<td ng-repeat="el in row.elements"     >
-								 
-									{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
-								</td>
-								<td ng-repeat="cell in row.cells" class="text-right" >
-							 
-										<span ng-if=" $root.useDbr || $root.useMdxNow  " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
-									
-									<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
-									
-								   <!-- {{ $root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]   }} | {{dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']}} :{{!$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] ? 'NOTHING':'' }} | {{(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%')}} {{(dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%')}}   -->
-								 
-									<span ng-if="  (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
-												 style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-									<span ng-if="  (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" 
-													style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
-									<span ng-if="   !$root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
-													style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-								 
-								 
-									<span ng-if="   !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']]  && row.cells[$index].isNumeric  && cell.isReadOnly && cell.value < 0 " 
-														style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-									 <span ng-if="  !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value >= 0" 
-														 style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
- 
-									 
-									 
-									
-									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
-												 style="padding-right: 10px; color:darkred"> {{formatPercentageString(cell.value, 2)}} </span>
-									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1 )&& row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
-													 style="padding-right: 10px;"> {{ formatPercentageString(cell.value, 2)}}   </span>
-
-		 
-
-									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
-																style="padding-right: 10px; color:darkred"> {{formatPercentageString(cell.value, 2)}} </span>
-									<span ng-if="  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 ||  (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
-																	style="padding-right: 10px;"> {{formatPercentageString(cell.value, 2)}}   </span>
-		
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					 
 					
 					<div id="pagination" ng-hide="$root.isPrinting"  ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
 					style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
