@@ -231,6 +231,12 @@ svg:not(:root) {
 	 
 	 
 }
+#sideContainer >  tbody > tr > td {
+						padding: 8px;
+						line-height: 1.42857143;
+						vertical-align: middle;
+						border-top: 0px solid #ddd ;
+				}
  
 	</style>
  
@@ -375,7 +381,7 @@ svg:not(:root) {
 				#content {
 						display: table;
 				}
-
+			 
 		 
 				</style>
 				</span>
@@ -460,7 +466,7 @@ svg:not(:root) {
 					class="fixed-container-side" 
 					style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
 					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('stickyContainer'+tableId), 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
-					<table  class="table ">
+					<table id="sideContainer" class="table ">
 						<tbody  >
 								<tr   id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index" 
 								ng-style="{'min-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'max-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px '}">
