@@ -417,7 +417,7 @@ svg:not(:root) {
 											placeholder="{{col.dimension}}...">
 											
 											<span ng-if="$index === 0 && selections.searchRows" ng-style="{'left':(getContainerWidth('searchColumn'+tableId)-35)+'px'}" 
-											style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc;" >
+											style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc; cursor:pointer" >
 												<i ng-click="selections.searchRows = ''" class="fa fa-times"></i>
 											</span> 
 									</th>
@@ -455,11 +455,11 @@ svg:not(:root) {
 									style="    white-space: initial;     padding: 8px;  vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600; font-size:0.7em; border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; ">
 								  <span>{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
 								</span>	<span ng-show="!hideColumn[$index] && chartVisible" class="pull-right">
-											<small> <i 	ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset); "   
+											<small style="cursor:pointer"> <i 	ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset); "   
 											class="fa fa-minus"></i></small>
 										</span>
 										<span ng-show="hideColumn[$index] && chartVisible" class="pull-right">
-												<small> 	<i ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " 
+												<small style="cursor:pointer"> 	<i ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " 
 												class="fa fa-times"></i></small>
 										</span>
 							</div>
@@ -493,8 +493,8 @@ svg:not(:root) {
 												type="text" ng-model="selections.searchRows"   
 												placeholder="{{col.dimension}}..."> 
 												<span ng-if="$index === 0 && selections.searchRows" ng-style="{'left':(getContainerWidth('searchColumn'+tableId)-35)+'px'}" 
-												style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc;" >
-													<i ng-click="selections.searchRows = ''" class="fa fa-times"></i>
+												style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc; cursor:pointer" >
+													<i  ng-click="selections.searchRows = ''" class="fa fa-times"></i>
 												</span> 
 									</td>
 								
@@ -509,7 +509,7 @@ svg:not(:root) {
 															ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 															
 														 
-															<span ng-show="!selections.searchRows && el.visible">
+															<span stye="cursor:pointer" ng-show="!selections.searchRows && el.visible">
 																	<span ng-show="el.visible" class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 																	<span ng-show="el.visible" ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
 																	<i ng-show="el.visible" ng-if="el.element.type == 'C' && !el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, $index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
@@ -578,18 +578,18 @@ svg:not(:root) {
 											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
 											ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 											
-											<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:top" 
+											<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:top; cursor:pointer" 
 												ng-click="increaseDataWidth()"  ><small><i class="fa fa-caret-right"></i></small></span>
-											<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:left;display:inline-block; margin:0 auto; left:-5px; top:-5px; vertical-align:bottom" 
+											<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:left;display:inline-block; margin:0 auto; left:-5px; top:-5px; vertical-align:bottom; cursor:pointer" 
 												ng-click="reduceDataWidth()"  ><small><i class="fa fa-caret-left"></i></small></span>
 											 
 											<span style="pointer-events:none;">  
 												{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   
 											
 											</span>
-											<span ng-show="!hideColumn[$index] && chartVisible"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom"  
+											<span ng-show="!hideColumn[$index] && chartVisible"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
 											ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);   " ><small><i class="fa fa-minus"></i></small></span>
-										<span ng-show="hideColumn[$index] && chartVisible"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom"  
+										<span ng-show="hideColumn[$index] && chartVisible"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
 										ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " ><small><i class="fa fa-times"></i></small></span>
 										 
 										</td>
