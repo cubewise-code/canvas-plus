@@ -2510,15 +2510,20 @@
           $(document).ready(function(){
             // Wrap each tr and td's content within a div
             // (todo: add logic so we only do this when printing)
-          
             scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
+           
+           
+             
             
-            scope.dispatchResize();
-            if( scope.api){
-              scope.api.update();
-             }
-            scope.dragStated = false;
+             
+             scope.dispatchResize();
+             if( scope.api){
+                scope.api.update();
+              }
+             scope.dragStated = false;
+            
+            
 
         })
         
