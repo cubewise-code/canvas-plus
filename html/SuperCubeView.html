@@ -221,6 +221,12 @@ svg:not(:root) {
 #pagination .btn{
 	font-size:0.7em;
 }
+.tm1-ui-dbr-context-button {
+	font-size:1em;
+}
+.tm1-ui-dbr-context-menu {
+	font-size:1em;
+}
 @page {
  
   margin: 0;
@@ -269,7 +275,7 @@ svg:not(:root) {
 						Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
 				 </span>
 					<span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-							<tm1-ui-export    tm1-target-id="af1{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+							<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span>  
 					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
@@ -535,7 +541,7 @@ svg:not(:root) {
 								<tr ng-show="chartVisible"  >
 										 
 									<td ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
-										
+										<span ng-show="false"> {{cubeName}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}</span>
 									</td>
 										<td class="overflowhidden"  ng-repeat="columnrem in hideColumn track by $index" ng-if="hideColumn[$index]  && $index <= (table.data()[0]['cells'].length) "></td>
 										<td id="chartRow{{tableId}}" ng-if="chartVisible"  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
@@ -557,7 +563,7 @@ svg:not(:root) {
 												colspan="{{col.colspan}}" 
 												rowspan="{{col.rowspan}}" 
 												class="text-center {{tableDimensionColumnClass}} overflowhidden" >
-													
+												
 												{{$index > 0 ? col.dimension:''}} 
 												<input ng-if="$index === 0" class="form-control" 
 												ng-change="dispatchResize(); " ng-blur="dispatchResize()"
@@ -670,6 +676,8 @@ svg:not(:root) {
 
 										 
 										<tm1-ui-dbr 
+										ng-focus="getFocus($event);  " 
+										ng-blur="lostFocus($event); "
 										ng-paste="handlePaste($event)"
 										cellref="{{(cell.reference()).toString()}}" 
 										 ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1) "
@@ -679,6 +687,8 @@ svg:not(:root) {
 										 >
 									</tm1-ui-dbr>	 
 									<tm1-ui-dbr  
+									ng-focus="getFocus($event);  " 
+										ng-blur="lostFocus($event); "
 									ng-paste="handlePaste($event)"
 									cellref="{{(cell.reference()).toString()}}" 
 											ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) "
@@ -687,10 +697,12 @@ svg:not(:root) {
 											tm1-elements='{{(cell.reference()).toString()}}' 
 											tm1-data-decimal="2"
 											tm1-format-percentage="true"
+										 
 											>
 									</tm1-ui-dbr>	 
 										<tm1-ui-dbr 
-										 
+										ng-focus="getFocus($event);  " 
+										ng-blur="lostFocus($event); "
 										ng-paste="handlePaste($event)"
 										cellref="{{(cell.reference()).toString()}}" 
 										 ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
@@ -746,7 +758,44 @@ svg:not(:root) {
 						</tbody>
 					</table>
 
-					 
+					<table ng-show="false" id="af{{tableId}}"class="table table-striped" >
+						<thead>
+							<tr ng-repeat="row in dataset.headers track by $index">
+								<th ng-repeat="col in row.rows track by $index"  class="text-center" >
+									{{col.dimension}}
+								</th>
+								<th ng-repeat="col in row.columns track by $index"  class="text-center" >
+									{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr  
+							ng-if=" decideRowToHideRow(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() ) === false"
+							ng-repeat="row in  table.data()  track by $index" >
+							<td  
+									 
+							 
+									 
+									ng-repeat="el in row.elements track by $index" >
+								 
+																	 			{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}} 
+																				
+																	 
+							</td>
+							<td   
+								 
+							 
+							 
+								ng-repeat="cell in row.cells track by $index" class="text-right" >
+								
+							  
+									<span ng-if=" row.cells[$index].isNumeric === true" style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
+									<span ng-if=" !row.cells[$index].isNumeric || row.cells[$index].isNumeric === false" style="padding-right: 10px;">{{cell.value}}</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 					
 					<div id="pagination" ng-hide="$root.isPrinting"  ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
 					style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
@@ -785,19 +834,22 @@ svg:not(:root) {
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 					<div class="modal-title" id="myModalLabel">
 						<span class="pull-left">Cell Reference</span> 
-						<span class="pull-right" style="width:100%;">
-							<small style="font-size:0.7em;">	<tm1-ui-dbr
-								ng-if="cellreferenceArray.length"
-								 tm1-instance="{{tm1Instance}}"
-								 tm1-cube="{{cubeName}}"
-								 tm1-elements='{{cellreferenceArray.toString()}}' 
-								 >
-							</tm1-ui-dbr></small>
-						</span>
+					 
 					</div>
 				</div>
 				<div class="modal-body table-responsive">
-						<table class="table">
+					<span class="pull-right" >
+						<small style=" text-align:right; font-size:0.9em;">	
+							<tm1-ui-dbr
+							ng-if="cellreferenceArray.length"
+							 tm1-instance="{{tm1Instance}}"
+							 tm1-cube="{{cubeName}}"
+							 tm1-elements='{{cellreferenceArray.toString()}}' 
+							 >
+						</tm1-ui-dbr>
+					</small>
+					</span>
+					<table class="table">
 
 							<thead>
 								<th>
@@ -821,16 +873,17 @@ svg:not(:root) {
 							</tr>
 							</tbody>
 						</table> 
+						 <hr>
 						<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width:100%;">
-							<div class="btn-group" role="group" aria-label="First group" style="width:100%;">
+							<div class="btn-group" role="group" aria-label="First group" style="width:100%; font-size:0.7em;">
 								<button ng-repeat="drillName in drillNames track by $index" ng-click="getDrillTable(cellreferenceArray, drillName.name)">{{drillName.name}}</button>
-								<span style="padding:10px; background-color:steelblue; max-width:35x; overflow: hidden; color:#fff; cursor:pointer;"	ng-show="tableDrill.length > 0 || tableDrillCol.length > 0"  class="   pull-right"  > 
+								<span style="padding:0px; margin:0px; background-color:steelblue;  width:30px; font-size:1em; overflow: hidden; color:#fff; cursor:pointer;"	ng-show="tableDrill.length > 0 || tableDrillCol.length > 0"  class="   pull-right"  > 
 								 
 									<span id="exportModal" style="color:#666 !important; "> 
 										<tm1-ui-export 
 									 
 										 
-										tm1-target-id="af2{{tableId}}" 
+										tm1-target-id="{{tableDrillCol.length && drillNameChosen != 'Transactions' ? 'af2': 'af2'+tableId}}" 
 										tm1-output-name="{{(cellreferenceArray.toString()+'').split(',').join('-')}}-{{drillNameChosen}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" 
 										m1-field-separator="" 
 										tm1-field-qualifier="" 
@@ -859,7 +912,7 @@ svg:not(:root) {
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="row in tableDrill[tableId].data()" >
+							<tr ng-repeat="row in tableDrill[tableId].data() track by $index" >
 								<td ng-repeat="el in row.elements" ng-if="el.visible || $parent.$index == 0" colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" ng-class="{'tm1-ui-element-consol': el.element.type == 'C'}"  >
 										<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 										<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
