@@ -227,6 +227,31 @@ svg:not(:root) {
 .tm1-ui-dbr-context-menu {
 	font-size:1em;
 }
+ 
+.rotate {
+
+transform: rotate(-180deg);
+
+/* Legacy vendor prefixes that you probably don't need... */
+
+/* Safari */
+-webkit-transform: rotate(-180deg);
+
+/* Firefox */
+-moz-transform: rotate(-180deg);
+
+/* IE */
+-ms-transform: rotate(-180deg);
+
+/* Opera */
+-o-transform: rotate(-180deg);
+
+/* Internet Explorer */
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+}
+ 
+
 @page {
  
   margin: 0;
@@ -420,6 +445,9 @@ svg:not(:root) {
 											style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc; cursor:pointer" >
 												<i ng-click="selections.searchRows = ''" class="fa fa-times"></i>
 											</span> 
+											<span ng-if="$index === 0 " style="position:absolute; padding:5px; right:0px; top:0px; cursor:pointer">
+													<i  ng-click="$root.allCollapsed = !$root.allCollapsed; collapseAll($root.allCollapsed); refreshNew(dataset);" ng-class="{'':$root.allCollapsed, 'rotate':!$root.allCollapsed}" class="fa fa-sitemap" aria-hidden="true"></i> 
+										 </span>
 									</th>
 								
 								</tr>
@@ -440,29 +468,43 @@ svg:not(:root) {
 						<span   ng-style="{'width': (getContainerWidth('headCol'+tableId))+'px',  'left':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px' }"
 								style="padding:0px; margin:0 auto; position:relative; display:inline-block;  white-space: nowrap; top:0px; float:left; background-color:#f0efef" 
 								ng-repeat="headerrrow in dataset.headers track by $index">
-								<div    ng-if="  col.visible "  ng-repeat="col in headerrrow.rows track by $index" 
+								<div  
+									ng-if="  col.visible " 
+								 ng-repeat="col in headerrrow.rows track by $index" 
 									ng-style="{   'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0) )+'px'  } " class="text-left" 
 									style="background-color: #f0efef; font-weight:600; font-size:0.7em; display:inline-block; margin: 0 auto;  padding:0px; 	  float:left; ">
 							 
 
 							</div>
-							<div  
-								 
-									ng-show="col.visible "   
+							<div    
+								 ng-init="seeDataNew(col)"
+									ng-show="col.visible"   
 									class="text-center center " 
 									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index))+'px', 'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
 									ng-repeat="col in headerrrow.columns track by $index" 
 									style="    white-space: initial;     padding: 8px;  vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600; font-size:0.7em; border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; ">
-								  <span>{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
-								</span>	<span ng-show="!hideColumn[$index] && chartVisible" class="pull-right">
-											<small style="cursor:pointer"> <i 	ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset); "   
-											class="fa fa-minus"></i></small>
-										</span>
-										<span ng-show="hideColumn[$index] && chartVisible" class="pull-right">
-												<small style="cursor:pointer"> 	<i ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " 
-												class="fa fa-times"></i></small>
-										</span>
-							</div>
+									<span>
+										 
+ 
+											{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
+								 
+									</span>	
+									
+									<span ng-show="!hideColumn[$index] && chartVisible" class="pull-right">
+												<small style="cursor:pointer"> 
+													<i 	ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset); "   
+												class="fa fa-minus"></i></small>
+									</span>
+									<span ng-show="hideColumn[$index] && chartVisible" class="pull-right">
+													<small style="cursor:pointer"> 	
+														<i ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " 
+													class="fa fa-times"></i></small>
+									</span>
+									<!-- <span class="pull-right"><i ng-show="col.element.type === 'C'"  
+										ng-click=" $root.collapseCol = !$root.collapseCol; $root.collapseColumn(col, $parent.$parent.$index, $index); " 
+										ng-class="{'fa-minus-square-o':!$root.collapseCol, 'fa-plus-square-o':$root.collapseCol }"
+										class="fa   fa-fw" style="margin-right:5px; cursor: pointer;" ></i></span> -->
+								</div>
 						</span>
 					
 					</div>
@@ -496,6 +538,10 @@ svg:not(:root) {
 												style="position: absolute;display: block;top: 0;padding: 10px;margin: 0px auto;left: 165px;background-color: #ccc; cursor:pointer" >
 													<i  ng-click="selections.searchRows = ''" class="fa fa-times"></i>
 												</span> 
+												<span ng-if="$index === 0 " style="position:absolute; padding:5px; right:0px; top:0px; cursor:pointer">
+														 <i  ng-click="$root.allCollapsed = !$root.allCollapsed; collapseAll($root.allCollapsed); refreshNew(dataset);" ng-class="{'':$root.allCollapsed, 'rotate':!$root.allCollapsed}" class="fa fa-sitemap" aria-hidden="true"></i> 
+												</span>
+												 
 									</td>
 								
 									</tr>
@@ -513,7 +559,7 @@ svg:not(:root) {
 																	<span ng-show="el.visible" class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 																	<span ng-show="el.visible" ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
 																	<i ng-show="el.visible" ng-if="el.element.type == 'C' && !el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, $index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																	<i ng-show="el.visible" ng-if="el.element.type == 'C' && el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, $index,table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+																	<i ng-show="el.visible" ng-if="el.element.type == 'C' && el.element.collapsed  " ng-click="   seeData($parent.$parent.$index, $index,table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 															</span>    
 															<span ng-show="el.visible"   ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
 															<span ng-show="el.visible"  >	{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
@@ -576,7 +622,8 @@ svg:not(:root) {
 											id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 											style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer; vertical-align:baseline;" 
 											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
-											ng-repeat="col in headerrow.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
+											ng-repeat="col in headerrow.columns" ng-if="col.visible  " 
+											  colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 											
 											<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:top; cursor:pointer" 
 												ng-click="increaseDataWidth()"  ><small><i class="fa fa-caret-right"></i></small></span>
@@ -585,13 +632,15 @@ svg:not(:root) {
 											 
 											<span style="pointer-events:none;">  
 												{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   
-											
+												  
 											</span>
 											<span ng-show="!hideColumn[$index] && chartVisible"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
 											ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);   " ><small><i class="fa fa-minus"></i></small></span>
 										<span ng-show="hideColumn[$index] && chartVisible"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
 										ng-click=" hideColumn[$index] = chartVisible ? !hideColumn[$index]:hideColumn[$index]; changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " ><small><i class="fa fa-times"></i></small></span>
-										 
+										<!-- <span class="pull-right"><i ng-show="col.element.type === 'C'"  ng-click=" $root.collapseCol = !$root.collapseCol; $root.collapseColumn(col, $parent.$parent.$index, $index); " 
+											ng-class="{'fa-minus-square-o':!$root.collapseCol, 'fa-plus-square-o':$root.collapseCol }"
+											class="fa   fa-fw" style="margin-right:5px; cursor: pointer;" ></i></span> -->
 										</td>
 										</tr>
 									
@@ -612,7 +661,7 @@ svg:not(:root) {
 										
 										<span ng-show="!selections.searchRows">
 																					<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																					<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
+																					<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="   seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 																				</span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
 																		
 																			<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
@@ -621,7 +670,8 @@ svg:not(:root) {
 																			</span>
 																			
 								</td>
-								<td    id="headerColHeight{{tableId}}{{$index}}"  
+								<td   
+									id="headerColHeight{{tableId}}{{$index}}"  
 									ng-style="{  'width':dataWidth+'px ', 'min-width':dataWidth+'px ' ,  'border-right':'1px solid #ccc'}" 
 									ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); " 
 									ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
@@ -766,6 +816,7 @@ svg:not(:root) {
 								</th>
 								<th ng-repeat="col in row.columns track by $index"  class="text-center" >
 									{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
+									
 								</th>
 							</tr>
 						</thead>

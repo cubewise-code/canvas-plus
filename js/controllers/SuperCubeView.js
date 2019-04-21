@@ -630,9 +630,31 @@
             scope.changeUrl = function(hideCol, index ){
               $location.search('hideCol', index+'-'+hideCol);
             }
-        
-                scope.seeDataNew = function(d, n){
-                  console.log(d, n)
+            $rootScope.allCollapsed = false;
+            scope.collapseAll = function(decider){
+              if(decider){
+               scope.dataset.collapseAll();
+              }else{
+                scope.dataset.expandAll();
+              }
+             
+              scope.table.refresh();
+             
+              $timeout(
+                function(){
+                  if(scope.api){
+                   scope.dispatchResize();
+                  }
+                },1000
+              )
+               
+            }
+            $rootScope.collapseColumn = function(elemnt, row,index){
+              console.log(elemnt, row,index);
+               
+            }
+                scope.seeDataNew = function(d){
+                //  console.log(d)
                 }
 
                 scope.getTablePosition = function(){
@@ -1699,10 +1721,10 @@
                    
                 }
                 scope.seeData = function(rowindex, index,table){
-                   
+                    $rootScope.allCollapsed = undefined; 
                     scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][index]]['element'].toggle();
                     //console.log( scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][index]]['element'].collapsed)
-                    scope.table.refresh();
+                    scope.table.refresh(); 
                     scope.refreshNew(scope.dataset);
             
                 };
@@ -2491,7 +2513,11 @@
           
             scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
+            
             scope.dispatchResize();
+            if( scope.api){
+              scope.api.update();
+             }
             scope.dragStated = false;
 
         })
