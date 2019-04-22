@@ -172,6 +172,15 @@
         var chart;
         scope.chartContainer; 
         scope.chartToolTipElements = [];
+        var formatComma = d3.format(","),
+            formatDecimal = d3.format(".1f"), 
+            formatDecimalComma = d3.format(",.2f"),
+            formatSuffix = d3.format("s"),
+            formatSuffixDecimal1 = d3.format(".1s"),
+            formatSuffixDecimal2 = d3.format(".2s"),
+            formatMoney = function(d) { return "$" + formatDecimalComma(d); },
+            formatPercent = d3.format(",.2%");
+
         scope.options = {
             "chart": {
               "type":  scope.activeName,
@@ -183,7 +192,7 @@
                 "left": 50
               },
              
-              "valueFormat": function(d){ return d3.format(',.4f')(d); },
+              "valueFormat": function(d){ return formatMoney(d); },
               "useInteractiveGuideline": true,
               "dispatch": {
                 //elementMouseover: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e};}else{scope.chartToolTipElements = e;}  console.log(e,'mouseover') },
@@ -500,7 +509,8 @@
                 "classes": null,
                 "chartContainer": null,
                 "enabled": true,
-                "hideDelay": 200,  
+                "hideDelay": 200, 
+                "valueFormatter": function(d){ console.log(formatDecimalComma(d), "looking at the cellvalue from chart pie tooltip format"); return formatComma(d); },
                 "headerEnabled": true,
                 "fixedTop": null,
                 "offset": {
