@@ -461,7 +461,9 @@
                   "chartContainer": null,
                   "enabled": true,
                   "hideDelay": 0,
-                  "valueFormatter": function(d){   return '$'+formatComma(d); },
+                   
+                  "valueFormatter": function(d,i){ console.log(d,i);  return formatComma(d); },
+                  "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                   "headerEnabled": true,
                   "fixedTop": null,
                   "offset": {
@@ -480,6 +482,29 @@
                 "height": null,
                 "showGuideLine": true,
                 "svgContainer": null
+              },
+              "multibar": {
+                "dispatch": {},
+                "width": 960,
+                "height": 500,
+                "forceY": [
+                  0
+                ],
+                "stacked": false,
+                "stackOffset": "zero",
+                "clipEdge": true,
+                "id": 2362,
+                "hideable": false,
+                "groupSpacing": 0.1,
+                 
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 500,
+                "barColor": null
               },
               "pie": {
                 "dispatch": {},
@@ -520,8 +545,8 @@
                 "chartContainer": null,
                 "enabled": true,
                 "hideDelay": 200, 
-                "valueFormatter": function(d,i){ console.log(d,i);  return '$'+formatComma(d); },
-                "headerFormatter": function(d){   return scope.formatToHeaderName(d);},
+                "valueFormatter": function(d,i){ console.log(d,i);  return formatComma(d); },
+                "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                 "headerEnabled": true,
                 "fixedTop": null,
                 "offset": {
