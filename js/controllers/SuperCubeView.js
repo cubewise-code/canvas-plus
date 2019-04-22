@@ -479,7 +479,7 @@
                 "donutRatio": 0.5,
                 "labelsOutside": false,
                 "labelSunbeamLayout": false,
-                "donut": false,
+                "donut": true,
                 "growOnHover": true,
                 "pieLabelsOutside": false,
                 "donutLabelsOutside": false,
