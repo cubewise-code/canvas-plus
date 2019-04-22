@@ -180,7 +180,16 @@
             formatSuffixDecimal2 = d3.format(".2s"),
             formatMoney = function(d) { return "$" + formatDecimalComma(d); },
             formatPercent = d3.format(",.2%");
-
+          var curveArray = [
+              {"d3Curve":d3.curveLinear,"curveTitle":"curveLinear"},
+              {"d3Curve":d3.curveStep,"curveTitle":"curveStep"},
+              {"d3Curve":d3.curveStepBefore,"curveTitle":"curveStepBefore"},
+              {"d3Curve":d3.curveStepAfter,"curveTitle":"curveStepAfter"},
+              {"d3Curve":d3.curveBasis,"curveTitle":"curveBasis"},
+              {"d3Curve":d3.curveCardinal,"curveTitle":"curveCardinal"},
+              {"d3Curve":d3.curveMonotoneX,"curveTitle":"curveMonotoneX"},
+              {"d3Curve":d3.curveCatmullRom,"curveTitle":"curveCatmullRom"}
+          ];
         scope.options = {
             "chart": {
               "type":  scope.activeName,
@@ -192,7 +201,7 @@
                 "left": 50
               },
              
-              "valueFormat": function(d){ return formatMoney(d); },
+              "valueFormat":  function(d){ console.log(d, "looking at the cellvalue from chart pie tooltip format"); return  formatComma(d); },
               "useInteractiveGuideline": true,
               "dispatch": {
                 //elementMouseover: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e};}else{scope.chartToolTipElements = e;}  console.log(e,'mouseover') },
@@ -370,7 +379,7 @@
                 },
                 "duration": 0,
                 "useVoronoi": true,
-                "interpolate": "linear"
+                "interpolate": "monotone"
               },
               "lines2": {
                 "dispatch": {  
@@ -410,7 +419,7 @@
                 },
                 "duration": 250,
                 "useVoronoi": true,
-                "interpolate": "linear"
+                "interpolate": "monotone"
               },
               
               "legend": {
@@ -452,6 +461,7 @@
                   "chartContainer": null,
                   "enabled": true,
                   "hideDelay": 0,
+                  "valueFormatter": function(d){   return '$'+formatComma(d); },
                   "headerEnabled": true,
                   "fixedTop": null,
                   "offset": {
@@ -485,7 +495,7 @@
                 "startAngle": false,
                 "padAngle": false,
                 "cornerRadius": 0,
-                "donutRatio": 0.5,
+                "donutRatio": 0.3,
                 
                 "labelsOutside": false,
                 "labelSunbeamLayout": false,
@@ -510,7 +520,7 @@
                 "chartContainer": null,
                 "enabled": true,
                 "hideDelay": 200, 
-                "valueFormatter": function(d){ console.log(formatDecimalComma(d), "looking at the cellvalue from chart pie tooltip format"); return formatComma(d); },
+                "valueFormatter": function(d,i){ console.log(d,i);  return '$'+formatComma(d); },
                 "headerEnabled": true,
                 "fixedTop": null,
                 "offset": {
@@ -522,7 +532,7 @@
                 "id": "nvtooltip-52625"
               },
               "width": null,
-              "interpolate": "linear",
+              "interpolate": "monotone",
               "clipEdge": true,
               "duration": 0,
               "clipVoronoi": true,
@@ -785,9 +795,11 @@
                 scope.refreshNew = function(newdataset){ 
                   if(scope.chartName === 'Pie'){
                     scope.options.chart.x =  function(d){console.log("pie",d); return d.key;}
+                     
                     
                   }else{
                     scope.options.chart.x =  function(d){  return d.x;}
+                     
                   }
                             if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
                               if($rootScope.useMdxNow){
@@ -906,16 +918,16 @@
 
                                                       if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
                                                         if(scope.chartName === 'Pie'){
-                                                          cellArrayFromJson.push({"key":rowNameFinalArray[row],  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],"y":  Math.round( Math.round(scope.table.data()[row].cells[gss].value)*100).toFixed(2) });
+                                                          cellArrayFromJson.push({"key":rowNameFinalArray[row], "format":"%", "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],"y":  Math.round( Math.round(scope.table.data()[row].cells[gss].value)*100).toFixed(2) });
                                                         }else{
-                                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":   scope.formatPercentage(scope.table.data()[row].cells[gss].value)   });
+                                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":   scope.formatPercentage(scope.table.data()[row].cells[gss].value)   });
                                                         }
                                                         // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']], "headers if percentage")
                                                       }else{
                                                         if(scope.chartName === 'Pie'){
-                                                          cellArrayFromJson.push({ "key":rowNameFinalArray[row],  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                          cellArrayFromJson.push({ "key":rowNameFinalArray[row], "format":"$", "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],"y": Math.round(scope.table.data()[row].cells[gss].value)});
                                                         }else{
-                                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
                                                         }
                                                       }
                                                     } 
@@ -1085,16 +1097,16 @@
 
                                                   if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
                                                     if(scope.chartName === 'Pie'){
-                                                      cellArrayFromJson.push({ "key":rowNameFinalArray[row],  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":  Math.round(Math.round(scope.table.data()[row].cells[gss].value)*100).toFixed(2)   });
+                                                      cellArrayFromJson.push({ "key":rowNameFinalArray[row],   "format":"%", "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":  Math.round(Math.round(scope.table.data()[row].cells[gss].value)*100).toFixed(2)   });
                                                     }else{
-                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":   scope.formatPercentage(scope.table.data()[row].cells[gss].value)   });
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":   scope.formatPercentage(scope.table.data()[row].cells[gss].value)   });
                                                     }
                                                    // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']], "headers if percentage")
                                                   }else{
                                                     if(scope.chartName === 'Pie'){
-                                                      cellArrayFromJson.push({"key":rowNameFinalArray[row],  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":    Math.round(scope.table.data()[row].cells[gss].value)   });
+                                                      cellArrayFromJson.push({"key":rowNameFinalArray[row],  "format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":    Math.round(scope.table.data()[row].cells[gss].value)   });
                                                     }else{
-                                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
                                                     }
                                                   }
                                                 } 
@@ -1274,16 +1286,16 @@
 
                                                     if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
                                                       if(scope.chartName === 'Pie'){
-                                                        cellArrayFromJson.push({"key":rowNameFinalArray[row],  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":    Math.round(Math.round(scope.table.data()[row].cells[gss].value)*100).toFixed(2)  });
+                                                        cellArrayFromJson.push({"key":rowNameFinalArray[row],  "format":"%",  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":    Math.round(Math.round(scope.table.data()[row].cells[gss].value)*100).toFixed(2)  });
                                                       }else{
-                                                        cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":   scope.formatPercentage(scope.table.data()[row].cells[gss].value)   });
+                                                        cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":   scope.formatPercentage(scope.table.data()[row].cells[gss].value)   });
                                                       }
                                                      // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']], "headers if percentage")
                                                     }else{
                                                       if(scope.chartName === 'Pie'){
-                                                        cellArrayFromJson.push({ "key":rowNameFinalArray[row], "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":   Math.round(scope.table.data()[row].cells[gss].value)  });
+                                                        cellArrayFromJson.push({ "key":rowNameFinalArray[row], "format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":   Math.round(scope.table.data()[row].cells[gss].value)  });
                                                       }else{
-                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
                                                       }
                                                     }
                                                   } 
@@ -1566,16 +1578,16 @@
 
                                          if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
                                           if(scope.chartName === 'Pie'){
-                                            cellArrayFromJson.push({"key":rowNameFinalArray[row], "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":     Math.round(Math.round(scope.table.data()[row].cells[gs].value)*100).toFixed(2)   });
+                                            cellArrayFromJson.push({"key":rowNameFinalArray[row],  "format":"%",  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":     Math.round(Math.round(scope.table.data()[row].cells[gs].value)*100).toFixed(2)   });
                                           }else{ 
-                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
                                           }
                                           // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']], "headers if percentage")
                                          }else{
                                           if(scope.chartName === 'Pie'){
-                                            cellArrayFromJson.push({ "key":rowNameFinalArray[row], "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":  Math.round(scope.table.data()[row].cells[gs].value)   });
+                                            cellArrayFromJson.push({ "key":rowNameFinalArray[row], "format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":  Math.round(scope.table.data()[row].cells[gs].value)   });
                                           }else{ 
-                                            cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                            cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
                                           }
                                          }
                                        } 
@@ -2208,16 +2220,16 @@
 
                                   if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
                                     if(scope.chartName === 'Pie'){
-                                      cellArrayFromJson.push({"key":rowNameFinalArray[row],"color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                      cellArrayFromJson.push({"key":rowNameFinalArray[row], "format":"%",  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
                                     }else{
-                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
                                     }
                                     // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']], "headers if percentage")
                                   }else{
                                     if(scope.chartName === 'Pie'){
-                                      cellArrayFromJson.push({"key":rowNameFinalArray[row],"color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                      cellArrayFromJson.push({"key":rowNameFinalArray[row],"format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y": Math.round(scope.table.data()[row].cells[gs].value)});
                                     }else{
-                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
                                     }
                                   }
                                 } 
