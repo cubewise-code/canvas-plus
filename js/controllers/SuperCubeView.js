@@ -379,7 +379,7 @@
                 },
                 "duration": 0,
                 "useVoronoi": true,
-                "interpolate": "monotone"
+                "interpolate": "cardinal"
               },
               "lines2": {
                 "dispatch": {  
@@ -419,7 +419,7 @@
                 },
                 "duration": 250,
                 "useVoronoi": true,
-                "interpolate": "monotone"
+                "interpolate": "cardinal"
               },
               
               "legend": {
@@ -521,6 +521,7 @@
                 "enabled": true,
                 "hideDelay": 200, 
                 "valueFormatter": function(d,i){ console.log(d,i);  return '$'+formatComma(d); },
+                "headerFormatter": function(d){   return scope.formatToHeaderName(d);},
                 "headerEnabled": true,
                 "fixedTop": null,
                 "offset": {
@@ -532,7 +533,7 @@
                 "id": "nvtooltip-52625"
               },
               "width": null,
-              "interpolate": "monotone",
+              "interpolate": "cardinal",
               "clipEdge": true,
               "duration": 0,
               "clipVoronoi": true,
@@ -2293,6 +2294,23 @@
              })
           }
 
+          scope.formatToHeaderName = function(number){
+            if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['dimension']  )+'')]]){
+                return scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['dimension']  )+'')]]
+             
+            }else{
+               if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element']['attributes']['Caption_Default'] ){
+                  return scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element']['attributes']['Caption_Default']
+               }else{
+                 
+                 return  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element'].key
+                
+               }
+               
+               
+            }
+            
+          }
 
             scope.formatUploadButton = function(){
                 
