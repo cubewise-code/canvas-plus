@@ -190,12 +190,13 @@
               {"d3Curve":d3.curveMonotoneX,"curveTitle":"curveMonotoneX"},
               {"d3Curve":d3.curveCatmullRom,"curveTitle":"curveCatmullRom"}
           ];
+        $rootScope.lineType = "cardinal";
         scope.options = {
             "chart": {
               "type":  scope.activeName,
               "height": (window.innerHeight/2),
               "margin": {
-                "top": 30,
+                "top": 20,
                 "right": 50,
                 "bottom": 5,
                 "left": 50
@@ -379,7 +380,7 @@
                 },
                 "duration": 0,
                 "useVoronoi": true,
-                "interpolate": "cardinal"
+                "interpolate": $rootScope.lineType
               },
               "lines2": {
                 "dispatch": {  
@@ -419,7 +420,7 @@
                 },
                 "duration": 250,
                 "useVoronoi": true,
-                "interpolate": "cardinal"
+                "interpolate": $rootScope.lineType
               },
               
               "legend": {
@@ -558,7 +559,7 @@
                 "id": "nvtooltip-52625"
               },
               "width": null,
-              "interpolate": "cardinal",
+              "interpolate": $rootScope.lineType,
               "clipEdge": true,
               "duration": 0,
               "clipVoronoi": true,

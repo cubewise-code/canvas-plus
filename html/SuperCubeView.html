@@ -342,6 +342,19 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									 
 							</div>
 					</span>
+					<span id="chartTypeDrop" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
+							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:150px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
+									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
+									style="width:100%; max-width:150px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
+									data-toggle="dropdown" ng-click="showTypeLineOptions = !showTypeLineOptions" aria-haspopup="true" aria-expanded="false" 
+									 >
+									{{$root.lineType}} 
+									<span class="pull-right"> <i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i></span>	
+									</button>
+									 
+							</div>
+					</span>
 					<span ng-show="chartVisible" > 
 						 
 							<span ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); "  
@@ -421,6 +434,29 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 	
 										</button>
 
+										 
+										 
+									 
+									</div>
+			</div>
+			<div class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartTypeDrop')+20)+'px','left': getContainerLeft('chartTypeDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:200px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
+							  
+								 
+									<div ng-show="showTypeLineOptions" class="out-shadow" ng-init="$root.activeLineTypeOption  = 1" 
+									style="width:100%; max-width:150px;  font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
+										
+										<button ng-repeat="item in ['cardinal','linear', 'step-before', 'step-after', 'basis', 'basis-open', 'bases', 'bases-closed', 'bundle', 'cardinal-open', 'cardinal-closed', 'monotone' ] track by $index" 
+												style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer;" 
+													ng-click="$root.activeLineTypeOption = ($index+1); $root.lineType = item;  activeType = item; lineType = item; options.chart.interpolate = item;  options.chart.lines2.interpolate = item; api.update(); options.chart.lines.interpolate = item; api.update();" class="dropdown-item"  >
+												 
+													{{item}}
+													<span class="pull-right">
+															<i ng-if="$root.activeLineTypeOption  === ($index+1)" class="fa fa-check dropdown-check" aria-hidden="true"></i>
+													</span>
+											 
+										</button> 
+										 
 										 
 										 
 									 
