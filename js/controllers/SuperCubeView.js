@@ -195,12 +195,12 @@
               "type":  scope.activeName,
               "height": (window.innerHeight/2),
               "margin": {
-                "top": 20,
+                "top": 30,
                 "right": 50,
                 "bottom": 5,
                 "left": 50
               },
-             
+               
               "valueFormat":  function(d){ console.log(d, "looking at the cellvalue from chart pie tooltip format"); return  formatComma(d); },
               "useInteractiveGuideline": true,
               "dispatch": {
@@ -459,10 +459,10 @@
                   "snapDistance": 0,
                   "classes": null,
                   "chartContainer": null,
-                  "enabled": true,
-                  "hideDelay": 0,
                    
-                  "valueFormatter": function(d,i){ console.log(d,i);  return formatComma(d); },
+                  "enabled": true,
+                  "hideDelay": 0, 
+                  "valueFormatter": function(d,i){   return  formatComma(d)},
                   "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                   "headerEnabled": true,
                   "fixedTop": null,
@@ -495,8 +495,7 @@
                 "clipEdge": true,
                 "id": 2362,
                 "hideable": false,
-                "groupSpacing": 0.1,
-                 
+                "groupSpacing": 0.1, 
                 "margin": {
                   "top": 0,
                   "right": 0,
@@ -544,8 +543,9 @@
                 "classes": null,
                 "chartContainer": null,
                 "enabled": true,
+                 
                 "hideDelay": 200, 
-                "valueFormatter": function(d,i){ console.log(d,i);  return formatComma(d); },
+                "valueFormatter": function(d,i){    return formatComma(d); },
                 "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                 "headerEnabled": true,
                 "fixedTop": null,
@@ -679,7 +679,10 @@
              
             // ... do smth
         };
-        
+        scope.getFormatColVal = function(val, index){
+          console.log(scope.data[index],val,index);
+          return val;
+        } 
           scope.highlightPoints = function(chart){
             scope.svg.selectAll("dot")    
             .data(data)         
@@ -1890,7 +1893,7 @@
                    
                 }
                 scope.formatPercentageString = function(total, d){
-                  return  parseFloat(total*100).toFixed(d)+'%'; 
+                  return  parseFloat(total*100).toFixed(d); 
                    
                 }
                 scope.seeData = function(rowindex, index,table){
