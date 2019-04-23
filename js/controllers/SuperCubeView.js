@@ -467,10 +467,7 @@
                   "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                   "headerEnabled": true,
                   "fixedTop": null,
-                  "offset": {
-                    "left": 0,
-                    "top": 0
-                  },
+                   
                   "hidden": false,
                   "data": null,
                   "id": "nvtooltip-70659"
@@ -550,10 +547,7 @@
                 "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                 "headerEnabled": true,
                 "fixedTop": null,
-                "offset": {
-                  "left": 0,
-                  "top": 0
-                },
+                 
                 "hidden": true,
                 "data": null,
                 "id": "nvtooltip-52625"
