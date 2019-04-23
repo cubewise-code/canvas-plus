@@ -331,9 +331,9 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					</span>
 					<span id="chartDrop" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
-							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:150px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
+							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
 									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
-									style="width:100%; max-width:150px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
+									style="width:100%; max-width:100px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
 									data-toggle="dropdown" ng-click="showChartOptions = !showChartOptions" aria-haspopup="true" aria-expanded="false" 
 									 >
 								 {{chartName}} 
@@ -344,9 +344,9 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					</span>
 					<span id="chartTypeDrop" ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px; border-left:1px solid steelblue;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
-							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:150px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
+							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
 									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
-									style="width:100%; max-width:150px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
+									style="width:100%; max-width:100px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
 									data-toggle="dropdown" ng-click="showTypeLineOptions = !showTypeLineOptions" aria-haspopup="true" aria-expanded="false" 
 									 >
 									<small>type: {{$root.lineType}} </small>
@@ -389,11 +389,11 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 			</div>
 	 
 			<div ng-show="showChartOptions" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop')+20)+'px','left': getContainerLeft('chartDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
-							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:150px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
+							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
 							  
 								 
 									<div class="out-shadow" ng-init="activeOption = 1" 
-									style="width:100%; max-width:150px; font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
+									style="width:100%; max-width:100px; font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
 										
 										<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer;" 
 													ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset);" class="dropdown-item"  >
@@ -440,11 +440,11 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									</div>
 			</div>
 			<div ng-show="showTypeLineOptions" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartTypeDrop')+20)+'px','left': getContainerLeft('chartTypeDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
-							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:150px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
+							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
 							  
 								 
 									<div ng-show="showTypeLineOptions" class="out-shadow" ng-init="$root.activeLineTypeOption  = 1" 
-									style="width:100%; max-width:150px;  font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
+									style="width:100%; max-width:100px;  font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
 										
 										<button ng-repeat="item in ['cardinal','linear', 'step-before', 'step-after', 'basis', 'basis-open', 'bases', 'bases-closed', 'bundle', 'cardinal-open', 'cardinal-closed', 'monotone' ] track by $index" 
 												style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;" 
