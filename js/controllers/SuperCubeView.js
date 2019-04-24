@@ -30,7 +30,7 @@
                 };
                 scope.hideCol = $location.search()['hideCol'];
                 if($attributes.cubeMdx != null && $attributes.cubeMdx != 'undefined'){
-                  console.log("MDX MDX MDX MDX MDX MDX MDX MDX MDX");
+                  //console.log("MDX MDX MDX MDX MDX MDX MDX MDX MDX");
                 } 
                 scope.myCellData = []
                 if(scope.hideCol != null && scope.hideCol != 'undefined'){
@@ -130,7 +130,7 @@
                     if(scope.tableUrlValue === 'true'){
                         
                     
-                        console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
+                        //console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
                         scope.tableHide = true ; 
                         
                        
@@ -346,7 +346,7 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
-                    elementMouseover: function(e){  console.log( e['pointIndex'], (scope.hideColumn), scope.hideCol, scope.hideColumn.length,  "column rolled over inside individual selection"); $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
+                    elementMouseover: function(e){    $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
                     elementMouseout: function(e){  $timeout(function(){$rootScope.overCol =-1; return e; })  },
                     renderEnd: function(e){    }
                  
@@ -678,7 +678,7 @@
             // ... do smth
         };
         scope.getFormatColVal = function(val, index){
-          console.log(scope.data[index],val,index);
+          //console.log(scope.data[index],val,index);
           return val;
         } 
           scope.highlightPoints = function(chart){
@@ -727,7 +727,7 @@
                
             }
             $rootScope.collapseColumn = function(elemnt, row,index){
-              console.log(elemnt, row,index);
+            //console.log(elemnt, row,index);
                
             }
                 scope.seeDataNew = function(d){
@@ -822,7 +822,7 @@
               var totalhidden = 0; 
                 for(var ddss = 0; ddss < scope.hideColumn.length; ddss++ ){
                   if(scope.hideColumn[ddss]){
-                    console.log(scope.hideColumn[ddss], "true");
+                //    console.log(scope.hideColumn[ddss], "true");
                     totalhidden++;
                   }
                 }
@@ -1003,7 +1003,7 @@
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
 
-                                       console.log(scope.data)
+                                    //   console.log(scope.data)
                                        if( scope.api){
                                         scope.api.update();
                                        }
@@ -1185,7 +1185,7 @@
                                       }
                                      //scope.tableData = scope.table.data();
                                      scope.data = jsonRowData;
-                                     console.log(scope.data)
+                                //     console.log(scope.data)
                                      if( scope.api){
                                       scope.api.update();
                                      }
@@ -1378,7 +1378,7 @@
 
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
-                                       console.log(scope.data)
+                                    //   console.log(scope.data)
                                        if( scope.api){
                                         scope.api.update();
                                        }
@@ -2331,7 +2331,7 @@
           }
 
           scope.formatToHeaderName = function(number){
-            console.log(number)
+         //   console.log(number)
             var useNumberNew =  number ;
             if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['dimension']  )+'')]]){
               if(scope.dataset.headers.length-1 != 0){
@@ -2512,7 +2512,7 @@
                             $tm1Ui.cellsetPut(sendValue).then(function(result){
                               //console.log(request, "######## saved")
                                  if(result.success){
-                                    console.log(result, "######## saved")
+                                  //  console.log(result, "######## saved")
                                     if(scope.api){
                                       scope.api.refresh()
                                     }
@@ -2768,14 +2768,14 @@
         
         scope.increaseDataWidth = function(){
           scope.dataWidth += (20);
-          console.log(scope.dataWidth , "stat drag");
+   //   console.log(scope.dataWidth , "stat drag");
 
         }
         scope.reduceDataWidth = function(){
           
            
           scope.dataWidth -= (20);
-          console.log(scope.dataWidth , "stat drag");
+        //  console.log(scope.dataWidth , "stat drag");
 
         }
           scope.updateUrlChart = function(){
@@ -2794,7 +2794,7 @@
           }
           scope.updateUrlTable = function(decider){
            
-                 console.log(decider);
+              //   console.log(decider);
                  if(!decider){
                    $location.search('tableHide', decider+'');
                  }else{
@@ -2933,7 +2933,7 @@
                     
                     }, function (newValue, oldValue) { 
                       if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                         console.log(newValue, "mdx attributes changed inside directive");
+                      //   console.log(newValue, "mdx attributes changed inside directive");
                           
                           scope.cubeMdxParams = JSON.parse(newValue)
                           scope.refresh(scope.cubeName, scope.cubeMdx)
