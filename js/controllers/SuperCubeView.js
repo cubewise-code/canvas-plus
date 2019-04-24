@@ -205,7 +205,9 @@
               "valueFormat":  function(d){ console.log(d, "looking at the cellvalue from chart pie tooltip format"); return  formatComma(d); },
               "useInteractiveGuideline": true,
               "dispatch": {
-                //elementMouseover: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e};}else{scope.chartToolTipElements = e;}  console.log(e,'mouseover') },
+ 
+                
+                 
                 //elementMouseout: function(e){ if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}; }else{scope.chartToolTipElements = e;}  console.log(e,'mouseout') },
                 tooltipShow: function(e){ console.log(e,'tooltipShow') },
                 tooltipHide: function(e){ console.log(e,'tooltipHide') }
@@ -344,8 +346,8 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
-                    elementMouseover: function(e){   },
-                    elementMouseout: function(e){   },
+                    elementMouseover: function(e){ console.log( e['pointIndex'], (scope.hideColumn), scope.hideColumn.length,  "column rolled over inside individual selection"); $timeout(function(){   if(scope.hideColumn.length){var useNumber =    e['pointIndex'] + (scope.hideColumn.length);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
+                    elementMouseout: function(e){  $timeout(function(){$rootScope.overCol =-1; return e; })  },
                     renderEnd: function(e){    }
                  
                 },
@@ -430,6 +432,7 @@
                   legendMouseover: function(e) {  },
                   legendMouseout: function(e) { },
                   stateChange: function(e) { }
+                  
                 },
                 "width": 400,
                 "height": 20,
@@ -450,8 +453,8 @@
               }, 
               "interactiveLayer": {
                 "dispatch": {
+                  elementMousemove: function(d){  $timeout(function(){     var useNumber =  Math.round(d['pointXValue']); console.log(d['pointXValue'], useNumber, "outcome after the column collapse"); $rootScope.overCol = useNumber; return d;  }) }
                   
-
                 },
                 "tooltip": {
                   "duration": 100,
@@ -2318,15 +2321,35 @@
           }
 
           scope.formatToHeaderName = function(number){
-            if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['dimension']  )+'')]]){
-                return scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['dimension']  )+'')]]
+            console.log(number)
+            var useNumberNew =  number ;
+            if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['dimension']  )+'')]]){
+              if(scope.dataset.headers.length-1 != 0){
+                return scope.dataset.headers[0]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[0]['columns'][useNumberNew]['dimension']  )+'')]] +' / '+scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['dimension']  )+'')]]
+              }else{
+                return scope.dataset.headers[0]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[0]['columns'][useNumberNew]['dimension']  )+'')]]  ;
+
+              }
+                
              
             }else{
-               if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element']['attributes']['Caption_Default'] ){
-                  return scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element']['attributes']['Caption_Default']
-               }else{
+             
+               if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element']['attributes']['Caption_Default'] ){
+                if(scope.dataset.headers.length-1 != 0){
+                  return scope.dataset.headers[0]['columns'][useNumberNew]['element']['attributes']['Caption_Default'] +' / '+scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].attributes['Caption_Default']
+                }else{
+                  return scope.dataset.headers[0]['columns'][useNumberNew]['element']['attributes']['Caption_Default']
+  
+                }  
                  
-                 return  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][number]['element'].key
+               }else{
+                if(scope.dataset.headers.length-1 != 0){
+                  return scope.dataset.headers[0]['columns'][useNumberNew]['element'].key +' / '+scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].key
+                }else{
+                  return  scope.dataset.headers[0]['columns'][useNumberNew]['element'].key
+  
+                }  
+                  
                 
                }
                

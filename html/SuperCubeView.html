@@ -358,12 +358,12 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					<span ng-show="chartVisible" > 
 						 
 							<span ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); "  
-							 style="margin : 5px; margin-bottom:0px; margin-top:0px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+							 style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 									Options	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
 							</span>
 						 
 						<span ng-if="options['chart']['showLegend'] && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
-						style="margin : 5px; margin-bottom:0px; margin-top:0px; display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 							Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
 						</span>
 						
@@ -689,8 +689,8 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									</td>
 											<td   
 											id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
-											style="border-right:1px solid #ccc; border-top:1px solid #ddd; background-color:#f0efef; cursor:pointer; vertical-align:baseline;" 
-											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd'}"
+											style="border-right:1px solid #ccc; border-top:1px solid #ddd;   cursor:pointer; vertical-align:baseline;" 
+											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd', 'background-color':$root.overCol === $index ? 'steelblue':'#f0efef', 'color':$root.overCol === $index ? '#fff':'#333' }"
 											ng-repeat="col in headerrow.columns" ng-if="col.visible  " 
 											  colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 											
