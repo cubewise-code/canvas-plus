@@ -346,7 +346,7 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
-                    elementMouseover: function(e){ console.log( e['pointIndex'], (scope.hideColumn), scope.hideCol, scope.hideColumn.length,  "column rolled over inside individual selection"); $timeout(function(){   if(scope.hideCol){var useNumber =    e['pointIndex'] + (scope.hideColumn.length);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
+                    elementMouseover: function(e){  console.log( e['pointIndex'], (scope.hideColumn), scope.hideCol, scope.hideColumn.length,  "column rolled over inside individual selection"); $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
                     elementMouseout: function(e){  $timeout(function(){$rootScope.overCol =-1; return e; })  },
                     renderEnd: function(e){    }
                  
@@ -817,6 +817,16 @@
                   var newHex = rgb2hex(newRgbIntensityFloat);
               
                   return newHex;
+              }
+              scope.gatherColumnsHiden = function(){
+              var totalhidden = 0; 
+                for(var ddss = 0; ddss < scope.hideColumn.length; ddss++ ){
+                  if(scope.hideColumn[ddss]){
+                    console.log(scope.hideColumn[ddss], "true");
+                    totalhidden++;
+                  }
+                }
+                return totalhidden;
               }
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
