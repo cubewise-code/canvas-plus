@@ -453,7 +453,7 @@
               }, 
               "interactiveLayer": {
                 "dispatch": {
-                  elementMousemove: function(d){  $timeout(function(){     var useNumber =  Math.round(d['pointXValue']); console.log(d['pointXValue'], useNumber, "outcome after the column collapse"); $rootScope.overCol = useNumber; return d;  }) }
+                  elementMousemove: function(d){  $timeout(function(){     var useNumber =  Math.round(d['pointXValue']);  $rootScope.overCol = useNumber; return d;  }) }
                   
                 },
                 "tooltip": {
