@@ -681,7 +681,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 											<td   
 											id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 											style="border-right:1px solid #ccc; border-top:1px solid #ddd;   cursor:pointer; vertical-align:baseline;" 
-											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd', 'background-color':$root.overCol === $index ? 'steelblue':'#f0efef', 'color':$root.overCol === $index ? '#fff':'#333' }"
+											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd', 'background-color':$root.overCol === $index && chartVisible ? 'steelblue':'#f0efef', 'color':$root.overCol === $index && chartVisible  ? '#fff':'#333' }"
 											ng-repeat="col in headerrow.columns" ng-if="col.visible  " 
 											  colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 											
