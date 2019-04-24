@@ -549,7 +549,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 								 ng-init="seeDataNew(col)"
 									ng-show="col.visible"   
 									class="text-center center " 
-									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index))+'px', 'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd' } " 
+									ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index))+'px'} " 
 									ng-repeat="col in headerrrow.columns track by $index" 
 									style="    white-space: initial;     padding: 8px;  vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600; font-size:0.7em; border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; ">
 									<span>
