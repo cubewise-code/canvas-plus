@@ -31,10 +31,10 @@
   {
     "id": "Employee Forecast",
     "mdx": [
-      "SELECT NON EMPTY TM1SubsetToSet(Period,'Default') ON COLUMNS,",
-      "NON EMPTY TM1SubsetToSet(Employee,'All Employees') ON ROWS",
+      "SELECT {[Period].[Year].children } ON COLUMNS,",
+      "NON EMPTY { TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ) } ON ROWS",
       "FROM [Employee]",
-      "where ( [Version].[Actual], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Department].&[{{Department}}], [Employee Measure].[Base Salary] )" 
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Department].&[{{Department}}], [Employee Measure].[Base Salary] )" 
     ],
     "description":"",
     "mdxParams": [

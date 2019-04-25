@@ -25,18 +25,18 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.showView = true; 
     //$rootScope.calendarShow = true ;
      
-    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description'}}
+    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description', "Employee": 'Full Name'}}
     $scope.startAllFiltersAreHere = function(){
         $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
-        console.log($rootScope.mdxParameters);
+        //console.log($rootScope.mdxParameters);
     }
     $scope.$watch(function () {
         return $rootScope.selections.year;
         
         }, function (newValue, oldValue) { 
             if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-             console.log(newValue, "mdx attributes changed inside directive");
+             //console.log(newValue, "mdx attributes changed inside directive");
               
              $rootScope.mdxParameters =  {parameters: {Year:newValue, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
@@ -48,7 +48,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
             
             }, function (newValue, oldValue) { 
                 if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                 console.log(newValue, "mdx attributes changed inside directive");
+               //  console.log(newValue, "mdx attributes changed inside directive");
                   
                  $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:newValue, Department:$rootScope.selections.department}}
     
@@ -60,7 +60,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                 
                 }, function (newValue, oldValue) { 
                     if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                     console.log(newValue, "mdx attributes changed inside directive");
+                 //    console.log(newValue, "mdx attributes changed inside directive");
                       
                      $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region, Department:newValue}}
         

@@ -49,7 +49,7 @@ textarea.ng-valid {
             <i style="padding-right:10px" class="fa fa-cube"></i>MDX Parameters
              
             <span class="pull-right"  >   
-                    <button style="font-size:0.7em; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;" class="btn btn-primary" ng-click="$root.useMdxNow ? $root.setMdx($root.mdxString) : $root.setMdxId()"><i style="color:#fff;" class="fa fa-flash"></i></button>
+                    <button style="font-size:0.7em; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;" class="btn btn-primary" ng-click="$root.useMdxNow ? $root.setMdx($root.mdxString) : $root.setMdxId( $root.mdxId)"><i style="color:#fff;" class="fa fa-flash"></i></button>
                 </span>
                 <span class="pull-right"  >   
                         <span style="font-size:1em; color:steelblue; background-color:transparent; padding:5px; padding-left:10px; padding-right:10px; border-radius:0px;"   ng-click="$root.useMdxNow = !$root.useMdxNow"> MDX <i    ng-class="{ 'fa-toggle-on':$root.useMdxNow,'fa-toggle-off':!$root.useMdxNow }" class="fa "></i></span>
