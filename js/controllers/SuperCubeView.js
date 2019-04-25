@@ -70,14 +70,7 @@
                 } else{
                   scope.cubeName = $attributes.cubeName;
                 }
-                if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue!= 'undefined'){
-                //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
-                  scope.cubeView = scope.cubeViewUrlValue ; 
-                  
-                  
-                } else{
-                  scope.cubeView = $attributes.cubeView;
-                }
+                 
                 
                 
                 scope.attributeOptions = $attributes.attributeOptions;
@@ -101,18 +94,18 @@
                     scope.cubeName = scope.cubeNameUrlValue ; 
                     
                     
-                  } else{
-                    scope.cubeName = $attributes.cubeName;
-                  }
+                } else{
+                  scope.cubeName = $attributes.cubeName;
+                }
 
-                  if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue != 'undefined'){
-                  //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
-                    scope.cubeView = scope.cubeViewUrlValue ; 
-                    
-                    
-                  } else{
-                    scope.cubeView = $attributes.cubeView;
-                  }
+                if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
+                //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                  scope.cubeView = scope.cubeViewUrlValue ; 
+                  
+                  
+                } else{
+                  scope.cubeView = $attributes.cubeView;
+                }
 
                   if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
                     //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
@@ -1201,7 +1194,7 @@
                             }
                             }else{
                               
-                            $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName, $rootScope.cubeView).then(function(result){
+                            $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName,scope.cubeView).then(function(result){
                                 if(!result.failed){
                                      
                                     scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -1692,7 +1685,7 @@
 
 
                                 scope.charRowCount = 0;
-                               $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,$rootScope.cubeView).then(function(result){
+                               $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,scope.cubeView).then(function(result){
                                    if(!result.failed){
                                   //console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
@@ -1877,7 +1870,7 @@
                                           }
                                         },1000
                                       )
-                                      
+                                      scope.refreshNew(scope.dataset)
                                       jsonRowData = [];
                                    } else {
                                        scope.message = result.message;
@@ -2331,10 +2324,10 @@
                             }
                           },1000
                         )
-                        
+                        scope.refreshNew(scope.dataset)
                         jsonRowData = [];
                      } else {
-                         scope.message = result.message;
+                        scope.message = result.message;
                          
                         
                      }		
@@ -2734,22 +2727,8 @@
                    
                    scope.sendCellSetPutArray.push(request);
           }
-          if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
-          //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
-            scope.cubeName = scope.cubeNameUrlValue ; 
-            
-            
-          } else{
-            scope.cubeName = $attributes.cubeName;
-          }
-          if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
-          //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
-            scope.cubeView = (scope.cubeViewUrlValue) ; 
-            
-            
-          } else{
-            scope.cubeView = $attributes.cubeView;
-          }
+           
+           
           scope.dispatchResize = function(){
             $timeout(
                 function(){
@@ -2983,7 +2962,7 @@
                               if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
                                }else{
-                                scope.currentRowCount = $attributes.rowsToLoad;
+                                scope.currentRowCount = scope.rowsToLoad;
                                }
                               scope.refresh(scope.cubeName, newValue)
                           }
@@ -3002,7 +2981,7 @@
                                if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
                                }else{
-                                scope.currentRowCount = $attributes.rowsToLoad;
+                                scope.currentRowCount = scope.rowsToLoad;
                                }
                                
                                scope.refresh(newValue, scope.cubeView)
