@@ -91,7 +91,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $scope.weatherCellsetPutArray = [];
         var path = location.pathname
         api_key = "feb028d6a3cf8710e58aaf25b2ed29f4"
-        nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$rootScope.selections.region+"&units=metric&appid="+api_key+"";
+        nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$rootScope.defaults.regionName+"&units=metric&appid="+api_key+"";
         $scope.readTextFile = function(file, callback) {
             
             var rawFile = new XMLHttpRequest();
@@ -194,7 +194,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
     }
     $rootScope.getWeather = function(region,userName){
-        $rootScope.loadWeatherViaTi(region,userName);
+        $timeout(
+            function(){
+                $rootScope.loadWeatherViaTi(region,userName);
+            },3000
+        )
+        
     }
     $rootScope.applicationTriggerFindUser = function(){
         $rootScope.countIdel = 0;
@@ -333,11 +338,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
           // $rootScope.calendarDateSelected = $rootScope.dateNumber+"/"+ $rootScope.calendarMonthSelected+"/"+ $rootScope.selections.year;
           
             globals.updateSettings(values, defaults, selections, parameter, options); 
-            
+            $rootScope.getWeather($rootScope.defaults.regionName, $rootScope.user.FriendlyName);
             
             // $rootScope.refreshCalendar();
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
-            $rootScope.getWeather($rootScope.selections.regionName, $rootScope.user.FriendlyName);
+          
         }
          
              
