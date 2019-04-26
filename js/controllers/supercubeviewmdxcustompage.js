@@ -70,10 +70,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                  
             
                 $scope.changedIdOption = true; 
-                $scope.activeCubeName = cube;
+                $scope.activeCubeName = '';
                 $rootScope.cubeName = '';
                 $timeout(
                     function(){
+                        $scope.activeCubeName = cube;
                         $rootScope.cubeName = cube;
                         $rootScope.parametersVisible = !$rootScope.parametersVisible ;
                     },1000
