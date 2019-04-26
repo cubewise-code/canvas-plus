@@ -125,7 +125,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 $tm1Ui.cellSetPut($scope.weatherCellsetPutArray).then(function(result){
                     if(result.success){
                         console.log("Weather saved to TM1 ");
-                        $tm1Ui.dataRefresh();
+                        $tm1Ui.dataRefresh('weatherGroup');
                     }else{
                         console.log("weather did not save")
                     }

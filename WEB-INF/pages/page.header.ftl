@@ -137,32 +137,36 @@
             
             <tm1-ui-dbr  ng-show="false"  tm1-read-only="true"
 				tm1-instance="dev" 
-				tm1-cube="User Weather"  
-				tm1-elements="Admin,description,String"
+				tm1-cube="User Weather"
+                 tm1-refresh-group="weatherGroup"  
+				tm1-elements="{{$root.user.FriendlyName}},description,String"
                 ng-model="$root.user['weatherDescription']"
 				   >
 			</tm1-ui-dbr>
             {{$root.user['weatherDescription']}}
             <tm1-ui-dbr  ng-show="false" tm1-read-only="true"
-				tm1-instance="dev" 
+				tm1-instance="dev"  
+                tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
-				tm1-elements="Admin,temperature,String"
+				tm1-elements="{{$root.user.FriendlyName}},temperature,String"
                 ng-model="$root.user['weatherTemp']"
 				  >
 			</tm1-ui-dbr>
             <i class="fa fa-thermometer-three-quarters" area-hidden="true"></i> | {{$root.user['weatherTemp']}} &#8451; 
             <tm1-ui-dbr ng-show="false"  tm1-read-only="true"
 				tm1-instance="dev" 
+                tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
-				tm1-elements="Admin,clouds,String"
+				tm1-elements="{{$root.user.FriendlyName}},clouds,String"
                 ng-model="$root.user['weatherClouds']"
                 tm1-on-change="$root.createCloudArray($root.user['weatherClouds'], $root.user['weatherDescription']);"
 				  >
 			</tm1-ui-dbr>
             <tm1-ui-dbr  tm1-read-only="true"
 				tm1-instance="dev" 
+                 tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
-				tm1-elements="Admin,city,String"
+				tm1-elements="{{$root.user.FriendlyName}},city,String"
                 ng-model="$root.user['city']"
                 
 				  >
