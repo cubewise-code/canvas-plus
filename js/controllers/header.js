@@ -87,18 +87,62 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         console.debug('error', text_status + ", " + error_thrown + ":\n" + r.responseText);
     }
     
-    $rootScope.loadWeatherViaTi = function(userName){
-        
-      
-         $tm1Ui.processExecute("dev","Cube.User Weather.loadFromSrc").then(function(result){
-           //console.log("NEW WEATHER IS UPDATED FOR USER", result)
-            if(result.success){
-                
-               $tm1Ui.dataRefresh();
-            }else{
-                
+    $rootScope.loadWeatherViaTi = function(regionName,userName){
+        $scope.weatherCellsetPutArray = [];
+        var path = location.pathname
+        api_key = "feb028d6a3cf8710e58aaf25b2ed29f4"
+        nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$rootScope.selections.region+"&units=metric&appid="+api_key+"";
+        $scope.readTextFile = function(file, callback) {
+            
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function() {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
             }
-        })
+            rawFile.send(null);
+        }
+         
+            $.getJSON(nurl, function(data){
+                
+                var elementArrayToSend = {'city':data['name'],  'longitude':data['coord'].lon, 'latitude':data['coord'].lat, 'description':data['weather'][0].main,'clouds':data['clouds'].all, 'temperature':data['main'].temp }
+                
+                console.log(elementArrayToSend, "WEATHER JSON NAMED MDX");
+            
+                _.forEach(elementArrayToSend, function(value, key) {
+                    var request = {
+                        value: (value+''), 
+                        instance:$rootScope.defaults.settingsInstance, 
+                        cube: "User Weather", 
+                        cubeElements:[$rootScope.user.FriendlyName,key,"String"] 
+                        }
+                        $scope.weatherCellsetPutArray.push(request)
+                  });
+                 
+
+                $tm1Ui.cellSetPut($scope.weatherCellsetPutArray).then(function(result){
+                    if(result.success){
+                        console.log("Weather saved to TM1 ");
+                        $tm1Ui.dataRefresh();
+                    }else{
+                        console.log("weather did not save")
+                    }
+                })
+                 
+                 
+            }) // <=== was missing
+        
+        //  $tm1Ui.processExecute("dev","Cube.User Weather.loadFromSrc").then(function(result){
+        //    //console.log("NEW WEATHER IS UPDATED FOR USER", result)
+        //     if(result.success){
+                
+        //         
+        //     }else{
+                
+        //     }
+        // })
     }
     $rootScope.cloudArray = [];
     $rootScope.showClouds = true;
@@ -149,8 +193,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
 
     }
-    $rootScope.getWeather = function(userName){
-        $rootScope.loadWeatherViaTi(userName);
+    $rootScope.getWeather = function(region,userName){
+        $rootScope.loadWeatherViaTi(region,userName);
     }
     $rootScope.applicationTriggerFindUser = function(){
         $rootScope.countIdel = 0;
@@ -277,7 +321,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "region", {"tm1Dimension":"Region", "tm1Alias":"Description"});
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Description"});
             
-                
+                 
             
             });   
             
@@ -293,7 +337,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             
             // $rootScope.refreshCalendar();
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
-           
+            $rootScope.getWeather($rootScope.selections.regionName, $rootScope.user.FriendlyName);
         }
          
              
@@ -436,7 +480,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                          }  
                  }    
             } ); 
-            $rootScope.getWeather($rootScope.userName);
+             
      });
 
     $rootScope.createCSSSelector = function(selector, style) {

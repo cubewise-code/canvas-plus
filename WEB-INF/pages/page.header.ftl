@@ -14,7 +14,7 @@
     <div ng-init=" $root.printOpened = false;" 
         style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; padding-right:0px; margin-right:50px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
 
-        <span ng-init=" $rootScope.getWeather($root.user.Name); "></span>
+        <span ng-if="$root.defaults.regionName" ng-init=" $root.getWeather($root.defaults.regionName,$root.user.FriendlyName); "></span>
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
             <li class="dropdown "  style="color:#fff !important; background-color:transparent !important;" >
@@ -383,7 +383,7 @@
             
  
             {{$root.defaults.year}} | 
-            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
+            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" ng-model="$root.defaults.regionName" tm1-read-only="true"></tm1-ui-dbra> | 
             <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
             
         </span>
