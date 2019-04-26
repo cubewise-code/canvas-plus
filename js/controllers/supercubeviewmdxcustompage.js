@@ -47,7 +47,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
     $scope.focusOnMdxString = function(string){
         $scope.focusedMdxString = string;
-        console.log($scope.focusedMdxString);
+        //console.log($scope.focusedMdxString);
     }
     $scope.findMdxStringChanged = function(){
         if($rootScope.mdxString === $scope.focusedMdxString){
@@ -66,7 +66,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
       
              
             
-            console.log($rootScope.mdxId+'' ,  $scope.focusedMdxId+'',  cube ,"$scope.focusedMdxId$scope.focusedMdxId" );
+            //console.log($rootScope.mdxId+'' ,  $scope.focusedMdxId+'',  cube ,"$scope.focusedMdxId$scope.focusedMdxId" );
                  
             
                 $scope.changedIdOption = true; 
@@ -98,7 +98,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
      
         $.getJSON("files/namedMdx.json", function(data){
           $scope.namedMdxIdArray = data;
-            console.log(data, "JSON NAMED MDX");
+            //console.log(data, "JSON NAMED MDX");
         }) // <=== was missing
     
     //usage:

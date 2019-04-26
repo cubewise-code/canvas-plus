@@ -195,15 +195,15 @@
                 "left": 50
               },
                
-              "valueFormat":  function(d){ console.log(d, "looking at the cellvalue from chart pie tooltip format"); return  formatComma(d); },
+              "valueFormat":  function(d){  return  formatComma(d); },
               "useInteractiveGuideline": true,
               "dispatch": {
  
                 
                  
                 //elementMouseout: function(e){ if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}; }else{scope.chartToolTipElements = e;}  console.log(e,'mouseout') },
-                tooltipShow: function(e){ console.log(e,'tooltipShow') },
-                tooltipHide: function(e){ console.log(e,'tooltipHide') }
+                tooltipShow: function(e){   },
+                tooltipHide: function(e){  }
               },
               "xAxis": {
                 "axisLabel": "",

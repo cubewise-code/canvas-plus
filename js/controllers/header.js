@@ -109,7 +109,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 
                 var elementArrayToSend = {'city':data['name'],  'longitude':data['coord'].lon, 'latitude':data['coord'].lat, 'description':data['weather'][0].main,'clouds':data['clouds'].all, 'temperature':data['main'].temp }
                 
-                console.log(elementArrayToSend, "WEATHER JSON NAMED MDX");
+                //console.log(elementArrayToSend, "WEATHER JSON NAMED MDX");
             
                 _.forEach(elementArrayToSend, function(value, key) {
                     var request = {
@@ -124,10 +124,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
                 $tm1Ui.cellSetPut($scope.weatherCellsetPutArray).then(function(result){
                     if(result.success){
-                        console.log("Weather saved to TM1 ");
+                        //console.log("Weather saved to TM1 ");
                         $tm1Ui.dataRefresh('weatherGroup');
                     }else{
-                        console.log("weather did not save")
+                        //console.log("weather did not save")
                     }
                 })
                  
