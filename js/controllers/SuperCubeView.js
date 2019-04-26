@@ -1070,7 +1070,7 @@
                                            
                                           for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
                                               if(myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]){
-                                                console.log(myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]], "Alias used for "+myRowObjElement.elements[jjjk]['dimension']) 
+                                                //console.log(myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]], "Alias used for "+myRowObjElement.elements[jjjk]['dimension']) 
                                                   if(rowNameArray[gggh]){
                                                     rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                                   }else{
