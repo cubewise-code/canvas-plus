@@ -1011,6 +1011,7 @@
                                 })
 
                               }else{
+
                               $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, $rootScope.mdxId,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                                 if(!result.failed){
                                      
@@ -2974,7 +2975,7 @@
                         return $attributes.cubeName;
                         
                         }, function (newValue, oldValue) { 
-                            if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                            if(newValue != '' && newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                              //console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
                                scope.selections.searchRows = '';

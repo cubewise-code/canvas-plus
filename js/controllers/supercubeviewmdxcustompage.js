@@ -70,8 +70,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                  
             
                 $scope.changedIdOption = true; 
-                $scope.activeCubeName = '';
-                $rootScope.cubeName = '';
+                 $scope.activeCubeName = cube;
+                 $rootScope.cubeName = null;
                 $timeout(
                     function(){
                         $scope.activeCubeName = cube;
