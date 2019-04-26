@@ -67,7 +67,9 @@ textarea.ng-valid {
                 </textarea>
             </div>
             <div class="col-xs-12 col-md-12 nopadding" >  
-                
+                <h3>
+                 Reports
+                </h3>
                 <!-- <textarea  ng-if="!$root.useMdxNow"   ng-focus="    "  
                 ng-blur="findMdxIdChanged() "  
                     style="width:100%; min-height:40px; border:1px solid steelblue" 
@@ -90,11 +92,11 @@ textarea.ng-valid {
                                     ng-mouseout="mdxidOver = ''; "
                                     ng-style="{'background-color': mdxidOver === mdxid.id ? 'steelblue':'#fff', 'color':mdxidOver === mdxid.id ? '#fff':'steelblue'}"
                                     style="width:100%; font-size:0.7em;   cursor:pointer;" 
-                                    ng-click=" $root.mdxId =  mdxid.id; changedOption = true;  $root.mdxId =  mdxid.id;  findMdxIdChanged();  chooseCube(mdxid.cube); " class="dropdown-item"  >
+                                    ng-click="    $root.mdxId =  mdxid.id; changedOption = true; findMdxIdChanged(mdxid.id,mdxid.cube);      " class="dropdown-item"  >
                                     <span class="pull-left" style="margin-right:10px;">
                                             <i ng-if="$root.mdxId === mdxid.id" class="fa fa-check dropdown-check" aria-hidden="true"></i>
                                     </span>
-                                        <span  >{{mdxid.id}}</span> 
+                                       <span  > <!-- {{mdxid.cube}}:  --> {{mdxid.id}}</span>
                                          
                                  
                             </button>  

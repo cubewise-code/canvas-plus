@@ -32,7 +32,7 @@
     "id": "Employee Forecast",
     "mdx": [
       "SELECT {[Period].[Year].children } ON COLUMNS,",
-      "NON EMPTY { TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ) } ON ROWS",
+      " { TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ) } ON ROWS",
       "FROM [Employee]",
       "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Department].&[{{Department}}], [Employee Measure].[Base Salary] )" 
     ],

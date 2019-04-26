@@ -1002,7 +1002,7 @@
                                        }
                                        jsonRowData = [];
                                        scope.getLastFocus(); 
-                                        
+                                       
                                         
                                 } else {
                                    scope.message = result.message; 

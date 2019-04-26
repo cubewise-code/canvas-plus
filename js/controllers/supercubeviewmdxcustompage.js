@@ -55,21 +55,31 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         }else{
             $scope.changedOption = true; 
         }
-        console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
+      //  console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
        
     }
     $scope.focusOnMdxId = function(id){
         $scope.focusedMdxId = id;
-        console.log($scope.focusedMdxId);
+        //console.log($scope.focusedMdxId);
     }
-    $scope.findMdxIdChanged = function(){
-        if($rootScope.mdxId === $scope.focusedMdxId){
-            $scope.changedIdOption = false; 
-        }else{
-            $scope.changedIdOption = true; 
-        }
-        console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
-       
+    $scope.findMdxIdChanged = function(id,cube){
+      
+             
+            
+            console.log($rootScope.mdxId+'' , $scope.focusedMdxId+'',  cube ,"$scope.focusedMdxId$scope.focusedMdxId" );
+                 
+            
+                $scope.changedIdOption = true; 
+                $scope.activeCubeName = cube;
+                $rootScope.cubeName = cube;
+                $timeout(
+                    function(){
+                        $rootScope.parametersVisible = !$rootScope.parametersVisible ;
+                    },1000
+                )        //console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
+        
+      
+    
     }
     var path = location.pathname
     $scope.readTextFile = function(file, callback) {
