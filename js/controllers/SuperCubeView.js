@@ -30,7 +30,7 @@
                 };
                 scope.hideCol = $location.search()['hideCol'];
                 if($attributes.cubeMdx != null && $attributes.cubeMdx != 'undefined'){
-                  console.log("MDX MDX MDX MDX MDX MDX MDX MDX MDX");
+                  //console.log("MDX MDX MDX MDX MDX MDX MDX MDX MDX");
                 } 
                 scope.myCellData = []
                 if(scope.hideCol != null && scope.hideCol != 'undefined'){
@@ -70,14 +70,7 @@
                 } else{
                   scope.cubeName = $attributes.cubeName;
                 }
-                if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue!= 'undefined'){
-                //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
-                  scope.cubeView = scope.cubeViewUrlValue ; 
-                  
-                  
-                } else{
-                  scope.cubeView = $attributes.cubeView;
-                }
+                 
                 
                 
                 scope.attributeOptions = $attributes.attributeOptions;
@@ -101,18 +94,18 @@
                     scope.cubeName = scope.cubeNameUrlValue ; 
                     
                     
-                  } else{
-                    scope.cubeName = $attributes.cubeName;
-                  }
+                } else{
+                  scope.cubeName = $attributes.cubeName;
+                }
 
-                  if(scope.cubeViewUrlValue!= null && scope.cubeViewUrlValue != 'undefined'){
-                  //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
-                    scope.cubeView = scope.cubeViewUrlValue ; 
-                    
-                    
-                  } else{
-                    scope.cubeView = $attributes.cubeView;
-                  }
+                if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
+                //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                  scope.cubeView = scope.cubeViewUrlValue ; 
+                  
+                  
+                } else{
+                  scope.cubeView = $attributes.cubeView;
+                }
 
                   if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
                     //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
@@ -130,7 +123,7 @@
                     if(scope.tableUrlValue === 'true'){
                         
                     
-                        console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
+                        //console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
                         scope.tableHide = true ; 
                         
                        
@@ -140,8 +133,8 @@
                       }
   
                   scope.dataWidth = 70;
-                 $rootScope.cubeName = scope.cubeName;
-                 $rootScope.cubeView = scope.cubeView;
+                 //$rootScope.cubeName = scope.cubeName;
+                 //$rootScope.cubeView = scope.cubeView;
                 
                   
                 
@@ -172,6 +165,25 @@
         var chart;
         scope.chartContainer; 
         scope.chartToolTipElements = [];
+        var formatComma = d3.format(","),
+            formatDecimal = d3.format(".1f"), 
+            formatDecimalComma = d3.format(",.2f"),
+            formatSuffix = d3.format("s"),
+            formatSuffixDecimal1 = d3.format(".1s"),
+            formatSuffixDecimal2 = d3.format(".2s"),
+            formatMoney = function(d) { return "$" + formatDecimalComma(d); },
+            formatPercent = d3.format(",.2%");
+          var curveArray = [
+              {"d3Curve":d3.curveLinear,"curveTitle":"curveLinear"},
+              {"d3Curve":d3.curveStep,"curveTitle":"curveStep"},
+              {"d3Curve":d3.curveStepBefore,"curveTitle":"curveStepBefore"},
+              {"d3Curve":d3.curveStepAfter,"curveTitle":"curveStepAfter"},
+              {"d3Curve":d3.curveBasis,"curveTitle":"curveBasis"},
+              {"d3Curve":d3.curveCardinal,"curveTitle":"curveCardinal"},
+              {"d3Curve":d3.curveMonotoneX,"curveTitle":"curveMonotoneX"},
+              {"d3Curve":d3.curveCatmullRom,"curveTitle":"curveCatmullRom"}
+          ];
+        $rootScope.lineType = "monotone";
         scope.options = {
             "chart": {
               "type":  scope.activeName,
@@ -182,11 +194,13 @@
                 "bottom": 5,
                 "left": 50
               },
-             
-              "valueFormat": function(d){ return d3.format(',.4f')(d); },
+               
+              "valueFormat":  function(d){ console.log(d, "looking at the cellvalue from chart pie tooltip format"); return  formatComma(d); },
               "useInteractiveGuideline": true,
               "dispatch": {
-                //elementMouseover: function(e){if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e};}else{scope.chartToolTipElements = e;}  console.log(e,'mouseover') },
+ 
+                
+                 
                 //elementMouseout: function(e){ if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}; }else{scope.chartToolTipElements = e;}  console.log(e,'mouseout') },
                 tooltipShow: function(e){ console.log(e,'tooltipShow') },
                 tooltipHide: function(e){ console.log(e,'tooltipHide') }
@@ -325,8 +339,8 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
-                    elementMouseover: function(e){   },
-                    elementMouseout: function(e){   },
+                    elementMouseover: function(e){    $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
+                    elementMouseout: function(e){  $timeout(function(){$rootScope.overCol =-1; return e; })  },
                     renderEnd: function(e){    }
                  
                 },
@@ -361,7 +375,7 @@
                 },
                 "duration": 0,
                 "useVoronoi": true,
-                "interpolate": "linear"
+                "interpolate": $rootScope.lineType
               },
               "lines2": {
                 "dispatch": {  
@@ -401,7 +415,7 @@
                 },
                 "duration": 250,
                 "useVoronoi": true,
-                "interpolate": "linear"
+                "interpolate": $rootScope.lineType
               },
               
               "legend": {
@@ -411,6 +425,7 @@
                   legendMouseover: function(e) {  },
                   legendMouseout: function(e) { },
                   stateChange: function(e) { }
+                  
                 },
                 "width": 400,
                 "height": 20,
@@ -431,8 +446,8 @@
               }, 
               "interactiveLayer": {
                 "dispatch": {
+                  elementMousemove: function(d){  $timeout(function(){     var useNumber =  Math.round(d['pointXValue']);  $rootScope.overCol = useNumber; return d;  }) }
                   
-
                 },
                 "tooltip": {
                   "duration": 100,
@@ -441,14 +456,14 @@
                   "snapDistance": 0,
                   "classes": null,
                   "chartContainer": null,
+                   
                   "enabled": true,
-                  "hideDelay": 0,
+                  "hideDelay": 0, 
+                  "valueFormatter": function(d,i){   return  formatComma(d)},
+                  "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                   "headerEnabled": true,
                   "fixedTop": null,
-                  "offset": {
-                    "left": 0,
-                    "top": 0
-                  },
+                   
                   "hidden": false,
                   "data": null,
                   "id": "nvtooltip-70659"
@@ -462,6 +477,58 @@
                 "showGuideLine": true,
                 "svgContainer": null
               },
+              "multibar": {
+                "dispatch": {},
+                "width": 960,
+                "height": 500,
+                "forceY": [
+                  0
+                ],
+                "stacked": false,
+                "stackOffset": "zero",
+                "clipEdge": true,
+                "id": 2362,
+                "hideable": false,
+                "groupSpacing": 0.1, 
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "duration": 500,
+                "barColor": null
+              },
+              "pie": {
+                "dispatch": {},
+                "arcsRadius": [],
+                "width": 500,
+                "height": 500,
+                "showLabels": true,
+                "title": false,
+                "titleOffset": 0,
+                "labelThreshold": 0.02,
+                "id": 9266,
+                "endAngle": false,
+                "startAngle": false,
+                "padAngle": false,
+                "cornerRadius": 0,
+                "donutRatio": 0.3,
+                
+                "labelsOutside": false,
+                "labelSunbeamLayout": false,
+                "donut": true,
+                "growOnHover": true,
+                "pieLabelsOutside": false,
+                "donutLabelsOutside": false,
+                "margin": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "labelType": "key"
+              },
               "tooltip": {
                 "duration": 100,
                 "gravity": "w",
@@ -470,19 +537,19 @@
                 "classes": null,
                 "chartContainer": null,
                 "enabled": true,
-                "hideDelay": 200,
+                 
+                "hideDelay": 200, 
+                "valueFormatter": function(d,i){    return formatComma(d); },
+                "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                 "headerEnabled": true,
                 "fixedTop": null,
-                "offset": {
-                  "left": 0,
-                  "top": 0
-                },
+                 
                 "hidden": true,
                 "data": null,
                 "id": "nvtooltip-52625"
               },
               "width": null,
-              "interpolate": "linear",
+              "interpolate": $rootScope.lineType,
               "clipEdge": true,
               "duration": 0,
               "clipVoronoi": true,
@@ -603,7 +670,10 @@
              
             // ... do smth
         };
-        
+        scope.getFormatColVal = function(val, index){
+          //console.log(scope.data[index],val,index);
+          return val;
+        } 
           scope.highlightPoints = function(chart){
             scope.svg.selectAll("dot")    
             .data(data)         
@@ -630,9 +700,31 @@
             scope.changeUrl = function(hideCol, index ){
               $location.search('hideCol', index+'-'+hideCol);
             }
-        
-                scope.seeDataNew = function(d, n){
-                  console.log(d, n)
+            $rootScope.allCollapsed = false;
+            scope.collapseAll = function(decider){
+              if(decider){
+               scope.dataset.collapseAll();
+              }else{
+                scope.dataset.expandAll();
+              }
+             
+              scope.table.refresh();
+             
+              $timeout(
+                function(){
+                  if(scope.api){
+                   scope.dispatchResize();
+                  }
+                },1000
+              )
+               
+            }
+            $rootScope.collapseColumn = function(elemnt, row,index){
+            //console.log(elemnt, row,index);
+               
+            }
+                scope.seeDataNew = function(d){
+                //  console.log(d)
                 }
 
                 scope.getTablePosition = function(){
@@ -719,8 +811,26 @@
               
                   return newHex;
               }
+              scope.gatherColumnsHiden = function(){
+              var totalhidden = 0; 
+                for(var ddss = 0; ddss < scope.hideColumn.length; ddss++ ){
+                  if(scope.hideColumn[ddss]){
+                //    console.log(scope.hideColumn[ddss], "true");
+                    totalhidden++;
+                  }
+                }
+                return totalhidden;
+              }
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
+                  if(scope.chartName === 'Pie'){
+                    scope.options.chart.x =  function(d){console.log("pie",d); return d.key;}
+                     
+                    
+                  }else{
+                    scope.options.chart.x =  function(d){  return d.x;}
+                     
+                  }
                             if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
                               if($rootScope.useMdxNow){
                                 $tm1Ui.cubeExecuteMdx(scope.tm1Instance,$rootScope.mdxString ).then(function(result){
@@ -818,24 +928,40 @@
                                                 
                                                 var cellArrayFromJson = [];
                                                 scope.charRowCount++;
+                                                if(scope.chartName === 'Pie'){
+                                                  jsonRowData[row] =  {"key": '' };
+                                                }else{
                                                 jsonRowData[row] =  {"key": '',
-                                                "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                                                                    "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], 
+                                                                    "values":[]};
+                                                }
                                                 for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                    
-                                                  if( scope.hideColumn[gss] ){  
+                                                  if( scope.hideColumn[gss]   ){  
                                                     //console.log("HIDE COLUMN",gss);
                                                     
                                                   }else{
                                                     if(scope.table.data()[row].elements.length){
                                                       jsonRowData[row].key = rowNameFinalArray[row] ;
-                                                  }
-                                                   
-                                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
-                                                      
-                                                  
-                                                  
-                                               
-                                                   // console.log("dont hide",gss);
+                                                    } 
+                                                    if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]  ){
+
+                                                      if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
+                                                        if(scope.chartName === 'Pie'){
+                                                          cellArrayFromJson.push({"key":rowNameFinalArray[row], "format":"%", "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],"y": Math.round((scope.table.data()[row].cells[gss].value)*100).toFixed(2)  });
+                                                        }else{
+                                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":   Math.round((scope.table.data()[row].cells[gss].value)*100).toFixed(2)    });
+                                                        }
+                                                        // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']], "headers if percentage")
+                                                      }else{
+                                                        if(scope.chartName === 'Pie'){
+                                                          cellArrayFromJson.push({ "key":rowNameFinalArray[row], "format":"$", "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                        }else{
+                                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                        }
+                                                      }
+                                                    } 
+                                                    // console.log("dont hide",gss);
                                                   }
                                                    
                                                     
@@ -848,7 +974,11 @@
                                                         
                                                 }
                                                 var tt = JSON.stringify(cellArrayFromJson) 
-                                                jsonRowData[row]["values"] = JSON.parse(tt);
+                                                if(scope.chartName === 'Pie'){
+                                                   var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                                                }else{
+                                                  jsonRowData[row]["values"] = JSON.parse(tt);
+                                                }
                                                
                                              
                                             
@@ -866,13 +996,13 @@
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
 
-                                       console.log(scope.data)
+                                    //   console.log(scope.data)
                                        if( scope.api){
                                         scope.api.update();
                                        }
                                        jsonRowData = [];
                                        scope.getLastFocus(); 
-                                       $tm1Ui.dataRefresh();
+                                       
                                         
                                 } else {
                                    scope.message = result.message; 
@@ -881,7 +1011,7 @@
                                 })
 
                               }else{
-                              $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
+                              $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, $rootScope.mdxId,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                                 if(!result.failed){
                                      
                                   scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -940,11 +1070,12 @@
                                            
                                           for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
                                               if(myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]){
+                                                //console.log(myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]], "Alias used for "+myRowObjElement.elements[jjjk]['dimension']) 
                                                   if(rowNameArray[gggh]){
-                                                      rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
-                                                    }else{
-                                                      rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
-                                                    }
+                                                    rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
+                                                  }else{
+                                                    rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
+                                                  }
                                               }else{
                                                   if(rowNameArray[gggh]){
                                                       rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
@@ -976,11 +1107,16 @@
                                               
                                               var cellArrayFromJson = [];
                                               scope.charRowCount++;
+                                              if(scope.chartName === 'Pie'){
+                                                jsonRowData[row] =  {"key": '' ,
+                                                "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], };
+                                              }else{
                                               jsonRowData[row] =  {"key": '',
                                               "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                                              }
                                               for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                  
-                                                if( scope.hideColumn[gss] ){  
+                                                if( scope.hideColumn[gss]  ){  
                                                   //console.log("HIDE COLUMN",gss);
                                                   
                                                 }else{
@@ -988,7 +1124,23 @@
                                                     jsonRowData[row].key = rowNameFinalArray[row] ;
                                                 }
                                                  
-                                                  cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]  ){
+
+                                                  if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
+                                                    if(scope.chartName === 'Pie'){
+                                                      cellArrayFromJson.push({ "key":rowNameFinalArray[row],   "format":"%", "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":  Math.round((scope.table.data()[row].cells[gss].value)*100).toFixed(2)   });
+                                                    }else{
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":  Math.round((scope.table.data()[row].cells[gss].value)*100).toFixed(2)   });
+                                                    }
+                                                   // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']], "headers if percentage")
+                                                  }else{
+                                                    if(scope.chartName === 'Pie'){
+                                                      cellArrayFromJson.push({"key":rowNameFinalArray[row],  "format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":    Math.round(scope.table.data()[row].cells[gss].value)   });
+                                                    }else{
+                                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                    }
+                                                  }
+                                                } 
                                                     
                                                 
                                                 
@@ -1006,7 +1158,11 @@
                                                       
                                               }
                                               var tt = JSON.stringify(cellArrayFromJson) 
-                                              jsonRowData[row]["values"] = JSON.parse(tt);
+                                              if(scope.chartName === 'Pie'){
+                                                 var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                                              }else{
+                                                jsonRowData[row]["values"] = JSON.parse(tt);
+                                              }
                                              
                                            
                                           
@@ -1023,7 +1179,7 @@
                                       }
                                      //scope.tableData = scope.table.data();
                                      scope.data = jsonRowData;
-                                     console.log(scope.data)
+                                //     console.log(scope.data)
                                      if( scope.api){
                                       scope.api.update();
                                      }
@@ -1038,28 +1194,34 @@
                             }
                             }else{
                               
-                            $tm1Ui.cubeExecuteView(scope.tm1Instance,$rootScope.cubeName, $rootScope.cubeView).then(function(result){
+                            $tm1Ui.cubeExecuteView(scope.tm1Instance,scope.cubeName,scope.cubeView).then(function(result){
                                 if(!result.failed){
                                      
                                     scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
                                       
-                                    scope.dataset = newdataset;
+                                    scope.dataset = scope.dataset;
                                         
                                         scope.optionsNew[scope.tableId] = {preload: false, watch: false};
                                         
                                        scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                                        
                                        scope.tablerowLength = scope.tableNew[scope.tableId].data().length;
-                                       scope.tableNew[scope.tableId].pageSize(scope.currentRowCount)
+                                       scope.tableNew[scope.tableId].pageSize(1000)
                                       // console.log(scope.table.data(), scope.tableNew.data());  
                                        var tableRows = scope.table.data();
 
                                         for(newrow in scope.tableNew[scope.tableId].data()){
                                             for(row in scope.table.data()){
-                                                if(scope.tableNew[scope.tableId].data()[newrow].index === scope.table.data()[row].index){
-                                                //console.log(scope.tableNew.data()[newrow].cells, "same row");
+                                              
+                                                if( scope.tableNew[scope.tableId].data()[newrow].index === scope.table.data()[row].index){
+                                                  
+                                                  //console.log(scope.tableNew[scope.tableId].data()[newrow].index, scope.table.data()[row].index, scope.table.data()[row]['cells'], scope.tableNew[scope.tableId].data()[newrow]['cells'], "same row");
+                                                  
+                                                   
                                                    scope.table.data()[row]['cells'] = scope.tableNew[scope.tableId].data()[newrow]['cells'];
                                                 } 
+                                              
+
                                             }
                                         }
                                          
@@ -1133,11 +1295,17 @@
                                                 
                                                 var cellArrayFromJson = [];
                                                 scope.charRowCount++;
-                                                jsonRowData[row] =  {"key": '',
-                                                "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                                                if(scope.chartName === 'Pie'){
+                                                  jsonRowData[row] =  {"key": '' ,
+                                                  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], };
+                                                }else{
+                                                  jsonRowData[row] =  {"key": '',
+                                                  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                                                }
+                                                
                                                 for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                    
-                                                  if( scope.hideColumn[gss] ){  
+                                                  if( scope.hideColumn[gss]  ){  
                                                     //console.log("HIDE COLUMN",gss);
                                                     
                                                   }else{
@@ -1145,8 +1313,24 @@
                                                       jsonRowData[row].key = rowNameFinalArray[row] ;
                                                   }
                                                    
-                                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
-                                                      
+                                                  if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]  ){
+
+                                                    if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
+                                                      if(scope.chartName === 'Pie'){
+                                                        cellArrayFromJson.push({"key":rowNameFinalArray[row],  "format":"%",  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":    Math.round((scope.table.data()[row].cells[gss].value)*100).toFixed(2)   });
+                                                      }else{
+                                                        cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y":  Math.round((scope.table.data()[row].cells[gss].value)*100).toFixed(2)    });
+                                                      }
+                                                     // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gss]['dimension'])+'']], "headers if percentage")
+                                                    }else{
+                                                      if(scope.chartName === 'Pie'){
+                                                        cellArrayFromJson.push({ "key":rowNameFinalArray[row], "format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":   Math.round(scope.table.data()[row].cells[gss].value)  });
+                                                      }else{
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gss,"x":gss,"y": Math.round(scope.table.data()[row].cells[gss].value)});
+                                                      }
+                                                    }
+                                                  } 
+           
                                                   
                                                   
                                                
@@ -1162,8 +1346,15 @@
                                                         
                                                         
                                                 }
+
                                                 var tt = JSON.stringify(cellArrayFromJson) 
-                                                jsonRowData[row]["values"] = JSON.parse(tt);
+                                                if(scope.chartName === 'Pie'){
+                                                  var ttT = JSON.stringify(cellArrayFromJson[0]) 
+                                                  jsonRowData[row]= JSON.parse(ttT);
+                                                }else{
+                                                  jsonRowData[row]["values"] = JSON.parse(tt);
+                                                }
+                                                
                                                
                                              
                                             
@@ -1178,20 +1369,22 @@
                                           scope.chart.margin.left = 50;
                                           scope.chart.margin.right = 50;
                                         }
+
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
-                                       console.log(scope.data)
+                                    //   console.log(scope.data)
                                        if( scope.api){
                                         scope.api.update();
                                        }
                                        jsonRowData = [];
                                        scope.getLastFocus(); 
-                                        
+                                       
                                 } else {
                                    scope.message = result.message; 
                                } 
                               
                            })
+
                           }
                       
                 }
@@ -1276,9 +1469,9 @@
                 }
                 scope.data = [];
                 scope.getCellData = function(elements, row, col){
-               // console.log( scope.tm1Instance+','+$rootScope.cubeName+','+(elements).toString());
+               // console.log( scope.tm1Instance+','+scope.cubeName+','+(elements).toString());
                scope.myCellData[row] = [];
-                $tm1Ui.cellGet(scope.tm1Instance, $rootScope.cubeName, elements.toString(),{} ).then(function(data){ 
+                $tm1Ui.cellGet(scope.tm1Instance, scope.cubeName, elements.toString(),{} ).then(function(data){ 
                      if(data){
                        //console.log(row, col, data);
                        scope.myCellData[row][col] = data;
@@ -1292,13 +1485,9 @@
                     if($rootScope.useMdxNow){
                       $rootScope.setMdx($rootScope.mdxString);
                     }else{
-                      if(scope.cubeMdx != $rootScope.mdxId ){
-                        scope.cubeMdx = $rootScope.mdxId;
-                      }else{
-                        
-                      }
-                    
-                    $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.cubeMdx,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
+                      
+                     
+                    $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, $rootScope.mdxId,   scope.cubeMdxParams ).then(function(result){
                         if(!result.failed){
                        //console.log(result, "scope.tablescope.table")
                             scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
@@ -1319,16 +1508,19 @@
                              scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
                              
                              scope.table.pageSize(scope.currentRowCount)
-                             scope.tableDimensionLength =  scope.table.data()[0].elements.length;
+                             if(scope.table.data()[0] != undefined && !scope.table.data()[0]){
+                              scope.tableDimensionLength =  scope.table.data()[0].elements.length;
+                             }else{
+                              scope.tableDimensionLength = 0;
+                             }
+                              
                            //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
                             
                              
                              //scope.table = scope.table;
                              scope.table.refresh();
                              $rootScope.table = scope.table;
-                             if($rootScope.table['_data']){
-
-                             }
+                             
                              $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
                              $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
                              $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
@@ -1391,8 +1583,13 @@
                                                                 
                                  var cellArrayFromJson = [];
                                  scope.charRowCount++;
+                                 if(scope.chartName === 'Pie'){
+                                  jsonRowData[row] =  {"key": '' ,
+                                  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],};
+                                }else{
                                  jsonRowData[row] =  {"key": '',
                                  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                                }
                                    for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                      
                                      if( scope.hideColumn[gs] ){  
@@ -1410,10 +1607,18 @@
                                        if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]  ){
 
                                          if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
-                                           cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                          if(scope.chartName === 'Pie'){
+                                            cellArrayFromJson.push({"key":rowNameFinalArray[row],  "format":"%",  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":     Math.round((scope.table.data()[row].cells[gs].value)*100).toFixed(2)    });
+                                          }else{ 
+                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y":   Math.round((scope.table.data()[row].cells[gs].value)*100).toFixed(2)   });
+                                          }
                                           // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']], "headers if percentage")
                                          }else{
-                                           cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                          if(scope.chartName === 'Pie'){
+                                            cellArrayFromJson.push({ "key":rowNameFinalArray[row], "format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":  Math.round(scope.table.data()[row].cells[gs].value)   });
+                                          }else{ 
+                                            cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                          }
                                          }
                                        } 
 
@@ -1436,7 +1641,11 @@
                                          
                                  }
                                  var tt = JSON.stringify(cellArrayFromJson) 
-                                 jsonRowData[row]["values"] = JSON.parse(tt);
+                                 if(scope.chartName === 'Pie'){
+                                   var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                                }else{
+                                  jsonRowData[row]["values"] = JSON.parse(tt);
+                                }
                                  //console.log(jsonRowData[row]) 
                              }
                              
@@ -1463,6 +1672,7 @@
                            )
                            
                            jsonRowData = [];
+                           scope.refreshNew(scope.dataset)
                         } else {
                             scope.message = result.message;
                             
@@ -1475,7 +1685,7 @@
 
 
                                 scope.charRowCount = 0;
-                               $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,$rootScope.cubeView).then(function(result){
+                               $tm1Ui.cubeExecuteView(scope.tm1Instance,cube,scope.cubeView).then(function(result){
                                    if(!result.failed){
                                   //console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
@@ -1496,7 +1706,11 @@
                                         scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
                                         
                                         scope.table.pageSize(scope.currentRowCount)
-                                        scope.tableDimensionLength =  scope.table.data()[0].elements.length;
+                                        if(scope.table.data()[0] != undefined && !scope.table.data()[0]){
+                                          scope.tableDimensionLength =  scope.table.data()[0].elements.length;
+                                         }else{
+                                          scope.tableDimensionLength = 0;
+                                         }
                                       //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
                                        
                                         
@@ -1568,8 +1782,13 @@
                                                                            
                                             var cellArrayFromJson = [];
                                             scope.charRowCount++;
+                                            if(scope.chartName === 'Pie'){
+                                              jsonRowData[row] =  {"key": '' ,
+                                              "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],};
+                                            }else{
                                             jsonRowData[row] =  {"key": '',
                                             "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                                            }
                                               for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 
                                                 if( scope.hideColumn[gs] ){  
@@ -1587,10 +1806,19 @@
                                                   if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]  ){
 
                                                     if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
-                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
+                                                      if(scope.chartName === 'Pie'){
+                                                        cellArrayFromJson.push({ "key":rowNameFinalArray[row], "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":    Math.round(Math.round(scope.table.data()[row].cells[gs].value)*100).toFixed(2)  });
+                                                      }else{
+                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y":  Math.round((scope.table.data()[row].cells[gs].value)*100).toFixed(2)    });
+                                                      }
                                                      // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']], "headers if percentage")
                                                     }else{
-                                                      cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                      if(scope.chartName === 'Pie'){
+                                                        cellArrayFromJson.push({ "key":rowNameFinalArray[row], "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y":   Math.round(scope.table.data()[row].cells[gs].value) });
+                                                      }else{
+                                                        cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                                      }
+                                                     
                                                     }
                                                   } 
 
@@ -1613,7 +1841,11 @@
                                                     
                                             }
                                             var tt = JSON.stringify(cellArrayFromJson) 
-                                            jsonRowData[row]["values"] = JSON.parse(tt);
+                                            if(scope.chartName === 'Pie'){
+                                               var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                                            }else{
+                                              jsonRowData[row]["values"] = JSON.parse(tt);
+                                            }
                                             //console.log(jsonRowData[row]) 
                                         }
                                         
@@ -1638,7 +1870,7 @@
                                           }
                                         },1000
                                       )
-                                      
+                                      scope.refreshNew(scope.dataset)
                                       jsonRowData = [];
                                    } else {
                                        scope.message = result.message;
@@ -1667,13 +1899,14 @@
                    
                 }
                 scope.formatPercentageString = function(total, d){
-                  return  parseFloat(total*100).toFixed(d)+'%'; 
+                  return  parseFloat(total*100).toFixed(2); 
                    
                 }
-                scope.seeData = function(rowindex,table){
-                    
-                    scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][0]]['element'].toggle();
-                    scope.table.refresh();
+                scope.seeData = function(rowindex, index,table){
+                    $rootScope.allCollapsed = undefined; 
+                    scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][index]]['element'].toggle();
+                    //console.log( scope.dataset.rows[(rowindex)][scope.dataset['dimensions']['rows'][index]]['element'].collapsed)
+                    scope.table.refresh(); 
                     scope.refreshNew(scope.dataset);
             
                 };
@@ -1903,181 +2136,245 @@
            }
             
            $rootScope.setMdx = function(mdxPassed){
-             
-            $tm1Ui.cubeExecuteMdx(scope.tm1Instance,mdxPassed).then(function(result){
-              if(!result.failed){
-                //console.log(result, "scope.tablescope.table")
-                     scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, $rootScope.cubeName, result, scope.attributeOptions);
-                    
-                     scope.options[scope.tableId] = {preload: false, watch: false};
-                     if(scope.table){
-                         if(scope.table.options){
-                          //console.log(scope.table, "scope.tablescope.table")
-                          scope.options[scope.tableId].index = scope.table.options.index;
-                          scope.options[scope.tableId].pageSize = scope.table.options.pageSize;
-                          scope.tablerowLength = scope.table.data().length;
+             $timeout(
+               function(){
+                $tm1Ui.cubeExecuteMdx(scope.tm1Instance,mdxPassed).then(function(result){
+                  if(!result.failed){
+                     
+                    //console.log(result, "scope.tablescope.table")
+                         scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
+                        
+                         scope.options[scope.tableId] = {preload: false, watch: false};
+                         if(scope.table){
+                             if(scope.table.options){
+                              //console.log(scope.table, "scope.tablescope.table")
+                              scope.options[scope.tableId].index = scope.table.options.index;
+                              scope.options[scope.tableId].pageSize = scope.table.options.pageSize;
+                              scope.tablerowLength = scope.table.data().length;
+                             }
+                             
+                              
+                           
+                              
                          }
+                          scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
+                          
+                          scope.table.pageSize(scope.currentRowCount)
+                          if(scope.table.data()[0] != undefined && !scope.table.data()[0]){
+                            scope.tableDimensionLength =  scope.table.data()[0].elements.length;
+                           }else{
+                            scope.tableDimensionLength = 0;
+                           }
+                        //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
                          
                           
-                       
+                          //scope.table = scope.table;
+                        //  scope.table.refresh();
                           
-                     }
-                      scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
-                      
-                      scope.table.pageSize(scope.currentRowCount)
-                      scope.tableDimensionLength =  scope.table.data()[0].elements.length;
-                    //console.log(scope.tableDimensionLength ,"scope.tableDimensionLength ");
-                     
-                      
-                      //scope.table = scope.table;
-                      scope.table.refresh();
-                      $rootScope.table = scope.table;
-                      if($rootScope.table['_data']){
-
-                      }
-                      $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
-                      $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
-                      $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
-                      //console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
-                      var jsonRowData = [];
-                      var colNameArray = [];
-                      var rowNameArray = [];
-          
-                      for(ggh = 0; ggh < scope.dataset.headers.length; ggh++){
-                          var myColObj = scope.dataset.headers[ggh];
-                          var arrayToUse= [];
                            
-                          for(jjkk = 0; jjkk < myColObj.columns.length; jjkk++){
-                            if(colNameArray[jjkk] === undefined || !colNameArray){
-                              colNameArray[jjkk] =  (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
-                           }else{
-                              colNameArray[jjkk] +=   (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
-                           }
-                              
-                          }
-                      }
-                      var rowNameFinalArray = [];
-                      for(gggh = 0; gggh < scope.table.data().length; gggh++){
-                          var myRowObjElement = scope.table.data()[gggh];
-                           
-                          for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
-                            //console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
-                              if(myRowObjElement.elements[jjjk].element.attributes['Description']){
-                                  if(rowNameArray[gggh]){
-                                      rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
-                                    }else{
-                                      rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
-                                    }
-                              }else{
-                                  if(rowNameArray[gggh]){
-                                      rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
-                                    }else{
-                                      rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.key);
-                                    }
+                          $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
+                          $rootScope.dimensionsOnColumns = scope.dataset['dimensions']['columns'];
+                          $rootScope.dimensionsOnTitles = scope.dataset['dimensions']['titles'];
+                          //console.log($rootScope.dimensionsOnRows, $rootScope.dimensionsOnColumns, $rootScope.dimensionsOnTitles + "table dimensions")
+                          var jsonRowData = [];
+                          var colNameArray = [];
+                          var rowNameArray = [];
+              
+                          for(ggh = 0; ggh < scope.dataset.headers.length; ggh++){
+                              var myColObj = scope.dataset.headers[ggh];
+                              var arrayToUse= [];
+                               
+                              for(jjkk = 0; jjkk < myColObj.columns.length; jjkk++){
+                                if(colNameArray[jjkk] === undefined || !colNameArray){
+                                  colNameArray[jjkk] =  (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                               }else{
+                                  colNameArray[jjkk] +=   (myColObj.columns[jjkk].element['attributes']['Caption_Default']);
+                               }
+                                  
                               }
-                                 
-                                   
-                            
                           }
-                          rowNameFinalArray[gggh] = rowNameArray[gggh];
-                          if(scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]]){
-                            //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
-                        }else{
-                          var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
-                          scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
-                        
-                        }    
-                          rowNameArray = [];
-                      }
-                     // console.log(colNameArray, "colNameArray", scope.randomColor);
-                       
-                      for(row in scope.table.data()){
-                       // console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes']['Color'], "Color of element")
-                       
-                                                         
-                          var cellArrayFromJson = [];
-                          scope.charRowCount++;
-                          jsonRowData[row] =  {"key": '',
-                          "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
-                            for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                              
-                              if( scope.hideColumn[gs] ){  
-                               // console.log("HIDE COLUMN",gs);
-                                
-                              }else{
-                                if(scope.table.data()[row].elements.length){
-                                  jsonRowData[row].key = rowNameFinalArray[row] ;
-                                    
-                                      
-                                }
-                                //console.log((scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%'),         scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]         );
-
-
-                                if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]  ){
-
-                                  if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
-                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y":   scope.formatPercentage(scope.table.data()[row].cells[gs].value)   });
-                                   // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']], "headers if percentage")
+                          var rowNameFinalArray = [];
+                          for(gggh = 0; gggh < scope.table.data().length; gggh++){
+                              var myRowObjElement = scope.table.data()[gggh];
+                               
+                              for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
+                                //console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
+                                  if(myRowObjElement.elements[jjjk].element.attributes['Description']){
+                                      if(rowNameArray[gggh]){
+                                          rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
+                                        }else{
+                                          rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
+                                        }
                                   }else{
-                                    cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                      if(rowNameArray[gggh]){
+                                          rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.name);
+                                        }else{
+                                          rowNameArray[gggh] =   (myRowObjElement.elements[jjjk].element.key);
+                                        }
                                   }
-                                } 
-
-
-                                 
-                                 
+                                     
+                                       
                                 
-                                //console.log("dont hide",gs); $rootScope.attributeOptions[] 
                               }
+                              
+                              rowNameFinalArray[gggh] = rowNameArray[gggh];
+                              if(scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]]){
+                                //scope.randomColor[(rowNameFinalArray[gggh]).split('-')[0]] =  '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
+                              }else{
+                                var newSatColor = scope.applySaturationToHexColor('#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6), 50);
+                                scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
+                              
+                              }    
+                              //console.log(rowNameFinalArray);
+                              rowNameArray = [];
+    
+                          }
+                         // console.log(colNameArray, "colNameArray", scope.randomColor);
                            
-                                
-                              
-                              
+                          for(row in scope.table.data()){
+                           // console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes']['Color'], "Color of element")
+                           
+                                                             
+                              var cellArrayFromJson = [];
+                              scope.charRowCount++;
+                              if(scope.chartName === 'Pie'){
+                                jsonRowData[row] =  {"key": '' ,
+                                "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],};
+                              }else{
+                              jsonRowData[row] =  {"key": '',
+                              "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
+                              }
+                                for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
+                                  
+                                  if( scope.hideColumn[gs] ){  
+                                   // console.log("HIDE COLUMN",gs);
+                                    
+                                  }else{
+                                    if(scope.table.data()[row].elements.length){
+                                      jsonRowData[row].key = rowNameFinalArray[row] ;
+                                        
+                                          
+                                    }
+                                    //console.log((scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] ).indexOf('%'),         scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]         );
+    
+    
+                                    if( $rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]  || scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]  ){
+    
+                                      if( (scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes'][$rootScope.attributeOptions['alias'][scope.table.data()[row].elements[scope.table.data()[row].elements.length-1]['dimension']]] +'').indexOf('%') > -1 || (scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']]+'' ).indexOf('%') > -1 ){
+                                        if(scope.chartName === 'Pie'){
+                                          cellArrayFromJson.push({"key":rowNameFinalArray[row], "format":"%",  "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "y":  Math.round((scope.table.data()[row].cells[gs].value)*100).toFixed(2)   });
+                                        }else{
+                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"%","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y":   Math.round((scope.table.data()[row].cells[gs].value)*100).toFixed(2)    });
+                                        }
+                                        // console.log(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['element']['attributes'][$rootScope.attributeOptions['alias'][(scope.dataset.headers[(scope.dataset.headers.length-1)]['columns'][gs]['dimension'])+'']], "headers if percentage")
+                                      }else{
+                                        if(scope.chartName === 'Pie'){
+                                          cellArrayFromJson.push({"key":rowNameFinalArray[row],"format":"$","color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])],  "y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                        }else{
+                                          cellArrayFromJson.push({"type":scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['type'],"format":"$","key":rowNameFinalArray[row],"label":"Column-"+gs,"x":gs,"y": Math.round(scope.table.data()[row].cells[gs].value)});
+                                        }
+                                      }
+                                    } 
+    
+    
+                                     
+                                     
+                                    
+                                    //console.log("dont hide",gs); $rootScope.attributeOptions[] 
+                                  }
+                               
+                                    
+                                  
+                                  
+                                        
+                                          
+                                      
+                                      
                                     
                                       
-                                  
-                                  
-                                
-                                  
-                                  
+                                      
+                              }
+                              var tt = JSON.stringify(cellArrayFromJson) 
+                              if(scope.chartName === 'Pie'){
+                                 var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                              }else{
+                                jsonRowData[row]["values"] = JSON.parse(tt);
+                              }
+                              //console.log(jsonRowData[row]) 
                           }
-                          var tt = JSON.stringify(cellArrayFromJson) 
-                          jsonRowData[row]["values"] = JSON.parse(tt);
-                          //console.log(jsonRowData[row]) 
-                      }
-                      
-                   
+                          
                        
-                    
-                     //scope.tableData = scope.table.data();
-                    scope.data = jsonRowData; 
-                    if( scope.chart && scope.activeName === 'multiBarChart'){
-                      scope.chart.left = 0;
-                      scope.chart.right = 0;
-                    }
-                    if(scope.chart && scope.activeName === 'lineChart'){
-                      scope.chart.margin.left = 50;
-                      scope.chart.margin.right = 50;
-                    }
-                    $timeout(
-                      function(){
-                        if( scope.api){
-                          scope.api.update();
                            
+                        
+                         //scope.tableData = scope.table.data();
+                        scope.data = jsonRowData; 
+                        if( scope.chart && scope.activeName === 'multiBarChart'){
+                          scope.chart.left = 0;
+                          scope.chart.right = 0;
                         }
-                      },1000
-                    )
+                        if(scope.chart && scope.activeName === 'lineChart'){
+                          scope.chart.margin.left = 50;
+                          scope.chart.margin.right = 50;
+                        }
+                        $timeout(
+                          function(){
+                            if( scope.api){
+                              scope.api.update();
+                               
+                            }
+                          },1000
+                        )
+                        scope.refreshNew(scope.dataset)
+                        jsonRowData = [];
+                     } else {
+                        scope.message = result.message;
+                         
+                        
+                     }		
                     
-                    jsonRowData = [];
-                 } else {
-                     scope.message = result.message;
-                     
-                    
-                 }		
-                
-             })
+                 })
+               },1000
+             )
+             
           }
 
+          scope.formatToHeaderName = function(number){
+         //   console.log(number)
+            var useNumberNew =  number ;
+            if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['dimension']  )+'')]]){
+              if(scope.dataset.headers.length-1 != 0){
+                return scope.dataset.headers[0]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[0]['columns'][useNumberNew]['dimension']  )+'')]] +' / '+scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['dimension']  )+'')]]
+              }else{
+                return scope.dataset.headers[0]['columns'][useNumberNew]['element'].attributes[$rootScope.attributeOptions['alias'][((  scope.dataset.headers[0]['columns'][useNumberNew]['dimension']  )+'')]]  ;
+
+              }
+                
+             
+            }else{
+             
+               if(scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element']['attributes']['Caption_Default'] ){
+                if(scope.dataset.headers.length-1 != 0){
+                  return scope.dataset.headers[0]['columns'][useNumberNew]['element']['attributes']['Caption_Default'] +' / '+scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].attributes['Caption_Default']
+                }else{
+                  return scope.dataset.headers[0]['columns'][useNumberNew]['element']['attributes']['Caption_Default']
+  
+                }  
+                 
+               }else{
+                if(scope.dataset.headers.length-1 != 0){
+                  return scope.dataset.headers[0]['columns'][useNumberNew]['element'].key +' / '+scope.dataset.headers[scope.dataset.headers.length-1]['columns'][useNumberNew]['element'].key
+                }else{
+                  return  scope.dataset.headers[0]['columns'][useNumberNew]['element'].key
+  
+                }  
+                  
+                
+               }
+               
+               
+            }
+            
+          }
 
             scope.formatUploadButton = function(){
                 
@@ -2208,7 +2505,7 @@
                 }
                 scope.saveValue = function(value, id){
                     var sendValue = [];
-                   
+                    
 
                         var tempO = document.getElementById(id)
                         
@@ -2223,10 +2520,12 @@
                             $tm1Ui.cellsetPut(sendValue).then(function(result){
                               //console.log(request, "######## saved")
                                  if(result.success){
-                                  //console.log(result, "######## saved")
-                                    
-                                    scope.refreshNew(scope.dataset);
-                        
+                                  //  console.log(result, "######## saved")
+                                    if(scope.api){
+                                      scope.api.refresh()
+                                    }
+                                  scope.refreshNew(scope.dataset);
+
                                  }else{
                     
                                  }
@@ -2397,8 +2696,13 @@
     
              
     }
-    $rootScope.setMdxId = function(){
-      scope.refresh(scope.cubeName,scope.cubeView);
+    $rootScope.setMdxId = function(mdxId){
+      $rootScope.mdxId =  mdxId;
+      
+      
+          scope.refresh(scope.cubeName,scope.cubeView);
+        
+      
     }
            scope.nextAvailable = function(row, col){
                var tempElementTwo = document.getElementById('input-'+scope.tableId+'-'+(row+1)+'-'+col )
@@ -2423,22 +2727,8 @@
                    
                    scope.sendCellSetPutArray.push(request);
           }
-          if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
-          //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
-            scope.cubeName = scope.cubeNameUrlValue ; 
-            
-            
-          } else{
-            scope.cubeName = $attributes.cubeName;
-          }
-          if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
-          //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
-            scope.cubeView = (scope.cubeViewUrlValue) ; 
-            
-            
-          } else{
-            scope.cubeView = $attributes.cubeView;
-          }
+           
+           
           scope.dispatchResize = function(){
             $timeout(
                 function(){
@@ -2457,25 +2747,34 @@
           $(document).ready(function(){
             // Wrap each tr and td's content within a div
             // (todo: add logic so we only do this when printing)
-          
             scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
-            scope.dispatchResize();
-            scope.dragStated = false;
+           
+           
+             
+            
+             
+             scope.dispatchResize();
+             if( scope.api){
+                scope.api.update();
+              }
+             scope.dragStated = false;
+            
+            
 
         })
         
         
         scope.increaseDataWidth = function(){
           scope.dataWidth += (20);
-          console.log(scope.dataWidth , "stat drag");
+   //   console.log(scope.dataWidth , "stat drag");
 
         }
         scope.reduceDataWidth = function(){
           
            
           scope.dataWidth -= (20);
-          console.log(scope.dataWidth , "stat drag");
+        //  console.log(scope.dataWidth , "stat drag");
 
         }
           scope.updateUrlChart = function(){
@@ -2494,7 +2793,7 @@
           }
           scope.updateUrlTable = function(decider){
            
-                 console.log(decider);
+              //   console.log(decider);
                  if(!decider){
                    $location.search('tableHide', decider+'');
                  }else{
@@ -2633,7 +2932,7 @@
                     
                     }, function (newValue, oldValue) { 
                       if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                         console.log(newValue, "mdx attributes changed inside directive");
+                      //   console.log(newValue, "mdx attributes changed inside directive");
                           
                           scope.cubeMdxParams = JSON.parse(newValue)
                           scope.refresh(scope.cubeName, scope.cubeMdx)
@@ -2663,7 +2962,7 @@
                               if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
                                }else{
-                                scope.currentRowCount = $attributes.rowsToLoad;
+                                scope.currentRowCount = scope.rowsToLoad;
                                }
                               scope.refresh(scope.cubeName, newValue)
                           }
@@ -2682,7 +2981,7 @@
                                if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
                                }else{
-                                scope.currentRowCount = $attributes.rowsToLoad;
+                                scope.currentRowCount = scope.rowsToLoad;
                                }
                                
                                scope.refresh(newValue, scope.cubeView)

@@ -1,39 +1,5 @@
 [
-  {
-    "label": "Summary",
-    "icon_class": "fa-black-tie",
-    "data": {
-      "page": "summary"
-    },
-    "expanded": false
-  },
-  {
-    "label": "P\u0026L",
-    "icon_class": "fa-file-text-o",
-    "children": [],
-    "data": {
-      "page": "p\u0026l"
-    },
-    "expanded": true
-  },
-  {
-    "label": "Retail",
-    "icon_class": "fa-shopping-cart",
-    "children": [
-      {
-        "label": "Workbook Upload",
-        "icon_class": "fa-file-text-o",
-        "data": {
-          "page": "retail/workbook-upload"
-        },
-        "expanded": false
-      }
-    ],
-    "data": {
-      "page": "retail"
-    },
-    "expanded": true
-  },
+   
   {
     "label": "MDXView",
     "icon_class": "fa-file-text-o",

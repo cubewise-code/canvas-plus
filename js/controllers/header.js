@@ -239,6 +239,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     } 
      $rootScope.findColorByHr = function(color){
              var m = moment($rootScope.overRideDate);
+             
             //console.log(m);
             var g = null; //return g
             
