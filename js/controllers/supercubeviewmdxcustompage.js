@@ -71,9 +71,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             
                 $scope.changedIdOption = true; 
                 $scope.activeCubeName = cube;
-                $rootScope.cubeName = cube;
+                $rootScope.cubeName = '';
                 $timeout(
                     function(){
+                        $rootScope.cubeName = cube;
                         $rootScope.parametersVisible = !$rootScope.parametersVisible ;
                     },1000
                 )        //console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
