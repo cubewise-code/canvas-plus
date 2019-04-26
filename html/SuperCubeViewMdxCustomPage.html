@@ -90,9 +90,9 @@ textarea.ng-valid {
                                     ng-mouseout="mdxidOver = ''; "
                                     ng-style="{'background-color': mdxidOver === mdxid.id ? 'steelblue':'#fff', 'color':mdxidOver === mdxid.id ? '#fff':'steelblue'}"
                                     style="width:100%; font-size:0.7em;   cursor:pointer;" 
-                                    ng-click=" changedOption = true;  $root.mdxId =  mdxid.id;  findMdxIdChanged();  chooseCube(mdxid.cube); " class="dropdown-item"  >
+                                    ng-click=" $root.mdxId =  mdxid.id; changedOption = true;  $root.mdxId =  mdxid.id;  findMdxIdChanged();  chooseCube(mdxid.cube); " class="dropdown-item"  >
                                     <span class="pull-left" style="margin-right:10px;">
-                                            <i ng-if="activemdxid === mdxid.id" class="fa fa-check dropdown-check" aria-hidden="true"></i>
+                                            <i ng-if="$root.mdxId === mdxid.id" class="fa fa-check dropdown-check" aria-hidden="true"></i>
                                     </span>
                                         <span style="padding-left:10px;">{{mdxid.id}}</span> 
                                          
