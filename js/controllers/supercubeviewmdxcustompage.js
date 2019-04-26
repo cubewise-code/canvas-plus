@@ -66,7 +66,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
       
              
             
-            console.log($rootScope.mdxId+'' , $scope.focusedMdxId+'',  cube ,"$scope.focusedMdxId$scope.focusedMdxId" );
+            console.log($rootScope.mdxId+'' ,  $scope.focusedMdxId+'',  cube ,"$scope.focusedMdxId$scope.focusedMdxId" );
                  
             
                 $scope.changedIdOption = true; 
