@@ -2225,7 +2225,7 @@
                                 scope.randomColor[(rowNameFinalArray[gggh]+'').split(' :- ')[0]] =  newSatColor ;
                               
                               }    
-                              console.log(rowNameFinalArray);
+                              //console.log(rowNameFinalArray);
                               rowNameArray = [];
     
                           }

@@ -11,7 +11,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.cubesAvailable = [];
     $scope.cubesViewsAvailable = [];
     $scope.cubeNUrlValue = decodeURI($location.search()['cubeName']);
-    
+    $scope.changedOption = false;
     if($scope.cubeNUrlValue  != null && $scope.cubeNUrlValue != 'undefined'){
         $scope.activeCubeName = decodeURI($location.search()['cubeName']);
     }else{
@@ -45,5 +45,52 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         )
          
     }
- 
+    $scope.focusOnMdxString = function(string){
+        $scope.focusedMdxString = string;
+        console.log($scope.focusedMdxString);
+    }
+    $scope.findMdxStringChanged = function(){
+        if($rootScope.mdxString === $scope.focusedMdxString){
+            $scope.changedOption = false; 
+        }else{
+            $scope.changedOption = true; 
+        }
+        console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
+       
+    }
+    $scope.focusOnMdxId = function(id){
+        $scope.focusedMdxId = id;
+        console.log($scope.focusedMdxId);
+    }
+    $scope.findMdxIdChanged = function(){
+        if($rootScope.mdxId === $scope.focusedMdxId){
+            $scope.changedIdOption = false; 
+        }else{
+            $scope.changedIdOption = true; 
+        }
+        console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
+       
+    }
+    var path = location.pathname
+    $scope.readTextFile = function(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+     
+        $.getJSON("files/namedMdx.json", function(data){
+          $scope.namedMdxIdArray = data;
+            console.log(data, "JSON NAMED MDX");
+        }) // <=== was missing
+    
+    //usage:
+    
+   
+  
 }]);

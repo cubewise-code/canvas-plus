@@ -1,0 +1,22 @@
+[
+	{
+	"id": "P&L",
+    "cube":"General Ledger"
+	},
+	{
+    "id": "Data Entry",
+    "cube":"General Ledger"
+     
+  },
+  {
+    "id": "Employee Forecast",
+    "cube":"Employee"
+    
+  },
+  {
+    "id": "Calendar",
+    "cube":"Calendar"
+    
+  }
+
+]
