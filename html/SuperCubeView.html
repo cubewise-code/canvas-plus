@@ -357,14 +357,24 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					</span>
 					<span ng-show="chartVisible" > 
 						 
-							<span ng-click="options['chart']['showLegend'] = !options['chart']['showLegend'];   dispatchResize(); api.refresh(); "  
+							<span ng-click="   chartOptionsOpen = !chartOptionsOpen;  dispatchResize(); api.refresh(); "  
 							 style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-									Options	<i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
+							Options	<i ng-class="{'fa-toggle-off':!chartOptionsOpen,'fa-toggle-on':chartOptionsOpen}" class="fa "></i>
 							</span>
+
+							<span ng-if="chartOptionsOpen" ng-click="options['chart']['showLegend'] = !options['chart']['showLegend']; dispatchResize(); api.refresh(); "  
+							 style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+							Legend <i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
+							</span>
+
+							<span ng-if="chartOptionsOpen" ng-click="options['chart']['focusEnable'] = !options['chart']['focusEnable']; options['chart']['focusShowAxisX'] = false; dispatchResize(); api.refresh(); "  
+							style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+							Focus <i ng-class="{'fa-toggle-off':!options['chart']['focusEnable'],'fa-toggle-on':options['chart']['focusEnable']}" class="fa "></i>
+						 </span>
 						 
-						<span ng-if="options['chart']['showLegend'] && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
+						<span ng-if="chartOptionsOpen && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
 						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-							Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
+						Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
 						</span>
 						
 					 
