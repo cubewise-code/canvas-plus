@@ -367,7 +367,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 							Legend <i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
 							</span>
 
-							<span ng-if="chartOptionsOpen" ng-click="options['chart']['focusEnable'] = !options['chart']['focusEnable']; options['chart']['focusShowAxisX'] = false; dispatchResize(); api.refresh(); "  
+							<span ng-if="chartOptionsOpen && chartName === 'Line' || chartName === 'Stacked Area'" ng-click="options['chart']['focusEnable'] = !options['chart']['focusEnable']; options['chart']['focusShowAxisX'] = false; dispatchResize(); api.refresh(); "  
 							style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 							Focus <i ng-class="{'fa-toggle-off':!options['chart']['focusEnable'],'fa-toggle-on':options['chart']['focusEnable']}" class="fa "></i>
 						 </span>
@@ -695,7 +695,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 											<td   
 											id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 											style="border-right:1px solid #ccc; border-top:1px solid #ddd;   cursor:pointer; vertical-align:baseline;" 
-											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd', 'background-color':$root.overCol === $index && chartVisible ? 'steelblue':'#f0efef', 'color':$root.overCol === $index && chartVisible  ? '#fff':'#333' }"
+											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol === $index && chartVisible ? 'steelblue':'#f0efef', 'color':!options['chart']['focusEnable'] &&  $root.overCol === $index && chartVisible  ? '#fff':'#333' }"
 											ng-repeat="col in headerrow.columns" ng-if="col.visible  " 
 											  colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 											
