@@ -190,9 +190,9 @@
               "height": (window.innerHeight/2),
               "margin": {
                 "top": 20,
-                "right": 50,
+                "right": 0,
                 "bottom": 5,
-                "left": 50
+                "left": 0
               },
                
               "valueFormat":  function(d){  return  formatComma(d); },
@@ -201,7 +201,7 @@
  
                 
                  
-                //elementMouseout: function(e){ if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}; }else{scope.chartToolTipElements = e;}  console.log(e,'mouseout') },
+                elementMouseout: function(e){   console.log(e,'mouseout') },
                 tooltipShow: function(e){   },
                 tooltipHide: function(e){  }
               },
@@ -431,7 +431,7 @@
                 "height": 20,
                 "align": true,
                 "maxKeyLength": 20,
-                "rightAlign": true,
+                "rightAlign": false,
                 "padding": 32,
                 "updateState": true,
                 "radioButtonMode": false,
@@ -452,7 +452,7 @@
                 "tooltip": {
                   "duration": 100,
                   "gravity": "w",
-                  "distance": 25,
+                  "distance": 50,
                   "snapDistance": 0,
                   "classes": null,
                   "chartContainer": null,
@@ -470,7 +470,7 @@
                 },
                 "margin": {
                   "left": 55,
-                  "top": 30
+                  "top": 100
                 },
                 "width": null,
                 "height": null,
@@ -558,7 +558,7 @@
               "forceY": [],
               "interactive": true,
               "interactiveUpdateDelay": 300,
-              "padData": false,
+              "padData": true,
               "padDataOuter": 0.1,
               "pointDomain": [
                 16,
@@ -825,8 +825,7 @@
                 scope.refreshNew = function(newdataset){ 
                   if(scope.chartName === 'Pie'){
                     scope.options.chart.x =  function(d){console.log("pie",d); return d.key;}
-                     
-                    
+                      
                   }else{
                     scope.options.chart.x =  function(d){  return d.x;}
                      
@@ -863,8 +862,8 @@
                                           scope.options.chart.right = 0;
                                         }
                                         if(scope.activeName === 'lineChart'){
-                                          scope.options.chart.margin.left = 50;
-                                          scope.options.chart.margin.right = 50;
+                                          scope.options.chart.margin.left = 0;
+                                          scope.options.chart.margin.right = 0;
                                         }
                                        //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                         var jsonRowData = [];
@@ -990,8 +989,8 @@
                                           scope.chart.right = 0;
                                         }
                                         if(scope.chart && scope.activeName === 'lineChart'){
-                                          scope.chart.margin.left = 50;
-                                          scope.chart.margin.right = 50;
+                                          scope.chart.margin.left = 0;
+                                          scope.chart.margin.right = 0;
                                         }
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
@@ -1042,8 +1041,8 @@
                                         scope.options.chart.right = 0;
                                       }
                                       if(scope.activeName === 'lineChart'){
-                                        scope.options.chart.margin.left = 50;
-                                        scope.options.chart.margin.right = 50;
+                                        scope.options.chart.margin.left = 0;
+                                        scope.options.chart.margin.right = 0;
                                       }
                                      //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                       var jsonRowData = [];
@@ -1175,8 +1174,8 @@
                                         scope.chart.right = 0;
                                       }
                                       if(scope.chart && scope.activeName === 'lineChart'){
-                                        scope.chart.margin.left = 50;
-                                        scope.chart.margin.right = 50;
+                                        scope.chart.margin.left = 0;
+                                        scope.chart.margin.right = 0;
                                       }
                                      //scope.tableData = scope.table.data();
                                      scope.data = jsonRowData;
@@ -1231,8 +1230,8 @@
                                           scope.options.chart.right = 0;
                                         }
                                         if(scope.activeName === 'lineChart'){
-                                          scope.options.chart.margin.left = 50;
-                                          scope.options.chart.margin.right = 50;
+                                          scope.options.chart.margin.left = 0;
+                                          scope.options.chart.margin.right = 0;
                                         }
                                        //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                         var jsonRowData = [];
@@ -1367,8 +1366,8 @@
                                           scope.chart.right = 0;
                                         }
                                         if(scope.chart && scope.activeName === 'lineChart'){
-                                          scope.chart.margin.left = 50;
-                                          scope.chart.margin.right = 50;
+                                          scope.chart.margin.left = 0;
+                                          scope.chart.margin.right = 0;
                                         }
 
                                        //scope.tableData = scope.table.data();
@@ -1660,8 +1659,8 @@
                              scope.chart.right = 0;
                            }
                            if(scope.chart && scope.activeName === 'lineChart'){
-                             scope.chart.margin.left = 50;
-                             scope.chart.margin.right = 50;
+                             scope.chart.margin.left = 0;
+                             scope.chart.margin.right = 0;
                            }
                            $timeout(
                              function(){
@@ -1860,8 +1859,8 @@
                                         scope.chart.right = 0;
                                       }
                                       if(scope.chart && scope.activeName === 'lineChart'){
-                                        scope.chart.margin.left = 50;
-                                        scope.chart.margin.right = 50;
+                                        scope.chart.margin.left = 0;
+                                        scope.chart.margin.right = 0;
                                       }
                                       $timeout(
                                         function(){
@@ -2314,8 +2313,8 @@
                           scope.chart.right = 0;
                         }
                         if(scope.chart && scope.activeName === 'lineChart'){
-                          scope.chart.margin.left = 50;
-                          scope.chart.margin.right = 50;
+                          scope.chart.margin.left = 0;
+                          scope.chart.margin.right = 0;
                         }
                         $timeout(
                           function(){

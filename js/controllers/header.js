@@ -90,8 +90,16 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.loadWeatherViaTi = function(regionName,userName){
         $scope.weatherCellsetPutArray = [];
         var path = location.pathname
+      
+       
+         
         api_key = "feb028d6a3cf8710e58aaf25b2ed29f4"
-        nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$rootScope.defaults.regionName+"&units=metric&appid="+api_key+"";
+        if($scope.capital){
+            nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$scope.capital+","+$rootScope.defaults.regionName+"&units=metric&appid="+api_key+"";
+        }else{
+            nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$rootScope.defaults.regionName+"&units=metric&appid="+api_key+"";
+        }
+        
         $scope.readTextFile = function(file, callback) {
             
             var rawFile = new XMLHttpRequest();
