@@ -708,7 +708,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 												{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}   
 												  
 											</span>
-											<span ng-show=" chartVisible && (($index === 0 && !hideColumn[$index]) || hideColumn[$index-1] && !hideColumn[$index]) "  
+											<!-- <span ng-show=" chartVisible && (($index === 0 && !hideColumn[$index]) || hideColumn[$index-1] && !hideColumn[$index]) "  
 												style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
 												ng-click=" hideColumn[$index] = true; changeUrl(hideColumn[$index], $index); refreshNew(dataset);   " >
 													<small><i class="fa fa-minus"></i></small>
@@ -716,7 +716,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 											<span ng-show="chartVisible && ((hideColumn[$index]) )"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
 												ng-click=" hideColumn.splice($index, 1); changeUrl(hideColumn[$index], $index); refreshNew(dataset);  " >
 													<small><i class="fa fa-times"></i></small>
-											</span>
+											</span> -->
 											<!-- <span class="pull-right"><i ng-show="col.element.type === 'C'"  ng-click=" $root.collapseCol = !$root.collapseCol; $root.collapseColumn(col, $parent.$parent.$index, $index); " 
 												ng-class="{'fa-minus-square-o':!$root.collapseCol, 'fa-plus-square-o':$root.collapseCol }"
 												class="fa   fa-fw" style="margin-right:5px; cursor: pointer;" ></i></span> -->
