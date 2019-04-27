@@ -201,7 +201,7 @@
  
                 
                  
-                elementMouseout: function(e){   console.log(e,'mouseout') },
+                
                 tooltipShow: function(e){   },
                 tooltipHide: function(e){  }
               },
@@ -339,9 +339,9 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
-                    elementMouseover: function(e){    $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
-                    elementMouseout: function(e){  $timeout(function(){$rootScope.overCol =-1; return e; })  },
-                    renderEnd: function(e){    }
+                    elementMouseover: function(e){  if(e){  $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });  } },
+                    elementMouseout: function(e){ if(e){ $timeout(function(){$rootScope.overCol =-1; return e; }) } },
+                    renderEnd: function(e){     }
                  
                 },
                 "width": 960,
@@ -578,7 +578,7 @@
               "showYAxis": true,
               "focusEnable": false,
               "focusShowAxisX": false,
-              "focusShowAxisY": true,
+              "focusShowAxisY": false,
               "brushExtent": null,
               "defaultState": null,
               "noData": null,
@@ -824,10 +824,10 @@
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                   if(scope.chartName === 'Pie'){
-                    scope.options.chart.x =  function(d){console.log("pie",d); return d.key;}
+                    scope.options.chart.x =  function(d){ if(d){ console.log("pie",d); return d.key; } }
                       
                   }else{
-                    scope.options.chart.x =  function(d){  return d.x;}
+                    scope.options.chart.x =  function(d){  if(d){  return d.x;}}
                      
                   }
                             if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
