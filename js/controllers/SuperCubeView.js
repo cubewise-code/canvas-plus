@@ -723,6 +723,38 @@
             //console.log(elemnt, row,index);
                
             }
+            scope.filter = function(row){
+    	
+              // if(value.yearTotal == null){
+              //   // Data isn't ready so don't display row
+              //   return false;
+              // }
+              if(scope.options.suppressZeros){
+                var zeroCounted = 0;
+                for(cell in row['cells']){
+                   
+                  if(row['cells'][cell].value == 0 || row['cells'][cell].value === undefined || row['cells'][cell].value === '-' ){
+                    zeroCounted++;
+                  }
+                }
+                if(zeroCounted === row['cells'].length){
+                 
+                  return false;
+                  
+                }
+              } 
+              return true;
+              
+             
+              
+              // if($scope.options.filter && $scope.options.filter != ""){
+              //   if(value["Full Name"].toLowerCase().indexOf($scope.options.filter.toLowerCase()) == -1){
+              //     return false;
+              //   }
+              // }
+        
+              
+            };
                 scope.seeDataNew = function(d){
                 //  console.log(d)
                 }
@@ -839,7 +871,7 @@
                                       
                                     scope.dataset = newdataset;
                                         
-                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false};
+                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false, filter: scope.filter};
                                         
                                        scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                                        
@@ -1018,7 +1050,7 @@
                                     
                                   scope.dataset = newdataset;
                                       
-                                      scope.optionsNew[scope.tableId] = {preload: false, watch: false};
+                                      scope.optionsNew[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                                       
                                      scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                                      
@@ -1201,7 +1233,7 @@
                                       
                                     scope.dataset = scope.dataset;
                                         
-                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false};
+                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                                         
                                        scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                                        
@@ -1492,7 +1524,7 @@
                        //console.log(result, "scope.tablescope.table")
                             scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                            
-                            scope.options[scope.tableId] = {preload: false, watch: false};
+                            scope.options[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                             if(scope.table){
                                 if(scope.table.options){
                                  //console.log(scope.table, "scope.tablescope.table")
@@ -1690,7 +1722,7 @@
                                   //console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                                       
-                                       scope.options[scope.tableId] = {preload: false, watch: false};
+                                       scope.options[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                                        if(scope.table){
                                            if(scope.table.options){
                                             //console.log(scope.table, "scope.tablescope.table")
@@ -2144,7 +2176,7 @@
                     //console.log(result, "scope.tablescope.table")
                          scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
                         
-                         scope.options[scope.tableId] = {preload: false, watch: false};
+                         scope.options[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                          if(scope.table){
                              if(scope.table.options){
                               //console.log(scope.table, "scope.tablescope.table")
@@ -2828,7 +2860,7 @@
                         if(name === "Transactions"){
                             scope.datasetDrill = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, data);
                            
-                            var options = {preload: false, watch: false};
+                            var options = {preload: false, watch: false,  filter: scope.filter};
                             if(scope.tableDrill){
                                 
                               //  options.pageSize = scope.tableDrill.options.pageSize;
