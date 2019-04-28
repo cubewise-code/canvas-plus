@@ -88,6 +88,15 @@
                 scope.chartUrlValue = $location.search()['chartView'];
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
+                scope.suppressZerosUrlValue = decodeURI($location.search()['suppressZeros']);
+                scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']);
+                
+                if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined' ){
+                  //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                    $rootScope.mdxId =  scope.mdxIdUrlValue ; 
+                    
+                    
+                }  
                 
                 if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' ){
                   //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
@@ -629,7 +638,7 @@
               "css": {}
             }
           }
-          
+           
           scope.charRowCount = 0;
           scope.consolidatedRowsOnly = false;
           scope.randomColor = [];
@@ -644,8 +653,23 @@
             deepWatchDataDepth: false, // default: 2
             debounce: 10 // default: 10
         };
-              
-          scope.gotoTop = function(){
+        
+        if(scope.suppressZerosUrlValue != null && scope.suppressZerosUrlValue != 'undefined'  ){
+          console.log(scope.suppressZerosUrlValue); 
+          if(scope.suppressZerosUrlValue === 'true'){
+            scope.options.suppressZeros = true;
+          }else{
+            scope.options.suppressZeros = false;
+          }
+          
+        }else{
+          console.log("no url suppress zeros so default to false"); 
+          scope.options.suppressZeros = false;
+          
+        }
+        
+
+        scope.gotoTop = function(){
             scope.tableHide = !scope.tableHide;
             if(scope.tableHide != null && scope.tableHide != 'undefned' && !scope.tableHide){
               $location.search('tableHide', 'true') 
@@ -1704,6 +1728,7 @@
                            )
                            
                            jsonRowData = [];
+                           $rootScope.parametersVisible =false;
                            scope.refreshNew(scope.dataset)
                         } else {
                             scope.message = result.message;
@@ -2837,6 +2862,20 @@
 
           }
           
+          scope.updateUrl = function(urlName, decider){
+           
+            //   console.log(decider);
+               if(!decider){
+                 $location.search(urlName, 'false');
+               }else{
+                 $location.search(urlName, 'true');
+               }
+                 
+             
+          
+
+        }
+        
           
           scope.drillNames = [];
            
@@ -2993,10 +3032,11 @@
                               scope.selections.searchRows = '';
                               if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
+                                
                                }else{
                                 scope.currentRowCount = scope.rowsToLoad;
                                }
-                              scope.refresh(scope.cubeName, newValue)
+                              scope.refresh(scope.cubeName, newValue);
                           }
                          
                                   
@@ -3009,6 +3049,7 @@
                             if(newValue != '' && newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                              //console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
+                               $location.search('cubeName', newValue); 
                                scope.selections.searchRows = '';
                                if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;

@@ -325,8 +325,8 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
 				 </span>
 
-				 <span ng-if="!tableHide  " ng-click="  options.suppressZeros = !options.suppressZeros; refresh(cubeName, cubeView)   "  
-				 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; " ng-init="options.suppressZeros=false">
+				 <span ng-if="!tableHide  " ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros',options.suppressZeros); refresh(cubeName, cubeView)   "  
+				 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
 					Zero Suppress <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
 				</span>
 					  
