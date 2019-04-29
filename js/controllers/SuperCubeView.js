@@ -88,6 +88,15 @@
                 scope.chartUrlValue = $location.search()['chartView'];
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
+                scope.suppressZerosUrlValue = decodeURI($location.search()['suppressZeros']);
+                scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']);
+                
+                if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined' ){
+                  //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                    $rootScope.mdxId =  scope.mdxIdUrlValue ; 
+                    
+                    
+                }  
                 
                 if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' ){
                   //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
@@ -190,20 +199,20 @@
               "height": (window.innerHeight/2),
               "margin": {
                 "top": 20,
-                "right": 50,
+                "right": 0,
                 "bottom": 5,
-                "left": 50
+                "left": 0
               },
                
-              "valueFormat":  function(d){ console.log(d, "looking at the cellvalue from chart pie tooltip format"); return  formatComma(d); },
+              "valueFormat":  function(d){  return  formatComma(d); },
               "useInteractiveGuideline": true,
               "dispatch": {
  
                 
                  
-                //elementMouseout: function(e){ if(!scope.options.chart.useInteractiveGuideline){scope.chartToolTipElements = {"0":e}; }else{scope.chartToolTipElements = e;}  console.log(e,'mouseout') },
-                tooltipShow: function(e){ console.log(e,'tooltipShow') },
-                tooltipHide: function(e){ console.log(e,'tooltipHide') }
+                
+                tooltipShow: function(e){   },
+                tooltipHide: function(e){  }
               },
               "xAxis": {
                 "axisLabel": "",
@@ -339,9 +348,9 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
-                    elementMouseover: function(e){    $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });   },
-                    elementMouseout: function(e){  $timeout(function(){$rootScope.overCol =-1; return e; })  },
-                    renderEnd: function(e){    }
+                    elementMouseover: function(e){  if(e){  $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });  } },
+                    elementMouseout: function(e){ if(e){ $timeout(function(){$rootScope.overCol =-1; return e; }) } },
+                    renderEnd: function(e){     }
                  
                 },
                 "width": 960,
@@ -360,7 +369,7 @@
                 "forcePoint": [],
                 "interactive": true,
                 "padDataOuter": 0.1,
-                "padData": false,
+                "padData": true,
                 "clipEdge": true,
                 "clipVoronoi": false,
                 "showVoronoi": false,
@@ -400,7 +409,7 @@
                 "forcePoint": [],
                 "interactive": false,
                 "padDataOuter": 0.1,
-                "padData": false,
+                "padData": true,
                 "clipEdge": false,
                 "clipVoronoi": true,
                 "showVoronoi": false,
@@ -431,7 +440,7 @@
                 "height": 20,
                 "align": true,
                 "maxKeyLength": 20,
-                "rightAlign": true,
+                "rightAlign": false,
                 "padding": 32,
                 "updateState": true,
                 "radioButtonMode": false,
@@ -452,7 +461,7 @@
                 "tooltip": {
                   "duration": 100,
                   "gravity": "w",
-                  "distance": 25,
+                  "distance": 50,
                   "snapDistance": 0,
                   "classes": null,
                   "chartContainer": null,
@@ -470,7 +479,7 @@
                 },
                 "margin": {
                   "left": 55,
-                  "top": 30
+                  "top": 100
                 },
                 "width": null,
                 "height": null,
@@ -558,7 +567,7 @@
               "forceY": [],
               "interactive": true,
               "interactiveUpdateDelay": 300,
-              "padData": false,
+              "padData": true,
               "padDataOuter": 0.1,
               "pointDomain": [
                 16,
@@ -577,16 +586,16 @@
               "showXAxis": false,
               "showYAxis": true,
               "focusEnable": false,
-              "focusShowAxisX": true,
+              "focusShowAxisX": false,
               "focusShowAxisY": false,
               "brushExtent": null,
               "defaultState": null,
               "noData": null,
               "focusMargin": {
                 "top": 0,
-                "right": 20,
-                "bottom": 20,
-                "left": 60
+                "right": 0,
+                "bottom": 0,
+                "left": 0
               },
               "rightAlignYAxis": false
             },
@@ -629,7 +638,7 @@
               "css": {}
             }
           }
-          
+           
           scope.charRowCount = 0;
           scope.consolidatedRowsOnly = false;
           scope.randomColor = [];
@@ -644,8 +653,23 @@
             deepWatchDataDepth: false, // default: 2
             debounce: 10 // default: 10
         };
-              
-          scope.gotoTop = function(){
+        
+        if(scope.suppressZerosUrlValue != null && scope.suppressZerosUrlValue != 'undefined'  ){
+          console.log(scope.suppressZerosUrlValue); 
+          if(scope.suppressZerosUrlValue === 'true'){
+            scope.options.suppressZeros = true;
+          }else{
+            scope.options.suppressZeros = false;
+          }
+          
+        }else{
+          console.log("no url suppress zeros so default to false"); 
+          scope.options.suppressZeros = false;
+          
+        }
+        
+
+        scope.gotoTop = function(){
             scope.tableHide = !scope.tableHide;
             if(scope.tableHide != null && scope.tableHide != 'undefned' && !scope.tableHide){
               $location.search('tableHide', 'true') 
@@ -675,25 +699,28 @@
           return val;
         } 
           scope.highlightPoints = function(chart){
-            scope.svg.selectAll("dot")    
-            .data(data)         
-        .enter().append("circle")                               
-            .attr("r", 5)       
-            .attr("cx", function(d) { return x(d.date); })       
-            .attr("cy", function(d) { return y(d.close); })     
-            .on("mouseover", function(d) {      
-                div.transition()        
-                    .duration(200)      
-                    .style("opacity", .9);      
-                div .html(formatTime(d.date) + "<br/>"  + d.close)  
-                    .style("left", (d3.event.pageX) + "px")     
-                    .style("top", (d3.event.pageY - 28) + "px");    
-                })                  
-            .on("mouseout", function(d) {       
-                div.transition()        
-                    .duration(500)      
-                    .style("opacity", 0);   
-            });
+            if(scope.svg != 'undefined' && scope.svg != null){
+              scope.svg.selectAll("dot")    
+              .data(data)         
+          .enter().append("circle")                               
+              .attr("r", 5)       
+              .attr("cx", function(d) { return x(d.date); })       
+              .attr("cy", function(d) { return y(d.close); })     
+              .on("mouseover", function(d) {      
+                  div.transition()        
+                      .duration(200)      
+                      .style("opacity", .9);      
+                  div .html(formatTime(d.date) + "<br/>"  + d.close)  
+                      .style("left", (d3.event.pageX) + "px")     
+                      .style("top", (d3.event.pageY - 28) + "px");    
+                  })                  
+              .on("mouseout", function(d) {       
+                  div.transition()        
+                      .duration(500)      
+                      .style("opacity", 0);   
+              });
+            }
+            
           }
   
          
@@ -723,6 +750,38 @@
             //console.log(elemnt, row,index);
                
             }
+            scope.filter = function(row){
+    	
+              // if(value.yearTotal == null){
+              //   // Data isn't ready so don't display row
+              //   return false;
+              // }
+              if(scope.options.suppressZeros){
+                var zeroCounted = 0;
+                for(cell in row['cells']){
+                   
+                  if(row['cells'][cell].value == 0 || row['cells'][cell].value === undefined || row['cells'][cell].value === '-' ){
+                    zeroCounted++;
+                  }
+                }
+                if(zeroCounted === row['cells'].length){
+                 
+                  return false;
+                  
+                }
+              } 
+              return true;
+              
+             
+              
+              // if($scope.options.filter && $scope.options.filter != ""){
+              //   if(value["Full Name"].toLowerCase().indexOf($scope.options.filter.toLowerCase()) == -1){
+              //     return false;
+              //   }
+              // }
+        
+              
+            };
                 scope.seeDataNew = function(d){
                 //  console.log(d)
                 }
@@ -824,11 +883,10 @@
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                   if(scope.chartName === 'Pie'){
-                    scope.options.chart.x =  function(d){console.log("pie",d); return d.key;}
-                     
-                    
+                    scope.options.chart.x =  function(d){ if(d){ console.log("pie",d); return d.key; } }
+                      
                   }else{
-                    scope.options.chart.x =  function(d){  return d.x;}
+                    scope.options.chart.x =  function(d){  if(d){  return d.x;}}
                      
                   }
                             if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
@@ -840,7 +898,7 @@
                                       
                                     scope.dataset = newdataset;
                                         
-                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false};
+                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false, filter: scope.filter};
                                         
                                        scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                                        
@@ -863,8 +921,8 @@
                                           scope.options.chart.right = 0;
                                         }
                                         if(scope.activeName === 'lineChart'){
-                                          scope.options.chart.margin.left = 50;
-                                          scope.options.chart.margin.right = 50;
+                                          scope.options.chart.margin.left = 0;
+                                          scope.options.chart.margin.right = 0;
                                         }
                                        //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                         var jsonRowData = [];
@@ -990,8 +1048,8 @@
                                           scope.chart.right = 0;
                                         }
                                         if(scope.chart && scope.activeName === 'lineChart'){
-                                          scope.chart.margin.left = 50;
-                                          scope.chart.margin.right = 50;
+                                          scope.chart.margin.left = 0;
+                                          scope.chart.margin.right = 0;
                                         }
                                        //scope.tableData = scope.table.data();
                                        scope.data = jsonRowData;
@@ -1011,6 +1069,7 @@
                                 })
 
                               }else{
+
                               $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, $rootScope.mdxId,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                                 if(!result.failed){
                                      
@@ -1018,7 +1077,7 @@
                                     
                                   scope.dataset = newdataset;
                                       
-                                      scope.optionsNew[scope.tableId] = {preload: false, watch: false};
+                                      scope.optionsNew[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                                       
                                      scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                                      
@@ -1041,8 +1100,8 @@
                                         scope.options.chart.right = 0;
                                       }
                                       if(scope.activeName === 'lineChart'){
-                                        scope.options.chart.margin.left = 50;
-                                        scope.options.chart.margin.right = 50;
+                                        scope.options.chart.margin.left = 0;
+                                        scope.options.chart.margin.right = 0;
                                       }
                                      //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                       var jsonRowData = [];
@@ -1174,8 +1233,8 @@
                                         scope.chart.right = 0;
                                       }
                                       if(scope.chart && scope.activeName === 'lineChart'){
-                                        scope.chart.margin.left = 50;
-                                        scope.chart.margin.right = 50;
+                                        scope.chart.margin.left = 0;
+                                        scope.chart.margin.right = 0;
                                       }
                                      //scope.tableData = scope.table.data();
                                      scope.data = jsonRowData;
@@ -1201,7 +1260,7 @@
                                       
                                     scope.dataset = scope.dataset;
                                         
-                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false};
+                                        scope.optionsNew[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                                         
                                        scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                                        
@@ -1230,8 +1289,8 @@
                                           scope.options.chart.right = 0;
                                         }
                                         if(scope.activeName === 'lineChart'){
-                                          scope.options.chart.margin.left = 50;
-                                          scope.options.chart.margin.right = 50;
+                                          scope.options.chart.margin.left = 0;
+                                          scope.options.chart.margin.right = 0;
                                         }
                                        //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                                         var jsonRowData = [];
@@ -1366,8 +1425,8 @@
                                           scope.chart.right = 0;
                                         }
                                         if(scope.chart && scope.activeName === 'lineChart'){
-                                          scope.chart.margin.left = 50;
-                                          scope.chart.margin.right = 50;
+                                          scope.chart.margin.left = 0;
+                                          scope.chart.margin.right = 0;
                                         }
 
                                        //scope.tableData = scope.table.data();
@@ -1492,7 +1551,7 @@
                        //console.log(result, "scope.tablescope.table")
                             scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                            
-                            scope.options[scope.tableId] = {preload: false, watch: false};
+                            scope.options[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                             if(scope.table){
                                 if(scope.table.options){
                                  //console.log(scope.table, "scope.tablescope.table")
@@ -1659,8 +1718,8 @@
                              scope.chart.right = 0;
                            }
                            if(scope.chart && scope.activeName === 'lineChart'){
-                             scope.chart.margin.left = 50;
-                             scope.chart.margin.right = 50;
+                             scope.chart.margin.left = 0;
+                             scope.chart.margin.right = 0;
                            }
                            $timeout(
                              function(){
@@ -1672,6 +1731,7 @@
                            )
                            
                            jsonRowData = [];
+                           $rootScope.parametersVisible =false;
                            scope.refreshNew(scope.dataset)
                         } else {
                             scope.message = result.message;
@@ -1690,7 +1750,7 @@
                                   //console.log(result, "scope.tablescope.table")
                                        scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                                       
-                                       scope.options[scope.tableId] = {preload: false, watch: false};
+                                       scope.options[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                                        if(scope.table){
                                            if(scope.table.options){
                                             //console.log(scope.table, "scope.tablescope.table")
@@ -1859,8 +1919,8 @@
                                         scope.chart.right = 0;
                                       }
                                       if(scope.chart && scope.activeName === 'lineChart'){
-                                        scope.chart.margin.left = 50;
-                                        scope.chart.margin.right = 50;
+                                        scope.chart.margin.left = 0;
+                                        scope.chart.margin.right = 0;
                                       }
                                       $timeout(
                                         function(){
@@ -2144,7 +2204,7 @@
                     //console.log(result, "scope.tablescope.table")
                          scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
                         
-                         scope.options[scope.tableId] = {preload: false, watch: false};
+                         scope.options[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                          if(scope.table){
                              if(scope.table.options){
                               //console.log(scope.table, "scope.tablescope.table")
@@ -2313,8 +2373,8 @@
                           scope.chart.right = 0;
                         }
                         if(scope.chart && scope.activeName === 'lineChart'){
-                          scope.chart.margin.left = 50;
-                          scope.chart.margin.right = 50;
+                          scope.chart.margin.left = 0;
+                          scope.chart.margin.right = 0;
                         }
                         $timeout(
                           function(){
@@ -2805,6 +2865,20 @@
 
           }
           
+          scope.updateUrl = function(urlName, decider){
+           
+            //   console.log(decider);
+               if(!decider){
+                 $location.search(urlName, 'false');
+               }else{
+                 $location.search(urlName, 'true');
+               }
+                 
+             
+          
+
+        }
+        
           
           scope.drillNames = [];
            
@@ -2828,7 +2902,7 @@
                         if(name === "Transactions"){
                             scope.datasetDrill = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, data);
                            
-                            var options = {preload: false, watch: false};
+                            var options = {preload: false, watch: false,  filter: scope.filter};
                             if(scope.tableDrill){
                                 
                               //  options.pageSize = scope.tableDrill.options.pageSize;
@@ -2961,10 +3035,11 @@
                               scope.selections.searchRows = '';
                               if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
+                                
                                }else{
                                 scope.currentRowCount = scope.rowsToLoad;
                                }
-                              scope.refresh(scope.cubeName, newValue)
+                              scope.refresh(scope.cubeName, newValue);
                           }
                          
                                   
@@ -2974,9 +3049,10 @@
                         return $attributes.cubeName;
                         
                         }, function (newValue, oldValue) { 
-                            if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                            if(newValue != '' && newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                              //console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
+                               $location.search('cubeName', newValue); 
                                scope.selections.searchRows = '';
                                if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;

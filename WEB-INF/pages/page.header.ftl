@@ -14,7 +14,7 @@
     <div ng-init=" $root.printOpened = false;" 
         style="position:fixed; top:0px; right:0px; z-index:99999; padding:10px; padding-right:0px; margin-right:50px; height:auto;" ng-if="$root.user.Name && !$root.userLoggedOut"  >       
 
-        <span ng-init=" $rootScope.getWeather($root.user.Name); "></span>
+        
             <ul class="nav navbar-top-links-v2 navbar-right  " style="color:#fff !important; background-color:transparent !important;"  >
             
             <li class="dropdown "  style="color:#fff !important; background-color:transparent !important;" >
@@ -137,32 +137,36 @@
             
             <tm1-ui-dbr  ng-show="false"  tm1-read-only="true"
 				tm1-instance="dev" 
-				tm1-cube="User Weather"  
-				tm1-elements="Admin,description,String"
+				tm1-cube="User Weather"
+                 tm1-refresh-group="weatherGroup"  
+				tm1-elements="{{$root.user.FriendlyName}},description,String"
                 ng-model="$root.user['weatherDescription']"
 				   >
 			</tm1-ui-dbr>
             {{$root.user['weatherDescription']}}
             <tm1-ui-dbr  ng-show="false" tm1-read-only="true"
-				tm1-instance="dev" 
+				tm1-instance="dev"  
+                tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
-				tm1-elements="Admin,temperature,String"
+				tm1-elements="{{$root.user.FriendlyName}},temperature,String"
                 ng-model="$root.user['weatherTemp']"
 				  >
 			</tm1-ui-dbr>
             <i class="fa fa-thermometer-three-quarters" area-hidden="true"></i> | {{$root.user['weatherTemp']}} &#8451; 
             <tm1-ui-dbr ng-show="false"  tm1-read-only="true"
 				tm1-instance="dev" 
+                tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
-				tm1-elements="Admin,clouds,String"
+				tm1-elements="{{$root.user.FriendlyName}},clouds,String"
                 ng-model="$root.user['weatherClouds']"
                 tm1-on-change="$root.createCloudArray($root.user['weatherClouds'], $root.user['weatherDescription']);"
 				  >
 			</tm1-ui-dbr>
             <tm1-ui-dbr  tm1-read-only="true"
 				tm1-instance="dev" 
+                 tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
-				tm1-elements="Admin,city,String"
+				tm1-elements="{{$root.user.FriendlyName}},city,String"
                 ng-model="$root.user['city']"
                 
 				  >
@@ -383,7 +387,8 @@
             
  
             {{$root.defaults.year}} | 
-            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description" tm1-read-only="true"></tm1-ui-dbra> | 
+            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description"  ng-model="$root.defaults.regionName" 
+             tm1-read-only="true"></tm1-ui-dbra> <span ng-if=" $root.defaults.regionName " ng-init=" $root.getWeather($root.defaults.regionName, $root.user.FriendlyName);"></span>| 
             <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
             
         </span>
