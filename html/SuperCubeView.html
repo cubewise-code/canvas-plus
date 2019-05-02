@@ -309,7 +309,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 					 	Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
-					 
+					 <span ng-hide="hideTableAsOption === 'true'">
 					<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
 					 style="margin:2px; padding:5px; display:inline-block;  padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff; ">
 						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i> 
@@ -325,7 +325,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
 				 </span>
-
+				</span>
 			 
 					  
 					<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   

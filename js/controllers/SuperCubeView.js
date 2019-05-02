@@ -26,6 +26,7 @@
                     customPage:'@',
                     cubeMdxParams:'@',
                     hideChartAsOption:'@',
+                    hideTableAsOption:'@',
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -91,6 +92,7 @@
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
                 scope.customPage = $attributes.customPage;
                 scope.hideChartAsOption = $attributes.hideChartAsOption;
+                scope.hideTableAsOption = $attributes.hideTableAsOption;
                 scope.tableUrlValue = $location.search()['tableHide'];
                 scope.chartUrlValue = $location.search()['chartView'];
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
@@ -126,6 +128,7 @@
                   if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
                     //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                     if(scope.chartUrlValue === 'true'){
+                      
                       scope.chartVisible = true; 
                     }else{
                       scope.chartVisible = false ; 
@@ -136,23 +139,37 @@
                     } else{
                       scope.chartVisible = false ; 
                     }
+
+
                     if(scope.tableUrlValue === 'true'){
                         
                     
                         //console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
-                        scope.tableHide = true ; 
+                        if(scope.hideTableAsOption === 'true'){
+                          scope.tableHide = true ; 
+                        }else{
+                          scope.tableHide = false ; 
+                        }
+                        
                         
                        
                         
                       } else{
-                        scope.tableHide = false ; 
+                        if(scope.hideTableAsOption === 'true'){
+                          scope.tableHide = true ; 
+                        }else{
+                          scope.tableHide = false ; 
+                        }
+                        
                       }
   
                   scope.dataWidth = 70;
                  //$rootScope.cubeName = scope.cubeName;
                  //$rootScope.cubeView = scope.cubeView;
                 
-                  
+                if(scope.hideChartAsOption === 'true'){
+                    scope.chartVisible = false ; 
+                } 
                 
                  
                 scope.dateNow = new Date() ;
