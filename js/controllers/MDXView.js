@@ -13,7 +13,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $rootScope.pageTitle = "Super Cube View + Freezepane";
+    $rootScope.pageTitle = "Super Cube View";
     $rootScope.cubeName = "General Ledger"
     $rootScope.cubeView = "Budget Template"
     $rootScope.useMdx = false;

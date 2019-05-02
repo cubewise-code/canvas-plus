@@ -27,6 +27,7 @@
                     cubeMdxParams:'@',
                     hideChartAsOption:'@',
                     hideTableAsOption:'@',
+                    useDefaultParameters:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -67,7 +68,7 @@
                 scope.firstDayPosition = {};
                
                 scope.tm1Instance = $attributes.tm1Instance;
-                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined'){
+                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' &&  !$attributes.useDefaultParameters){
                 //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                   scope.cubeName = scope.cubeNameUrlValue ; 
                   
@@ -75,7 +76,8 @@
                 } else{
                   scope.cubeName = $attributes.cubeName;
                 }
-                 
+                
+
                 $rootScope.overCol = [];
                 
                 scope.attributeOptions = $attributes.attributeOptions;
@@ -100,12 +102,15 @@
                 scope.suppressZerosUrlValue = decodeURI($location.search()['suppressZeros']);
                 scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']);
                 
-                if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined' ){
+                if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined'   ){
                   //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
-                    $rootScope.mdxId =  scope.mdxIdUrlValue ; 
+                  
+                  $rootScope.mdxId =  scope.mdxIdUrlValue ; 
                     
                     
-                }  
+                }  else{
+                  $rootScope.mdxId =  $attributes.cubeMdx ; 
+                }
                 
                 if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' ){
                   //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
@@ -226,7 +231,7 @@
               },
                
               "valueFormat":  function(d){  return  formatComma(d); },
-              "useInteractiveGuideline": false,
+              "useInteractiveGuideline": true,
               "dispatch": {
  
                 
@@ -659,7 +664,7 @@
               "css": {}
             }
           }
-           
+          scope.data = [];
           scope.charRowCount = 0;
           scope.consolidatedRowsOnly = false;
           scope.randomColor = [];
@@ -1076,7 +1081,7 @@
                                           scope.chart.margin.right = 0;
                                         }
                                        //scope.tableData = scope.table.data();
-                                       scope.data = jsonRowData;
+                                       scope.data[scope.tableId] = jsonRowData;
 
                                     //   console.log(scope.data)
                                        if( scope.api){
@@ -1261,7 +1266,9 @@
                                         scope.chart.margin.right = 0;
                                       }
                                      //scope.tableData = scope.table.data();
-                                     scope.data = jsonRowData;
+                                     
+                                     scope.data[scope.tableId] = jsonRowData;
+
                                 //     console.log(scope.data)
                                      if( scope.api){
                                       scope.api.update();
@@ -1454,7 +1461,7 @@
                                         }
 
                                        //scope.tableData = scope.table.data();
-                                       scope.data = jsonRowData;
+                                       scope.data[scope.tableId] = jsonRowData;
                                     //   console.log(scope.data)
                                        if( scope.api){
                                         scope.api.update();
@@ -1550,7 +1557,7 @@
                     "name": "Last Year"
                     }
                 }
-                scope.data = [];
+               
                 scope.getCellData = function(elements, row, col){
                // console.log( scope.tm1Instance+','+scope.cubeName+','+(elements).toString());
                scope.myCellData[row] = [];
@@ -1736,7 +1743,7 @@
                               
                            
                             //scope.tableData = scope.table.data();
-                           scope.data = jsonRowData; 
+                           scope.data[scope.tableId] = jsonRowData; 
                            if( scope.chart && scope.activeName === 'multiBarChart'){
                              scope.chart.left = 0;
                              scope.chart.right = 0;
@@ -1937,7 +1944,7 @@
                                          
                                       
                                        //scope.tableData = scope.table.data();
-                                      scope.data = jsonRowData; 
+                                      scope.data[scope.tableId] = jsonRowData; 
                                       if( scope.chart && scope.activeName === 'multiBarChart'){
                                         scope.chart.left = 0;
                                         scope.chart.right = 0;
@@ -2402,7 +2409,7 @@
                            
                         
                          //scope.tableData = scope.table.data();
-                        scope.data = jsonRowData; 
+                        scope.data[scope.tableId] = jsonRowData; 
                         if( scope.chart && scope.activeName === 'multiBarChart'){
                           scope.chart.left = 0;
                           scope.chart.right = 0;

@@ -332,7 +332,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 						 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
-					<span id="chartDrop{{tableId}}" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					<span ng-hide="hideChartAsOption === 'true'" id="chartDrop{{tableId}}" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
 							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
 									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
@@ -345,7 +345,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									 
 							</div>
 					</span>
-					<span id="chartTypeDrop{{tableId}}" ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					<span  ng-hide="hideChartAsOption === 'true'" id="chartTypeDrop{{tableId}}" ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px; border-left:1px solid steelblue;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
 							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
 									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
@@ -358,7 +358,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									 
 							</div>
 					</span>
-					<span ng-show="chartVisible" > 
+					<span ng-hide="hideChartAsOption === 'true'" ng-show="chartVisible" > 
 						 
 							<span ng-click="   chartOptionsOpen = !chartOptionsOpen;  dispatchResize(); api.refresh(); "  
 							 style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
@@ -673,7 +673,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										<!-- <td class="overflowhidden"  ng-repeat="columnrem in hideColumn[tableId] track by $index" ng-if="hideColumn[tableId][$index]  && $index <= (table.data()[0]['cells'].length) "></td> -->
 										<td id="chartRow{{tableId}}" ng-if="chartVisible"  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
-											<nvd3   options="options" data="data" events="events"  api="api" on-ready="callback" ></nvd3>
+											<nvd3   options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
 											
 										</td>
 										 
@@ -736,7 +736,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
 										 
 										class="{{tableDimensionColumnClass}} overflowhidden"
-										ng-style="{    'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
+										ng-style="{ 'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
 										style=" border-left:1px solid #ccc; border-right:1px solid #ccc; " 
 										ng-repeat="el in row.elements track by $index" 
 										 
@@ -1089,7 +1089,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
 	
 	<div ng-style="{'height':((innerHeight))+'px'}" style="z-index:33; background-color:#fff; display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
-	ng-if="$root.parametersVisible === true" ng-show="customPage  || (!tableHide && !chartVisible)"   >
+	ng-if="customPage && $root.parametersVisible === true" ng-show="customPage  || (!tableHide && !chartVisible)"   >
  <div ng-include="'html/'+customPage+'.html'" ></div>
 </div>
 	
