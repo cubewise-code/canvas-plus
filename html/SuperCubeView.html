@@ -21,6 +21,7 @@
 			padding-top:0px;
 			position:fixed;
 			left:0px;
+			background-color:#fff;
 			top:146px;
 			width:100% ;
 			max-width:100%;
@@ -89,7 +90,7 @@
 			width:100%;
 			height:auto;
 			z-index:33;
-			display:block;
+			display:none;
 			background-color: transparent;
 			color:#333;
 			
@@ -302,9 +303,9 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   
   	<div class="row"    >
 				 
-			<div ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth()}" style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  top:110px; background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:auto;  text-align:center;" 
+			<div id="optionSection{{tableId}}" ng-show=" $root.showView && !$root.isPrinting "  ng-style="{'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:auto;  text-align:center;" 
 			 >
-					<span ng-if="customPage"  ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
+					<span ng-if="customPage != ''"  ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
 					style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 					 	Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
@@ -325,16 +326,13 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
 				 </span>
 
-				 <span ng-if="!tableHide  " ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros',options.suppressZeros); refresh(cubeName, cubeView)   "  
-				 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
-					Zero Suppress <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
-				</span>
+			 
 					  
-					<span 	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
+					<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 						 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
-					<span id="chartDrop" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					<span id="chartDrop{{tableId}}" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
 							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
 									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
@@ -347,7 +345,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									 
 							</div>
 					</span>
-					<span id="chartTypeDrop" ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					<span id="chartTypeDrop{{tableId}}" ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px; border-left:1px solid steelblue;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
 							<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
 									<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
@@ -385,6 +383,10 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					 
 						 
 					</span>
+					<span   ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros',options.suppressZeros); refresh(cubeName, cubeView)   "  
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
+					 Zero Suppress <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
+				 </span>
 					<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right" ng-if="!tableHide && $root.useMdxNow && !$root.useDbr " 
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
 					 <span ng-show="!$root.warningOff"> <i class="fa fa-info-circle" aria-hidden="true"></i> Read Only Cells, No Format Used {{$root.warningOff}}<i   class="fa fa-times" aria-hidden="true"></i></span>
@@ -403,7 +405,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
 			</div>
 	 
-			<div ng-show="showChartOptions" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop')+20)+'px','left': getContainerLeft('chartDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+			<div ng-show="showChartOptions" id="" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop'+tableId)+20)+'px','left': getContainerLeft('chartDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
 							  
 								 
@@ -454,7 +456,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									 
 									</div>
 			</div>
-			<div ng-show="showTypeLineOptions" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartTypeDrop')+20)+'px','left': getContainerLeft('chartTypeDrop')+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+			<div ng-show="showTypeLineOptions" id="lineOptions{{tableId}}" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartTypeDrop'+tableId)+20)+'px','left': getContainerLeft('chartTypeDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
 							  
 								 
@@ -479,7 +481,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 			</div>
 				 
 			<div id="stickyContainer{{tableId}}"   class="stickyContainer "  
-				ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'left':getTableLeft(),'top':getTableTop()}"> 
+				ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
 				<span  >
 				<style >
 				html{
@@ -547,7 +549,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				</div>
 
 				<div class="fixed-container" id="fixedHeaderContainer{{tableId}}" 
-					ng-style="{'width':getTableWidth(), 'position': getTablePosition(),'left':getTableLeft(),'top':((getTableTop().split('px')[0])-9)+'px'}"  
+					ng-style="{'width':getTableWidth(), 'position': getTablePosition(),'left':getTableLeft(),'top':((getTableTop())-9)+'px'}"  
 					style=" background-color:#f0efef; padding-top:8px; white-space: nowrap;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2); overflow:hidden;">
 						<div id="sticky-header" ng-show="selections.searchRows && rowsToDisplay() != 0 || !selections.searchRows" 	
 							class="sticky-header"   style="display:inline-block; float:left; margin:0 auto;"
@@ -592,7 +594,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				<div  id="sideContent{{tableId}}" ng-hide="tableHide"
 					class="fixed-container-side" 
 					style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
-					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'height':workOutContainerHeight('stickyContainer'+tableId), 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
+					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
 					<table id="sideContainer" class="table ">
 						<tbody  >
 								<tr   id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index" 
@@ -655,7 +657,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 		 
 			
 				 
-				<div ng-show="!tableHide || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()}">
+				<div ng-show="!tableHide || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()+'px'}">
 					
 					<table class="table" id="af1{{tableId}}">
 
@@ -700,7 +702,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 											<td   
 											id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 											style="border-right:1px solid #ccc; border-top:1px solid #ddd;   cursor:pointer; vertical-align:baseline;" 
-											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol === $index && chartVisible ? 'steelblue':'#f0efef', 'color':!options['chart']['focusEnable'] &&  $root.overCol === $index && chartVisible  ? '#fff':'#333' }"
+											ng-style="{'border-bottom':chartVisible && hideColumn[$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible ? 'steelblue':'#f0efef', 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff':'#333' }"
 											ng-repeat="col in headerrow.columns" ng-if="col.visible  " 
 											  colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
 											
@@ -931,8 +933,8 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						</tbody>
 					</table> 
 					
-					<div id="pagination" ng-hide="$root.isPrinting"  ng-style="{'width':getTableWidth(), 'left':getTableLeft()}" 
-					style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22; bottom:0px; left:0px;" 
+					<div id="pagination" ng-hide="$root.isPrinting"  ng-style="{'top':((getContainerTop('stickyContainer'+tableId)) + (getContainerHeight('stickyContainer'+tableId)) ) + 'px','width':getTableWidth(), 'left':getTableLeft()}" 
+					style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22;  left:0px;" 
 					>
 						<div class="btn-group pull-right" role="group" style="padding-top:3px;"   >
 							<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default"     ng-click="table.previous(); "><i class="fa fa-angle-left"></i></button>

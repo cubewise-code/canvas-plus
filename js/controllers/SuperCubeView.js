@@ -13,6 +13,8 @@
                     tablePosition:'@',
                     tableLeft:'@',
                     tableTop:'@',
+                    tableHeight:'@',
+                    chartHeight:'@',
                     tableId:'@',
                     tableHeightBottomOffset:'@',
                     tableDimensionColumnClass:'@',
@@ -22,7 +24,8 @@
                     chartVisible:'@',
                     tableHide:'@',
                     customPage:'@',
-                    cubeMdxParams:'@'
+                    cubeMdxParams:'@',
+                    hideChartAsOption:'@',
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -71,7 +74,7 @@
                   scope.cubeName = $attributes.cubeName;
                 }
                  
-                
+                $rootScope.overCol = [];
                 
                 scope.attributeOptions = $attributes.attributeOptions;
                 scope.tableWidth = $attributes.tableWidth; 
@@ -79,11 +82,14 @@
                 scope.tablePosition = $attributes.tablePosition;
                 scope.tableLeft = $attributes.tableLeft;
                 scope.tableTop = $attributes.tableTop;
+                scope.tableHeight = $attributes.tableHeight;
+                scope.chartHeight = $attributes.chartHeight;
                 scope.tableId = $attributes.tableId;
                 scope.rowsToLoad =  $attributes.rowsToLoad;
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
                 scope.customPage = $attributes.customPage;
+                scope.hideChartAsOption = $attributes.hideChartAsOption;
                 scope.tableUrlValue = $location.search()['tableHide'];
                 scope.chartUrlValue = $location.search()['chartView'];
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
@@ -196,7 +202,7 @@
         scope.options = {
             "chart": {
               "type":  scope.activeName,
-              "height": (window.innerHeight/2),
+              "height": (scope.chartHeight),
               "margin": {
                 "top": 20,
                 "right": 0,
@@ -348,8 +354,8 @@
                 "dispatch": { 
                  
                     elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
-                    elementMouseover: function(e){  if(e){  $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol = useNumber; return e; });  } },
-                    elementMouseout: function(e){ if(e){ $timeout(function(){$rootScope.overCol =-1; return e; }) } },
+                    elementMouseover: function(e){  if(e){  $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol[scope.tableId] = useNumber; return e; });  } },
+                    elementMouseout: function(e){ if(e){ $timeout(function(){$rootScope.overCol[scope.tableId] =-1; return e; }) } },
                     renderEnd: function(e){     }
                  
                 },
@@ -455,7 +461,7 @@
               }, 
               "interactiveLayer": {
                 "dispatch": {
-                  elementMousemove: function(d){  $timeout(function(){     var useNumber =  Math.round(d['pointXValue']);  $rootScope.overCol = useNumber; return d;  }) }
+                  elementMousemove: function(d){  $timeout(function(){     var useNumber =  Math.round(d['pointXValue']);  $rootScope.overCol[scope.tableId] = useNumber; return d;  }) }
                   
                 },
                 "tooltip": {
@@ -760,12 +766,15 @@
                 var zeroCounted = 0;
                 for(cell in row['cells']){
                    
-                  if(row['cells'][cell].value == 0 || row['cells'][cell].value === undefined || row['cells'][cell].value === '-' ){
+                  if(row['cells'][cell].value === 0 || (row['cells'][cell].value+'').indexOf('5e-') > -1 || row['cells'][cell].value === 'undefined' || row['cells'][cell].value === '-' || row['cells'][cell].value === '' ){
                     zeroCounted++;
+                  }else{
+                    //console.log(zeroCounted, row['cells'].length, row.elements[0].element['attributes'].Description,  row.cells, "decide to show row ")
                   }
+                  
                 }
                 if(zeroCounted === row['cells'].length){
-                 
+                  
                   return false;
                   
                 }
@@ -2019,28 +2028,32 @@
                         $chartContent = $(el).find('#chartRow'+scope.tableId);
                         $sideContent = $(el).find('#sideContent'+scope.tableId); 
                         $tableContent = $(el).find('#af1'+scope.tableId); 
-
+                         
                         scope.scrolling = true;
                         $($stickyHeader).css('display','none'); 
-                        if(scope.tableHide){
-                          $($sideContent).css('display', 'block');
-                        }
-                        $($sideContent).css('display', 'block');
+                        
+                      
                              var valuetoEval = scope.offsetTop;
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
                              if(scope.chartVisible  ){
-                              scope.offsetTop = ((window.innerHeight/2) );
+                              scope.offsetTop = ((scope.chartHeight) );
       
                             }else{
                               scope.offsetTop = 1;
                             }
-                            
+                            if(scope.tableHide){
+                                $($sideContent).css('display', 'none');
+                              }else{
+                                $($sideContent).css('display', 'block');
+                            }
+                           
+
                             if($($body).scrollTop() >= parseInt(valuetoEval)  ){
                               $($fixedHeader).css('display','block'); 
                               $($stickyHeader).css('display','block'); 
-                              $($sideContent).css('display', 'block');
-                                scope.headerOutOffView = true;
+                               
+                              scope.headerOutOffView = true;
                               //console.log("view header")
                                 if($($stickyHeader)){
                                     $($stickyHeader).css('display','block !important'); 
@@ -2058,24 +2071,8 @@
                                 }
                                
                                
-                                if( $($sideContent)){
-                                    $($sideContent).css('display', 'block');
-                                    $($sideContent).css('margin-top', -$($body).scrollTop());
-                                    
-                                    if(scope.chartVisible){
-                                      //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
-                                      $($sideContent).css('height', (window.innerHeight - (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top +(8) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) ) + $($body).scrollTop() );
-                                    }else{
-                                       
-                                       
-                                    }
-                                     
-                                                                    
-                                }
-                                if(scope.tableHide){
-                                  $($sideContent).css('display', 'block');
-                                  $($sideContent).css('height', (((window.innerHeight -  (scope.tableHeightBottomOffset)-(((document.getElementById('fixedHeaderContainer'+scope.tableId).getBoundingClientRect().top )+(8))   )) )) + $($body).scrollTop());
-                                }
+                                 
+                                 
                                 window.dispatchEvent(new Event('resize')); 
                             }else{
                               $($stickyHeader).css('display','none'); 
@@ -2103,6 +2100,29 @@
                                  
                                   
                             } 
+                            if( $($sideContent)){
+                            
+                              $($sideContent).css('margin-top', -$($body).scrollTop());
+                              
+                              if(scope.chartVisible){
+                                //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
+                                if(scope.tableHeight){
+                                  $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) ) + $($body).scrollTop() );
+                                }else{
+                                  $($sideContent).css('height', ((window.innerHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(38) )    )) ) + $($body).scrollTop() );
+                                
+                                }
+                                 
+                              }else{
+                                if(scope.tableHeight){
+                                 
+                                $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(38) )   )) ) + $($body).scrollTop() );
+                                }
+                              }
+                               
+                                                              
+                              }
+                            
                              if($($stickyHeader)){
                                 $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                              }
@@ -2530,15 +2550,25 @@
                 if(document.getElementById(id)){
                     var tempObjToTrack = document.getElementById(id);
                     if(tempObjToTrack != null || tempObjToTrack != undefined ){
-                        return (((window.innerHeight - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top) );
-                    }
+                      if(scope.chartHeight){
+                        scope.options.chart.height = scope.chartHeight;
+                      }else{
+                        scope.options.chart.height = window.innerHeight/2;
+                     
+                      }
+                   }
                 }
              }
               scope.setTableHeight = function(id){
                   if(document.getElementById(id)){
                       var tempObjToTrack = document.getElementById(id);
                       if(tempObjToTrack != null || tempObjToTrack != undefined ){
-                          return (((window.innerHeight - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top));
+                        if(scope.tableHeight){
+                          return (((( scope.tableHeight) - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top));
+                        }else{
+                          return ((((window.innerHeight  ) - (scope.tableHeightBottomOffset)) - tempObjToTrack.getBoundingClientRect().top));
+                      
+                        }
                       }
                   }
                }
@@ -2793,7 +2823,11 @@
             $timeout(
                 function(){
                   if(scope.tableHide){
-                    scope.options.chart.height = window.innerHeight/2;
+                    if(scope.chartHeight){
+                      scope.options.chart.height = ( scope.chartHeight-50);
+                    }else{
+                     scope.options.chart.height = (window.innerHeight/2);
+                    }
                   }
                   window.dispatchEvent(new Event('resize'));
                     
@@ -2977,7 +3011,12 @@
                     scope.api.refresh()
                   }
                   if(scope.chartVisible  ){
-                    scope.offsetTop = ((window.innerHeight/2) );
+                    if(scope.chartHeight){
+                      scope.offsetTop = (( scope.chartHeight));
+                    }else{
+                      scope.offsetTop = ((window.innerHeight /2));
+                    }
+                    
 
                   }else{
                     scope.offsetTop = 1;

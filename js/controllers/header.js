@@ -97,7 +97,13 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         if($scope.capital){
             nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$scope.capital+","+$rootScope.defaults.regionName+"&units=metric&appid="+api_key+"";
         }else{
-            nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$rootScope.defaults.regionName+"&units=metric&appid="+api_key+"";
+
+            if($rootScope.defaults.regionName === 'Total Europe'){
+                nurl = "https://api.openweathermap.org/data/2.5/weather?q=Europe&units=metric&appid="+api_key+"";
+            }else{
+                nurl = "https://api.openweathermap.org/data/2.5/weather?q="+$rootScope.defaults.regionName+"&units=metric&appid="+api_key+"";
+            }
+             
         }
         
         $scope.readTextFile = function(file, callback) {
