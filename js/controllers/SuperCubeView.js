@@ -2055,15 +2055,17 @@
                         $($stickyHeader).css('display','none'); 
                         
                       
-                             var valuetoEval = scope.offsetTop;
+                            
                        
                              scope.scrollAmountTop =  $($body).scrollTop();
                              if(scope.chartVisible  ){
                               scope.offsetTop = ((scope.chartHeight) );
       
                             }else{
+                              
                               scope.offsetTop = 1;
                             }
+                            var valuetoEval = scope.offsetTop;
                             if(scope.tableHide){
                                 $($sideContent).css('display', 'none');
                               }else{
