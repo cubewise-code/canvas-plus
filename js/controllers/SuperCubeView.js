@@ -139,8 +139,7 @@
                     } else{
                       scope.chartVisible = false ; 
                     }
-
-
+                    
                     if(scope.tableUrlValue === 'true'){
                         
                     
@@ -167,9 +166,7 @@
                  //$rootScope.cubeName = scope.cubeName;
                  //$rootScope.cubeView = scope.cubeView;
                 
-                if(scope.hideChartAsOption === 'true'){
-                    scope.chartVisible = false ; 
-                } 
+                  
                 
                  
                 scope.dateNow = new Date() ;
