@@ -32,31 +32,32 @@
                     monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
                 };
                 scope.hideCol = $location.search()['hideCol'];
+                scope.hideColumn = [];
                 if($attributes.cubeMdx != null && $attributes.cubeMdx != 'undefined'){
                   //console.log("MDX MDX MDX MDX MDX MDX MDX MDX MDX");
                 } 
                 scope.myCellData = []
                 if(scope.hideCol != null && scope.hideCol != 'undefined'){
                   if( (scope.hideCol+'').split('-').length > 0){
-                    scope.hideColumn = [];
+                    scope.hideColumn[scope.tableId] = [];
                   //console.log((scope.hideCol+'').split('-')[0], "#####");
                     for(var urlcount = 0; urlcount < (scope.hideCol+'').split('-')[0];urlcount++){
                       
-                      scope.hideColumn[urlcount] = true;
+                      scope.hideColumn[scope.tableId][urlcount] = true;
                     }
                     //  if((scope.hideCol+'').split('-')[1] === 'true'){
-                    //   scope.hideColumn[(scope.hideCol+'').split('-')[0]] = true;
+                    //   scope.hideColumn[scope.tableId][(scope.hideCol+'').split('-')[0]] = true;
                     // }else{
-                    //   scope.hideColumn[(scope.hideCol+'').split('-')[0]] = false;
+                    //   scope.hideColumn[scope.tableId][(scope.hideCol+'').split('-')[0]] = false;
                     // }
                   
                   }
                   
                 }else{
-                  scope.hideColumn = [];
+                  scope.hideColumn[scope.tableId] = [];
                 }
                 scope.cubeMdx = $attributes.cubeMdx;
-                
+               
                 if($attributes.cubeMdxParams != null && $attributes.cubeMdxParams != 'undefined' ){
                   scope.cubeMdxParams = JSON.parse($attributes.cubeMdxParams);
                 }
@@ -211,7 +212,7 @@
               },
                
               "valueFormat":  function(d){  return  formatComma(d); },
-              "useInteractiveGuideline": true,
+              "useInteractiveGuideline": false,
               "dispatch": {
  
                 
@@ -881,9 +882,9 @@
               }
               scope.gatherColumnsHiden = function(){
               var totalhidden = 0; 
-                for(var ddss = 0; ddss < scope.hideColumn.length; ddss++ ){
-                  if(scope.hideColumn[ddss]){
-                //    console.log(scope.hideColumn[ddss], "true");
+                for(var ddss = 0; ddss < scope.hideColumn[scope.tableId].length; ddss++ ){
+                  if(scope.hideColumn[scope.tableId][ddss]){
+                //    console.log(scope.hideColumn[scope.tableId][ddss], "true");
                     totalhidden++;
                   }
                 }
@@ -1004,7 +1005,7 @@
                                                 }
                                                 for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                    
-                                                  if( scope.hideColumn[gss]   ){  
+                                                  if( scope.hideColumn[scope.tableId][gss]   ){  
                                                     //console.log("HIDE COLUMN",gss);
                                                     
                                                   }else{
@@ -1184,7 +1185,7 @@
                                               }
                                               for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                  
-                                                if( scope.hideColumn[gss]  ){  
+                                                if( scope.hideColumn[scope.tableId][gss]  ){  
                                                   //console.log("HIDE COLUMN",gss);
                                                   
                                                 }else{
@@ -1373,7 +1374,7 @@
                                                 
                                                 for(var gss = 0; gss < scope.table.data()[row].cells.length; gss++){
                                                    
-                                                  if( scope.hideColumn[gss]  ){  
+                                                  if( scope.hideColumn[scope.tableId][gss]  ){  
                                                     //console.log("HIDE COLUMN",gss);
                                                     
                                                   }else{
@@ -1660,7 +1661,7 @@
                                 }
                                    for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                      
-                                     if( scope.hideColumn[gs] ){  
+                                     if( scope.hideColumn[scope.tableId][gs] ){  
                                       // console.log("HIDE COLUMN",gs);
                                        
                                      }else{
@@ -1860,7 +1861,7 @@
                                             }
                                               for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                                 
-                                                if( scope.hideColumn[gs] ){  
+                                                if( scope.hideColumn[scope.tableId][gs] ){  
                                                  // console.log("HIDE COLUMN",gs);
                                                   
                                                 }else{
@@ -2326,7 +2327,7 @@
                               }
                                 for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
                                   
-                                  if( scope.hideColumn[gs] ){  
+                                  if( scope.hideColumn[scope.tableId][gs] ){  
                                    // console.log("HIDE COLUMN",gs);
                                     
                                   }else{
