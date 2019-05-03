@@ -332,7 +332,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				 </span>
 				</span>
 			 
-					  
+					  <span ng-show="!hideChartAsOption">
 					<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 						 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
@@ -388,6 +388,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					 
 						 
 					</span>
+				</span>
 					<span   ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros',options.suppressZeros); refresh(cubeName, cubeView)   "  
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
 					 Zero Suppress <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 

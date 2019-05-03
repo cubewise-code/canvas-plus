@@ -112,7 +112,7 @@
 		<div   id="three" ng-init="startAllFiltersAreHere()"  style="overflow:hidden !important; background-color:#fff;">
 			
 				<super-cube-view  
-				panel-heading="{{'' + $root.cubeName +' / '+$root.mdxId +''}}"
+				panel-heading="{{'Total Salary: '+$root.mdxId +''}}"
 				tm1-instance = "dev"
 				cube-name = "{{$root.cubeName}}" 
 				cube-mdx = "{{$root.mdxId}}"
@@ -139,7 +139,7 @@
 		<div id="one"   style="background-color:#fff;">
 			
 			<super-cube-view  
-			panel-heading="{{'' + $root.cubeName +' / '+$root.mdxIdOne +''}}"
+			panel-heading="{{'Total Salary: '+$root.mdxIdOne +''}}"
 				tm1-instance = "dev"
 				cube-name = "{{$root.cubeName}}" 
 				cube-mdx = "{{$root.mdxIdOne}}"
@@ -167,7 +167,7 @@
 		<div   id="two"  style="background-color:#fff;">
 			 	
 			<super-cube-view  
-			panel-heading="{{'' + $root.cubeName +' / '+$root.mdxIdTwo +''}}"
+			panel-heading="{{'Total Salary: '+$root.mdxIdTwo +''}}"
 			tm1-instance = "dev"
 			cube-name = "{{$root.cubeName}}" 
 			cube-mdx = "{{$root.mdxIdTwo}}"

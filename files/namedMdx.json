@@ -14,6 +14,14 @@
     
   },
   {
+    "id": "Region By Department",
+    "cube": "Employee"
+  },
+  {
+    "id": "Department By Region",
+    "cube": "Employee"
+  },
+  {
     "id": "Calendar",
     "cube":"Calendar"
     

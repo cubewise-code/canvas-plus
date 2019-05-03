@@ -15,11 +15,11 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.values = {};
     $rootScope.cubeView = '';
     $rootScope.pageTitle = "Super Named MDX + Grid";
-    $rootScope.cubeName = "General Ledger"
+    $rootScope.cubeName = "Employee"
     $rootScope.interactiveLayer = false;
     $rootScope.mdxId = "Employee Forecast"
-    $rootScope.mdxIdOne = "Data Entry"
-    $rootScope.mdxIdTwo = "P&L"
+    $rootScope.mdxIdOne = "Region By Department"
+    $rootScope.mdxIdTwo = "Department By Region"
     $rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ([Year].&[2018], [Region].&[England], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
     $rootScope.useMdx = false;
     $rootScope.useDbr = false;
