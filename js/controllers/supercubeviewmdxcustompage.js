@@ -18,7 +18,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $scope.activeCubeName = $scope.cubeName;
     }
  
-
+    $scope.mdxId = 'P&L'
     
     $scope.dimensionalityArray = [];
     $scope.currentDeminsionAttributes = [];
@@ -50,7 +50,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         //console.log($scope.focusedMdxString);
     }
     $scope.findMdxStringChanged = function(){
-        if($rootScope.mdxString === $scope.focusedMdxString){
+        if($scope.mdxString === $scope.focusedMdxString){
             $scope.changedOption = false; 
         }else{
             $scope.changedOption = true; 
@@ -63,23 +63,20 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         //console.log($scope.focusedMdxId);
     }
     $scope.findMdxIdChanged = function(id,cube){
-      
-             
-            
-            //console.log($rootScope.mdxId+'' ,  $scope.focusedMdxId+'',  cube ,"$scope.focusedMdxId$scope.focusedMdxId" );
+       
+                //console.log($scope.mdxId+'' , $scope.focusedMdxId+'',  cube ,"$scope.focusedMdxId$scope.focusedMdxId" );
                  
-               $location.search('mdxId', id+''); 
+                $rootScope.mdxId =  id;
                 $scope.changedIdOption = true; 
-                 $scope.activeCubeName = cube;
-                 $rootScope.cubeName = null;
+                $location.search('mdxId', id+''); 
+               // $scope.activeCubeName = cube;
+                //$rootScope.cubeName = null;
                 $timeout(
                     function(){
-                     
-                        $scope.activeCubeName = cube;
-                        $rootScope.cubeName = cube;
                         
+                        $rootScope.setMdxId(id, cube); 
                     },1000
-                )        //console.log($scope.changedOption, "FOCUS OUT OF TEXTFIELD");
+                )       
         
       
     
@@ -97,12 +94,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         rawFile.send(null);
     }
      
-        $.getJSON("files/namedMdx.json", function(data){
-          $scope.namedMdxIdArray = data;
-            //console.log(data, "JSON NAMED MDX");
-        }) // <=== was missing
-    
-    //usage:
+    $.getJSON("files/namedMdx.json", function(data){
+        $scope.namedMdxIdArray = data;
+        //console.log(data, "JSON NAMED MDX");
+    })  
+
     
    
   

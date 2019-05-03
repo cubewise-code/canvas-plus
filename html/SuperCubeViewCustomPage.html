@@ -30,8 +30,12 @@
 	border: 0px solid steelblue;
 	border-top:2px solid steelblue;
 }
+.custom-page{
+    background-color:#fff;
+}
+
 </style>
-<div id="custom-page" class="col-xs-12 col-md-12" ng-show="customPage" ng-controller="supercubeviewcustompageCtrl" ng-style="{'padding-top':(((getTableTop()+'').split('px').join(''))-35)+'px'}">
+<div id="custom-page" class="col-xs-12 col-md-12 custom-page" ng-show="customPage" ng-controller="supercubeviewcustompageCtrl" ng-style="{'padding-top':(((getTableTop()+'').split('px').join(''))-35)+'px'}">
     <div class="col-xs-12 col-md-12" > 
         <h3  >
             <i style="padding-right:10px" class="fa fa-cube"></i>Cube View Parameters

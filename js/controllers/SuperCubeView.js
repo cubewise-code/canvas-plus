@@ -4,6 +4,7 @@
             return {
                 templateUrl: 'html/SuperCubeView.html',
                 scope:{
+                    panelHeading:'@',
                     tm1Instance: '@',  
                     cubeName:'@',
                     cubeView:'@',
@@ -33,53 +34,15 @@
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
                     monthkey: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
                 };
+                scope.panelHeading = $attributes.panelHeading;
                 scope.hideCol = $location.search()['hideCol'];
                 scope.hideColumn = [];
-                if($attributes.cubeMdx != null && $attributes.cubeMdx != 'undefined'){
-                  //console.log("MDX MDX MDX MDX MDX MDX MDX MDX MDX");
-                } 
-                scope.myCellData = []
-                if(scope.hideCol != null && scope.hideCol != 'undefined'){
-                  if( (scope.hideCol+'').split('-').length > 0){
-                    scope.hideColumn[scope.tableId] = [];
-                  //console.log((scope.hideCol+'').split('-')[0], "#####");
-                    for(var urlcount = 0; urlcount < (scope.hideCol+'').split('-')[0];urlcount++){
-                      
-                      scope.hideColumn[scope.tableId][urlcount] = true;
-                    }
-                    //  if((scope.hideCol+'').split('-')[1] === 'true'){
-                    //   scope.hideColumn[scope.tableId][(scope.hideCol+'').split('-')[0]] = true;
-                    // }else{
-                    //   scope.hideColumn[scope.tableId][(scope.hideCol+'').split('-')[0]] = false;
-                    // }
-                  
-                  }
-                  
-                }else{
-                  scope.hideColumn[scope.tableId] = [];
-                }
-                scope.cubeMdx = $attributes.cubeMdx;
-               
-                if($attributes.cubeMdxParams != null && $attributes.cubeMdxParams != 'undefined' ){
-                  scope.cubeMdxParams = JSON.parse($attributes.cubeMdxParams);
-                }
-                
                 scope.selections = {};
                 scope.firstDayPosition = {};
-               
                 scope.tm1Instance = $attributes.tm1Instance;
-                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' &&  !$attributes.useDefaultParameters){
-                //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
-                  scope.cubeName = scope.cubeNameUrlValue ; 
-                  
-                  
-                } else{
-                  scope.cubeName = $attributes.cubeName;
-                }
-                
-
-                $rootScope.overCol = [];
-                
+                scope.myCellData = []; 
+                $rootScope.overCol = []; 
+                scope.mdxId = [];
                 scope.attributeOptions = $attributes.attributeOptions;
                 scope.tableWidth = $attributes.tableWidth; 
                 scope.innerWidth = window.innerWidth;
@@ -92,37 +55,64 @@
                 scope.rowsToLoad =  $attributes.rowsToLoad;
                 scope.tableDimensionColumnClass = $attributes.tableDimensionColumnClass;
                 scope.tableDataColumnClass = $attributes.tableDataColumnClass;
-                scope.customPage = $attributes.customPage;
+                scope.customPages = [];
+                scope.customPages[$attributes.tableId] = $attributes.customPage;
                 scope.hideChartAsOption = $attributes.hideChartAsOption;
                 scope.hideTableAsOption = $attributes.hideTableAsOption;
+
                 scope.tableUrlValue = $location.search()['tableHide'];
                 scope.chartUrlValue = $location.search()['chartView'];
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
                 scope.suppressZerosUrlValue = decodeURI($location.search()['suppressZeros']);
-                scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']);
-                
-                if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined'   ){
-                  //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
+
+                if(scope.hideCol != null && scope.hideCol != 'undefined'){
+                  if( (scope.hideCol+'').split('-').length > 0){
+                    scope.hideColumn[scope.tableId] = [];
+                    //console.log((scope.hideCol+'').split('-')[0], "#####");
+                    for(var urlcount = 0; urlcount < (scope.hideCol+'').split('-')[0];urlcount++){
+                      
+                      scope.hideColumn[scope.tableId][urlcount] = true;
+                    }
+                    //  if((scope.hideCol+'').split('-')[1] === 'true'){
+                    //   scope.hideColumn[scope.tableId][(scope.hideCol+'').split('-')[0]] = true;
+                    // }else{
+                    //   scope.hideColumn[scope.tableId][(scope.hideCol+'').split('-')[0]] = false;
+                    // }
                   
-                  $rootScope.mdxId =  scope.mdxIdUrlValue ; 
-                    
-                    
-                }  else{
-                  $rootScope.mdxId =  $attributes.cubeMdx ; 
-                }
-                
-                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' ){
-                  //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
-                    scope.cubeName = scope.cubeNameUrlValue ; 
-                    
-                    
+                  } 
+                }else{
+                  scope.hideColumn[scope.tableId] = [];
+                } 
+
+                if($attributes.cubeMdxParams != null && $attributes.cubeMdxParams != 'undefined' ){
+                  scope.cubeMdxParams = JSON.parse($attributes.cubeMdxParams);
+                }else{
+
+                } 
+
+                if(scope.cubeNameUrlValue != null && scope.cubeNameUrlValue != 'undefined' &&  !$attributes.useDefaultParameters){
+                //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                  scope.cubeName = scope.cubeNameUrlValue ;  
                 } else{
                   scope.cubeName = $attributes.cubeName;
                 }
+                
 
-                if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'){
-                //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
+                 
+                if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined'   &&  !$attributes.useDefaultParameters  || $attributes.useDefaultParameters === false ){
+                  console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+                  scope.mdxId[scope.tableId] = scope.mdxIdUrlValue; 
+                    
+                }else{
+                  scope.mdxId[scope.tableId] =  $attributes.cubeMdx;
+                }
+                
+               
+
+                if(scope.cubeViewUrlValue != null && scope.cubeViewUrlValue != 'undefined'  &&  !$attributes.useDefaultParameters){
+                  //console.log(scope.cubeViewUrlValue, "URL VALUES TRACKED" )
                   scope.cubeView = scope.cubeViewUrlValue ; 
                   
                   
@@ -130,9 +120,9 @@
                   scope.cubeView = $attributes.cubeView;
                 }
 
-                  if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
+                if(scope.chartUrlValue != null && scope.chartUrlValue != 'undefined' ){
                     //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
-                    if(scope.chartUrlValue === 'true'){
+                    if(scope.chartUrlValue === 'true' ){
                       
                       scope.chartVisible = true; 
                     }else{
@@ -141,31 +131,31 @@
                       
                       
                       
-                    } else{
-                      scope.chartVisible = false ; 
+                } else{
+                  scope.chartVisible = false ; 
+                }
+                    
+                if(scope.tableUrlValue === 'true'){
+                    
+                
+                    //console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
+                    if(scope.hideTableAsOption === 'true'){
+                      scope.tableHide = true ; 
+                    }else{
+                      scope.tableHide = false ; 
                     }
                     
-                    if(scope.tableUrlValue === 'true'){
-                        
                     
-                        //console.log(scope.tableUrlValue, "scope.tableUrlValuescope.tableUrlValuescope.tableUrlValue")
-                        if(scope.hideTableAsOption === 'true'){
-                          scope.tableHide = true ; 
-                        }else{
-                          scope.tableHide = false ; 
-                        }
-                        
-                        
-                       
-                        
-                      } else{
-                        if(scope.hideTableAsOption === 'true'){
-                          scope.tableHide = true ; 
-                        }else{
-                          scope.tableHide = false ; 
-                        }
-                        
-                      }
+                    
+                    
+                  } else{
+                    if(scope.hideTableAsOption === 'true'){
+                      scope.tableHide = true ; 
+                    }else{
+                      scope.tableHide = false ; 
+                    }
+                    
+                  }
   
                   scope.dataWidth = 70;
                  //$rootScope.cubeName = scope.cubeName;
@@ -191,6 +181,7 @@
                 scope.dataset = []; 
                 scope.tableNew = [];
                 scope.table = [];
+                scope.tables = [];
                 scope.optionsNew = [];
                 scope.options = [];
                 scope.cellRef = {};
@@ -231,7 +222,7 @@
               },
                
               "valueFormat":  function(d){  return  formatComma(d); },
-              "useInteractiveGuideline": true,
+              "useInteractiveGuideline": $rootScope.interactiveLayer,
               "dispatch": {
  
                 
@@ -918,7 +909,7 @@
                     scope.options.chart.x =  function(d){  if(d){  return d.x;}}
                      
                   }
-                            if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
+                            if(scope.cubeMdx != null && scope.cubeMdx != 'undefined' || scope.mdxId[scope.tableId] != null){
                               if($rootScope.useMdxNow){
                                 $tm1Ui.cubeExecuteMdx(scope.tm1Instance,$rootScope.mdxString ).then(function(result){
                                   if(!result.failed){
@@ -1099,7 +1090,7 @@
 
                               }else{
 
-                              $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, $rootScope.mdxId,  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
+                              $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.mdxId[scope.tableId],  JSON.parse($attributes.cubeMdxParams) ).then(function(result){
                                 if(!result.failed){
                                      
                                   scope.datasetNew[scope.tableId] = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
@@ -1570,14 +1561,16 @@
                 }
                 scope.refresh = function(cube,cubeview){
                     
-                  if(scope.cubeMdx != null && scope.cubeMdx != 'undefined'){
+                  if(scope.cubeMdx != null && scope.cubeMdx != 'undefined' ||  scope.mdxId[scope.tableId] != null){
+                    
                     scope.charRowCount = 0;
                     if($rootScope.useMdxNow){
                       $rootScope.setMdx($rootScope.mdxString);
                     }else{
-                      
                      
-                    $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, $rootScope.mdxId,   scope.cubeMdxParams ).then(function(result){
+                    console.log("id to load ##### ",scope.mdxId[scope.tableId], "    ##### table = ", scope.tableId,  "   useMdx  = " , $rootScope.useMdxNow)
+                     
+                    $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.mdxId[scope.tableId],   scope.cubeMdxParams ).then(function(result){
                         if(!result.failed){
                        //console.log(result, "scope.tablescope.table")
                             scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
@@ -1762,7 +1755,7 @@
                            )
                            
                            jsonRowData = [];
-                           $rootScope.parametersVisible =false;
+                          $rootScope.parametersVisible =false;
                            scope.refreshNew(scope.dataset)
                         } else {
                             scope.message = result.message;
@@ -2010,7 +2003,7 @@
               //console.log(scope.tableUrlValue,scope.chartUrlValue, "URL VALUES TRACKED" )
                 //scope.tableHide= scope.tableUrlValue;  
                 
-                $rootScope.parametersVisible = false;
+               $rootScope.parametersVisible = false;
               }else{
                 //scope.tableHide= $attributes.tableHide;
                 
@@ -2024,7 +2017,7 @@
                 scope.chartVisible = false;  
               }
                 
-                $rootScope.parametersVisible = false;
+               $rootScope.parametersVisible = false;
               }else{
                 scope.chartVisible= $attributes.chartVisible;
                 
@@ -2133,14 +2126,17 @@
                                 if(scope.tableHeight){
                                   $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) ) + $($body).scrollTop() );
                                 }else{
-                                  $($sideContent).css('height', ((window.innerHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(38) )    )) ) + $($body).scrollTop() );
+                                  $($sideContent).css('height', ((window.innerHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(30) )    )) ) + $($body).scrollTop() );
                                 
                                 }
                                  
                               }else{
                                 if(scope.tableHeight){
                                  
-                                $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(38) )   )) ) + $($body).scrollTop() );
+                                $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(30) )   )) ) + $($body).scrollTop() );
+                                }else{
+                                  $($sideContent).css('height', ((scope.innerHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(30) )   )) ) + $($body).scrollTop() );
+                               
                                 }
                               }
                                
@@ -2150,7 +2146,7 @@
                              if($($stickyHeader)){
                                 $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                              }
-                             $($sideContent).css('margin-top', -$($body).scrollTop());
+                             
                       });
                       $timeout(
                         function(){
@@ -2810,10 +2806,10 @@
     
              
     }
-    $rootScope.setMdxId = function(mdxId){
-      $rootScope.mdxId =  mdxId;
-      
-      
+    $rootScope.setMdxId = function(mdxId, cube){
+      console.log("setMdxId", mdxId, "indide the directive after the custom page is changed")
+          scope.mdxId[scope.tableId] =  mdxId; 
+          scope.cubeName = cube;
           scope.refresh(scope.cubeName,scope.cubeView);
         
       
