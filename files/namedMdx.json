@@ -14,11 +14,11 @@
     
   },
   {
-    "id": "Region By Department",
+    "id": "Region By Departments",
     "cube": "Employee"
   },
   {
-    "id": "Department By Region",
+    "id": "Department By Regions",
     "cube": "Employee"
   },
   {

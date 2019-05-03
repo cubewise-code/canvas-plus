@@ -18,8 +18,8 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.cubeName = "Employee"
     $rootScope.interactiveLayer = false;
     $rootScope.mdxId = "Employee Forecast"
-    $rootScope.mdxIdOne = "Region By Department"
-    $rootScope.mdxIdTwo = "Department By Region"
+    $rootScope.mdxIdOne = "Region By Departments"
+    $rootScope.mdxIdTwo = "Department By Regions"
     $rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ([Year].&[2018], [Region].&[England], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
     $rootScope.useMdx = false;
     $rootScope.useDbr = false;
@@ -27,7 +27,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.showView = true; 
     //$rootScope.calendarShow = true ;
      
-    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description', "Employee": 'Full Name'} }
+    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Product Category', "Version": 'Description', "Employee": 'Full Name'} }
     $scope.startAllFiltersAreHere = function(){
         $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
