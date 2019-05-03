@@ -1,7 +1,6 @@
 [
-   
   {
-    "label": "MDXView",
+    "label": "Cube View",
     "icon_class": "fa-file-text-o",
     "data": {
       "page": "mdxview"
@@ -13,6 +12,14 @@
     "icon_class": "fa-file-text-o",
     "data": {
       "page": "namedmdx"
+    },
+    "expanded": false
+  },
+  {
+    "label": "NamedMdx Grid",
+    "icon_class": "fa-table",
+    "data": {
+      "page": "namedmdx-grid"
     },
     "expanded": false
   }

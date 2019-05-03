@@ -1,4 +1,4 @@
-app.controller('NamedMdxCtrl',  ['$scope',  '$rootScope', '$log', '$tm1Ui','$localStorage','$window', '$timeout',
+app.controller('NamedMdxGridCtrl',  ['$scope',  '$rootScope', '$log', '$tm1Ui','$localStorage','$window', '$timeout',
 function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
@@ -14,7 +14,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.lists = {};
     $scope.values = {};
     $rootScope.cubeView = '';
-    $rootScope.pageTitle = "Super Named MDX ";
+    $rootScope.pageTitle = "Super Named MDX + Grid";
     $rootScope.cubeName = "General Ledger"
 
     $rootScope.mdxId = "Data Entry"

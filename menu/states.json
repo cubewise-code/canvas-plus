@@ -22,5 +22,9 @@
   "namedmdx": {
     "url": "/namedmdx",
     "templateUrl": "html/NamedMdx.html"
+  },
+  "namedmdx-grid": {
+    "url": "/namedmdx-grid",
+    "templateUrl": "html/NamedMdx Grid.html"
   }
 }
