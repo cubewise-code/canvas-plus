@@ -37,7 +37,10 @@
                 scope.panelHeading = $attributes.panelHeading;
                 scope.hideCol = $location.search()['hideCol'];
                 scope.hideColumn = [];
-                scope.selections = {};
+                scope.selections = {
+                  searchRows: []
+                };
+                
                 scope.firstDayPosition = {};
                 scope.tm1Instance = $attributes.tm1Instance;
                 scope.myCellData = []; 
@@ -59,7 +62,7 @@
                 scope.customPages[$attributes.tableId] = $attributes.customPage;
                 scope.hideChartAsOption = $attributes.hideChartAsOption;
                 scope.hideTableAsOption = $attributes.hideTableAsOption;
-
+                
                 scope.tableUrlValue = $location.search()['tableHide'];
                 scope.chartUrlValue = $location.search()['chartView'];
                 scope.cubeNameUrlValue = decodeURI($location.search()['cubeName']);
@@ -219,18 +222,9 @@
                 "right": 0,
                 "bottom": 5,
                 "left": 0
-              },
-               
+              }, 
               "valueFormat":  function(d){  return  formatComma(d); },
-              "useInteractiveGuideline": $rootScope.interactiveLayer,
-              "dispatch": {
- 
-                
-                 
-                
-                tooltipShow: function(e){   },
-                tooltipHide: function(e){  }
-              },
+              "useInteractiveGuideline": $rootScope.interactiveLayer, 
               "xAxis": {
                 "axisLabel": "",
                 "dispatch": {
@@ -364,7 +358,7 @@
               "lines": {
                 "dispatch": { 
                  
-                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));}   },
+                    elementClick: function(e){if(!scope.options.chart.useInteractiveGuideline && e != 'undefined' && e != null ){scope.chartToolTipElements = {"0":e};   scope.selections.searchRows[scope.table] = (e['series']['key']+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize'));}else{scope.chartToolTipElements = e; scope.selections.searchRows[scope.tableId] = '';  window.dispatchEvent(new Event('resize'));}   },
                     elementMouseover: function(e){  if(e){  $timeout(function(){   if(scope.hideCol){ var hiddenTotal = scope.gatherColumnsHiden(); var useNumber =    e['pointIndex'] + (hiddenTotal);  }else{var useNumber =    e['pointIndex'] ;}   ; $rootScope.overCol[scope.tableId] = useNumber; return e; });  } },
                     elementMouseout: function(e){ if(e){ $timeout(function(){$rootScope.overCol[scope.tableId] =-1; return e; }) } },
                     renderEnd: function(e){     }
@@ -409,7 +403,8 @@
                   
                   renderEnd: function(e){   }
                
-              },
+              }, 
+                 
                 "width": 960,
                 "height": 500,
                 "xDomain": null,
@@ -442,12 +437,11 @@
                 "duration": 250,
                 "useVoronoi": true,
                 "interpolate": $rootScope.lineType
-              },
-              
+              }, 
               "legend": {
                 dispatch: {
-                  legendClick: function(e) { scope.selections.searchRows = '';  window.dispatchEvent(new Event('resize'));  },
-                  legendDblclick: function(e) {  scope.selections.searchRows = (e.key+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
+                  legendClick: function(e) { scope.selections.searchRows[scope.tableId] = '';  window.dispatchEvent(new Event('resize'));  },
+                  legendDblclick: function(e) {  scope.selections.searchRows[scope.tableId] = (e.key+'').split(' :- ')[0];  window.dispatchEvent(new Event('resize')); },
                   legendMouseover: function(e) {  },
                   legendMouseout: function(e) { },
                   stateChange: function(e) { }
@@ -481,22 +475,20 @@
                   "distance": 50,
                   "snapDistance": 0,
                   "classes": null,
-                  "chartContainer": null,
-                   
+                  "chartContainer": null, 
                   "enabled": true,
                   "hideDelay": 0, 
                   "valueFormatter": function(d,i){   return  formatComma(d)},
                   "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
                   "headerEnabled": true,
-                  "fixedTop": null,
-                   
+                  "fixedTop": null, 
                   "hidden": false,
                   "data": null,
-                  "id": "nvtooltip-70659"
+                  "id": null
                 },
                 "margin": {
-                  "left": 55,
-                  "top": 100
+                  "left": 0,
+                  "top": 0
                 },
                 "width": null,
                 "height": null,
@@ -557,22 +549,24 @@
               },
               "tooltip": {
                 "duration": 100,
-                "gravity": "w",
-                "distance": 25,
-                "snapDistance": 0,
-                "classes": null,
-                "chartContainer": null,
-                "enabled": true,
-                 
-                "hideDelay": 200, 
-                "valueFormatter": function(d,i){    return formatComma(d); },
-                "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
-                "headerEnabled": true,
-                "fixedTop": null,
-                 
-                "hidden": true,
-                "data": null,
-                "id": "nvtooltip-52625"
+                  "gravity": "w",
+                  "distance": 50,
+                  "snapDistance": 0,
+                  "classes": null,
+                  "chartContainer": null, 
+                  "enabled": true,
+                  "hideDelay": 0, 
+                  "valueFormatter": function(d,i){   return  formatComma(d)},
+                  "headerFormatter": function(d){  if(scope.chartName === 'Pie' ){return d;}else{return scope.formatToHeaderName(d);}  },
+                  "margin": {
+                    "left": 0,
+                    "top": 0
+                  },
+                  "headerEnabled": true,
+                  "fixedTop": null, 
+                  "hidden": false,
+                  "data": null,
+                  "id": null
               },
               "width": null,
               "interpolate": $rootScope.lineType,
@@ -614,8 +608,15 @@
                 "bottom": 0,
                 "left": 0
               },
-              "rightAlignYAxis": false
+              "rightAlignYAxis": false,
+              "callback": highlightPoints,
+              "dispatch": {
+                  "renderEnd": function(){
+                    highlightPoints(scope.chart)
+                  }
+              }
             },
+            
             "title": {
               "enable": false,
               "text": "Title for Line Chart",
@@ -670,7 +671,24 @@
             deepWatchDataDepth: false, // default: 2
             debounce: 10 // default: 10
         };
-        
+        function highlightPoints(chart){
+        if(scope.data[scope.tableId] != null && scope.data[scope.tableId] != undefined  && scope.data[scope.tableId]  &&   scope.data[scope.tableId].length){
+            var data = scope.data[scope.tableId];
+          
+            
+          console.log(scope.data[scope.tableId], "Values");
+          //   var points = d3.select('.nv-groups')
+          //       .selectAll("circle.myPoint")
+          //       .data(scope.data[scope.tableId][0].values);
+            
+          //   points.enter().append("circle")
+          //       .attr("class", "myPoint") 
+          //       .attr("r", 5);
+          // } 
+           
+      }
+    }
+
         if(scope.suppressZerosUrlValue != null && scope.suppressZerosUrlValue != 'undefined'  ){
           console.log(scope.suppressZerosUrlValue); 
           if(scope.suppressZerosUrlValue === 'true'){
@@ -708,7 +726,9 @@
             scope.api = scope.api;
             scope.chart = scope.chart;
             scope.svg = scope.svg;
-             
+            console.log("call back function", scope.chart);
+            
+
             // ... do smth
         };
         scope.getFormatColVal = function(val, index){
@@ -716,7 +736,8 @@
           return val;
         } 
           scope.highlightPoints = function(chart){
-            if(scope.svg != 'undefined' && scope.svg != null){
+            if(scope.svg != 'undefined' && scope.svg != null && scope.svg ){
+              console.log("high lighting the point ", chart )
               scope.svg.selectAll("dot")    
               .data(data)         
           .enter().append("circle")                               
@@ -2186,7 +2207,7 @@
             }
             scope.decideRowToHideRow = function(tableinview, searchfield, searchexists){
 
-               // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
+               // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows[scope.tableId]), "function to decide row view")
                 if(tableinview === true){
                    
                     return true;
@@ -2194,7 +2215,7 @@
                    
                  
                 }else{
-                  if(scope.selections.searchRows != null && scope.selections.searchRows !='undefined' && ((searchexists+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) === -1){
+                  if(scope.selections.searchRows[scope.tableId] != null && scope.selections.searchRows[scope.tableId] !='undefined' && ((searchexists+'').toLowerCase()).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) === -1){
                    // console.log("hide row")
                     return true;
                   }else{
@@ -2208,7 +2229,7 @@
             }
             scope.decideRowToHideFreezePane = function(tableinviewfreeze, searchfieldfreeze, searchexistsfreeze){
 
-              // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows), "function to decide row view")
+              // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows[scope.tableId]), "function to decide row view")
                if(tableinviewfreeze === false){
                   
                    return true;
@@ -2216,10 +2237,10 @@
                   
                 
                }else{
-                 if(scope.selections.searchRows != null && scope.selections.searchRows !='undefined' ){
+                 if(scope.selections.searchRows[scope.tableId] != null && scope.selections.searchRows[scope.tableId] !='undefined' ){
                     
-                    if( ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
-                      //console.log("show row with same name as", scope.selections.searchRows,  searchexistsfreeze, ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows).toLowerCase()));
+                    if( ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) > -1){
+                      //console.log("show row with same name as", scope.selections.searchRows[scope.tableId],  searchexistsfreeze, ((searchexistsfreeze+'').toLowerCase()).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()));
                       return true;
                     }else{
                       return false
@@ -3013,10 +3034,10 @@
                             arrayOfAliasAndNames = ""+obg[row].elements[0].element.name+" ";
                         }
                          
-                        if(scope.selections.searchRows && (arrayOfAliasAndNames).indexOf((scope.selections.searchRows).toLowerCase()) > -1){
+                        if(scope.selections.searchRows[scope.tableId] && (arrayOfAliasAndNames).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) > -1){
                            
                             count++;
-                           // console.log("rows to display",  arrayOfAliasAndNames, (arrayOfAliasAndNames).indexOf((scope.selections.searchRows).toLowerCase()) );
+                           // console.log("rows to display",  arrayOfAliasAndNames, (arrayOfAliasAndNames).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) );
                         }else{
                             
                         }
@@ -3091,7 +3112,7 @@
                           if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
                            //console.log(newValue, "cube View has changed inside watch");
                               scope.cubeView = newValue;
-                              scope.selections.searchRows = '';
+                              scope.selections.searchRows[scope.tableId] = '';
                               if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
                                 
@@ -3112,7 +3133,7 @@
                              //console.log(newValue, "cube Name has changed inside watch");
                                scope.cubeName = newValue;
                                $location.search('cubeName', newValue); 
-                               scope.selections.searchRows = '';
+                               scope.selections.searchRows[scope.tableId] = '';
                                if($rootScope.isPrinting){
                                 scope.currentRowCount = 10000;
                                }else{

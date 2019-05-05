@@ -16,7 +16,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.cubeView = '';
     $rootScope.pageTitle = "Super Named MDX + Grid";
     $rootScope.cubeName = "Employee"
-    $rootScope.interactiveLayer = false;
+    $rootScope.interactiveLayer = true;
     $rootScope.mdxId = "Employee Forecast"
     $rootScope.mdxIdOne = "Region By Departments"
     $rootScope.mdxIdTwo = "Department By Regions"

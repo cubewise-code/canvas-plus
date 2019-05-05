@@ -380,10 +380,10 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 							Focus <i ng-class="{'fa-toggle-off':!options['chart']['focusEnable'],'fa-toggle-on':options['chart']['focusEnable']}" class="fa "></i>
 						 </span>
 						 
-						<!-- <span ng-if="table.data().length < 30 && chartOptionsOpen && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
+						<span ng-if=" chartOptionsOpen && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
 						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
 						Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
-						</span> -->
+						</span>  
 						
 					 
 						 
@@ -391,7 +391,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				</span>
 					<span   ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros',options.suppressZeros); refresh(cubeName, cubeView)   "  
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
-					 Zero Suppress <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
+					 Zero Sup. <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
 				 </span>
 					<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right" ng-if="!tableHide && $root.useMdxNow && !$root.useDbr " 
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
@@ -487,7 +487,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 			</div>
 				 
 			<div id="stickyContainer{{tableId}}"   class="stickyContainer "  
-				ng-style="{'height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
+				ng-style="{'overflow':hideTableAsOption ? 'visible':'auto','height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
 				<span  >
 				<style >
 				html{
@@ -534,12 +534,12 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										<input ng-if="$index === 0" class="form-control" 
 											ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 											style="display:inline-block;width:100%;font-size:1em; background-color: rgb(240, 239, 239);display:inline-block;border: none;" 
-											type="text" ng-model="selections.searchRows"   
+											type="text" ng-model="selections.searchRows[tableId]"   
 											placeholder="{{col.dimension}}...">
 											
-											<span ng-if="$index === 0 && selections.searchRows" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" 
+											<span ng-if="$index === 0 && selections.searchRows[tableId]" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" 
 											style="position: absolute; display: block; top: 0px; right: 0px; padding: 10px; padding-left:5px; padding-right:5px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer; right:0px;width:30px; left: 145.333px;" >
-												<i ng-click="selections.searchRows = ''" class="fa fa-times"></i>
+												<i ng-click="selections.searchRows[tableId] = ''" class="fa fa-times"></i>
 											</span> 
 											<span  class="pull-right" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}"  ng-if="$index === 0 " style="position: absolute; display: block; top: 0px; right:0px; padding: 10px; margin: 0px; background-color: rgb(204, 204, 204); width:30px; cursor: pointer; ">
 													<i  ng-click="$root.allCollapsed = !$root.allCollapsed; collapseAll($root.allCollapsed); refreshNew(dataset);" ng-class="{'':$root.allCollapsed, 'rotate':!$root.allCollapsed}" class="fa fa-sitemap" aria-hidden="true"></i> 
@@ -557,7 +557,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				<div class="fixed-container" id="fixedHeaderContainer{{tableId}}" 
 					ng-style="{'width':getTableWidth(), 'position': getTablePosition(),'left':getTableLeft(),'top':((getTableTop())-9)+'px'}"  
 					style=" background-color:#f0efef; padding-top:8px; white-space: nowrap;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2); overflow:hidden;">
-						<div id="sticky-header" ng-show="selections.searchRows && rowsToDisplay() != 0 || !selections.searchRows" 	
+						<div id="sticky-header" ng-show="selections.searchRows[tableId] && rowsToDisplay() != 0 || !selections.searchRows[tableId]" 	
 							class="sticky-header"   style="display:inline-block; float:left; margin:0 auto;"
 							ng-style="{'width': 'auto' } " 
 						>
@@ -619,11 +619,11 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 												<input ng-if="$index === 0" class="form-control" 
 												ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 												style="background-color: transparent;display:inline-block;border: none; font-size:1em;" 
-												type="text" ng-model="selections.searchRows"   
+												type="text" ng-model="selections.searchRows[tableId]"   
 												placeholder="{{col.dimension}}..."> 
-												<span ng-if="$index === 0 && selections.searchRows" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" 
+												<span ng-if="$index === 0 && selections.searchRows[tableId]" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" 
 												style="position: absolute; display: block; top: 0px; right: 0px; padding: 10px; padding-left:5px; padding-right:5px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer; right:0px;width:30px; z-index: 222; left: 145.333px;" >
-													<i  ng-click="selections.searchRows = ''" class="fa fa-times"></i>
+													<i  ng-click="selections.searchRows[tableId] = ''" class="fa fa-times"></i>
 												</span> 
 												<span class="pull-right" ng-if="$index === 0 " ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" style="position: absolute; display: block; top: 0px; right:0px; padding: 10px; width:30px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer;    ">
 														 <i  ng-click="$root.allCollapsed = !$root.allCollapsed; collapseAll($root.allCollapsed); refreshNew(dataset);" ng-class="{'':$root.allCollapsed, 'rotate':!$root.allCollapsed}" class="fa fa-sitemap" aria-hidden="true"></i> 
@@ -632,7 +632,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 									</td>
 								
 									</tr>
-								<tr    ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								<tr    ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index"  >
 								<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px',   'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
 															style=" border:0px solid transparent; border-right:0px solid #ccc; border-left:1px solid #ccc; vertical-align:text-top; "                                                              
@@ -642,7 +642,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 															ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
 															
 														 
-															<span stye="cursor:pointer" ng-show="!selections.searchRows && el.visible">
+															<span stye="cursor:pointer" ng-show="!selections.searchRows[tableId] && el.visible">
 																	<span ng-show="el.visible" class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 																	<span ng-show="el.visible" ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
 																	<i ng-show="el.visible" ng-if="el.element.type == 'C' && !el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, $index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
@@ -701,7 +701,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 												<input ng-if="$index === 0" class="form-control" 
 												ng-change="dispatchResize(); " ng-blur="dispatchResize()"
 												style="background-color: transparent;display:inline-block;border: none;" 
-												type="text" ng-model="selections.searchRows"   
+												type="text" ng-model="selections.searchRows[tableId]"   
 												placeholder="{{col.dimension}}..."> 
 												 
 									</td>
@@ -737,7 +737,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										</tr>
 									
 							<tr id="rowHeightElement{{$index}}"  ng-show="!hideTableAsOption"
-								ng-hide=" decideRowToHideRow(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
+								ng-hide=" decideRowToHideRow(tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
 								ng-repeat="row in  table.data()  track by $index" >
 								<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
 										 
@@ -751,7 +751,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
 										<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
 										
-										<span ng-show="!selections.searchRows">
+										<span ng-show="!selections.searchRows[tableId]">
 																					<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 																					<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="   seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
 																				</span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
@@ -913,7 +913,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						</thead>
 						<tbody>
 							<tr  
-							ng-if=" decideRowToHideRow(tableHide,  selections.searchRows, (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() ) === false"
+							ng-if=" decideRowToHideRow(tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() ) === false"
 							ng-repeat="row in  table.data()  track by $index" >
 							<td  
 									 
@@ -1094,6 +1094,9 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 	</div>
 
 	
+
+ 
+
 	<div ng-style="{'height':((innerHeight))+'px'}" style="z-index:33; background-color:rgba(0,0,0,0.2); display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
 	ng-if="customPage && customPage != ''" ng-show="customPage && customPage != '' && $root.parametersVisible "   >
  <div ng-include="'html/'+customPage+'.html'" ></div>
