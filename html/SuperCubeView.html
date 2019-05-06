@@ -304,9 +304,13 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 	 
  
   
-  	<div  ng-show="!$rootScope.hideCharts"   >
+  	<div     >
 				 
-			<div id="optionSection{{tableId}}" ng-show="$root.showView && !$root.isPrinting "  ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;" 
+			<div id="optionSection{{tableId}}"  
+				ng-click="$root.chartsHeight === 180 ? $root.toggleCharts():''"
+			 ng-show="$root.showView && !$root.isPrinting "  
+			 ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" 
+			 style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;" 
 			 >
 			 <span ng-click="hideToolbar  = !hideToolbar" 	style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 			 <i ng-class="{'fa-toggle-off':!$root.hideToolbar,'fa-toggle-on':$root.hideToolbar}" class="fa "></i>

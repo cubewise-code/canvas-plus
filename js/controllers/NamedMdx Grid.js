@@ -95,7 +95,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                     
                 }
                 $rootScope.hideCharts = false;
-                $scope.startDrag = function(e,heighttopass){
+                $rootScope.toggleCharts = function(){
                      if($rootScope.chartsHeight === 180){
                         $rootScope.chartsHeight =  $scope.chartsDefaultHeight;
                         $rootScope.chartsTableHeight = $scope.chartsDefaultTableHeight;
