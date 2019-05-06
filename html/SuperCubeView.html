@@ -307,7 +307,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   	<div     >
 				 
 			<div id="optionSection{{tableId}}"  
-				ng-click="$root.chartsHeight === 180 ? $root.toggleCharts():''"
+				ng-click="$root.chartsHeight === 180 && hideTableAsOption ? $root.toggleCharts():''"
 			 ng-show="$root.showView && !$root.isPrinting "  
 			 ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" 
 			 style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;" 
