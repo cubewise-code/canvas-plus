@@ -572,7 +572,7 @@
                   "fixedTop": null, 
                   "hidden": false,
                   "data": null,
-                  "id": "nvtooltip"
+                  "id": "mynvtooltip"
               },
               "width": null,
               "interpolate": $rootScope.lineType,
@@ -671,7 +671,11 @@
             debounce: 10 // default: 10
         };
         function listenTotheChart(element){ 
-          console.log(element, "line dispatch")
+          console.log(element, "line dispatch");
+          if(element['point'] && element && element['point']['key'] != 'undefined'){
+            scope.selections.searchRows[scope.tableId] = element['point']['key'];
+          }
+           
           
        
         }

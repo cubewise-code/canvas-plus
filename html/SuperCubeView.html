@@ -340,7 +340,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				</span>
 			 
 					  <span ng-show="!hideChartAsOption">
-					<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;   updateUrlChart(); dispatchResize(); api.update();"   
+					<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible; showChartOptions = !chartVisible ? false:''; showTypeLineOptions = !chartVisible ? false:'';   updateUrlChart(); dispatchResize(); api.update();"   
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 						 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
@@ -1100,10 +1100,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 		</div>
 		 
 	</div>
-	<div   class="nvtooltip xy-tooltip" id="nvtooltip"  >
- 
-		</div>
-	
+	 
  
  
 
@@ -1112,4 +1109,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
  <span ng-click="$root.parametersVisible = !$root.parametersVisible " ng-style="{'height':((innerHeight))+'px'}"  style=" background-color:rgba(0,0,0,0.2); display:block; left:0px; top:0px; position:fixed; width:100%; overflow:visible; padding-top:30px;"></span>
 	<div ng-include="'html/'+customPage+'.html'" ></div>
 </div>
+<div class="nvtooltip"  class="nvtolltip" id="mynvtooltip"   >
+ 
+	</div>
  
