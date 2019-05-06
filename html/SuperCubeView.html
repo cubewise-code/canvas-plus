@@ -294,11 +294,44 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
  
 
 <style ng-if="!$root.colorHide">
-        #sideContainer >  tbody > tr > td {
+			  
+			 #sideContainer >  tbody > tr > td {
 				 
-						border-top: 0px solid #ddd ;
+					
+					border-top: 0px solid #ddd ;
 				}
+				.tm1-ui-process-button{
+					font-size:0.7em;
+					background-color:transparent !important;
+				}
+				.tm1-ui-process > button{
+				 
+					background-color:transparent;
+					border:0px;
+					font-size: 1em !important;
+					padding: 10px !important;
+					line-height: 1.33;
+					border-radius: 0px;
+			}
+			.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+				  background-color:transparent;
+					border:0px;
+					font-size: 1em !important;
+					padding: 10px !important;
+}
+.btn > .btn-lg >.btn-block > .btn-primary > .tm1-ui-process-button {
+    padding: 0px !important;
+    font-size: 1em !important;
+    line-height: 1.33;
+    border-radius: 0px;
+}
+.btn-lg, .btn-group-lg > .btn {
+	padding: 0px !important;
+    font-size: 1em !important;
  
+    line-height: 1.33;
+    border-radius: 6px;
+}
 </style>
  
 	 
@@ -326,9 +359,14 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					 style="margin:2px; padding:5px; display:inline-block;  padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff; ">
 						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i> 
 					</span>
+					<span ng-if="uiProcessName && uiProcessName != ''" ng-click="  runTi(uiProcessName);   "  
+					style="margin:0px; padding:0px; font-size:1em; display:inline-block; padding:7px; float:left; left:0px; cursor:pointer; ">
+				 		Run Ti
+				 </span>
 					 <span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 							<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span>
+
 					<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "  
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						 DBR's <i ng-class="{'fa-toggle-off':!$root.useDbr ,'fa-toggle-on': $root.useDbr }" class="fa "></i>
@@ -337,6 +375,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 						Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
 				 </span>
+				  
 				</span>
 			 
 					  <span ng-show="!hideChartAsOption">

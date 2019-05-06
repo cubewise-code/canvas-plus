@@ -28,7 +28,8 @@
                     cubeMdxParams:'@',
                     hideChartAsOption:'@',
                     hideTableAsOption:'@',
-                    useDefaultParameters:'@'
+                    useDefaultParameters:'@',
+                    uiProcessName:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -69,6 +70,11 @@
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
                 scope.suppressZerosUrlValue = decodeURI($location.search()['suppressZeros'+scope.tableId]);
                 scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
+
+
+                if($attributes.uiProcessName && $attributes.uiProcessName != '' && $attributes.uiProcessName != null && $attributes.uiProcessName != 'undefined'  ){
+                  scope.uiProcessName = $attributes.uiProcessName;
+                }
 
                 if(scope.hideCol != null && scope.hideCol != 'undefined'){
                   if( (scope.hideCol+'').split('-').length > 0){
@@ -693,7 +699,15 @@
           scope.options.suppressZeros = false;
           
         }
-        
+        scope.runTi = function(tiName){
+          $tm1Ui.processExecute(scope.tm1Instance, tiName).then(function(result){
+            if(result){
+              console.log("Ti Run", result);
+              scope.refresh(scope.cubeName, scope.cubeView);
+            }
+          }
+          )
+        }
 
         scope.gotoTop = function(){
             scope.tableHide = !scope.tableHide;
