@@ -178,10 +178,13 @@
 .nvtooltip .with-3d-shadow, .with-3d-shadow .nvtooltip{
 	height:auto;
 	overflow:auto;
- 
+  z-index:33 !important;
 	left:0px !important;
 	position:fixed;
-
+  margin-top:0px;
+ 
+ 
+	
 }
 .nvtooltip,.nvtooltip table  {
 	font-size:10px !important;
@@ -301,7 +304,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 	 
  
   
-  	<div     >
+  	<div  ng-show="!$rootScope.hideCharts"   >
 				 
 			<div id="optionSection{{tableId}}" ng-show="$root.showView && !$root.isPrinting "  ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;" 
 			 >
@@ -333,7 +336,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				</span>
 			 
 					  <span ng-show="!hideChartAsOption">
-					<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;  updateUrlChart(); dispatchResize(); api.update();"   
+					<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible;   updateUrlChart(); dispatchResize(); api.update();"   
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 						 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 					</span>
@@ -389,10 +392,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						 
 					</span>
 				</span>
-					<span   ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros',options.suppressZeros); refresh(cubeName, cubeView)   "  
-					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
-					 Zero Sup. <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
-				 </span>
+				
 					<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right" ng-if="!tableHide && $root.useMdxNow && !$root.useDbr " 
 					 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
 					 <span ng-show="!$root.warningOff"> <i class="fa fa-info-circle" aria-hidden="true"></i> Read Only Cells, No Format Used {{$root.warningOff}}<i   class="fa fa-times" aria-hidden="true"></i></span>
@@ -407,8 +407,11 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						<i class="fa fa-info-circle" aria-hidden="true"></i>	Warning: Reduce Rows <i   class="fa fa-times" aria-hidden="true"></i>
 				</span>	</div>
 					 
+				</span>
+				<span class="pull-right"   ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros'+tableId, options.suppressZeros); refresh(cubeName, cubeView)   "  
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
+					 Zero Sup. <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
 				 </span>
-
 			</div>
 	 
 			<div ng-show="showChartOptions" id="" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop'+tableId)+20)+'px','left': getContainerLeft('chartDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
@@ -487,7 +490,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 			</div>
 				 
 			<div id="stickyContainer{{tableId}}"   class="stickyContainer "  
-				ng-style="{'overflow':hideTableAsOption ? 'visible':'auto','height': setTableHeight('stickyContainer'+tableId)+'px', 'width':getTableWidthinPx()+'px','position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
+				ng-style="{'overflow':hideTableAsOption ? 'visible':'auto','height': setTableHeight('stickyContainer'+tableId)+'px',  'position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
 				<span  >
 				<style >
 				html{
@@ -663,7 +666,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 		 
 			
 				 
-				<div ng-show="!tableHide || chartVisible" ng-style="{ 'left':getTableLeft(),'top':getTableTop()+'px'}">
+				<div style="overflow:hidden" ng-show="!tableHide || chartVisible" ng-style="{'height':tableHeight ? tableHeight+'px' : 'unset', 'left':getTableLeft(),'top':getTableTop()+'px'}">
 					
 					<table class="table" id="af1{{tableId}}">
 
@@ -677,9 +680,9 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										<span ng-show="false"> {{cubeName}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}</span>
 									</td>
 										<!-- <td class="overflowhidden"  ng-repeat="columnrem in hideColumn[tableId] track by $index" ng-if="hideColumn[tableId][$index]  && $index <= (table.data()[0]['cells'].length) "></td> -->
-										<td id="chartRow{{tableId}}" ng-if="chartVisible  "  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
+										<td    id="chartRow{{tableId}}" ng-if="chartVisible  "  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
-											<nvd3   options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
+											<nvd3 id="chart-{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
 											
 										</td>
 										 
@@ -939,7 +942,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						</tbody>
 					</table> 
 					
-					<div id="pagination" ng-hide="$root.isPrinting"  ng-style="{'top':((getContainerTop('stickyContainer'+tableId)) + (getContainerHeight('stickyContainer'+tableId)) ) + 'px','width':getTableWidth(), 'left':getTableLeft()}" 
+					<div   id="pagination" ng-hide="$root.isPrinting || hideTableAsOption"  ng-style="{'top':((getContainerTop('stickyContainer'+tableId)) + (getContainerHeight('stickyContainer'+tableId)) ) + 'px','width':getTableWidth(), 'left':getTableLeft()}" 
 					style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22;  left:0px;" 
 					>
 						<div class="btn-group pull-right" role="group" style="padding-top:3px;"   >
@@ -1091,14 +1094,18 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				</div>
 			</div>
 		</div>
+		 
 	</div>
-
+	<div   class="nvtooltip xy-tooltip" id="nvtooltip"  >
+ 
+		</div>
 	
-
+ 
  
 
-	<div ng-style="{'height':((innerHeight))+'px'}" style="z-index:33; background-color:rgba(0,0,0,0.2); display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
+	<div ng-style="{'height':((innerHeight))+'px'}"  style="z-index:33; background-color:transparent; display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
 	ng-if="customPage && customPage != ''" ng-show="customPage && customPage != '' && $root.parametersVisible "   >
- <div ng-include="'html/'+customPage+'.html'" ></div>
+ <span ng-click="$root.parametersVisible = !$root.parametersVisible " ng-style="{'height':((innerHeight))+'px'}"  style=" background-color:rgba(0,0,0,0.2); display:block; left:0px; top:0px; position:fixed; width:100%; overflow:visible; padding-top:30px;"></span>
+	<div ng-include="'html/'+customPage+'.html'" ></div>
 </div>
-	
+ 

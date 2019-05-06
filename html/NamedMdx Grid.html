@@ -1,4 +1,4 @@
-<div ng-controller="NamedMdxGridCtrl" ng-if="$root.user.Name && $root.selections.year && $root.selections.region && $root.selections.department"   >
+<div ng-controller="NamedMdxGridCtrl" ng-mousemove="moveDrag($event)" ng-mouseup="stopDrag()" ng-if="$root.user.Name && $root.selections.year && $root.selections.region && $root.selections.department"   >
 	 
 
 		<style>
@@ -81,6 +81,15 @@
 					min-width:70px !important; 
 					
 				}
+				#triangle-up {
+					margin-top:-20px;
+					width: 0;
+					height: 0;
+					border-left: 5px solid transparent;
+					border-right: 5px solid transparent;
+					border-bottom: 10px solid dimgray;
+					cursor:row-resize ;
+				}
 				 
 			</style>
 			 
@@ -107,8 +116,7 @@
 			</super-cube-view>	
 			 
 		</div> -->
-	 
-			 
+		 	 
 		<div   id="three" ng-init="startAllFiltersAreHere()"  style="overflow:hidden !important; background-color:#fff;">
 			
 				<super-cube-view  
@@ -121,7 +129,7 @@
 				table-height-bottom-offset="30"
 				table-width="98%"
 				table-left="1%"
-				table-top="520"
+				table-top="{{$root.chartsHeight}}"
 				chart-height="0"
 				table-dimension-column-class="min-width250"
 				table-data-column-class="min-width100"
@@ -136,34 +144,7 @@
 				</super-cube-view>	
 				 
 		</div>  
-		<div id="one"   style="background-color:#fff;">
-			
-			<super-cube-view  
-			panel-heading="{{'Total Salary: '+$root.mdxIdOne +''}}"
-				tm1-instance = "dev"
-				cube-name = "{{$root.cubeName}}" 
-				cube-mdx = "{{$root.mdxIdOne}}"
-				cube-mdx-params = "{{$root.mdxParameters}}"
-				attribute-options="{{$root.attributeOptions}}"  
-				table-height-bottom-offset="30"
-				table-width="48%"
-				table-left="1%"
-				table-top="139"
-				table-height="490"
-				chart-height="300"
-				table-dimension-column-class="min-width250"
-				table-data-column-class="min-width100"
-				table-id="one"
-				rows-to-load = "50"
-				chart-visible="true"
-				table-visible="true" 
-				hide-chart-as-option= ""
-				hide-table-as-option= "true"
-				use-default-parameters = "true"
-				> 
-			</super-cube-view>	
-			 
-		</div>
+		 
 		<div   id="two"  style="background-color:#fff;">
 			 	
 			<super-cube-view  
@@ -177,12 +158,12 @@
 			table-width="48%"
 			table-left="51%"
 			table-top="139"
-			table-height="490"
-			chart-height="300"
+			table-height="{{chartsTableHeight}}"
+			chart-height="250"
 			table-dimension-column-class="min-width250"
 			table-data-column-class="min-width100"
 			table-id="two"
-			rows-to-load = "50"
+			rows-to-load = "100"
 			chart-visible="true"
 			table-visible="true"
 			hide-chart-as-option= ""
@@ -192,6 +173,38 @@
 				> 
 			</super-cube-view>	
 			 
-		</div>  
-
+		</div>
+		<div id="one"   style="background-color:#fff;">
+			
+				<super-cube-view  
+				panel-heading="{{'Total Salary: '+$root.mdxIdOne +''}}"
+					tm1-instance = "dev"
+					cube-name = "{{$root.cubeName}}" 
+					cube-mdx = "{{$root.mdxIdOne}}"
+					cube-mdx-params = "{{$root.mdxParameters}}"
+					attribute-options="{{$root.attributeOptions}}"  
+					table-height-bottom-offset="30"
+					table-width="48%"
+					table-left="1%"
+					table-top="139"
+					table-height="{{chartsTableHeight}}"
+					chart-height="250"
+					table-dimension-column-class="min-width250"
+					table-data-column-class="min-width100"
+					table-id="one"
+					rows-to-load = "100"
+					chart-visible="true"
+					table-visible="true" 
+					hide-chart-as-option= ""
+					hide-table-as-option= "true"
+					use-default-parameters = "true"
+					> 
+				</super-cube-view>	
+				 
+			</div>  
+			 
+			<div  class="center" ng-mousedown="startDrag($event,($root.chartsHeight))"   ng-style="{'top':($root.chartsHeight-45)+'px'}" style="cursor:row-resize ; z-index:99;height:10px; position:fixed; left:0px; width:100%; background-color:dimgray;  ">
+				<div id="triangle-up"></div>
+			</div>
+		
 	</div>
