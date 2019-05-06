@@ -25,6 +25,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.useDbr = false;
     $rootScope.useMdxNow = false; 
     $rootScope.showView = true; 
+    $rootScope.topSection = 179;
     $rootScope.chartsHeight = 490;
     $rootScope.chartsTableHeight = 324;
     $scope.chartsDefaultHeight = 490;
@@ -97,13 +98,13 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                 }
                 $rootScope.hideCharts = false;
                 $rootScope.toggleCharts = function(){
-                     if($rootScope.chartsHeight === 179){
+                     if($rootScope.chartsHeight === $rootScope.topSection){
                         $rootScope.chartsHeight =  $scope.chartsDefaultHeight;
                         $rootScope.chartsTableHeight = $scope.chartsDefaultTableHeight;
                         $rootScope.hideCharts = false;
                      }else{
                         $rootScope.hideCharts = true;
-                        $rootScope.chartsHeight =  179;
+                        $rootScope.chartsHeight =  $rootScope.topSection;
                         $rootScope.chartsTableHeight =0;
 
                      }
