@@ -507,7 +507,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 			</div>
 				 
 			<div id="stickyContainer{{tableId}}"   class="stickyContainer "  
-				ng-style="{'overflow':hideTableAsOption ? 'visible':'auto','height': setTableHeight('stickyContainer'+tableId)+'px',  'position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
+				ng-style="{ 'height': setTableHeight('stickyContainer'+tableId)+'px',  'position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
 				<span  >
 				<style >
 				html{
@@ -683,7 +683,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 		 
 			
 				 
-				<div style="overflow:hidden" ng-show="!tableHide || chartVisible" ng-style="{'height':tableHeight ? tableHeight+'px' : 'unset', 'left':getTableLeft(),'top':getTableTop()+'px'}">
+				<div  ng-show="!tableHide || chartVisible" ng-style="{ 'height':tableHeight ? tableHeight+'px' : 'unset', 'left':getTableLeft(),'top':getTableTop()+'px'}">
 					
 					<table class="table" id="af1{{tableId}}">
 
