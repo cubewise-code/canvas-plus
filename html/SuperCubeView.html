@@ -686,8 +686,8 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										<!-- <td class="overflowhidden"  ng-repeat="columnrem in hideColumn[tableId] track by $index" ng-if="hideColumn[tableId][$index]  && $index <= (table.data()[0]['cells'].length) "></td> -->
 										<td    id="chartRow{{tableId}}" ng-if="chartVisible  "  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
-											<nvd3 id="chart-{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
-											
+											<nvd3 id="chart{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
+											 
 										</td>
 										 
 									</tr>
@@ -1109,7 +1109,5 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
  <span ng-click="$root.parametersVisible = !$root.parametersVisible " ng-style="{'height':((innerHeight))+'px'}"  style=" background-color:rgba(0,0,0,0.2); display:block; left:0px; top:0px; position:fixed; width:100%; overflow:visible; padding-top:30px;"></span>
 	<div ng-include="'html/'+customPage+'.html'" ></div>
 </div>
-<div class="nvtooltip"  class="nvtolltip" id="mynvtooltip"   >
  
-	</div>
  

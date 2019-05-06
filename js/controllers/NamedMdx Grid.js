@@ -77,6 +77,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                     console.log()
                     //$scope.dragStart = false;
                 }
+
                 $scope.moveDrag = function(e){
                     // if($scope.dragStart && $scope.dragStart === true){
                     //     if($rootScope.chartsTableHeight  >= 30 && e.screenY < $scope.startY){
@@ -104,10 +105,19 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                         $rootScope.hideCharts = true;
                         $rootScope.chartsHeight =  180;
                         $rootScope.chartsTableHeight =0;
+
                      }
-
                     
-
+                     if(document.getElementsByClassName('nvtooltip xy-tooltip')){
+                        for(hss = 0; hss < document.getElementsByClassName('nvtooltip xy-tooltip').length; hss++){
+                           var obbbj =  document.getElementsByClassName('nvtooltip xy-tooltip')[hss];
+                           console.log("tracing the tootltips");
+                           obbbj.style.opacity = 0;
+                        }
+                     }
+                    
+                     window.dispatchEvent(new Event('resize'));
+                      
                    //$scope.dragStart = true;
                      
                 }

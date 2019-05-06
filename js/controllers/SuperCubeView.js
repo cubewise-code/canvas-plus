@@ -481,7 +481,7 @@
                   "distance": 50,
                   "snapDistance": 0,
                   "classes": null,
-                  "chartContainer": null, 
+                  "chartContainer": 'chartRow'+scope.tableId, 
                   "enabled": true,
                   "hideDelay": 0, 
                   "valueFormatter": function(d,i){   return  formatComma(d)},
@@ -490,7 +490,7 @@
                   "fixedTop": null, 
                   "hidden": false,
                   "data": null,
-                  "id": null
+                  "id": 'nvtooltip'+scope.tableId
                 },
                 "margin": {
                   "left": 0,
@@ -499,7 +499,7 @@
                 "width": null,
                 "height": null,
                 "showGuideLine": true,
-                "svgContainer": null
+                "svgContainer": 'chart'+scope.tableId
               },
               "multibar": {
                 "dispatch": {},
@@ -572,7 +572,7 @@
                   "fixedTop": null, 
                   "hidden": false,
                   "data": null,
-                  "id": "mynvtooltip"
+                  "id": "mynvtooltip"+scope.tableId
               },
               "width": null,
               "interpolate": $rootScope.lineType,
