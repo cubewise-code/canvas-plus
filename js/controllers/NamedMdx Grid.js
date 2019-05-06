@@ -97,13 +97,13 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                 }
                 $rootScope.hideCharts = false;
                 $rootScope.toggleCharts = function(){
-                     if($rootScope.chartsHeight === 180){
+                     if($rootScope.chartsHeight === 179){
                         $rootScope.chartsHeight =  $scope.chartsDefaultHeight;
                         $rootScope.chartsTableHeight = $scope.chartsDefaultTableHeight;
                         $rootScope.hideCharts = false;
                      }else{
                         $rootScope.hideCharts = true;
-                        $rootScope.chartsHeight =  180;
+                        $rootScope.chartsHeight =  179;
                         $rootScope.chartsTableHeight =0;
 
                      }
