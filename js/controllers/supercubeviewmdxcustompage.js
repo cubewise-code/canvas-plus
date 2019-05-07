@@ -198,16 +198,21 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         $rootScope.mdxString =  "SELECT { "+collectColumnMdxString+" } ON COLUMNS, { "+collectRowMdxString+" } ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ("+collectTilesMdxString+", "+collectFiltersMdxString+")";
     };
   
-  
+    $scope.openElementModal = function(dimensionName){
+       $rootScope.dimensionSelectedToEdit  = dimensionName;
+
+        $("#dimensionEditor").modal("show")
+    }
     $scope.cubeDimensionalityArray = [];
-    $scope.dimensionElementsArray = [];
+    $rootScope.dimensionElementsArray = [];
     $scope.formatMdxStringCube = function(cube){ 
         if($scope.showCubeList){
             $scope.showCubeList = !$scope.showCubeList;
         }
-        $scope.dimensionElementsArray = [];
+        $rootScope.dimensionElementsArray = [];
          $scope.mdxStringCube =  cube;
          $scope.activeCubeName = cube;
+         $scope.openDimensionElements = [];
          $tm1Ui.cubeDimensions($scope.tm1Instance, cube).then(function(result){
             if(!result.failed){ 
                 console.log("cubeNameChanged Dimensions to load",  result);
@@ -223,8 +228,8 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                     $tm1Ui.dimensionElements($scope.tm1Instance, result[kkd] ).then(function(resultEl){
                       if(resultEl){
                         var dim = (((resultEl[0]['UniqueName']).split('.')[0]).split('[').join('')).split(']').join('')
-                         $scope.dimensionElementsArray[dim] =  resultEl;
-                         console.log("elements : ",   $scope.dimensionElementsArray ,"for dimension" );
+                         $rootScope.dimensionElementsArray[dim] =  resultEl;
+                         console.log("elements : ",   $rootScope.dimensionElementsArray ,"for dimension" );
 
                       }
                     

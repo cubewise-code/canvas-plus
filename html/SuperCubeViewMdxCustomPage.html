@@ -112,7 +112,8 @@ textarea.ng-valid {
     
                                 </h4>  
                                 <div class="col-xs-12 col-md-12" id="col"  style="padding-bottom:20px;"  >
-                                        <span id="{{tileDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="tileDimension in tilesDimensionArray track by $index" class="badge badge-primary"> {{tileDimension}}</span>
+                                        <span id="{{tileDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="tileDimension in tilesDimensionArray track by $index" class="badge badge-primary"> {{tileDimension}}:{{dimensionElementsArray[tileDimension][0].Name}} 
+                                            | <i ng-click="openDimensionElements[tileDimension] = !openDimensionElements[tileDimension]; openElementModal(tileDimension)" ng-class="{'fa-pencil':!openDimensionElements[tileDimension], 'fa-caret-up':openDimensionElements[tileDimension]}" class="fa " > </i> </span>
                          
                                 </div>
                                 
@@ -124,7 +125,9 @@ textarea.ng-valid {
     
                                 </h4>  
                                 <div class="col-xs-12 col-md-12" id="col"  style="padding-bottom:20px;"  >
-                                        <span id="{{filterDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="filterDimension in filtersDimensionArray track by $index" class="badge badge-primary"> {{filterDimension}}</span>
+                                        <span id="{{filterDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="filterDimension in filtersDimensionArray track by $index" class="badge badge-primary"> {{filterDimension}}:{{dimensionElementsArray[filterDimension][0].Name}}
+                                                | <i ng-click="openDimensionElements[filterDimension] = !openDimensionElements[filterDimension]; openElementModal(filterDimension)" ng-class="{'fa-pencil':!openDimensionElements[filterDimension], 'fa-caret-up':openDimensionElements[filterDimension]}" class="fa " > </i> 
+                                            </span>
                                 
                                 </div>
                                
@@ -132,10 +135,12 @@ textarea.ng-valid {
                     
                     <div class="col-xs-6 col-md-6 nopadding" style="border:1px solid #ccc;" id="div1"   > 
                             <h4 style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;" id="row" ng-if="$root.useMdxNow"  ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)">
-                                      Rows: Drop Area
+                                      Row: Drop Area
                             </h4>  
                             <div class="col-xs-12 col-md-6"   style="padding-bottom:20px;"  > 
-                                    <span id="{{rowDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="rowDimension in rowDimensionArray track by $index" class="badge badge-primary"> {{rowDimension}}</span>
+                                    <span id="{{rowDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="rowDimension in rowDimensionArray track by $index" class="badge badge-primary"> {{rowDimension}}:{{dimensionElementsArray[rowDimension][0].Name}}
+                                            | <i ng-click="openDimensionElements[rowDimension] = !openDimensionElements[rowDimension]; openElementModal(rowDimension)" ng-class="{'fa-pencil':!openDimensionElements[rowDimension], 'fa-caret-up':openDimensionElements[rowDimension]}" class="fa " > </i> 
+                                    </span>
                           
                             </div>
                              
@@ -145,10 +150,12 @@ textarea.ng-valid {
                             ng-if="$root.useMdxNow" 
                             id="col"  ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)"
                             >
-                                     Columns: Drop Area 
+                                     Column: Drop Area 
                             </h4>  
                             <div class="col-xs-12 col-md-12" id="col"  style="padding-bottom:20px;"  > 
-                                 <span id="{{columnDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="columnDimension in columnDimensionArray track by $index" class="badge badge-primary"> {{columnDimension}}</span>
+                                 <span id="{{columnDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="columnDimension in columnDimensionArray track by $index" class="badge badge-primary"> {{columnDimension}}:{{dimensionElementsArray[columnDimension][0].Name}}
+                                        | <i ng-click="openDimensionElements[columnDimension] = !openDimensionElements[columnDimension] ; openElementModal(columnDimension)" ng-class="{'fa-pencil':!openDimensionElements[columnDimension], 'fa-caret-up':openDimensionElements[columnDimension]}" class="fa " > </i> 
+                                </span>
                             </div>
                            
 
@@ -268,4 +275,11 @@ textarea.ng-valid {
                 
          </div>
 
+ 
+      
+
 </div>
+
+      
+ 
+  
