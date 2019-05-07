@@ -319,6 +319,10 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 			 ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" 
 			 style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;" 
 			 >
+			<span   ng-click="$root.toggleCharts()"  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:10px; cursor:pointer;">
+				<i ng-show="$root.chartsHeight != $root.topSection" class="fa fa-plus"></i>
+				<i ng-show="$root.chartsHeight === $root.topSection" class="fa fa-minus"></i>
+			</span>
 			 <span ng-click="hideToolbar  = !hideToolbar;  showChartOptions = hideToolbar ? false:''; showTypeLineOptions = hideToolbar ? false:''; " 	style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 			 <i ng-class="{'fa-toggle-off':!$root.hideToolbar,'fa-toggle-on':$root.hideToolbar}" class="fa "></i>
 			 </span>
@@ -328,12 +332,14 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 					 	Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
+				 
 					 <span ng-hide="hideTableAsOption === 'true'">
+						
 					<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
 					 style="margin:2px; padding:5px; display:inline-block;  padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff; ">
 						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i> 
 					</span>
-					 
+				 
 					 <span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 							<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span>
