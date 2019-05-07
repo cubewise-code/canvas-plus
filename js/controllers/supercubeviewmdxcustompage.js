@@ -200,16 +200,16 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
   
   
     $scope.cubeDimensionalityArray = [];
+    $scope.dimensionElementsArray = [];
     $scope.formatMdxStringCube = function(cube){ 
         if($scope.showCubeList){
             $scope.showCubeList = !$scope.showCubeList;
         }
-         
+        $scope.dimensionElementsArray = [];
          $scope.mdxStringCube =  cube;
          $scope.activeCubeName = cube;
          $tm1Ui.cubeDimensions($scope.tm1Instance, cube).then(function(result){
             if(!result.failed){ 
-                
                 console.log("cubeNameChanged Dimensions to load",  result);
                 //$scope.cubeDimensionalityArray = result;
                 $scope.rowDimensionArray = [];
@@ -218,6 +218,22 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                 $scope.filtersDimensionArray = [];
                 $scope.tilesDimensionArray = result;
                 $rootScope.mdxString =  "SELECT { } ON COLUMNS, { } ON ROWS FROM ["+$scope.activeCubeName+"] WHERE ()";
+
+                for(var kkd = 0; kkd < result.length; kkd++){
+                    $tm1Ui.dimensionElements($scope.tm1Instance, result[kkd] ).then(function(resultEl){
+                      if(resultEl){
+                        var dim = (((resultEl[0]['UniqueName']).split('.')[0]).split('[').join('')).split(']').join('')
+                         $scope.dimensionElementsArray[dim] =  resultEl;
+                         console.log("elements : ",   $scope.dimensionElementsArray ,"for dimension" );
+
+                      }
+                    
+                     
+                    })
+                }
+               
+              
+               
                 //$rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ([Year].&[2018], [Region].&[England], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
     
             }
