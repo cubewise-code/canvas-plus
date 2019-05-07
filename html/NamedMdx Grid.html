@@ -155,7 +155,7 @@
 			
 				<super-cube-view  
 				panel-heading="{{'Total Salary: '+$root.mdxId +''}}"
-				tm1-instance = "dev"
+				tm1-instance = "{{$root.defaults.settingsInstance}}"
 				cube-name = "{{$root.cubeName}}" 
 				cube-mdx = "{{$root.mdxId}}"
 				cube-mdx-params = "{{$root.mdxParameters}}"
@@ -183,7 +183,7 @@
 			 	
 			<super-cube-view  
 			panel-heading="{{'Total Salary: '+$root.mdxIdTwo +''}}"
-			tm1-instance = "dev"
+			tm1-instance = "{{$root.defaults.settingsInstance}}"
 			cube-name = "{{$root.cubeName}}" 
 			cube-mdx = "{{$root.mdxIdTwo}}"
 			cube-mdx-params = "{{$root.mdxParameters}}"
@@ -212,7 +212,7 @@
 			
 				<super-cube-view  
 				panel-heading="{{'Total Salary: '+$root.mdxIdOne +''}}"
-					tm1-instance = "dev"
+					tm1-instance = "{{$root.defaults.settingsInstance}}"
 					cube-name = "{{$root.cubeName}}" 
 					cube-mdx = "{{$root.mdxIdOne}}"
 					cube-mdx-params = "{{$root.mdxParameters}}"
