@@ -102,42 +102,55 @@ textarea.ng-valid {
                 </h4>
                 </h3>  
                 <div   class="col-xs-12 col-md-12 " id="testApp"  style="margin-bottom:20px;" >
-                        <div    class="col-xs-12 col-md-12 nopadding" style="border:1px solid #ccc;"  > 
+                        <div   class="col-xs-12 col-md-12 nopadding" style="border:1px solid #ccc;"  > 
                                 <h4 style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;" 
-                                ng-if="$root.useMdxNow" ng-init="formatMdxStringCube(activeCubeName)" >
+                                ng-if="$root.useMdxNow"
+                                id="tiles" 
+                                ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)"
+                                >
+                                         Tiles: 
+    
+                                </h4>  
+                                <div class="col-xs-12 col-md-12" id="col"  style="padding-bottom:20px;"  >
+                                        <span id="{{tileDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="tileDimension in tilesDimensionArray track by $index" class="badge badge-primary"> {{tileDimension}}</span>
+                         
+                                </div>
+                                
+                        </div>   
+                    <div    class="col-xs-12 col-md-12 nopadding" style="border:1px solid #ccc;"  > 
+                                <h4 id="filters"  style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;" 
+                                ng-if="$root.useMdxNow" ng-init="formatMdxStringCube(activeCubeName)"   ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)">
                                          Filters: 
     
                                 </h4>  
-                                <div id="filters" class="col-xs-12 col-md-12"  style="padding-bottom:20px;"  ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)">
+                                <div class="col-xs-12 col-md-12" id="col"  style="padding-bottom:20px;"  >
                                         <span id="{{filterDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="filterDimension in filtersDimensionArray track by $index" class="badge badge-primary"> {{filterDimension}}</span>
+                                
                                 </div>
+                               
                         </div>  
-                    <div   class="col-xs-12 col-md-12 nopadding" style="border:1px solid #ccc;"  > 
-                            <h4 style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;" 
-                            ng-if="$root.useMdxNow" >
-                                     Tiles: 
-
-                            </h4>  
-                            <div class="col-xs-12 col-md-12" id="tiles"  style="padding-bottom:20px; " ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)"> 
-                                    <span id="{{tileDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="tileDimension in tilesDimensionArray track by $index" class="badge badge-primary"> {{tileDimension}}</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-md-6 nopadding" style="border:1px solid #ccc;" id="div1"  > 
-                            <h4 style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;"ng-if="$root.useMdxNow" >
+                    
+                    <div class="col-xs-6 col-md-6 nopadding" style="border:1px solid #ccc;" id="div1"   > 
+                            <h4 style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;" id="row" ng-if="$root.useMdxNow"  ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)">
                                       Rows: 
                             </h4>  
-                            <div class="col-xs-12 col-md-12" id="row"  style="padding-bottom:20px;" ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)" >
+                            <div class="col-xs-12 col-md-6"   style="padding-bottom:20px;"  > 
                                     <span id="{{rowDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="rowDimension in rowDimensionArray track by $index" class="badge badge-primary"> {{rowDimension}}</span>
+                          
                             </div>
+                             
                     </div>
                     <div class="col-xs-6 col-md-6 nopadding" style="border:1px solid #ccc;" > 
                             <h4 style="padding-bottom:10px; padding-top:10px; font-size:1em; margin-top:0px;"   
-                            ng-if="$root.useMdxNow" >
+                            ng-if="$root.useMdxNow" 
+                            id="col"  ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)"
+                            >
                                      Columns:  
                             </h4>  
-                            <div class="col-xs-12 col-md-12" id="col"  style="padding-bottom:20px;"  ondrop="angular.element(document.getElementById('testApp')).scope().drop(event)" ondragover="angular.element(document.getElementById('testApp')).scope().allowDrop(event)">
-                                <span id="{{columnDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="columnDimension in columnDimensionArray track by $index" class="badge badge-primary"> {{columnDimension}}</span>
+                            <div class="col-xs-12 col-md-12" id="col"  style="padding-bottom:20px;"  > 
+                                 <span id="{{columnDimension}}"  draggable="true" ondragstart="angular.element(document.getElementById('testApp')).scope().drag(event)" style="margin:5px; font-size:1em; font-weight:400; line-height:1.2em;"  ng-repeat="columnDimension in columnDimensionArray track by $index" class="badge badge-primary"> {{columnDimension}}</span>
                             </div>
+                           
 
                     </div>
                 </div>

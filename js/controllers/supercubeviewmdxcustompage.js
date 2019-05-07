@@ -159,20 +159,43 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         //ev.target.appendChild(document.getElementById(data));
         window.dispatchEvent(new Event('resize')); 
         console.log($scope.tilesDimensionArray, $scope.columnDimensionArray,  $scope.rowDimensionArray, $scope.filtersDimensionArray)
-         
+         var collectTilesMdxString = '';
+         var collectFiltersMdxString = '';
+         var collectRowMdxString = '';
+         var collectColumnMdxString = '';
         for(var tthh = 0; tthh < $scope.tilesDimensionArray.length; tthh++){
-
-        }
-        for(var tth = 0; tth < $scope.columnDimensionArray.length; tth++){
-            
-        }
-        for(var thh = 0; thh < $scope.rowDimensionArray.length; thh++){
-            
-        }
-        for(var th = 0; th < $scope.filtersDimensionArray.length; th++){
+           if(collectTilesMdxString === ''){
+                collectTilesMdxString = "["+$scope.tilesDimensionArray[tthh]+"].&[]"
+           }else{
+                collectTilesMdxString =  collectTilesMdxString + ", ["+$scope.tilesDimensionArray[tthh]+"].&[]";
+           }
            
         }
-        $rootScope.mdxString =  "SELECT { } ON COLUMNS, { } ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ()";
+        for(var tth = 0; tth < $scope.columnDimensionArray.length; tth++){
+            if(collectColumnMdxString === ''){
+                collectColumnMdxString = "TM1SubsetToSet(["+$scope.columnDimensionArray[tth]+"], \"Default\")"
+           }else{
+            collectColumnMdxString =  collectColumnMdxString + "* TM1SubsetToSet(["+$scope.columnDimensionArray[tth]+"], \"Default\")";
+           }
+           
+        }
+        for(var thh = 0; thh < $scope.rowDimensionArray.length; thh++){
+            if(collectRowMdxString === ''){
+                collectRowMdxString = "TM1SubsetToSet(["+$scope.rowDimensionArray[thh]+"], \"Default\")"
+           }else{
+            collectRowMdxString =  collectRowMdxString + "* TM1SubsetToSet(["+$scope.rowDimensionArray[thh]+"], \"Default\")";
+           }
+           
+        }
+        for(var th = 0; th < $scope.filtersDimensionArray.length; th++){
+            if(collectFiltersMdxString === ''){
+                collectFiltersMdxString = "["+$scope.filtersDimensionArray[th]+"].&[]"
+            }else{
+                collectFiltersMdxString = collectFiltersMdxString+ ", ["+$scope.filtersDimensionArray[th]+"].&[]"
+            }
+        }
+
+        $rootScope.mdxString =  "SELECT { "+collectColumnMdxString+" } ON COLUMNS, { "+collectRowMdxString+" } ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ("+collectTilesMdxString+", "+collectFiltersMdxString+")";
     };
   
   
