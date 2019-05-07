@@ -221,13 +221,17 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         //console.log("checking the user loged in ");
 
         $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(result){
-            if(result['IsActive']){
-                 $rootScope.userLoggedOut = false;
-                 
-            }else{
-                 $rootScope.userLoggedOut = true;
+            if(result){
+                if(result['IsActive']){
+                    $rootScope.user  = result;
+                    $rootScope.userLoggedOut = false;
+                    
+               }else{
+                    $rootScope.userLoggedOut = true;
+               }
+               
             }
-            
+           
             //console.log("USER", result)
 
            

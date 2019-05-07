@@ -87,7 +87,7 @@
 	  <div id="one" ng-init="startAllFiltersAreHere()">
 			
 			<super-cube-view ng-if="$root.mdxParameters"
-				tm1-instance = "dev"
+				tm1-instance = "{{$root.defaults.settingsInstance}}"
 				cube-name = "{{$root.cubeName}}" 
 				cube-mdx = "{{$root.mdxId}}"
 				cube-mdx-params = "{{$root.mdxParameters}}"
@@ -120,3 +120,42 @@
 			 
 		 
 	</div>
+
+	
+<div id="dimensionEditor" class="modal fade bs-example-modal-xxlg"  >
+ 
+        <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">{{$root.dimensionSelectedToEdit}}</h4>
+        </div>
+        <div class="modal-body">
+				     	
+				<table id="test-element-list-item-display" class="table table-hover">
+					 
+					<tbody>
+						<tr ng-repeat="item in $root.dimensionElementsArray[$root.dimensionSelectedToEdit]  track by $index ">
+							<td ng-click="$root.selectedElementIndex[$root.dimensionSelectedToEdit] = ($index+1)" 
+							ng-style="{'background-color':$root.selectedElementIndex[$root.dimensionSelectedToEdit]-1 == $index ? 'steelblue':'','color':$root.selectedElementIndex[$root.dimensionSelectedToEdit]-1 == $index ? '#fff':'steelblue' }">
+							<tm1-ui-dbra ng-show="false"
+							   tm1-instance="{{$root.defaults.settingsInstance}}"
+							   tm1-dimension="{{$root.dimensionSelectedToEdit}}"
+							   tm1-element='{{$root.dimensionElementsArray[$root.dimensionSelectedToEdit][$index].Name}}'
+							   tm1-attribute="Caption_Default"
+							   ng-model="dimName[$root.dimensionSelectedToEdit][$index]"
+							   >
+							</tm1-ui-dbra>
+							{{dimName[$root.dimensionSelectedToEdit][$index]  ? dimName[$root.dimensionSelectedToEdit][$index]   : item.Name}}</td>
+							 
+						</tr>
+					</tbody>
+					
+				</table>
+        </div>
+        <div class="modal-footer">
+          
+        </div>
+      </div>
+    </div>
+    </div>

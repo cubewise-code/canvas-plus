@@ -27,12 +27,42 @@
       { "name":"Region", "value":"3" },
       { "name":"Department", "value":"2" }
     ]
+  }, 
+  {
+    "id": "Region By Departments",
+    "mdx": [
+      "SELECT {[Period].[Year].children } ON COLUMNS,",
+      " { TM1DRILLDOWNMEMBER( {[Department].[All Category]}, ALL, RECURSIVE )  * {[Region].[{{Region}}]} } ON ROWS",
+      "FROM [Employee]",
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local],  [Employee].[All Employees],[Employee Measure].[Base Salary] )" 
+    ],
+    "description":"",
+    "mdxParams": [
+      { "name":"Year", "value":"2015" },
+      { "name":"Region", "value":"1" },
+      { "name":"Department", "value":"1" }
+    ]
+  },
+  {
+    "id": "Department By Regions",
+    "mdx": [
+      "SELECT {[Period].[Year].children } ON COLUMNS,",
+      " {    TM1DRILLDOWNMEMBER( {[Region].[Total Europe]}, ALL, RECURSIVE ) * {[Department].[{{Department}}]} } ON ROWS",
+      "FROM [Employee]",
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local],   [Employee Measure].[Base Salary] )" 
+    ],
+    "description":"",
+    "mdxParams": [
+      { "name":"Year", "value":"2015" },
+      { "name":"Region", "value":"1" },
+      { "name":"Department", "value":"1" }
+    ]
   },
   {
     "id": "Employee Forecast",
     "mdx": [
-      "SELECT {[Period].[Year].children } ON COLUMNS,",
-      " { TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ) } ON ROWS",
+      "SELECT {[Period].[Year], [Period].[Year].children } ON COLUMNS,",
+      " {   {TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ) } } ON ROWS",
       "FROM [Employee]",
       "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Department].&[{{Department}}], [Employee Measure].[Base Salary] )" 
     ],

@@ -1,4 +1,4 @@
-<div ng-controller="NamedMdxGridCtrl" ng-if="$root.user.Name && $root.selections.year && $root.selections.region && $root.selections.department"   >
+<div ng-controller="NamedMdxGridCtrl" ng-mousemove="moveDrag($event)" ng-mouseup="stopDrag()" ng-if="$root.user.Name && $root.selections.year && $root.selections.region && $root.selections.department"   >
 	 
 
 		<style>
@@ -81,106 +81,123 @@
 					min-width:70px !important; 
 					
 				}
-				 
-			</style>
-			 
-		<!-- <div id="one" ng-init="startAllFiltersAreHere()">
-			
-			<super-cube-view ng-if="$root.mdxParameters"
-				tm1-instance = "dev"
-				cube-name = "{{$root.cubeName}}" 
-				cube-mdx = "{{$root.mdxId}}"
-				cube-mdx-params = "{{$root.mdxParameters}}"
-				attribute-options="{{$root.attributeOptions}}"  
-				table-height-bottom-offset="30"
-				table-width="100%"
-				table-left="0"
-				table-top="139px"
-				table-dimension-column-class="min-width250"
-				table-data-column-class="min-width100"
-				table-id="one"
-				rows-to-load = "50"
-				chart-visible=""
-				table-visible=""
-				custom-page = "SuperCubeViewMdxCustomPage"
-				> 
-			</super-cube-view>	
-			 
-		</div> -->
+				#triangle-up {
+					margin-top:-20px;
+					width: 0;
+					height: 0;
+					border-left: 5px solid transparent;
+					border-right: 5px solid transparent;
+					border-bottom: 10px solid dimgray;
+					cursor:row-resize ;
+				}
+				#triangle-down {
+					width: 0;
+					height: 0;
+					border-left: 5px solid transparent;
+					border-right: 5px solid transparent;
+					border-top: 10px solid #fff;
+				}
+
+
+				/*  CUSTOM CSS SCROLL BARS  */
+#one ::-webkit-scrollbar
+{
+  width: 5px;  /* for vertical scrollbars */
+  height: 8px; /* for horizontal scrollbars */
+  z-index:1;
+   background-color: transparent;
+    background: transparent;
+    fill:transparent;
+}
+
+#one ::-webkit-scrollbar-track
+{
+  background-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
+}
+
+#one ::-webkit-scrollbar-thumb
+{
+    cursor:pointer;
+  background: #4f81bd;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.3) ;
+     background-image: linear-gradient(#375a84, #4f81bd, #375a84);
+}
+/*  CUSTOM CSS SCROLL BARS  */
+#two ::-webkit-scrollbar
+{
+  width: 5px;  /* for vertical scrollbars */
+  height: 8px; /* for horizontal scrollbars */
+  z-index:1;
+   background-color: transparent;
+    background: transparent;
+    fill:transparent;
+}
+
+#two ::-webkit-scrollbar-track
+{
+  background-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
+}
+
+#two ::-webkit-scrollbar-thumb
+{
+    cursor:pointer;
+  background: #4f81bd;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.3) ;
+     background-image: linear-gradient(#375a84, #4f81bd, #375a84);
+}
+</style>
 	 
-			 
-					 <div   id="three"  style="overflow:hidden !important; background-color:#fff;">
+		
+		
+		<div   id="three" ng-init="startAllFiltersAreHere()"  style="overflow:hidden !important; background-color:#fff;">
 			
-				<super-cube-view 
-				tm1-instance = "dev"
+				<super-cube-view  
+				panel-heading="{{'Total Salary: '+$root.mdxId +''}}"
+				tm1-instance = "{{$root.defaults.settingsInstance}}"
 				cube-name = "{{$root.cubeName}}" 
 				cube-mdx = "{{$root.mdxId}}"
 				cube-mdx-params = "{{$root.mdxParameters}}"
 				attribute-options="{{$root.attributeOptions}}"  
 				table-height-bottom-offset="30"
-				table-width="100%"
-				table-left="0"
-				table-top="490"
-				chart-height="0"
+				table-width="98%"
+				table-left="1%"
+				table-top="{{$root.chartsHeight}}"
+				chart-height="250"
 				table-dimension-column-class="min-width250"
 				table-data-column-class="min-width100"
 				table-id="three"
 				rows-to-load = "50"
-				chart-visible=""
+				chart-visible="false"
 				table-visible=""
-				hide-chart-as-option= "true"
-				custom-page = "SuperCubeViewMdxCustomPage"
-
-					> 
+				hide-chart-as-option= ""
+				custom-page = ""
+				use-default-parameters = "false"
+				ui-process-name="Cube.Employee.UpdateEmployee" > 
 				</super-cube-view>	
 				 
-			</div>  
-		<div id="one" ng-init="startAllFiltersAreHere()"  style="background-color:#fff;">
-			
-			<super-cube-view ng-if="$root.mdxParameters"
-				tm1-instance = "dev"
-				cube-name = "General Ledger" 
-				cube-view = "Default"
-				cube-mdx-params = "{{$root.mdxParameters}}"
-				attribute-options="{{$root.attributeOptions}}"  
-				table-height-bottom-offset="30"
-				table-width="50%"
-				table-left="0"
-				table-top="139"
-				table-height="490"
-				chart-height="300"
-				table-dimension-column-class="min-width250"
-				table-data-column-class="min-width100"
-				table-id="one"
-				rows-to-load = "50"
-				chart-visible="true"
-				table-visible="true"
-				 
-				hide-chart-as-option= ""
-				hide-table-as-option= "true"
-				use-default-parameters = "true"
-				> 
-			</super-cube-view>	
-			 
-		</div>
-		 <div   id="two"  style="background-color:#fff;">
+		</div>  
+		 
+		<div   id="two"  style="background-color:#fff;">
 			 	
-			<super-cube-view 
-			tm1-instance = "dev"
-			cube-name = "Employee" 
-			cube-view = "Default"
+			<super-cube-view  
+			panel-heading="{{'Total Salary: '+$root.mdxIdTwo +''}}"
+			tm1-instance = "{{$root.defaults.settingsInstance}}"
+			cube-name = "{{$root.cubeName}}" 
+			cube-mdx = "{{$root.mdxIdTwo}}"
 			cube-mdx-params = "{{$root.mdxParameters}}"
 			attribute-options="{{$root.attributeOptions}}"  
 			table-height-bottom-offset="30"
-			table-width="50%"
+			table-width="49%"
 			table-left="50%"
 			table-top="139"
-			table-height="490"
-			chart-height="300"
+			table-height="{{chartsTableHeight}}"
+			chart-height="250"
 			table-dimension-column-class="min-width250"
 			table-data-column-class="min-width100"
 			table-id="two"
-			rows-to-load = "50"
+			rows-to-load = "100"
 			chart-visible="true"
 			table-visible="true"
 			hide-chart-as-option= ""
@@ -190,15 +207,42 @@
 				> 
 			</super-cube-view>	
 			 
-		</div> 
-
-		 
+		</div>
+		<div id="one"   style="background-color:#fff;">
+			
+				<super-cube-view  
+				panel-heading="{{'Total Salary: '+$root.mdxIdOne +''}}"
+					tm1-instance = "{{$root.defaults.settingsInstance}}"
+					cube-name = "{{$root.cubeName}}" 
+					cube-mdx = "{{$root.mdxIdOne}}"
+					cube-mdx-params = "{{$root.mdxParameters}}"
+					attribute-options="{{$root.attributeOptions}}"  
+					table-height-bottom-offset="30"
+					table-width="49%"
+					table-left="1%"
+					table-top="139"
+					table-height="{{chartsTableHeight}}"
+					chart-height="250"
+					table-dimension-column-class="min-width250"
+					table-data-column-class="min-width100"
+					table-id="one"
+					rows-to-load = "100"
+					chart-visible="true"
+					table-visible="true" 
+					hide-chart-as-option= ""
+					hide-table-as-option= "true"
+					use-default-parameters = "true"
+					> 
+				</super-cube-view>	
+				 
+			</div>  
 			 
-	
-			 
-		 
-	
-			 
-			 
-		 
+			<div  class="center" ng-mousedown="$root.toggleCharts()"   ng-style="{'top':($root.chartsHeight-43)+'px'}" style="cursor:row-resize ; z-index:99;height:13px; position:fixed; left:0px; width:100%; background-color:dimgray;  ">
+				<div ng-show="$root.chartsHeight != $root.topSection" id="triangle-up"></div>
+				<div ng-show="$root.chartsHeight === $root.topSection" id="triangle-down"></div>
+			</div>
+			<div   class="nvtooltip xy-tooltip" id="nvtooltip-1"  >
+ 
+			</div>
+			
 	</div>

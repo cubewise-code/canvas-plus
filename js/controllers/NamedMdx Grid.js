@@ -15,17 +15,24 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.values = {};
     $rootScope.cubeView = '';
     $rootScope.pageTitle = "Super Named MDX + Grid";
-    $rootScope.cubeName = "General Ledger"
-
-    $rootScope.mdxId = "Data Entry"
+    $rootScope.cubeName = "Employee"
+    $rootScope.interactiveLayer = true;
+    $rootScope.mdxId = "Employee Forecast"
+    $rootScope.mdxIdOne = "Region By Departments"
+    $rootScope.mdxIdTwo = "Department By Regions"
     $rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ([Year].&[2018], [Region].&[England], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
     $rootScope.useMdx = false;
     $rootScope.useDbr = false;
     $rootScope.useMdxNow = false; 
     $rootScope.showView = true; 
+    $rootScope.topSection = 179;
+    $rootScope.chartsHeight = 490;
+    $rootScope.chartsTableHeight = 310;
+    $scope.chartsDefaultHeight = 490;
+    $scope.chartsDefaultTableHeight = 310;
     //$rootScope.calendarShow = true ;
      
-    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description', "Employee": 'Full Name'} }
+    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Product Category', "Version": 'Description', "Employee": 'Full Name'} }
     $scope.startAllFiltersAreHere = function(){
         $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
@@ -67,6 +74,55 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                     }
                             
                 })
+                $scope.stopDrag = function(){
+                    console.log()
+                    //$scope.dragStart = false;
+                }
+
+                $scope.moveDrag = function(e){
+                    // if($scope.dragStart && $scope.dragStart === true){
+                    //     if($rootScope.chartsTableHeight  >= 30 && e.screenY < $scope.startY){
+                    //         $rootScope.chartsHeight =  $rootScope.chartsHeight - 10;
+                    //         $rootScope.chartsTableHeight =  $rootScope.chartsTableHeight - 10;
+                    //     }else{
+                    //         $rootScope.chartsHeight =  $rootScope.chartsHeight + 10;
+                    //         $rootScope.chartsTableHeight =  $rootScope.chartsTableHeight + 10;
+                    //     }
+
+                         
+                    //     console.log("move capture")
+                    // }else{
+
+                    // }
+                    
+                }
+                $rootScope.hideCharts = false;
+                $rootScope.toggleCharts = function(){
+                     if($rootScope.chartsHeight === $rootScope.topSection){
+                        $rootScope.chartsHeight =  $scope.chartsDefaultHeight;
+                        $rootScope.chartsTableHeight = $scope.chartsDefaultTableHeight;
+                        $rootScope.hideCharts = false;
+                     }else{
+                        $rootScope.hideCharts = true;
+                        $rootScope.chartsHeight =  $rootScope.topSection;
+                        $rootScope.chartsTableHeight =0;
+
+                     }
+                    
+                     if(document.getElementsByClassName('nvtooltip xy-tooltip')){
+                        for(hss = 0; hss < document.getElementsByClassName('nvtooltip xy-tooltip').length; hss++){
+                           var obbbj =  document.getElementsByClassName('nvtooltip xy-tooltip')[hss];
+                           console.log("tracing the tootltips");
+                           obbbj.style.opacity = 0;
+                        }
+                     }
+                    
+                     window.dispatchEvent(new Event('resize'));
+                      
+                   //$scope.dragStart = true;
+                     
+                }
+
 }]);
 app.directive('ngRightClick', ['$parse', function($parse) {
     return function(scope, element, attrs) {

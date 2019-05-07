@@ -13,6 +13,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
+    
     $rootScope.cubeView = '';
     $rootScope.pageTitle = "Super Named MDX ";
     $rootScope.cubeName = "General Ledger"
@@ -23,6 +24,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.useDbr = false;
     $rootScope.useMdxNow = false; 
     $rootScope.showView = true; 
+    $scope.dimName = [];
     //$rootScope.calendarShow = true ;
      
     $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Description', "Employee": 'Full Name'} }
