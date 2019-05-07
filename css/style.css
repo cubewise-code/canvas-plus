@@ -597,7 +597,7 @@ div.tm1-subnm-hierarchy-style {
     padding-left: 1px;
     background-color: White;
     height: 247px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
  
 

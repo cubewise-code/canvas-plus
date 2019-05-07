@@ -97,6 +97,56 @@
 					border-right: 5px solid transparent;
 					border-top: 10px solid #fff;
 				}
+
+
+				/*  CUSTOM CSS SCROLL BARS  */
+#one ::-webkit-scrollbar
+{
+  width: 5px;  /* for vertical scrollbars */
+  height: 8px; /* for horizontal scrollbars */
+  z-index:1;
+   background-color: transparent;
+    background: transparent;
+    fill:transparent;
+}
+
+#one ::-webkit-scrollbar-track
+{
+  background-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
+}
+
+#one ::-webkit-scrollbar-thumb
+{
+    cursor:pointer;
+  background: #4f81bd;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.3) ;
+     background-image: linear-gradient(#375a84, #4f81bd, #375a84);
+}
+/*  CUSTOM CSS SCROLL BARS  */
+#two ::-webkit-scrollbar
+{
+  width: 5px;  /* for vertical scrollbars */
+  height: 8px; /* for horizontal scrollbars */
+  z-index:1;
+   background-color: transparent;
+    background: transparent;
+    fill:transparent;
+}
+
+#two ::-webkit-scrollbar-track
+{
+  background-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
+}
+
+#two ::-webkit-scrollbar-thumb
+{
+    cursor:pointer;
+  background: #4f81bd;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.3) ;
+     background-image: linear-gradient(#375a84, #4f81bd, #375a84);
+}
 			</style>
 			 
 		<!-- <div id="one" ng-init="startAllFiltersAreHere()">
@@ -122,7 +172,8 @@
 			</super-cube-view>	
 			 
 		</div> -->
-		 	 
+		
+		
 		<div   id="three" ng-init="startAllFiltersAreHere()"  style="overflow:hidden !important; background-color:#fff;">
 			
 				<super-cube-view  
@@ -161,8 +212,8 @@
 			cube-mdx-params = "{{$root.mdxParameters}}"
 			attribute-options="{{$root.attributeOptions}}"  
 			table-height-bottom-offset="30"
-			table-width="48%"
-			table-left="51%"
+			table-width="49%"
+			table-left="50%"
 			table-top="139"
 			table-height="{{chartsTableHeight}}"
 			chart-height="250"
@@ -190,7 +241,7 @@
 					cube-mdx-params = "{{$root.mdxParameters}}"
 					attribute-options="{{$root.attributeOptions}}"  
 					table-height-bottom-offset="30"
-					table-width="48%"
+					table-width="49%"
 					table-left="1%"
 					table-top="139"
 					table-height="{{chartsTableHeight}}"
@@ -209,7 +260,7 @@
 				 
 			</div>  
 			 
-			<div  class="center" ng-mousedown="$root.toggleCharts()"   ng-style="{'top':($root.chartsHeight-40)+'px'}" style="cursor:row-resize ; z-index:99;height:10px; position:fixed; left:0px; width:100%; background-color:dimgray;  ">
+			<div  class="center" ng-mousedown="$root.toggleCharts()"   ng-style="{'top':($root.chartsHeight-43)+'px'}" style="cursor:row-resize ; z-index:99;height:13px; position:fixed; left:0px; width:100%; background-color:dimgray;  ">
 				<div ng-show="$root.chartsHeight != $root.topSection" id="triangle-up"></div>
 				<div ng-show="$root.chartsHeight === $root.topSection" id="triangle-down"></div>
 			</div>

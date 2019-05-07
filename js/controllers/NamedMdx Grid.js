@@ -27,9 +27,9 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     $rootScope.showView = true; 
     $rootScope.topSection = 179;
     $rootScope.chartsHeight = 490;
-    $rootScope.chartsTableHeight = 324;
+    $rootScope.chartsTableHeight = 310;
     $scope.chartsDefaultHeight = 490;
-    $scope.chartsDefaultTableHeight = 324;
+    $scope.chartsDefaultTableHeight = 310;
     //$rootScope.calendarShow = true ;
      
     $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Product Category', "Version": 'Description', "Employee": 'Full Name'} }
