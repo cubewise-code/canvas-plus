@@ -142,7 +142,7 @@
 							   tm1-instance="{{$root.defaults.settingsInstance}}"
 							   tm1-dimension="{{$root.dimensionSelectedToEdit}}"
 							   tm1-element='{{$root.dimensionElementsArray[$root.dimensionSelectedToEdit][$index].Name}}'
-							   tm1-attribute="Caption_Default"
+							   tm1-attribute="{{$root.attributeOptions['alias'][$root.dimensionSelectedToEdit]}}"
 							   ng-model="dimName[$root.dimensionSelectedToEdit][$index]"
 							   >
 							</tm1-ui-dbra>
