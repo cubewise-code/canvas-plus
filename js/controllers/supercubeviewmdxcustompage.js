@@ -81,6 +81,36 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
       
     
     }
+    $scope.allowDrop= function (ev) {
+        ev.preventDefault();
+    };
+
+  $scope.drag=  function (ev) {
+        ev.dataTransfer.setData("Text", ev.target.id);
+    };
+
+  $scope.drop=  function (ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("Text");
+        
+       
+            ev.target.appendChild(document.getElementById(data));
+     
+        
+    };
+  
+  
+    $scope.cubeDimensionalityArray = [];
+    $scope.formatMdxStringCube = function(cube){ 
+         $scope.mdxStringCube =  cube;
+         $tm1Ui.cubeDimensions($scope.tm1Instance, cube).then(function(result){
+            if(!result.failed){ 
+                console.log("cubeNameChanged Dimensions to load",  result);
+                $scope.cubeDimensionalityArray = result;
+            }
+         }
+         )
+    }
     var path = location.pathname
     $scope.readTextFile = function(file, callback) {
         var rawFile = new XMLHttpRequest();
