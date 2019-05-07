@@ -496,7 +496,7 @@
                   "fixedTop": null, 
                   "hidden": false,
                   "data": null,
-                  "id": 'nvtooltip'+scope.tableId
+                  "id": null
                 },
                 "margin": {
                   "left": 0,
@@ -578,7 +578,7 @@
                   "fixedTop": null, 
                   "hidden": false,
                   "data": null,
-                  "id": "mynvtooltip"+scope.tableId
+                  "id": null
               },
               "width": null,
               "interpolate": $rootScope.lineType,
@@ -679,7 +679,8 @@
         function listenTotheChart(element){ 
           console.log(element, "line dispatch");
           if(element['point'] && element && element['point']['key'] != 'undefined'){
-            scope.selections.searchRows[scope.tableId] = element['point']['key'];
+             
+            scope.selections.searchRows[scope.tableId] = (element['point']['key']+'').split(' :- ')[0];
           }
            
           
