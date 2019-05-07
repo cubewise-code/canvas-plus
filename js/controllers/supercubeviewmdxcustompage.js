@@ -210,6 +210,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
             $scope.showCubeList = !$scope.showCubeList;
         }
         $rootScope.dimensionElementsArray = [];
+        $rootScope.selectedElementIndex = [];
          $scope.mdxStringCube =  cube;
          $scope.activeCubeName = cube;
          $scope.openDimensionElements = [];
@@ -228,7 +229,9 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                     $tm1Ui.dimensionElements($scope.tm1Instance, result[kkd] ).then(function(resultEl){
                       if(resultEl){
                         var dim = (((resultEl[0]['UniqueName']).split('.')[0]).split('[').join('')).split(']').join('')
-                         $rootScope.dimensionElementsArray[dim] =  resultEl;
+                        $rootScope.selectedElementIndex[dim] = resultEl[0]['Index']; 
+                        $rootScope.dimensionElementsArray[dim] =  resultEl;
+                         
                          console.log("elements : ",   $rootScope.dimensionElementsArray ,"for dimension" );
 
                       }
