@@ -754,6 +754,7 @@
                function(){
                  scope.options.chart.width= document.getElementById('af1'+scope.tableId).getBoundingClientRect().width;
                  $rootScope.chartLoading = false;
+                 scope.dispatchResize();
                },1600
              )
               
@@ -2326,8 +2327,15 @@
                      scope.options.chart.height = (window.innerHeight/2);
                     }
                   }
+                 
+                
                   window.dispatchEvent(new Event('resize'));
-                    
+                  $('#stickyContainer'+scope.tableId).animate({
+                    scrollTop: 1
+                 });
+                 $('#stickyContainer'+scope.tableId).animate({
+                  scrollLeft:  1
+               });
                 },1000
             )
              
@@ -2340,10 +2348,11 @@
             // (todo: add logic so we only do this when printing)
             scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
-            
+           
              //scope.dispatchResize();
             $timeout(
               function(){
+
                 if(scope.tableHide){
                   if(scope.chartHeight){
                     scope.options.chart.height = ( scope.chartHeight);
