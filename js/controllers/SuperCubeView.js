@@ -230,6 +230,7 @@
                 "bottom": 5,
                 "left": 0
               }, 
+              "width":null,
               "valueFormat":  function(d){  return  formatComma(d); },
               "useInteractiveGuideline": $rootScope.interactiveLayer, 
               "dispatch": { 
@@ -375,7 +376,7 @@
                     renderEnd: function(e){      }
                  
                 },
-                "width":null,
+                "width": null,
                 "height": null,
                 "xDomain": null,
                 "yDomain": null,
@@ -395,7 +396,7 @@
                 "clipEdge": true,
                 "clipVoronoi": false,
                 "showVoronoi": false,
-                "id": 53376,
+                 
                 "interactiveUpdateDelay": 300,
                 "showLabels": true,
                 "margin": {
@@ -436,8 +437,8 @@
                 "clipEdge": false,
                 "clipVoronoi": true,
                 "showVoronoi": false,
-                "id": 38061,
-                "interactiveUpdateDelay": 300,
+          
+                "interactiveUpdateDelay": 0,
                 "showLabels": false,
                 "margin": {
                   "top": 0,
@@ -458,7 +459,7 @@
                   stateChange: function(e) { }
                   
                 },
-                "width": null,
+                "width": 400,
                 "height": 20,
                 "align": true,
                 "maxKeyLength": 20,
@@ -510,8 +511,8 @@
               },
               "multibar": {
                 "dispatch": {},
-                "width": null,
-                "height": null,
+                "width": 960,
+                "height": 500,
                 "forceY": [
                   0
                 ],
@@ -747,16 +748,15 @@
         } 
      
         scope.doResizeChart = function(bool){
-          if(!bool){
-            $timeout(
-              function(){
-                if(scope.api){
-                  scope.options.chart.width = window.innerWidth;
-                  scope.api.refresh();
-                }
-              },1100
-            ) 
-          }
+           
+             $rootScope.chartLoading = true;
+             $timeout(
+               function(){
+                 scope.options.chart.width= document.getElementById('af1'+scope.tableId).getBoundingClientRect().width;
+                 $rootScope.chartLoading = false;
+               },1600
+             )
+              
            
            
         }
@@ -1136,14 +1136,7 @@
                         }
                     }
                      
-                    if(scope.activeName === 'multiBarChart'){
-                      scope.options.chart.left = 0;
-                      scope.options.chart.right = 0;
-                    }
-                    if(scope.activeName === 'lineChart'){
-                      scope.options.chart.margin.left = 0;
-                      scope.options.chart.margin.right = 0;
-                    }
+                    
                    //scope.options.chart.margin.left  = (250)*(scope.table.data()[0].elements.length)
                     var jsonRowData = [];
                     var colNameArray = [];
@@ -1272,14 +1265,7 @@
                       ////console.log(jsonRowData[row]) 
                     }
                   
-                    if( scope.chart && scope.activeName === 'multiBarChart'){
-                      scope.chart.left = 0;
-                      scope.chart.right = 0;
-                    }
-                    if(scope.chart && scope.activeName === 'lineChart'){
-                      scope.chart.margin.left = 0;
-                      scope.chart.margin.right = 0;
-                    }
+                   
 
                    //scope.tableData = scope.table.data();
                    scope.data[scope.tableId] = jsonRowData;
@@ -1621,18 +1607,18 @@
                                 if(scope.tableHeight > 0){
                                   console.log(scope.tableHeight, " - ",scope.tableHeightBottomOffset, "- ",(document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top) , "########");
                                   
-                                  $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
+                                  $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
-                                  $($sideContent).css('height', ((window.innerHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
+                                  $($sideContent).css('height', ((window.innerHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 
                                 }
                                  
                               }else{
                                 if(scope.tableHeight){
                                  
-                                $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
+                                $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
-                                  $($sideContent).css('height',((window.innerHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
+                                  $($sideContent).css('height',((window.innerHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                
                                 }
                               }
@@ -1643,25 +1629,25 @@
                              if($($stickyHeader)){
                                 $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                              }
-                             $timeout(
-                              function(){
-                                var ele = $('#stickyContainer'+scope.tableId);
-                                $chartContent = $(ele).find('#chartRow'+scope.tableId);
-                                $tableContent = $(ele).find('#af1'+scope.tableId); 
-                                 if( $tableContent && $chartContent){
-                                //console.log($tableContent.css('width'));
-                                   
-                                     $($chartContent).css('width',  $tableContent.css('width') );
-                                   
-                                   
-                                  
-                               
-                                 }
-                                  
-                                
-                              },1100)
+                             
                       });
-                       
+                      $timeout(
+                        function(){
+                          var ele = $('#stickyContainer'+scope.tableId);
+                          $chartContent = $(ele).find('#chartRow'+scope.tableId);
+                          $tableContent = $(ele).find('#af1'+scope.tableId); 
+                           if( $tableContent && $chartContent){
+                          //console.log($tableContent.css('width'));
+                             
+                              $($chartContent).css('width',  $tableContent.css('width') );
+                             
+                             
+                            
+                         
+                           }
+                            
+                          
+                        },100)
                 }else{
                     if(scope.containerishere === true){
 
@@ -2372,6 +2358,9 @@
                 $('#stickyContainer'+scope.tableId).animate({
                   scrollTop: 1
                });
+               $('#stickyContainer'+scope.tableId).animate({
+                scrollLeft:  1
+             });
               },1000
             )
            

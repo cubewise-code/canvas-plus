@@ -711,7 +711,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										<!-- <td class="overflowhidden"  ng-repeat="columnrem in hideColumn[tableId] track by $index" ng-if="hideColumn[tableId][$index]  && $index <= (table.data()[0]['cells'].length) "></td> -->
 										<td    id="chartRow{{tableId}}" ng-if="chartVisible  "  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
-											<nvd3 id="chart{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
+											<nvd3   id="chart{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
 											 
 										</td>
 										 
