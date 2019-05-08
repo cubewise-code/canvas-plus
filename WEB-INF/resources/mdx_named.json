@@ -32,9 +32,9 @@
     "id": "Region By Departments",
     "mdx": [
       "SELECT {[Period].[Year].children } ON COLUMNS,",
-      " { TM1DRILLDOWNMEMBER( {[Department].[All Category]}, ALL, RECURSIVE )  * {[Region].[{{Region}}]} } ON ROWS",
+      " { TM1DRILLDOWNMEMBER( {[Department].[All Category]}, ALL, RECURSIVE )   } ON ROWS",
       "FROM [Employee]",
-      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local],  [Employee].[All Employees],[Employee Measure].[Base Salary] )" 
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Employee].[All Employees],[Employee Measure].[Base Salary] )" 
     ],
     "description":"",
     "mdxParams": [
@@ -47,9 +47,9 @@
     "id": "Department By Regions",
     "mdx": [
       "SELECT {[Period].[Year].children } ON COLUMNS,",
-      " {    TM1DRILLDOWNMEMBER( {[Region].[Total Europe]}, ALL, RECURSIVE ) * {[Department].[{{Department}}]} } ON ROWS",
+      " {    TM1DRILLDOWNMEMBER( {[Region].[Total Europe]}, ALL, RECURSIVE )  } ON ROWS",
       "FROM [Employee]",
-      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local],   [Employee Measure].[Base Salary] )" 
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Department].&[{{Department}}],  [Employee Measure].[Base Salary] )" 
     ],
     "description":"",
     "mdxParams": [

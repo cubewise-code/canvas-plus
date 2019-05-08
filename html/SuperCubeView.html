@@ -314,12 +314,22 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   	<div     >
 				 
 			<div id="optionSection{{tableId}}"  
-				ng-click="$root.chartsHeight === $root.topSection && hideTableAsOption ? $root.toggleCharts():''; "
+			 
 			 ng-show="$root.showView && !$root.isPrinting "  
 			 ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" 
 			 style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;" 
 			 >
-			 <span ng-click="hideToolbar  = !hideToolbar;  showChartOptions = hideToolbar ? false:''; showTypeLineOptions = hideToolbar ? false:''; " 	style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+			<span  
+				ng-if="useGrid" 
+				ng-click="$root.componentFullScreen[tableId] = !$root.componentFullScreen[tableId] ; $root.toggleFullScreenComponent(tableId, $root.componentFullScreen[tableId]);  doResizeChart($root.componentFullScreen[tableId]);"  
+				class="pull-left text-left"  
+				style="margin:7px;   margin-left:0px; width:auto; overflow:hidden; height:auto; color:#fff; float:left; left:0px; padding-left:10px; cursor:pointer;">
+					<i   ng-class="{'fa-minus':$root.componentFullScreen[tableId], 'fa-plus':!$root.componentFullScreen[tableId]}" 
+					class="fa  "></i>
+
+			 
+			</span>  
+			 <span ng-click="hideToolbar  = !hideToolbar;  showChartOptions = hideToolbar ? false:''; showTypeLineOptions = hideToolbar ? false:''; " 	style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff;">
 			 <i ng-class="{'fa-toggle-off':!$root.hideToolbar,'fa-toggle-on':$root.hideToolbar}" class="fa "></i>
 			 </span>
 			 <span class="pull-left" style="font-size:1.2em; padding-top:0.6em;">{{ !hideToolbar ? panelHeading:''}}</span> 
@@ -328,12 +338,14 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 					 	Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
 					</span>
+				 
 					 <span ng-hide="hideTableAsOption === 'true'">
+						
 					<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
 					 style="margin:2px; padding:5px; display:inline-block;  padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff; ">
-						 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i> 
+					 	 Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i> 
 					</span>
-					 
+				 
 					 <span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 							<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 					</span>
@@ -431,7 +443,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				 </span>
 			</div>
 	 
-			<div ng-show="showChartOptions" id="" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop'+tableId)+20)+'px','left': getContainerLeft('chartDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+			<div ng-show="showChartOptions " id="" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop'+tableId)+20)+'px','left': getContainerLeft('chartDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 							style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
 							  
 								 
@@ -540,9 +552,9 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
 						<table class="table  "  >
 							<thead >
-								<tr ng-repeat="row in dataset.headers track by $index" >
+								<tr ng-repeat="row in dataset.headers track by $index" 	ng-style="{'height':(getContainerHeight('sticky-header'+tableId) )+'px'}" >
 									<th  
-									ng-style="{'height':(getContainerHeight('sticky-header') )+'px'}"
+								 
 									style="border-right:1px solid #ccc; background-color: #f0efef; " 
 									ng-repeat="col in row.rows track by $index" 
 									ng-if="col.visible || $parent.$index === 0 " colspan="{{col.colspan}}" 
@@ -577,7 +589,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				<div class="fixed-container" id="fixedHeaderContainer{{tableId}}" 
 					ng-style="{'width':getTableWidth(), 'position': getTablePosition(),'left':getTableLeft(),'top':((getTableTop())-9)+'px'}"  
 					style=" background-color:#f0efef; padding-top:8px; white-space: nowrap;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2); overflow:hidden;">
-						<div id="sticky-header" ng-show="selections.searchRows[tableId] && rowsToDisplay() != 0 || !selections.searchRows[tableId]" 	
+						<div id="{{'sticky-header'+tableId}}" ng-show="selections.searchRows[tableId] && rowsToDisplay() != 0 || !selections.searchRows[tableId]" 	
 							class="sticky-header"   style="display:inline-block; float:left; margin:0 auto;"
 							ng-style="{'width': 'auto' } " 
 						>
@@ -617,11 +629,11 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 					</div>
 				</div>
 
-				<div  id="sideContent{{tableId}}" ng-hide="tableHide"
+				<div  id="sideContent{{tableId}}" ng-hide="tableHide || useGrid && !$root.showSectionFullScreen[tableId] && $root.showSectionFullScreenActive"
 					class="fixed-container-side" 
 					style="    box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:1; background-color:#fff;"  
 					ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
-					<table id="sideContainer" class="table ">
+					<table id="sideContainer" class="table "  >
 						<tbody  >
 								<tr   id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index" 
 								ng-style="{'min-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'max-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px '}">
@@ -699,7 +711,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 										<!-- <td class="overflowhidden"  ng-repeat="columnrem in hideColumn[tableId] track by $index" ng-if="hideColumn[tableId][$index]  && $index <= (table.data()[0]['cells'].length) "></td> -->
 										<td    id="chartRow{{tableId}}" ng-if="chartVisible  "  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
 												
-											<nvd3 id="chart{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
+											<nvd3   id="chart{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
 											 
 										</td>
 										 
@@ -959,15 +971,15 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 						</tbody>
 					</table> 
 					
-					<div   id="pagination" ng-hide="$root.isPrinting || hideTableAsOption || tableHide"  ng-style="{'top':((getContainerTop('stickyContainer'+tableId)) + (getContainerHeight('stickyContainer'+tableId)) ) + 'px','width':getTableWidth(), 'left':getTableLeft()}" 
+					<div   id="pagination"   ng-style="{'top':((getContainerTop('stickyContainer'+tableId)) + (getContainerHeight('stickyContainer'+tableId)) ) + 'px','width':getTableWidth(), 'left':getTableLeft()}" 
 					style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:22;  left:0px;" 
 					>
-						<div class="btn-group pull-right" role="group" style="padding-top:3px;"   >
+						<div ng-hide="$root.isPrinting || hideTableAsOption || tableHide" class="btn-group pull-right" role="group" style="padding-top:3px;"   >
 							<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default"     ng-click="table.previous(); "><i class="fa fa-angle-left"></i></button>
 							<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>
 							<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default"   ng-click="table.next(); "><i class="fa fa-angle-right"></i></button>
 						</div>
-						<div class="btn-group pull-right" role="group" style="padding-top:3px;" >
+						<div ng-hide="$root.isPrinting || hideTableAsOption || tableHide" class="btn-group pull-right" role="group" style="padding-top:3px;" >
 								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">10</button>
 								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15); currentRowCount = 15; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">15</button>
 								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30); currentRowCount = 30; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">30</button>
