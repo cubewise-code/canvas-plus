@@ -29,7 +29,8 @@
                     hideChartAsOption:'@',
                     hideTableAsOption:'@',
                     useDefaultParameters:'@',
-                    uiProcessName:'@'
+                    uiProcessName:'@',
+                    useGrid:'@'
                 }, 
                 link:function(scope, $elements, $attributes, directiveCtrl, transclude){
                     scope.defaults = {  months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
@@ -70,7 +71,7 @@
                 scope.cubeViewUrlValue = decodeURI($location.search()['cubeView']);
                 scope.suppressZerosUrlValue = decodeURI($location.search()['suppressZeros'+scope.tableId]);
                 scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
-
+                scope.useGrid = $attributes.useGrid;
 
                 if($attributes.uiProcessName && $attributes.uiProcessName != '' && $attributes.uiProcessName != null && $attributes.uiProcessName != 'undefined'  ){
                   scope.uiProcessName = $attributes.uiProcessName;
@@ -374,8 +375,8 @@
                     renderEnd: function(e){      }
                  
                 },
-                "width": 960,
-                "height": 500,
+                "width":null,
+                "height": null,
                 "xDomain": null,
                 "yDomain": null,
                 "pointDomain": [
@@ -415,8 +416,8 @@
                
               }, 
                  
-                "width": 960,
-                "height": 500,
+                "width": null,
+                "height": null,
                 "xDomain": null,
                 "yDomain": null,
                 "pointDomain": [
@@ -457,7 +458,7 @@
                   stateChange: function(e) { }
                   
                 },
-                "width": 400,
+                "width": null,
                 "height": 20,
                 "align": true,
                 "maxKeyLength": 20,
@@ -509,8 +510,8 @@
               },
               "multibar": {
                 "dispatch": {},
-                "width": 960,
-                "height": 500,
+                "width": null,
+                "height": null,
                 "forceY": [
                   0
                 ],
@@ -745,6 +746,20 @@
           return val;
         } 
      
+        scope.doResizeChart = function(bool){
+          if(!bool){
+            $timeout(
+              function(){
+                if(scope.api){
+                  scope.options.chart.width = window.innerWidth;
+                  scope.api.refresh();
+                }
+              },1100
+            ) 
+          }
+           
+           
+        }
   
          
             scope.changeUrl = function(hideCol, index ){
@@ -1509,13 +1524,13 @@
                     if(scope.excelReformated === false){
                         scope.formatUploadButton();
                     }
-                    
+                  
                     angular.element(document.querySelector('#stickyContainer'+scope.tableId)).bind('scroll', function(){
                       
                        
                         var el = $('#stickyContainer'+scope.tableId);
                         $body = $(el);  
-                        $stickyHeader = $(el).find('#sticky-header');
+                        $stickyHeader = $(el).find('#sticky-header'+scope.tableId);
                         $fixedHeader = $(el).find('.fixed-container');
                         $fixedHeaderContainer = $(el).find('#fixedFirstColHeader');
                         
@@ -1603,19 +1618,21 @@
                               
                               if(scope.chartVisible){
                                 //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
-                                if(scope.tableHeight){
-                                  $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) ) + $($body).scrollTop() );
+                                if(scope.tableHeight > 0){
+                                  console.log(scope.tableHeight, " - ",scope.tableHeightBottomOffset, "- ",(document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top) , "########");
+                                  
+                                  $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
-                                  $($sideContent).css('height', ((window.innerHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(30) )    )) ) + $($body).scrollTop() );
+                                  $($sideContent).css('height', ((window.innerHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 
                                 }
                                  
                               }else{
                                 if(scope.tableHeight){
                                  
-                                $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(30) )   )) ) + $($body).scrollTop() );
+                                $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
-                                  $($sideContent).css('height', ((scope.innerHeight) - (scope.tableHeightBottomOffset)-(((document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top +(30) )   )) ) + $($body).scrollTop() );
+                                  $($sideContent).css('height',((window.innerHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('headCol'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                
                                 }
                               }
@@ -1626,25 +1643,25 @@
                              if($($stickyHeader)){
                                 $($stickyHeader).css('margin-left', -$($body).scrollLeft());
                              }
-                             
+                             $timeout(
+                              function(){
+                                var ele = $('#stickyContainer'+scope.tableId);
+                                $chartContent = $(ele).find('#chartRow'+scope.tableId);
+                                $tableContent = $(ele).find('#af1'+scope.tableId); 
+                                 if( $tableContent && $chartContent){
+                                //console.log($tableContent.css('width'));
+                                   
+                                     $($chartContent).css('width',  $tableContent.css('width') );
+                                   
+                                   
+                                  
+                               
+                                 }
+                                  
+                                
+                              },1100)
                       });
-                      $timeout(
-                        function(){
-                          var ele = $('#stickyContainer'+scope.tableId);
-                          $chartContent = $(ele).find('#chartRow'+scope.tableId);
-                          $tableContent = $(ele).find('#af1'+scope.tableId); 
-                           if( $tableContent && $chartContent){
-                          //console.log($tableContent.css('width'));
-                             
-                              $($chartContent).css('width',  $tableContent.css('width') );
-                             
-                             
-                            
-                         
-                           }
-                            
-                          
-                        },1000)
+                       
                 }else{
                     if(scope.containerishere === true){
 
@@ -1660,6 +1677,7 @@
                     function(){
                         //console.log("looking for freezepane");
                         scope.setUpFreezePane();
+                       
                     },100
                 )
                 
@@ -2336,11 +2354,7 @@
             // (todo: add logic so we only do this when printing)
             scope.refresh(scope.cubeName,scope.cubeView);
             scope.setUpFreezePane();
-           
-             
-             
             
-             
              //scope.dispatchResize();
             $timeout(
               function(){
@@ -2355,6 +2369,9 @@
                   scope.api.update();
                 }
                 
+                $('#stickyContainer'+scope.tableId).animate({
+                  scrollTop: 1
+               });
               },1000
             )
            
