@@ -1045,6 +1045,15 @@
               }
            
             }
+            scope.getFileLoaded = function(){
+              if($("#ngexcelfile")[0].files[0]){
+                console.log($("#ngexcelfile")[0].files[0].name);
+                return 'Upload : '+$("#ngexcelfile")[0].files[0].name;
+              }else{
+                return '';
+              }
+               
+            }
             $rootScope.collapseColumn = function(elemnt, row,index){
             //console.log(elemnt, row,index);
                
