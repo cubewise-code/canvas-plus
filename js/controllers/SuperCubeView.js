@@ -1025,6 +1025,7 @@
                                               function(){
                                                 scope.lists.cellPutRequests = [];
                                                 $tm1Ui.dataRefresh();
+                                                $("#ngexcelfile")[0].files[0].name = '';
                                                 scope.refresh(scope.cubeName,scope.cubeView);
                                               },2000
                                             )
@@ -1046,12 +1047,16 @@
            
             }
             scope.getFileLoaded = function(){
-              if($("#ngexcelfile")[0].files[0]){
-                console.log($("#ngexcelfile")[0].files[0].name);
-                return 'Upload : '+$("#ngexcelfile")[0].files[0].name;
-              }else{
-                return '';
-              }
+            
+                  if($("#ngexcelfile")[0].files[0] && $("#ngexcelfile")[0].files[0].name != '' ){
+                    console.log($("#ngexcelfile")[0].files[0].name);
+                    return 'Upload : '+$("#ngexcelfile")[0].files[0].name;
+
+                  }else{
+                    return '';
+                  }
+                
+               
                
             }
             $rootScope.collapseColumn = function(elemnt, row,index){
