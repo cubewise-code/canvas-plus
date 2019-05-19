@@ -127,28 +127,37 @@
         <div class="modal-dialog" role="document">
       <div class="modal-content" >
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabel">{{$root.dimensionSelectedToEdit}}</h4>
+          <button type="button" ng-click="$root.editModalOpened = false;" class="close" data-dismiss="modal" aria-label="Close"><span  aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">{{$root.dimensionSelectedToEdit}} </h4>
         </div>
         <div class="modal-body">
 				     	
 				<table id="test-element-list-item-display" class="table table-hover">
 					 
-					<tbody>
-						<tr ng-repeat="item in $root.dimensionElementsArray[$root.dimensionSelectedToEdit]  track by $index ">
-							<td ng-click="$root.selectedElementIndex[$root.dimensionSelectedToEdit] = ($index+1)" 
-							ng-style="{'background-color':$root.selectedElementIndex[$root.dimensionSelectedToEdit]-1 == $index ? 'steelblue':'','color':$root.selectedElementIndex[$root.dimensionSelectedToEdit]-1 == $index ? '#fff':'steelblue' }">
-							<tm1-ui-dbra ng-show="false"
-							   tm1-instance="{{$root.defaults.settingsInstance}}"
-							   tm1-dimension="{{$root.dimensionSelectedToEdit}}"
-							   tm1-element='{{$root.dimensionElementsArray[$root.dimensionSelectedToEdit][$index].Name}}'
-							   tm1-attribute="{{$root.attributeOptions['alias'][$root.dimensionSelectedToEdit]}}"
-							   ng-model="dimName[$root.dimensionSelectedToEdit][$index]"
-							   >
-							</tm1-ui-dbra>
-							{{dimName[$root.dimensionSelectedToEdit][$index]  ? dimName[$root.dimensionSelectedToEdit][$index]   : item.Name}}</td>
+					<tbody ng-if="$root.editModalOpened">
+						<tr  ng-if="!$root.subsetModal" 
+							ng-repeat="item in $root.dimensionElementsArray[$root.dimensionSelectedToEdit] track by $index ">
+							<td ng-click="$root.selectedElementIndex[$root.dimensionSelectedToEdit] = ($index+1); $root.getDimensionalityArrays()" style="cursor:pointer"
+							ng-style="{'background-color':$root.selectedElementIndex[$root.dimensionSelectedToEdit] == ($index+1) ? 'steelblue':'','color':$root.selectedElementIndex[$root.dimensionSelectedToEdit] == ($index+1) ? '#fff':'steelblue' }">
+							<tm1-ui-dbra ng-show="false" 
+							 ng-if="!$root.loading && $root.dimensionSelectedToEdit && (item.Name).indexOf('}') === -1 && (item.Name).indexOf(']') === -1 && (item.Name).indexOf(',') === -1"
+							tm1-instance="{{$root.defaults.settingsInstance}}"
+							tm1-dimension="{{$root.dimensionSelectedToEdit}}"
+							tm1-element=' {{item.Name}}'
+							tm1-attribute="{{$root.attributeOptions['alias'][$root.dimensionSelectedToEdit]}}"
+							ng-model="$root.dimName[$root.dimensionSelectedToEdit][$index]"
+							>
+						 </tm1-ui-dbra>
+							{{$root.dimName[$root.dimensionSelectedToEdit][$index] ? $root.dimName[$root.dimensionSelectedToEdit][$index]   : item.Name}}</td>
 							 
 						</tr>
+						<tr  ng-if="$root.subsetModal" ng-repeat="item in $root.dimensionSubsetsArray[$root.dimensionSelectedToEdit]  track by $index ">
+								<td ng-click="$root.selectedSubsetsIndex[$root.dimensionSelectedToEdit] = ($index); $root.getDimensionalityArrays()" style="cursor:pointer"
+								ng-style="{'background-color':$root.selectedSubsetsIndex[$root.dimensionSelectedToEdit] === ($index) ? 'steelblue':'','color': $root.selectedSubsetsIndex[$root.dimensionSelectedToEdit] == ($index) ? '#fff':'steelblue' }">
+								 
+								   {{$root.dimensionSubsetsArray[$root.dimensionSelectedToEdit][$index].Name}}  
+								    
+							</tr>
 					</tbody>
 					
 				</table>

@@ -17,7 +17,7 @@
     "id": "Data Entry",
     "mdx": [
       "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS,",
-      "{TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS",
+      "{   TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE ) } ON ROWS",
       "FROM [General Ledger]",
       "WHERE ([Year].&[{{Year}}], [Region].&[{{Region}}], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[{{Department}}])" 
     ],
@@ -32,7 +32,7 @@
     "id": "Region By Departments",
     "mdx": [
       "SELECT {[Period].[Year].children } ON COLUMNS,",
-      " { TM1DRILLDOWNMEMBER( {[Department].[All Category]}, ALL, RECURSIVE )   } ON ROWS",
+      " { ORDER({TM1DRILLDOWNMEMBER( {[Department].[All Category]}, ALL, RECURSIVE )  }, [Employee Measure].[Base Salary], BDESC ) } ON ROWS",
       "FROM [Employee]",
       "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Employee].[All Employees],[Employee Measure].[Base Salary] )" 
     ],
@@ -47,7 +47,7 @@
     "id": "Department By Regions",
     "mdx": [
       "SELECT {[Period].[Year].children } ON COLUMNS,",
-      " {    TM1DRILLDOWNMEMBER( {[Region].[Total Europe]}, ALL, RECURSIVE )  } ON ROWS",
+      " {   ORDER({ TM1DRILLDOWNMEMBER( {[Region].[Total Europe]}, ALL, RECURSIVE ) }, [Employee Measure].[Base Salary], BDESC ) } ON ROWS",
       "FROM [Employee]",
       "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Department].&[{{Department}}],  [Employee Measure].[Base Salary] )" 
     ],
@@ -62,7 +62,7 @@
     "id": "Employee Forecast",
     "mdx": [
       "SELECT {[Period].[Year], [Period].[Year].children } ON COLUMNS,",
-      " {   {TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ) } } ON ROWS",
+      " {   ORDER( TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ),  [Employee Measure].[Base Salary], BDESC ) } ON ROWS",
       "FROM [Employee]",
       "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Department].&[{{Department}}], [Employee Measure].[Base Salary] )" 
     ],

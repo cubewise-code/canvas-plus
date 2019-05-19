@@ -16,22 +16,25 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     
     $rootScope.cubeView = '';
     $rootScope.pageTitle = "Super Named MDX ";
-    $rootScope.cubeName = "General Ledger"
-
+    $rootScope.cubeName = "General Ledger" 
     $rootScope.mdxId = "Data Entry"
     $rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ([Year].&[2018], [Region].&[England], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
     $rootScope.useMdx = false;
     $rootScope.useDbr = false;
     $rootScope.useMdxNow = false; 
     $rootScope.showView = true; 
-    $scope.dimName = [];
+    $rootScope.dimName = [];
     //$rootScope.calendarShow = true ;
      
-    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Version": 'Caption_Default', "Employee": 'Full Name'} }
+    $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Product":"Code&Description", "Version": 'Caption_Default', "Employee": 'Full Name'} }
     $scope.startAllFiltersAreHere = function(){
         $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
         //console.log($rootScope.mdxParameters);
+    }
+    $scope.read = function(workbook){
+        console.log('do read', workbook);
+
     }
     $scope.$watch(function () {
         return $rootScope.selections.year;
@@ -69,6 +72,8 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
                     }
                             
                 })
+
+              
 }]);
 app.directive('ngRightClick', ['$parse', function($parse) {
     return function(scope, element, attrs) {
@@ -81,3 +86,5 @@ app.directive('ngRightClick', ['$parse', function($parse) {
         });
     };
 }]);
+
+ 
