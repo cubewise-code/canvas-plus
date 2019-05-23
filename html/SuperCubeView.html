@@ -365,22 +365,21 @@
 						 <span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 								<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 						</span>
-						<div ng-if="!tableHide  " ng-hide="lists.cellPutRequests.length > 0"  class="pull-left text-left"  
+						<div ng-if="!tableHide  " ng-hide="lists.cellPutRequests.length > 0 || $root.useMdxNow"  class="pull-left text-left"  
 							style=" margin-left:0px; width:auto; overflow:hidden; height:33px; padding:5px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 								 	 
 					 				
 									<input  ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"  
-											style=" float: right;display: block;top: 0px;width: 300px; height:33px; margin-left:67px;  position:absolute;" type="button" value="Read Data"  ng-click="READ(file)"   />  
-									 <input  style=" background-color: transparent; color: #fff; border:1px solid #fff; display:inline-block; top:0px; width:67px;" type="file" id="ngexcelfile" ng-change="getFileLoaded()" ng-model="file"/>
+											style=" float: right;display: block;top: 0px;width: 300px; height:33px; margin-left:67px;  position:absolute;" type="button" value="Read Data"  ng-click="READ(file)" ng-mouseover="getFileLoaded()"  />  
+									 <input  style=" background-color: transparent; color: #fff; border:1px solid #fff; display:inline-block; top:0px; width:67px;" type="file" id="ngexcelfile"  ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()" ng-change="getFileLoaded()" ng-model="file"/>
 						 		
 								 
 						</div>
-						<span  ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"   style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
-					  style="color:#333;" ng-show="!lists.cellPutRequests.length" >{{getFileLoaded()}}</span>
+						<span ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"   style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
+					  style="color:#333;" ng-show="!lists.cellPutRequests.length && !$root.useMdxNow" >{{getFileLoaded()}}</span>
 					 
 					 
-						<span style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
-						ng-show="lists.cellPutRequests.length > 0"  ng-click="$root.saveAllElements()" style="color:#333;" >SAVE DATA TO TM1</span>
+			 
 					 
 						<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "  
 						 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
