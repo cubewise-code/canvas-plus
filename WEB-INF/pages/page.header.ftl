@@ -381,7 +381,7 @@
         >
         <h4 style="   width:100%; " 
         class="text-left pull-left">
-          {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}} <i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i>
+          {{($root.subPathBoolean ? ($root.selectedsubParentPage):'') | capitalize }}{{$root.pageTitle}} <i ng-if="$root.isLoading"  class="fa fa-refresh fa-spin" ></i>
         
           <span class="hidden-xs pull-right text-right" ng-show="$root.topOffSet === $root.defaultOffSet"> 
             
