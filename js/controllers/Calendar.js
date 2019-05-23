@@ -263,26 +263,34 @@
     };
     
     scope.deleteEvent = function(rowJson, referenceElements){
-        var myArrayToSend = [];
+       
         _.forEach(rowJson.cells, function(value, key) {
+             var myArrayToSend = [];
             var ref = value.reference();
-            //console.log(key, value.reference(), "reference from inside the controller");
-            myArrayToSend.push({value:'', instance:'dev', cube:'Calendar', cubeElements:ref});
-        });
-       //console.log(myArrayToSend, "row to delete");
-        $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
-            if(!result.failed){
-                //console.log(result, "cleared event");
-                 scope.hasNum = []; 
-                 
-                  scope.query(true); 
-                   $tm1Ui.dataRefresh();
+            console.log(value, key)
+            if(value.key === 'count'){
+
             }else{
-                //console.log(result.message);
+                console.log(key, value.reference(), "reference from inside the controller");
+                myArrayToSend.push({value:'', instance:'dev', cube:'Calendar', cubeElements:ref});
+                $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
+                    if(!result.failed){
+                        //console.log(result, "cleared event");
+                        scope.hasNum = []; 
+                        
+                        scope.query(true); 
+                        $tm1Ui.dataRefresh();
+                    }else{
+                        //console.log(result.message);
+                    }
+                    
+            
+                });
             }
             
-       
         });
+       //console.log(myArrayToSend, "row to delete");
+         
     }
     scope.saveItem = function(rowJson, referenceElements, userRefElements){
         var myArrayToSave = [];
