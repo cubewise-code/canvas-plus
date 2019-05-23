@@ -370,8 +370,8 @@
 								 	 
 					 				
 									<input  ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"  
-											style=" float: right;display: block;top: 0px;width: 300px; height:33px; margin-left:67px;  position:absolute;" type="button" value="Read Data"  ng-click="READ(file)" ng-mouseover="getFileLoaded()"  />  
-									 <input  style=" background-color: transparent; color: #fff; border:1px solid #fff; display:inline-block; top:0px; width:67px;" type="file" id="ngexcelfile"  ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()" ng-change="getFileLoaded()" ng-model="file"/>
+											style=" float: right;display: block;top: 0px; width: 200px; height:33px; margin-left:67px;  position:absolute; opacity:0;" type="button" value=""  ng-click="READ(file)" ng-mouseover="getFileLoaded()"  />  
+									 <input  style=" background-color: transparent; color: #fff; border:1px solid #fff; display:inline-block; top:0px; width:67px; opacity:1;" type="file" id="ngexcelfile"  ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()" ng-change="getFileLoaded()" ng-model="file"/>
 						 		
 								 
 						</div>
