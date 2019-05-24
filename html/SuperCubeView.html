@@ -375,7 +375,7 @@
 						 		
 								 
 						</div>
-						<span ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"   style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
+						<span ng-if="!tableHide" ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"   style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
 					  style="color:#333;" ng-show="!lists.cellPutRequests.length && !$root.useMdxNow" >{{getFileLoaded()}}</span>
 					 
 					 
