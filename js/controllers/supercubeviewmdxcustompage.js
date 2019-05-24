@@ -12,6 +12,14 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.cubesViewsAvailable = [];
     $scope.cubeNUrlValue = decodeURI($location.search()['cubeName']);
     $scope.useMdxUrlValue = decodeURI($location.search()['useMdx']);
+    $scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
+    if($scope.mdxIdUrlValue != null && $scope.mdxIdUrlValue != 'undefined'     ){
+        console.log($scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+        $scope.mdxId  = $scope.mdxIdUrlValue; 
+        
+    }else{
+        $scope.mdxId = 'P&L'
+    }
     $scope.changedOption = false;
     if($scope.cubeNUrlValue  != null && $scope.cubeNUrlValue != 'undefined'){
         $scope.activeCubeName = decodeURI($location.search()['cubeName']);
@@ -25,7 +33,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     }
   //  $rootScope.cubeName = $scope.activeCubeName ;
  
-    $scope.mdxId = 'P&L'
+     
     
     $scope.dimensionalityArray = [];
     $scope.currentDeminsionAttributes = [];

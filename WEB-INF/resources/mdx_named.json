@@ -32,9 +32,9 @@
     "id": "Region By Departments",
     "mdx": [
       "SELECT {[Period].[Year].children } ON COLUMNS,",
-      " { ORDER({TM1DRILLDOWNMEMBER( {[Department].[All Category]}, ALL, RECURSIVE )  }, [Employee Measure].[Base Salary], BDESC ) } ON ROWS",
+      " { ORDER({TM1DRILLDOWNMEMBER( {[Department].[All Category]}, ALL, RECURSIVE )  }, [Employee Measure].[Full Time Base Salary], BDESC ) } ON ROWS",
       "FROM [Employee]",
-      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Employee].[All Employees],[Employee Measure].[Base Salary] )" 
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Employee].[All Employees],[Employee Measure].[Full Time Base Salary] )" 
     ],
     "description":"",
     "mdxParams": [
@@ -47,9 +47,9 @@
     "id": "Department By Regions",
     "mdx": [
       "SELECT {[Period].[Year].children } ON COLUMNS,",
-      " {   ORDER({ TM1DRILLDOWNMEMBER( {[Region].[Total Europe]}, ALL, RECURSIVE ) }, [Employee Measure].[Base Salary], BDESC ) } ON ROWS",
+      " {   ORDER({ TM1DRILLDOWNMEMBER( {[Region].[Total Europe]}, ALL, RECURSIVE ) }, [Employee Measure].[Full Time Base Salary], BDESC ) } ON ROWS",
       "FROM [Employee]",
-      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Department].&[{{Department}}],  [Employee Measure].[Base Salary] )" 
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Department].&[{{Department}}],  [Employee Measure].[Full Time Base Salary] )" 
     ],
     "description":"",
     "mdxParams": [
@@ -62,9 +62,9 @@
     "id": "Employee Forecast",
     "mdx": [
       "SELECT {[Period].[Year], [Period].[Year].children } ON COLUMNS,",
-      " {   ORDER( TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ),  [Employee Measure].[Base Salary], BDESC ) } ON ROWS",
+      " {   ORDER( TM1DRILLDOWNMEMBER( {[Employee].[All Employees]}, ALL, RECURSIVE ),  [Employee Measure].[Full Time Base Salary], BDESC ) } ON ROWS",
       "FROM [Employee]",
-      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Department].&[{{Department}}], [Employee Measure].[Base Salary] )" 
+      "where ( [Version].[Budget], [Year].&[{{Year}}] , [Currency].[Local], [Region].&[{{Region}}], [Department].&[{{Department}}], [Employee Measure].[Full Time Base Salary] )" 
     ],
     "description":"",
     "mdxParams": [

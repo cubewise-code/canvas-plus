@@ -148,15 +148,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                  
             }) // <=== was missing
         
-        //  $tm1Ui.processExecute("dev","Cube.User Weather.loadFromSrc").then(function(result){
-        //    //console.log("NEW WEATHER IS UPDATED FOR USER", result)
-        //     if(result.success){
-                
-        //         
-        //     }else{
-                
-        //     }
-        // })
+         
     }
     $rootScope.cloudArray = [];
     $rootScope.showClouds = true;
@@ -336,7 +328,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
         $scope.initializeVariables = function(){
             
-            $tm1Ui.applicationUser("dev").then(function(data){
+            $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(data){
 
                 $rootScope.values.user = data;
                 

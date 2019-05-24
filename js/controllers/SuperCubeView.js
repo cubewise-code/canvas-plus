@@ -959,7 +959,7 @@
                    if(scope.createRequest === true){
                       var request = {
                         value: v, 
-                        instance:"dev", 
+                        instance:$rootScope.defaults.settingsInstance, 
                         cube: scope.cubeName, 
                         cubeElements:refer
                         };

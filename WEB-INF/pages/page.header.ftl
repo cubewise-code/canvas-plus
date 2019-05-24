@@ -3,7 +3,7 @@
 <div ng-show="$root.isPrinting ? false:true" id="page-header"  ng-controller="headerCtrl"   >
  
     <div ng-show='false'>
-        <tm1-ui-user  ng-hide="true" tm1-instance="dev" ng-model="$root.user"></tm1-ui-user>
+        <tm1-ui-user  ng-hide="true" tm1-instance="{{$root.defaults.settingsInstance}}" ng-model="$root.user"></tm1-ui-user>
         
     </div>
     <div id="mininavinternal"></div>
@@ -136,7 +136,7 @@
         <span class="pull-left" style="  position:fixed; top:0px; left:50%; width:50%; background-color:rgba(0,0,0,0.6); color:#fff; text-align:center; margin-left:-25%;">
             
             <tm1-ui-dbr  ng-show="false"  tm1-read-only="true"
-				tm1-instance="dev" 
+				tm1-instance="{{$root.defaults.settingsInstance}}" 
 				tm1-cube="User Weather"
                  tm1-refresh-group="weatherGroup"  
 				tm1-elements="{{$root.user.FriendlyName}},description,String"
@@ -145,7 +145,7 @@
 			</tm1-ui-dbr>
             {{$root.user['weatherDescription']}}
             <tm1-ui-dbr  ng-show="false" tm1-read-only="true"
-				tm1-instance="dev"  
+				tm1-instance="{{$root.defaults.settingsInstance}}"  
                 tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
 				tm1-elements="{{$root.user.FriendlyName}},temperature,String"
@@ -154,7 +154,7 @@
 			</tm1-ui-dbr>
             <i class="fa fa-thermometer-three-quarters" area-hidden="true"></i> | {{$root.user['weatherTemp']}} &#8451; 
             <tm1-ui-dbr ng-show="false"  tm1-read-only="true"
-				tm1-instance="dev" 
+				tm1-instance="{{$root.defaults.settingsInstance}}" 
                 tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
 				tm1-elements="{{$root.user.FriendlyName}},clouds,String"
@@ -163,7 +163,7 @@
 				  >
 			</tm1-ui-dbr>
             <tm1-ui-dbr  tm1-read-only="true"
-				tm1-instance="dev" 
+				tm1-instance="{{$root.defaults.settingsInstance}}" 
                  tm1-refresh-group="weatherGroup"
 				tm1-cube="User Weather"  
 				tm1-elements="{{$root.user.FriendlyName}},city,String"
@@ -325,7 +325,7 @@
                     </span> 
                     <tm1-ui-subnm 
                     ng-show="$root.rowDriver != 'Year' && $root.columnDriver != 'Year' "
-                    tm1-instance="dev"  
+                    tm1-instance="{{$root.defaults.settingsInstance}}"  
                     ng-if="$root.defaults.year != '' " 
                     tm1-dimension="Year" 
                     tm1-subset="All Years" 
@@ -341,7 +341,7 @@
                 <tm1-ui-subnm 
                 ng-show="$root.rowDriver != 'Region' && $root.columnDriver != 'Region' "
                 ng-if="$root.defaults.region != ''"
-                tm1-instance="dev" 
+                tm1-instance="{{$root.defaults.settingsInstance}}" 
                 tm1-dimension="Region" 
                 tm1-subset="Default" 
                 tm1-select-only="false"
@@ -355,7 +355,7 @@
                 <tm1-ui-subnm 
                 ng-show="$root.rowDriver != 'Department' && $root.columnDriver != 'Department' "
                     ng-if="$root.defaults.department != ''"
-                    tm1-instance="dev"
+                    tm1-instance="{{$root.defaults.settingsInstance}}"
                     tm1-default-element="{{$root.defaults.department}}"  
                     tm1-dimension="Department" tm1-subset="Default" tm1-select-only="false" ng-model="$root.selections.department"
                     tm1-on-change='updateSettings($root.values, $root.defaults, $root.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Product Category", "value":data})'
@@ -387,9 +387,9 @@
             
  
             {{$root.defaults.year}} | 
-            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description"  ng-model="$root.defaults.regionName" 
+            <tm1-ui-dbra tm1-instance="{{$root.defaults.settingsInstance}}" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description"  ng-model="$root.defaults.regionName" 
              tm1-read-only="true"></tm1-ui-dbra> <span ng-if=" $root.defaults.regionName " ng-init=" $root.getWeather($root.defaults.regionName, $root.user.FriendlyName);"></span>| 
-            <tm1-ui-dbra tm1-instance="dev" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
+            <tm1-ui-dbra tm1-instance="{{$root.defaults.settingsInstance}}" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
             
         </span>
       
@@ -439,7 +439,7 @@
             
          <calendar 
             ng-if="$root.selections.year && $root.user.FriendlyName" 
-            tm1-instance="dev" 
+            tm1-instance="{{$root.defaults.settingsInstance}}" 
             selected-year="{{$root.selections.year}}"
             cube-name = "Calendar"
             user="{{$root.user.FriendlyName}}"

@@ -98,9 +98,9 @@
         
      
          
-        $tm1Ui.cubeExecuteNamedMdx('dev', "Calendar", {parameters: { "Period":scope.selections.year, "Client":scope.user} }).then(function(result){
+        $tm1Ui.cubeExecuteNamedMdx($rootScope.defaults.settingsInstance, $rootScope.defaults.calendarCube, {parameters: { "Period":scope.selections.year, "Client":scope.user} }).then(function(result){
 			if(!result.failed){
-                scope.dataset = $tm1Ui.resultsetTransform("dev", "Calendar", result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
+                scope.dataset = $tm1Ui.resultsetTransform($root.defaults.settingsInstance, $rootScope.defaults.calendarCube, result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
 				var options = {preload: false, watch: false};
 				if(scope.table){
                    
@@ -272,7 +272,7 @@
 
             }else{
                 console.log(key, value.reference(), "reference from inside the controller");
-                myArrayToSend.push({value:'', instance:'dev', cube:'Calendar', cubeElements:ref});
+                myArrayToSend.push({value:'', instance:$rooScope.defaults.settingsInstance, cube:$rootScope.defaults.calendarCube, cubeElements:ref});
                 $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
                     if(!result.failed){
                         //console.log(result, "cleared event");
@@ -294,8 +294,8 @@
     }
     scope.saveItem = function(rowJson, referenceElements, userRefElements){
         var myArrayToSave = [];
-        myArrayToSave.push({value:'New', instance:'dev', cube:'Calendar', cubeElements:referenceElements});
-        myArrayToSave.push({value:scope.user, instance:'dev', cube:'Calendar', cubeElements:userRefElements});
+        myArrayToSave.push({value:'New', instance:$rootScope.defaults.settingsInstance, cube:$rootScope.defaults.calendarCube, cubeElements:referenceElements});
+        myArrayToSave.push({value:scope.user, instance:$rootScope.defaults.settingsInstance, cube:$rootScope.defaults.calendarCube, cubeElements:userRefElements});
        
         $tm1Ui.cellsetPut(myArrayToSave).then(function(result){
             if(!result.failed){
