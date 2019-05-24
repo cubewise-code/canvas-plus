@@ -53,7 +53,7 @@
                 scope.sheetsUploaded = [];
                
                 scope.lists.records = {};
-   
+                scope.selectedColumnForPieChart = 0;
                 scope.finalRowCellArrayToCapture = [];
                 scope.sent = 0;
                 scope.firstDayPosition = {};
@@ -1005,12 +1005,38 @@
                                       
 
                                   }else{
-                                    
+                                    $ngBootbox.alert('Data FAILED to SAVE to TM1 Cube:'+scope.cubeName+'!')
+                                          .then(function() {
+                                            scope.alertOpen = false;
+                                            $timeout(
+                                              function(){
+                                                scope.lists.cellPutRequests = [];
+                                                $tm1Ui.dataRefresh();
+                                                $("#ngexcelfile")[0].files[0].name = '';
+                                                
+                                              },2000
+                                            )
+                                            
+                                          });
                                         
-                                  console.log("FAILED");
+                                       console.log("FAILED");
                                       
                                   }
                               });
+              }else{
+                $ngBootbox.alert('All Cells in view are read only cells, no data entry allowed!')
+                .then(function() {
+                  scope.alertOpen = false;
+                  $timeout(
+                    function(){
+                      scope.lists.cellPutRequests = [];
+                      $tm1Ui.dataRefresh();
+                      $("#ngexcelfile")[0].files[0].name = '';
+                      
+                    },2000
+                  )
+                  
+                });
               }
            
             }
@@ -1162,6 +1188,7 @@
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                   if(scope.chartName === 'Pie'){
+                    
                     scope.options.chart.x =  function(d){ if(d){ console.log("pie",d); return d.key; } }
                       
                   }else{
@@ -1492,7 +1519,7 @@
 
                             var tt = JSON.stringify(cellArrayFromJson) 
                             if(scope.chartName === 'Pie'){
-                              var ttT = JSON.stringify(cellArrayFromJson[0]) 
+                              var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]) 
                               jsonRowData[row]= JSON.parse(ttT);
                             }else{
                               jsonRowData[row]["values"] = JSON.parse(tt);
@@ -1522,7 +1549,11 @@
 
 
               scope.columnSortedRev= [];
-
+              scope.selectColumnForPieChart = function(col, index){
+                scope.selectedColumnForPieChart = index;
+                scope.refreshNew(scope.cubeName, scope.cubeView);
+                console.log("Column selected to use in the chart")
+              }
               scope.sortTableBy = function(alias,name){
                 if(alias){
                   scope.table.sort(alias);
@@ -1720,7 +1751,8 @@
                        }
                        var tt = JSON.stringify(cellArrayFromJson) 
                        if(scope.chartName === 'Pie'){
-                          var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                          var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]); 
+                          jsonRowData[row]= JSON.parse(ttT);
                        }else{
                          jsonRowData[row]["values"] = JSON.parse(tt);
                        }
@@ -2175,7 +2207,8 @@
                               }
                               var tt = JSON.stringify(cellArrayFromJson) 
                               if(scope.chartName === 'Pie'){
-                                 var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                                 var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]); 
+                                 jsonRowData[row]= JSON.parse(ttT);
                               }else{
                                 jsonRowData[row]["values"] = JSON.parse(tt);
                               }

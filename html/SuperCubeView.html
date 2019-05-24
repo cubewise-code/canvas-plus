@@ -396,7 +396,7 @@
 					</span>
 				 
 							<span ng-show="!hideChartAsOption">
-						<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible; showChartOptions = !chartVisible ? false:''; showTypeLineOptions = !chartVisible ? false:'';   updateUrlChart(); dispatchResize(); api.update();"   
+						<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.overCol[tableId] = false; $root.parametersVisible = false; chartVisible = !chartVisible; showChartOptions = !chartVisible ? false:''; showTypeLineOptions = !chartVisible ? false:'';   updateUrlChart(); dispatchResize(); api.update();"   
 						style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 							 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 						</span>
@@ -481,7 +481,7 @@
 										<div class="out-shadow" ng-init="activeOption = 1" 
 										style="width:100%; max-width:100px; font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
 											
-											<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer;" 
+											<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;" 
 														ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset);" class="dropdown-item"  >
 													 
 														Line
@@ -511,7 +511,7 @@
 		
 											</button>
 											<button ng-show="chartName != 'Pie'" style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;  " 
-											ng-click="activeOption = 4; activeName = 'pieChart';  chartName = 'Pie' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset); " class="dropdown-item" >
+											ng-click="activeOption = 4; activeName = 'pieChart';  chartName = 'Pie' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; $root.overCol[tableId] = false; options.chart.type = activeName;  refreshNew(dataset); " class="dropdown-item" >
 													Pie  
 													<span class="pull-right">
 															<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
@@ -772,10 +772,12 @@
 
 												id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 												style="border-right:1px solid #ccc; border-top:1px solid #ddd;  font-size:0.7em;   cursor:pointer; vertical-align:baseline;" 
-												ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible ? 'steelblue':'#f0efef', 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff':'#333' }"
-												ng-repeat="col in headerrow.columns" ng-if="col.visible  " 
+												ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible  ? 'steelblue': (chartName === 'Pie' && $index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1   ? 'steelblue':'#f0efef'), 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff': ($index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1 && chartName === 'Pie' ? '#fff': '#333') }"
+												ng-repeat="col in headerrow.columns track by $index"  ng-if="col.visible  " 
 											 	colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-												
+												 <span ng-if="chartName === 'Pie' && $index != selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1  "  style="width:10px; height:10px; font-size:1.2em;  background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer" 
+												 ng-click="selectColumnForPieChart(col, $index)"  ><small><i class="fa fa-pie-chart"></i>   </small></span>	
+										 
 												<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:top; cursor:pointer" 
 													ng-click="increaseDataWidth()"  ><small><i class="fa fa-caret-right"></i></small></span>
 												<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:left;display:inline-block; margin:0 auto; left:-5px; top:-5px; vertical-align:bottom; cursor:pointer" 
