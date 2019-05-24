@@ -100,7 +100,7 @@
          
         $tm1Ui.cubeExecuteNamedMdx($rootScope.defaults.settingsInstance, $rootScope.defaults.calendarCube, {parameters: { "Period":scope.selections.year, "Client":scope.user} }).then(function(result){
 			if(!result.failed){
-                scope.dataset = $tm1Ui.resultsetTransform($rootScope.defaults.settingsInstancenstance, $rootScope.defaults.calendarCube, result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
+                scope.dataset = $tm1Ui.resultsetTransform($rootScope.defaults.settingsInstance, $rootScope.defaults.calendarCube, result, {alias: {"}Clients": "}TM1 DefaultDisplayValue", Version: "Description"}});
 				var options = {preload: false, watch: false};
 				if(scope.table){
                    

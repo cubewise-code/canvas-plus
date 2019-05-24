@@ -1041,14 +1041,16 @@
            
             }
             scope.getFileLoaded = function(){
-            
-                  if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name != '' ){
-                  //  console.log($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name);
-                    return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
+            if($("#ngexcelfile")[0] != undefined && $("#ngexcelfile")[0] != null){
+              if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name != '' ){
+                //  console.log($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name);
+                  return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
 
-                  }else{
-                    return '';
-                  }
+                }else{
+                  return '';
+                }
+            }
+                  
                 
                
                
@@ -1924,7 +1926,7 @@
                                  
                                   
                             } 
-                            if( $($sideContent)){
+                            if( $($sideContent) && document.getElementById('searchColumn'+scope.tableId)){
                             
                               $($sideContent).css('margin-top', -$($body).scrollTop());
                               
@@ -1940,7 +1942,7 @@
                                 }
                                  
                               }else{
-                                if(scope.tableHeight){
+                                if(scope.tableHeight ){
                                  
                                 $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
