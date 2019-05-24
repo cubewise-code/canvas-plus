@@ -80,11 +80,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
              
     };
     $scope.on_request_success = function(response) {
-        console.debug('response', response);
+  //console.debug('response', response);
     } 
     
     $scope.on_request_error = function(r, text_status, error_thrown) {
-        console.debug('error', text_status + ", " + error_thrown + ":\n" + r.responseText);
+  //console.debug('error', text_status + ", " + error_thrown + ":\n" + r.responseText);
     }
     
     $rootScope.loadWeatherViaTi = function(regionName,userName){
@@ -280,10 +280,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
        $timeout(
            function(){
             if(!$rootScope.nightTime){ 
-                console.log("color to use", "WHITE")  
+          //console.log("color to use", "WHITE")  
                 $rootScope.colortouse  = 'transparent'; 
             }else{
-               console.log("color to use", "DARK") 
+         //console.log("color to use", "DARK") 
                
                 $rootScope.colortouse  =  '#000000c9' ;
               

@@ -267,11 +267,11 @@
         _.forEach(rowJson.cells, function(value, key) {
              var myArrayToSend = [];
             var ref = value.reference();
-            console.log(value, key)
+      //console.log(value, key)
             if(value.key === 'count'){
 
             }else{
-                console.log(key, value.reference(), "reference from inside the controller");
+          //console.log(key, value.reference(), "reference from inside the controller");
                 myArrayToSend.push({value:'', instance:$rooScope.defaults.settingsInstance, cube:$rootScope.defaults.calendarCube, cubeElements:ref});
                 $tm1Ui.cellsetPut(myArrayToSend).then(function(result){
                     if(!result.failed){

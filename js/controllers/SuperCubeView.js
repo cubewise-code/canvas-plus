@@ -126,7 +126,7 @@
 
                  
                 if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined'   &&  !$attributes.useDefaultParameters  || $attributes.useDefaultParameters === false ){
-                  console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+            //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                   scope.mdxId[scope.tableId] = scope.mdxIdUrlValue; 
                     
                 }else{
@@ -693,7 +693,7 @@
             debounce: 10 // default: 10
         };
         function listenTotheChart(element){ 
-          console.log(element, "line dispatch");
+    //console.log(element, "line dispatch");
           if(element['point'] && element && element['point']['key'] != 'undefined'){
              
             scope.selections.searchRows[scope.tableId] = (element['point']['key']+'').split(' :- ')[0];
@@ -704,7 +704,7 @@
         }
 
         if(scope.suppressZerosUrlValue != null && scope.suppressZerosUrlValue != 'undefined'  ){
-          console.log(scope.suppressZerosUrlValue); 
+    //console.log(scope.suppressZerosUrlValue); 
           if(scope.suppressZerosUrlValue === 'true'){
             scope.options.suppressZeros = true;
           }else{
@@ -712,7 +712,7 @@
           }
           
         }else{
-          console.log("no url suppress zeros so default to false"); 
+    //console.log("no url suppress zeros so default to false"); 
           scope.options.suppressZeros = false;
           
         }
@@ -980,7 +980,7 @@
                 
             }
             $rootScope.saveAllElements = function(){
-              console.log(scope.lists.cellPutRequests, scope.lists.cellPutRequests.length, "save");
+        //console.log(scope.lists.cellPutRequests, scope.lists.cellPutRequests.length, "save");
               if( scope.lists.cellPutRequests.length > 0){
                     $tm1Ui.cellSetPut(scope.lists.cellPutRequests).then(function(result){
                                         
@@ -1000,7 +1000,7 @@
                                             
                                           });
                                           
-                                          console.log("SAVED")
+                                    //console.log("SAVED")
                                       
                                       
 
@@ -1019,7 +1019,7 @@
                                             
                                           });
                                         
-                                       console.log("FAILED");
+                                 //console.log("FAILED");
                                       
                                   }
                               });
@@ -1335,7 +1335,7 @@
                       $rootScope.setMdx($rootScope.mdxString);
                     }else{
                      
-                    console.log("id to load ##### ",scope.mdxId[scope.tableId], "    ##### table = ", scope.tableId,  "   useMdx  = " , $rootScope.useMdxNow)
+              //console.log("id to load ##### ",scope.mdxId[scope.tableId], "    ##### table = ", scope.tableId,  "   useMdx  = " , $rootScope.useMdxNow)
                      
                     $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.mdxId[scope.tableId],   scope.cubeMdxParams ).then(function(result){
                         if(!result.failed){
@@ -1554,7 +1554,7 @@
               scope.selectColumnForPieChart = function(col, index){
                 scope.selectedColumnForPieChart = index;
                 scope.refreshNew(scope.cubeName, scope.cubeView);
-                console.log("Column selected to use in the chart")
+          //console.log("Column selected to use in the chart")
               }
               scope.sortTableBy = function(alias,name){
                 if(alias){
@@ -1563,7 +1563,7 @@
                   scope.columnSortedRev = scope.table['_sortReverse'] ;
                   
                       
-                      console.log(scope.columnSortedRev, "table");
+                //console.log(scope.columnSortedRev, "table");
                       $timeout(
                         function(){
                          
@@ -1577,7 +1577,7 @@
                   scope.columnSortedRev = scope.table['_sortReverse'] ;
                   
                       
-                       console.log(scope.columnSortedRev, "table")
+                 //console.log(scope.columnSortedRev, "table")
                        $timeout(
                         function(){
                            
@@ -1610,12 +1610,12 @@
                        
                   }
                    scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
-                   console.log("table columns", scope.table, scope.table['dataSource'][0]['cells'][0]['dataset']['dimensions']['columns'][0]);
+             //console.log("table columns", scope.table, scope.table['dataSource'][0]['cells'][0]['dataset']['dimensions']['columns'][0]);
                    
                     scope.tableColumnDimensionArray = scope.table['dataSource'][0]['cells'][0]['dataset']['dimensions']['columns'];
                     for(var gxs = 0; gxs < scope.tableColumnDimensionArray.length; gxs++){
                        $tm1Ui.dimensionElements(scope.tm1Instance, scope.tableColumnDimensionArray[gxs]).then(function(result){
-                         console.log("RESULT COLUMN DIMENSION ELEMENTS", result);
+                   //console.log("RESULT COLUMN DIMENSION ELEMENTS", result);
                         for(var tte = 0; tte < result.length; tte++)
                         {  
                           if(result[tte]['Type'] === 'Consolidated'){ 
@@ -1625,7 +1625,7 @@
                             
                           }
                         }
-                        console.log('scope.consolidatedColumnsElementNames',  scope.consolidatedColumnsElementNames);
+                  //console.log('scope.consolidatedColumnsElementNames',  scope.consolidatedColumnsElementNames);
                         
                      });
                     }
@@ -1933,7 +1933,7 @@
                               if(scope.chartVisible){
                                 //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
                                 if(scope.tableHeight > 0){
-                                  console.log(scope.tableHeight, " - ",scope.tableHeightBottomOffset, "- ",(document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top) , "########");
+                            //console.log(scope.tableHeight, " - ",scope.tableHeightBottomOffset, "- ",(document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top) , "########");
                                   
                                   $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
@@ -2614,7 +2614,7 @@
              
     }
     $rootScope.setMdxId = function(mdxId, cube){
-      console.log("setMdxId", mdxId, "indide the directive after the custom page is changed")
+//console.log("setMdxId", mdxId, "indide the directive after the custom page is changed")
           scope.mdxId[scope.tableId] =  mdxId; 
           scope.cubeName = cube;
           scope.refresh(scope.cubeName,scope.cubeView);

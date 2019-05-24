@@ -19,7 +19,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout, $l
     $scope.cubeNUrlValue = decodeURI($location.search()['cubeName']); 
     $scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
     if($scope.mdxIdUrlValue != null && $scope.mdxIdUrlValue != 'undefined'     ){
-        console.log($scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+  //console.log($scope.cubeNameUrlValue, "URL VALUES TRACKED" )
         $rootScope.mdxId  = $scope.mdxIdUrlValue; 
         
     }else{
@@ -50,7 +50,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout, $l
         //console.log($rootScope.mdxParameters);
     }
     $scope.read = function(workbook){
-        console.log('do read', workbook);
+  //console.log('do read', workbook);
 
     }
     $scope.$watch(function () {

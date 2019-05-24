@@ -14,7 +14,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.useMdxUrlValue = decodeURI($location.search()['useMdx']);
     $scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
     if($scope.mdxIdUrlValue != null && $scope.mdxIdUrlValue != 'undefined'     ){
-        console.log($scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+  //console.log($scope.cubeNameUrlValue, "URL VALUES TRACKED" )
         $scope.mdxId  = $scope.mdxIdUrlValue; 
         
     }else{
@@ -124,7 +124,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
   $scope.drop=  function (ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("Text");
-        console.log("Drop : Dimension",data, "on ", ev.target.getAttribute('id'))
+  //console.log("Drop : Dimension",data, "on ", ev.target.getAttribute('id'))
         if(($scope.rowDimensionArray).indexOf(data) === -1){
              
         }else{
@@ -190,7 +190,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         
     };
     $rootScope.getDimensionalityArrays = function(){
-        console.log( $scope.tilesDimensionArray, $scope.columnDimensionArray,  $scope.rowDimensionArray, $scope.filtersDimensionArray)
+  //console.log( $scope.tilesDimensionArray, $scope.columnDimensionArray,  $scope.rowDimensionArray, $scope.filtersDimensionArray)
          var collectTilesMdxString = '';
          var collectFiltersMdxString = '';
          var collectRowMdxString = '';
@@ -217,7 +217,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
         for(var thh = 0; thh < $scope.rowDimensionArray.length; thh++){
             
             if($rootScope.dimensionSubsetsArray[$scope.rowDimensionArray[thh]]){
-                console.log($scope.rowDimensionArray[thh], $rootScope.dimensionSubsetsArray,  "SUBSETNAME");
+          //console.log($scope.rowDimensionArray[thh], $rootScope.dimensionSubsetsArray,  "SUBSETNAME");
                 var subsetToUse ='\"'+ $rootScope.dimensionSubsetsArray[$scope.rowDimensionArray[thh]][$rootScope.selectedSubsetsIndex[$scope.rowDimensionArray[thh]]].Name+'\"'
                 if(collectRowMdxString === ''){
 
@@ -301,7 +301,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                         $rootScope.selectedElementIndex[dim] = resultEl[0]['Index']; 
                         $rootScope.dimensionElementsArray[dim] =  resultEl;
                          
-                         console.log("elements : ",   $rootScope.dimensionElementsArray ,"for dimension in cube" );
+                   //console.log("elements : ",   $rootScope.dimensionElementsArray ,"for dimension in cube" );
                         }
                       }
                     
@@ -309,7 +309,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                     })
                     $tm1Ui.dimensionSubsets($scope.tm1Instance, result[kkd] ).then(function(resultSubset){
                         if(resultSubset){
-                             console.log("subsets : ",  resultSubset ,"for dimension in cube");
+                       //console.log("subsets : ",  resultSubset ,"for dimension in cube");
                              if(resultSubset[0] && resultSubset.length){
                                 var dim = (((resultSubset[0]['UniqueName']).split('.')[0]).split('[').join('')).split(']').join('')
                                 $rootScope.selectedSubsetsIndex[dim] = 0;
@@ -317,7 +317,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                              }
                               
                         }else{
-                            console.log("subsets : ",  resultSubset ,"for dimension in cube. Failed");
+                      //console.log("subsets : ",  resultSubset ,"for dimension in cube. Failed");
                         }
                     });
                 }
