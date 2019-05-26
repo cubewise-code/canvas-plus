@@ -877,8 +877,29 @@
                                      var ref = scope.table.data()[currentRow].cells[colCount].reference();
                                     // console.log(vv, currentRow, ref, "currentRow");
                                      //console.log('ref', ref, vv, kkk, "$$$")
-                                      scope.sendValueToCube(ref, ((vv+'').split('(').join('-')).split(')').join(''), currentRow);
-                                      scope.sent++;
+                                    if( !vv  || vv === '-' || vv === '' || vv == 0 ){
+
+                                    }else{
+                                      scope.createRequest = true;
+                                      for(var tyt = 0; tyt < scope.consolidatedColumnsElementNames.length;tyt++ ){
+                                         if( ((ref).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) > -1){
+                                         scope.createRequest = false;
+                                         //  console.log("DONT SEND THE REQUEST FOR THE COLUMN",scope.consolidatedColumnsElementNames[tyt], ((refer).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) )
+                                         }else{
+                                           
+                                         }
+                                      }
+                                      
+                                      if(scope.createRequest === true){
+                                         console.log(currentRow, colCount, "saving value into the cube", ((vv+'').split('(').join('-')).split(')').join(''))
+                                        scope.sendValueToCube(ref, ((vv+'').split('(').join('-')).split(')').join(''), currentRow, colCount);
+                                        scope.sent++;
+                                           
+                                           
+                                       }
+                                      }
+                                     
+                                  
                                    }
                                    
                                 }
@@ -911,7 +932,7 @@
                   });
                      
                
-                  $rootScope.saveAllElements();
+                   
                    
               };
               if (xlsxflag) {
@@ -929,34 +950,22 @@
             }
             scope.saving = 0;
             scope.lists.cellPutRequests = [];
-            scope.sendValueToCube = function(reference, v, index){
+            scope.sendValueToCube = function(reference, v, index, column){
                
               var refer = reference 
-                scope.saving++;
+              scope.saving++;
               //  console.log( v, index, "index to save")
-              var saveElement = false;
+           
             
-                var el = scope.table.data()[index];
+             
                 
              
                  
               
                 
                   //console.log( scope.table.data()[index]['cells'][0].isReadOnly);
-                 if( !v  || v === '-' || v === '' || v == 0 ){
-
-                 }else{
-                  scope.createRequest = true;
-                   for(var tyt = 0; tyt < scope.consolidatedColumnsElementNames.length;tyt++ ){
-                      if( ((refer).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) > -1){
-                      scope.createRequest = false;
-                      //  console.log("DONT SEND THE REQUEST FOR THE COLUMN",scope.consolidatedColumnsElementNames[tyt], ((refer).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) )
-                      }else{
+                 
                         
-                      }
-                   }
-                   
-                   if(scope.createRequest === true){
                       var request = {
                         value: v, 
                         instance:$rootScope.defaults.settingsInstance, 
@@ -967,8 +976,7 @@
                        // console.log("send to the cube", scope.lists.cellPutRequests)
                         
                         
-                    }
-                   }
+                     
                   
                   
                  
