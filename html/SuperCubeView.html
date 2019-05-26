@@ -319,7 +319,24 @@
 						margin-left:-100px;
 						opacity:0;
 				}
-							
+				input[type="file"] {
+    display: none;
+}		
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding:5px 5px;
+ 
+    cursor: pointer;
+		background-color: transparent !important; 
+		color: #fff; 
+		border:1px solid #fff; 
+		display:inline-block; 
+		top:0px; 
+		width:67px; 
+		opacity:1;
+		text-align:center;
+}
 		 
 	</style>
 	 
@@ -367,12 +384,15 @@
 						</span>
 						<div ng-if="!tableHide  " ng-hide="lists.cellPutRequests.length > 0 || $root.useMdxNow"  class="pull-left text-left"  
 							style=" margin-left:0px; width:auto; overflow:hidden; height:33px; padding:5px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-								 	 
-					 				
-									<input  ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"  
+								 	 	<input  ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"  
 											style=" float: right; display: block;top: 0px; width: 200px; height:33px; margin-left:67px;  position:absolute; opacity:0;" type="button" value=""  ng-click="READ(file)" ng-mouseover="getFileLoaded()"  />  
-									 <input  style=" background-color: transparent; color: #fff; border:1px solid #fff; display:inline-block; top:0px; width:67px; opacity:1;" type="file" id="ngexcelfile"  ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()" ng-change="getFileLoaded()" ng-model="file"/>
-						 		
+								<label class="custom-file-upload">
+									<span>UPLOAD</span>
+									<input  type="file" id="ngexcelfile"  ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()" ng-change="getFileLoaded()" ng-model="file"/>
+
+								 
+									</label> 
+								 
 								 
 						</div>
 						<span ng-if="!tableHide" ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"  

@@ -1052,7 +1052,8 @@
             if($("#ngexcelfile")[0] != undefined && $("#ngexcelfile")[0] != null){
               if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name != '' ){
                 //  console.log($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name);
-                  return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
+                //  return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
+                  return 'PREVIEW';
 
                 }else{
                   return '';
