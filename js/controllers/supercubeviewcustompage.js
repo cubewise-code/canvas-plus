@@ -103,7 +103,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                     $scope.currentDimensionClicked = dimensionName;
                     $scope.dimensionalityDimensionIndexClicked = index;
                     $tm1Ui.dimensionAttributes($scope.tm1Instance, dimensionName).then(function(dimAttributedata){
-                            console.log(dimAttributedata)
+                            //console.log(dimAttributedata)
                             $scope.currentDeminsionAttributes = dimAttributedata;
                                         
                         
@@ -116,7 +116,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
          
     }
     $scope.selectAliasToUse = function(dimensionName, aliasName ){
-        console.log(dimensionName, aliasName, $rootScope.attributeOptions['alias'][dimensionName]);
+        //console.log(dimensionName, aliasName, $rootScope.attributeOptions['alias'][dimensionName]);
         $rootScope.attributeOptions['alias'][dimensionName] = aliasName;
         
     }

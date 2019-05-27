@@ -51,9 +51,9 @@
                 scope.workbookUploadedSheetsData = [];
                 scope.workbookUploadedSheetsColumnData = [];
                 scope.sheetsUploaded = [];
-                scope.elementArray = {};
+               
                 scope.lists.records = {};
-                scope.rowElementArrayToCapture = [];
+                scope.selectedColumnForPieChart = 0;
                 scope.finalRowCellArrayToCapture = [];
                 scope.sent = 0;
                 scope.firstDayPosition = {};
@@ -126,7 +126,7 @@
 
                  
                 if(scope.mdxIdUrlValue != null && scope.mdxIdUrlValue != 'undefined'   &&  !$attributes.useDefaultParameters  || $attributes.useDefaultParameters === false ){
-                  console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+            //console.log(scope.cubeNameUrlValue, "URL VALUES TRACKED" )
                   scope.mdxId[scope.tableId] = scope.mdxIdUrlValue; 
                     
                 }else{
@@ -693,7 +693,7 @@
             debounce: 10 // default: 10
         };
         function listenTotheChart(element){ 
-          console.log(element, "line dispatch");
+    //console.log(element, "line dispatch");
           if(element['point'] && element && element['point']['key'] != 'undefined'){
              
             scope.selections.searchRows[scope.tableId] = (element['point']['key']+'').split(' :- ')[0];
@@ -704,7 +704,7 @@
         }
 
         if(scope.suppressZerosUrlValue != null && scope.suppressZerosUrlValue != 'undefined'  ){
-          console.log(scope.suppressZerosUrlValue); 
+    //console.log(scope.suppressZerosUrlValue); 
           if(scope.suppressZerosUrlValue === 'true'){
             scope.options.suppressZeros = true;
           }else{
@@ -712,7 +712,7 @@
           }
           
         }else{
-          console.log("no url suppress zeros so default to false"); 
+    //console.log("no url suppress zeros so default to false"); 
           scope.options.suppressZeros = false;
           
         }
@@ -837,113 +837,93 @@
                   }   
                   if (exceljson.length > 0) {  
                     for (var i = 0; i < exceljson.length; i++) {  
+                   //   console.log("push data to use",i, exceljson[i], exceljson)
                       scope.workbookUploadedSheetsData.push(exceljson[i]);  
-                        scope.$apply();  
+                      scope.$apply();  
                     }  
                   } 
                   
                   
-                   
-                  var currentworksheet = workbook.Sheets[y];
-                  var headers = {}; 
-                  var startRow = 2;
-                  for(z in currentworksheet) {
-                    
-                    
-                    if(z[0] === '!'){
-                        
-                     }else{  
-                     
-                      var col = (z).replace(/[^A-Za-z]/g, "");
-                      var row = parseInt((z+'').split(col).join(''));
-                      var value = currentworksheet[z].v;
-                        if( row  < startRow) {
-                        
-                          headers[col] = {};
-                          headers[col] = value; 
-                          continue;
-                        }
-                      
-                      }
-                    }
-                    
-                    
-                     
-                     
-                    scope.workbookUploadedSheetsColumnData = headers;
+                  scope.tableRowDimensions = scope.table.data()[0].elements[0]['dataset']['dimensions']['rows'];
+                  scope.tableColumnDimensions = scope.table.data()[0].elements[0]['dataset']['dimensions']['columns'];
+                  
+                  
                      
                      
                    // console.log(scope.table.data()[0].cells[0].reference(), scope.cubeName, scope.workbookUploadedSheetsData, scope.workbookUploadedSheetsColumnData, "ROW AND COLUMNS excel DATA" );
-                    var cellref = scope.table.data()[0].cells[0].reference();
-
-                    for(item in result){
-                      //console.log("dimensional order", result[item], item,  cellref[item] );
-                       
-                      scope.elementArray[result[item]] = cellref[item];
-                      
-
-                    }
-                   // console.log(scope.elementArray, "element data");
-                  
-                   scope.tableRowDimensions = scope.table.data()[0].elements[0]['dataset']['dimensions']['rows'];
-                   scope.tableColumnDimensions = scope.table.data()[0].elements[0]['dataset']['dimensions']['columns'];
-                   
-                   for(item in scope.workbookUploadedSheetsData){
-                    scope.rowElementArrayToCapture[item] = {};
-                     // console.log(scope.workbookUploadedSheetsData[item], "scope.workbookUploadedSheetsData[item]")
-                     _.forEach(scope.workbookUploadedSheetsData[item], function(value, key) {
-                       
-                        
-                       
-                            var keyToUse = key;
-                            var valueToUse = value;
-
-                            for(dimension in scope.tableRowDimensions){
-                              if( keyToUse === scope.tableRowDimensions[dimension]){
-                               
-                                scope.rowElementArrayToCapture[item] = valueToUse;
-                            
-                              }
-                            } 
-                      }); 
-                       
-                   }
+                 
                    _.forEach(scope.workbookUploadedSheetsData, function(vvv, kkk) {
                      var colCount = -1;
                      scope.finalRowCellArrayToCapture[kkk] = [];
+                     
+                    if(kkk >= scope.tableColumnDimensions.length-1){
+
+                     //console.log( kkk,  "kkk");
+                     if( ((scope.tableRowDimensions).toString() ).indexOf(kkk) === -1  && ((scope.tableColumnDimensions).toString() ).indexOf(kkk) === -1 ){
+                       var currentRow = kkk-(scope.tableColumnDimensions.length-1);
                       _.forEach(vvv, function(vv, kk) {
-                        
-                        for(dimension in scope.tableRowDimensions){
-                          if(kk != scope.tableRowDimensions[dimension]){
-                            for(coldimension in scope.tableColumnDimensions){
+                          
+                             
+                           if( ((scope.tableRowDimensions).toString()).indexOf(kk) === -1){
                               
-                              if(kk != scope.tableColumnDimensions[coldimension] ){
-                                
-                              //  scope.rowElementArrayToCapture[kkk][scope.tableColumnDimensions[coldimension]] = kk;
-                               // scope.rowElementArrayToCapture[kkk]['Value'] = vv;
-                                
-                                colCount++;
-                                var ref = scope.table.data()[kkk].cells[colCount].reference();
+                                  if( ((scope.tableColumnDimensions).toString()).indexOf(kk) === -1){
+                             
+                               // console.log('####', ((scope.tableColumnDimensions).toString()).indexOf(kk), kk,"  Col", "ROW # : ",kkk, vv)
+                              
+                                if(scope.table.data()[currentRow] != undefined && scope.table.data()[currentRow] != null ){
                                  
-                                scope.sendValueToCube(ref, vv, kkk);
-                                 scope.sent++;
-                               // console.log(scope.table.data()[kkk].cells[colCount].reference(), scope.rowElementArrayToCapture[kkk]['Account'], scope.rowElementArrayToCapture[kkk]['Value'], scope.rowElementArrayToCapture[kkk][scope.tableColumnDimensions[coldimension]], "column"); 
+                                  colCount++;
+                                   if(scope.table.data()[currentRow].cells[colCount] != undefined && !scope.table.data()[currentRow]['cells'][colCount].isReadOnly){
+                                     var ref = scope.table.data()[currentRow].cells[colCount].reference();
+                                    // console.log(vv, currentRow, ref, "currentRow");
+                                     //console.log('ref', ref, vv, kkk, "$$$")
+                                    if( !vv  || vv === '-' || vv === '' || vv == 0 ){
+
+                                    }else{
+                                      scope.createRequest = true;
+                                      for(var tyt = 0; tyt < scope.consolidatedColumnsElementNames.length;tyt++ ){
+                                         if( ((ref).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) > -1){
+                                         scope.createRequest = false;
+                                         //  console.log("DONT SEND THE REQUEST FOR THE COLUMN",scope.consolidatedColumnsElementNames[tyt], ((refer).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) )
+                                         }else{
+                                           
+                                         }
+                                      }
+                                      
+                                      if(scope.createRequest === true){
+                                         console.log(currentRow, colCount, "saving value into the cube", ((vv+'').split('(').join('-')).split(')').join(''))
+                                        scope.sendValueToCube(ref, ((vv+'').split('(').join('-')).split(')').join(''), currentRow, colCount);
+                                        scope.sent++;
+                                           
+                                           
+                                       }
+                                      }
+                                     
+                                  
+                                   }
+                                   
+                                }
                               }
-                               
+                                 
                             }
-                          }
-                        }
+                               // console.log(scope.table.data()[kkk].cells[colCount].reference(), scope.rowElementArrayToCapture[kkk]['Account'], scope.rowElementArrayToCapture[kkk]['Value'], scope.rowElementArrayToCapture[kkk][scope.tableColumnDimensions[coldimension]], "column"); 
+                             
+                               
+                             
+                         
+                      
                          
                        
                       });
+                     }
+                    }
                      // console.log( scope.finalRowCellArrayToCapture[kkk] , "$$$$");
 
                    });
                    
                     
                    //console.log( scope.rowElementArrayToCapture, key, value "$$$$");
-                    //console.log("dimensional order", scope.table.data()[0].elements[0]['dataset']['dimensions']['rows'][0], scope.table.data()[0].elements[0]['dataset']['dimensions']['rows'].length,scope.table.data()[0].elements[0]['dataset']['dimensions']['columns'][0],scope.table.data()[0].elements[0]['dataset']['dimensions']['columns'].length, scope.elementArray );
-                      
+                     
                         
                         
                  
@@ -952,7 +932,7 @@
                   });
                      
                
-
+                   
                    
               };
               if (xlsxflag) {
@@ -965,33 +945,30 @@
                 }
                
             });
+          
                
             }
             scope.saving = 0;
             scope.lists.cellPutRequests = [];
-            scope.sendValueToCube = function(reference, v, index){
-              //console.log(index, "index to save")
+            scope.sendValueToCube = function(reference, v, index, column){
+               
               var refer = reference 
-                scope.saving++;
-                if(scope.table.data()[index]['elements'][0]['element']['attributes'].Type === 'N'    ){
-                 //console.log( scope.table.data()[index]['cells'][0].isReadOnly  ,scope.rowElementArrayToCapture[index]);
-                 if( !v  || v === '-' || v === '' ){
-
-                 }else{
-                  scope.createRequest = true;
-                   for(var tyt = 0; tyt < scope.consolidatedColumnsElementNames.length;tyt++ ){
-                      if( ((refer).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) > -1){
-                      scope.createRequest = false;
-                        console.log("DONT SEND THE REQUEST FOR THE COLUMN",scope.consolidatedColumnsElementNames[tyt], ((refer).toString()).indexOf(scope.consolidatedColumnsElementNames[tyt]) )
-                      }else{
+              scope.saving++;
+              //  console.log( v, index, "index to save")
+           
+            
+             
+                
+             
+                 
+              
+                
+                  //console.log( scope.table.data()[index]['cells'][0].isReadOnly);
+                 
                         
-                      }
-                   }
-                   
-                   if(scope.createRequest === true){
                       var request = {
                         value: v, 
-                        instance:"dev", 
+                        instance:$rootScope.defaults.settingsInstance, 
                         cube: scope.cubeName, 
                         cubeElements:refer
                         };
@@ -999,20 +976,19 @@
                        // console.log("send to the cube", scope.lists.cellPutRequests)
                         
                         
-                    }
-                   }
+                     
                   
                   
                  
                    // console.log(request);
 
-                }
+                
                  
               
                 
             }
             $rootScope.saveAllElements = function(){
-            console.log(scope.lists.cellPutRequests, scope.lists.cellPutRequests.length, "save");
+        //console.log(scope.lists.cellPutRequests, scope.lists.cellPutRequests.length, "save");
               if( scope.lists.cellPutRequests.length > 0){
                     $tm1Ui.cellSetPut(scope.lists.cellPutRequests).then(function(result){
                                         
@@ -1032,29 +1008,58 @@
                                             
                                           });
                                           
-                                          console.log("SAVED")
+                                    //console.log("SAVED")
                                       
                                       
 
                                   }else{
-                                    
+                                    $ngBootbox.alert('Data FAILED to SAVE to TM1 Cube:'+scope.cubeName+'!')
+                                          .then(function() {
+                                            scope.alertOpen = false;
+                                            $timeout(
+                                              function(){
+                                                scope.lists.cellPutRequests = [];
+                                                $tm1Ui.dataRefresh();
+                                                $("#ngexcelfile")[0].files[0].name = '';
+                                                
+                                              },2000
+                                            )
+                                            
+                                          });
                                         
-                                  console.log("FAILED");
+                                 //console.log("FAILED");
                                       
                                   }
                               });
+              }else{
+                $ngBootbox.alert('All Cells in view are read only cells, no data entry allowed!')
+                .then(function() {
+                  scope.alertOpen = false;
+                  $timeout(
+                    function(){
+                      scope.lists.cellPutRequests = [];
+                      $tm1Ui.dataRefresh();
+                      $("#ngexcelfile")[0].files[0].name = '';
+                      
+                    },2000
+                  )
+                  
+                });
               }
            
             }
             scope.getFileLoaded = function(){
-            
-                  if($("#ngexcelfile")[0].files[0] && $("#ngexcelfile")[0].files[0].name != '' ){
-                    console.log($("#ngexcelfile")[0].files[0].name);
-                    return 'Upload : '+$("#ngexcelfile")[0].files[0].name;
+            if($("#ngexcelfile")[0] != undefined && $("#ngexcelfile")[0] != null){
+              if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name != '' ){
+                //  console.log($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name);
+                //  return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
+                  return 'PREVIEW';
 
-                  }else{
-                    return '';
-                  }
+                }else{
+                  return '';
+                }
+            }
+                  
                 
                
                
@@ -1194,6 +1199,7 @@
                 scope.rowTotalConsolidationArray = [];
                 scope.refreshNew = function(newdataset){ 
                   if(scope.chartName === 'Pie'){
+                    
                     scope.options.chart.x =  function(d){ if(d){ console.log("pie",d); return d.key; } }
                       
                   }else{
@@ -1338,7 +1344,7 @@
                       $rootScope.setMdx($rootScope.mdxString);
                     }else{
                      
-                    console.log("id to load ##### ",scope.mdxId[scope.tableId], "    ##### table = ", scope.tableId,  "   useMdx  = " , $rootScope.useMdxNow)
+              //console.log("id to load ##### ",scope.mdxId[scope.tableId], "    ##### table = ", scope.tableId,  "   useMdx  = " , $rootScope.useMdxNow)
                      
                     $tm1Ui.cubeExecuteNamedMdx(scope.tm1Instance, scope.mdxId[scope.tableId],   scope.cubeMdxParams ).then(function(result){
                         if(!result.failed){
@@ -1383,7 +1389,7 @@
                                       
                 scope.dataset = scope.dataset;
                     
-                    scope.optionsNew[scope.tableId] = {preload: false, watch: false, sortType: null, sortReverse: false, filter: scope.filter};
+                    scope.optionsNew[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
                     
                    scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                    
@@ -1524,7 +1530,7 @@
 
                             var tt = JSON.stringify(cellArrayFromJson) 
                             if(scope.chartName === 'Pie'){
-                              var ttT = JSON.stringify(cellArrayFromJson[0]) 
+                              var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]) 
                               jsonRowData[row]= JSON.parse(ttT);
                             }else{
                               jsonRowData[row]["values"] = JSON.parse(tt);
@@ -1554,7 +1560,11 @@
 
 
               scope.columnSortedRev= [];
-
+              scope.selectColumnForPieChart = function(col, index){
+                scope.selectedColumnForPieChart = index;
+                scope.refreshNew(scope.cubeName, scope.cubeView);
+          //console.log("Column selected to use in the chart")
+              }
               scope.sortTableBy = function(alias,name){
                 if(alias){
                   scope.table.sort(alias);
@@ -1562,7 +1572,7 @@
                   scope.columnSortedRev = scope.table['_sortReverse'] ;
                   
                       
-                      console.log(scope.columnSortedRev, "table");
+                //console.log(scope.columnSortedRev, "table");
                       $timeout(
                         function(){
                          
@@ -1576,7 +1586,7 @@
                   scope.columnSortedRev = scope.table['_sortReverse'] ;
                   
                       
-                       console.log(scope.columnSortedRev, "table")
+                 //console.log(scope.columnSortedRev, "table")
                        $timeout(
                         function(){
                            
@@ -1595,7 +1605,7 @@
                   
                   scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, cube, result, scope.attributeOptions);
                                       
-                  scope.options[scope.tableId] = {preload: false, index: 0, pageSize: scope.currentRowCount, watch: false, sortType: null, sortReverse: false, filter: scope.filter};
+                  scope.options[scope.tableId] = {preload: false, index: 0, pageSize: scope.currentRowCount, watch: false, filter: scope.filter};
                   if(scope.table){
                       if(scope.table.options){
                        //console.log(scope.table, "scope.tablescope.table")
@@ -1609,12 +1619,12 @@
                        
                   }
                    scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
-                   console.log("table columns", scope.table, scope.table['dataSource'][0]['cells'][0]['dataset']['dimensions']['columns'][0]);
+             //console.log("table columns", scope.table, scope.table['dataSource'][0]['cells'][0]['dataset']['dimensions']['columns'][0]);
                    
                     scope.tableColumnDimensionArray = scope.table['dataSource'][0]['cells'][0]['dataset']['dimensions']['columns'];
                     for(var gxs = 0; gxs < scope.tableColumnDimensionArray.length; gxs++){
                        $tm1Ui.dimensionElements(scope.tm1Instance, scope.tableColumnDimensionArray[gxs]).then(function(result){
-                         console.log("RESULT COLUMN DIMENSION ELEMENTS", result);
+                   //console.log("RESULT COLUMN DIMENSION ELEMENTS", result);
                         for(var tte = 0; tte < result.length; tte++)
                         {  
                           if(result[tte]['Type'] === 'Consolidated'){ 
@@ -1624,13 +1634,13 @@
                             
                           }
                         }
-                        console.log('scope.consolidatedColumnsElementNames',  scope.consolidatedColumnsElementNames);
+                  //console.log('scope.consolidatedColumnsElementNames',  scope.consolidatedColumnsElementNames);
                         
                      });
                     }
                     
                    scope.table.pageSize(scope.currentRowCount);
-                   scope.table.sort('Account');
+                  
                
                    if(scope.table.data()[0] != undefined && !scope.table.data()[0]){
                      
@@ -1643,7 +1653,7 @@
                    
                    //scope.table = scope.table;
                    scope.table.refresh();
-                   scope.table.sort('Account');
+                    
                    $rootScope.table = scope.table;
                   
                    $rootScope.dimensionsOnRows = scope.dataset['dimensions']['rows'];
@@ -1752,7 +1762,8 @@
                        }
                        var tt = JSON.stringify(cellArrayFromJson) 
                        if(scope.chartName === 'Pie'){
-                          var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                          var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]); 
+                          jsonRowData[row]= JSON.parse(ttT);
                        }else{
                          jsonRowData[row]["values"] = JSON.parse(tt);
                        }
@@ -1924,14 +1935,14 @@
                                  
                                   
                             } 
-                            if( $($sideContent)){
+                            if( $($sideContent) && document.getElementById('searchColumn'+scope.tableId)){
                             
                               $($sideContent).css('margin-top', -$($body).scrollTop());
                               
                               if(scope.chartVisible){
                                 //console.log((document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) )+(document.getElementById('head'+scope.tableId).getBoundingClientRect().height);
                                 if(scope.tableHeight > 0){
-                                  console.log(scope.tableHeight, " - ",scope.tableHeightBottomOffset, "- ",(document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top) , "########");
+                            //console.log(scope.tableHeight, " - ",scope.tableHeightBottomOffset, "- ",(document.getElementById('optionSection'+scope.tableId).getBoundingClientRect().top) , "########");
                                   
                                   $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) )  + (document.getElementById('chartRow'+scope.tableId).getBoundingClientRect().height ) -(3)  )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
@@ -1940,7 +1951,7 @@
                                 }
                                  
                               }else{
-                                if(scope.tableHeight){
+                                if(scope.tableHeight ){
                                  
                                 $($sideContent).css('height', ((scope.tableHeight) - (scope.tableHeightBottomOffset)-((( (38) ) )) + document.getElementById('searchColumn'+scope.tableId).getBoundingClientRect().height ) + $($body).scrollTop() );
                                 }else{
@@ -2054,7 +2065,7 @@
                     //console.log(result, "scope.tablescope.table")
                          scope.dataset = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, result, scope.attributeOptions);
                         
-                         scope.options[scope.tableId] = {preload: false, watch: false, index: 0, pageSize: scope.currentRowCount, sortType: null, sortReverse: false, filter: scope.filter};
+                         scope.options[scope.tableId] = {preload: false, watch: false, index: 0, pageSize: scope.currentRowCount,  filter: scope.filter};
                          if(scope.table){
                              if(scope.table.options){
                               //console.log(scope.table, "scope.tablescope.table")
@@ -2068,7 +2079,7 @@
                               
                          }
                           scope.table = $tm1Ui.tableCreate(scope, scope.dataset.rows, scope.options[scope.tableId]);
-                          scope.table.sort('Account');
+                         
                           scope.table.pageSize(scope.currentRowCount);
                          
                           if(scope.table.data()[0] != undefined && !scope.table.data()[0]){
@@ -2207,7 +2218,8 @@
                               }
                               var tt = JSON.stringify(cellArrayFromJson) 
                               if(scope.chartName === 'Pie'){
-                                 var ttT = JSON.stringify(cellArrayFromJson[0]); jsonRowData[row]= JSON.parse(ttT);
+                                 var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]); 
+                                 jsonRowData[row]= JSON.parse(ttT);
                               }else{
                                 jsonRowData[row]["values"] = JSON.parse(tt);
                               }
@@ -2611,7 +2623,7 @@
              
     }
     $rootScope.setMdxId = function(mdxId, cube){
-      console.log("setMdxId", mdxId, "indide the directive after the custom page is changed")
+//console.log("setMdxId", mdxId, "indide the directive after the custom page is changed")
           scope.mdxId[scope.tableId] =  mdxId; 
           scope.cubeName = cube;
           scope.refresh(scope.cubeName,scope.cubeView);
@@ -2785,7 +2797,7 @@
                         if(name === "Transactions"){
                             scope.datasetDrill = $tm1Ui.resultsetTransform(scope.tm1Instance, scope.cubeName, data);
                            
-                            var options = {preload: false, watch: false, sortType: null, sortReverse: false, index: 0, pageSize: scope.currentRowCount,   filter: scope.filter};
+                            var options = {preload: false, watch: false,  index: 0, pageSize: scope.currentRowCount,   filter: scope.filter};
                             if(scope.tableDrill){
                                 
                               //  options.pageSize = scope.tableDrill.options.pageSize;

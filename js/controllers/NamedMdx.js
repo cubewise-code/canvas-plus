@@ -1,5 +1,5 @@
-app.controller('NamedMdxCtrl',  ['$scope',  '$rootScope', '$log', '$tm1Ui','$localStorage','$window', '$timeout',
-function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
+app.controller('NamedMdxCtrl',  ['$scope',  '$rootScope', '$log', '$tm1Ui','$localStorage','$window', '$timeout', '$location',
+function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout, $location) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
     *     lists.* should be used to store any lists that are used with ng-repeat, i.e. tm1-ui-element-list
@@ -16,8 +16,25 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
     
     $rootScope.cubeView = '';
     $rootScope.pageTitle = "Super Named MDX ";
-    $rootScope.cubeName = "General Ledger" 
-    $rootScope.mdxId = "Data Entry"
+    $scope.cubeNUrlValue = decodeURI($location.search()['cubeName']); 
+    $scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
+    if($scope.mdxIdUrlValue != null && $scope.mdxIdUrlValue != 'undefined'     ){
+  //console.log($scope.cubeNameUrlValue, "URL VALUES TRACKED" )
+        $rootScope.mdxId  = $scope.mdxIdUrlValue; 
+        
+    }else{
+        $rootScope.mdxId = "Data Entry"
+    }
+    if($scope.cubeNUrlValue  != null && $scope.cubeNUrlValue != 'undefined'){
+         
+        $rootScope.cubeName = decodeURI($location.search()['cubeName']);
+    }else{
+        $rootScope.cubeName = "General Ledger" 
+    }
+
+    
+
+     
     $rootScope.mdxString = "SELECT {[Period].[Year], [Period].[Jan], [Period].[Feb], [Period].[Mar], [Period].[Apr], [Period].[May], [Period].[Jun], [Period].[Jul], [Period].[Aug], [Period].[Sep], [Period].[Oct], [Period].[Nov], [Period].[Dec]} ON COLUMNS, {TM1DRILLDOWNMEMBER( {[Account].[Net Income]}, ALL, RECURSIVE )} ON ROWS FROM ["+$rootScope.cubeName+"] WHERE ([Year].&[2018], [Region].&[England], [General Ledger Measure].&[Amount], [Currency].&[Local], [Version].&[Budget], [Department].&[Corporate])" 
     $rootScope.useMdx = false;
     $rootScope.useDbr = false;
@@ -33,7 +50,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout) {
         //console.log($rootScope.mdxParameters);
     }
     $scope.read = function(workbook){
-        console.log('do read', workbook);
+  //console.log('do read', workbook);
 
     }
     $scope.$watch(function () {

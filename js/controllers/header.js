@@ -80,11 +80,11 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
              
     };
     $scope.on_request_success = function(response) {
-        console.debug('response', response);
+  //console.debug('response', response);
     } 
     
     $scope.on_request_error = function(r, text_status, error_thrown) {
-        console.debug('error', text_status + ", " + error_thrown + ":\n" + r.responseText);
+  //console.debug('error', text_status + ", " + error_thrown + ":\n" + r.responseText);
     }
     
     $rootScope.loadWeatherViaTi = function(regionName,userName){
@@ -148,15 +148,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
                  
             }) // <=== was missing
         
-        //  $tm1Ui.processExecute("dev","Cube.User Weather.loadFromSrc").then(function(result){
-        //    //console.log("NEW WEATHER IS UPDATED FOR USER", result)
-        //     if(result.success){
-                
-        //         
-        //     }else{
-                
-        //     }
-        // })
+         
     }
     $rootScope.cloudArray = [];
     $rootScope.showClouds = true;
@@ -288,10 +280,10 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
        $timeout(
            function(){
             if(!$rootScope.nightTime){ 
-                console.log("color to use", "WHITE")  
+          //console.log("color to use", "WHITE")  
                 $rootScope.colortouse  = 'transparent'; 
             }else{
-               console.log("color to use", "DARK") 
+         //console.log("color to use", "DARK") 
                
                 $rootScope.colortouse  =  '#000000c9' ;
               
@@ -336,7 +328,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     /// REFRESH ALL COMPONENTS ON THE PAGE FUNCTION FIRED EVERY TIME THE 3 KPI OR THE MAIN CHART NEEDS TO SHOW NEW VALUES
         $scope.initializeVariables = function(){
             
-            $tm1Ui.applicationUser("dev").then(function(data){
+            $tm1Ui.applicationUser($rootScope.defaults.settingsInstance).then(function(data){
 
                 $rootScope.values.user = data;
                 

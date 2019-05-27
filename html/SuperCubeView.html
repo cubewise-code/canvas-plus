@@ -319,7 +319,24 @@
 						margin-left:-100px;
 						opacity:0;
 				}
-							
+				input[type="file"] {
+    display: none;
+}		
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding:5px 5px;
+ 
+    cursor: pointer;
+		background-color: transparent !important; 
+		color: #fff; 
+		border:1px solid #fff; 
+		display:inline-block; 
+		top:0px; 
+		width:67px; 
+		opacity:1;
+		text-align:center;
+}
 		 
 	</style>
 	 
@@ -365,22 +382,31 @@
 						 <span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 								<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
 						</span>
-						<div ng-if="!tableHide  " ng-hide="lists.cellPutRequests.length > 0"  class="pull-left text-left"  
+						<div ng-if="!tableHide  " ng-hide="lists.cellPutRequests.length > 0 || $root.useMdxNow"  class="pull-left text-left"  
 							style=" margin-left:0px; width:auto; overflow:hidden; height:33px; padding:5px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-								 	 
-					 				
-									<input  ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"  
-											style=" float: right;display: block;top: 0px;width: 300px; height:33px; margin-left:67px;  position:absolute;" type="button" value="Read Data"  ng-click="READ(file)"   />  
-									 <input  style=" background-color: transparent; color: #fff; border:1px solid #fff; display:inline-block; top:0px; width:67px;" type="file" id="ngexcelfile" ng-change="getFileLoaded()" ng-model="file"/>
-						 		
+								 	 	<input  ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"  
+											style=" float: right; display: block;top: 0px; width: 200px; height:33px; margin-left:67px;  position:absolute; opacity:0;" type="button" value=""  ng-click="READ(file)" ng-mouseover="getFileLoaded()"  />  
+								<label class="custom-file-upload">
+									<span>UPLOAD</span>
+									<input  type="file" id="ngexcelfile"  ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()" ng-change="getFileLoaded()" ng-model="file"/>
+
+								 
+									</label> 
+								 
 								 
 						</div>
-						<span  ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"   style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
-					  style="color:#333;" ng-show="!lists.cellPutRequests.length" >{{getFileLoaded()}}</span>
+						<span ng-if="!tableHide" ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"  
+						 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
+					   ng-show="!lists.cellPutRequests.length && !$root.useMdxNow" >{{getFileLoaded()}}</span>
+						<span ng-click="$root.saveAllElements()"   
+						style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
+							ng-show="lists.cellPutRequests.length && !$root.useMdxNow" >SAVE ALL</span>
+							<span ng-click="lists.cellPutRequests = [];"   
+							  style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
+								ng-show="lists.cellPutRequests.length && !$root.useMdxNow" >CANCEL</span>
 					 
-					 
-						<span style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
-						ng-show="lists.cellPutRequests.length > 0"  ng-click="$root.saveAllElements()" style="color:#333;" >SAVE DATA TO TM1</span>
+						 
+			 
 					 
 						<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "  
 						 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
@@ -397,7 +423,7 @@
 					</span>
 				 
 							<span ng-show="!hideChartAsOption">
-						<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.parametersVisible = false; chartVisible = !chartVisible; showChartOptions = !chartVisible ? false:''; showTypeLineOptions = !chartVisible ? false:'';   updateUrlChart(); dispatchResize(); api.update();"   
+						<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.overCol[tableId] = false; $root.parametersVisible = false; chartVisible = !chartVisible; showChartOptions = !chartVisible ? false:''; showTypeLineOptions = !chartVisible ? false:'';   updateUrlChart(); dispatchResize(); api.update();"   
 						style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 							 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 						</span>
@@ -482,7 +508,7 @@
 										<div class="out-shadow" ng-init="activeOption = 1" 
 										style="width:100%; max-width:100px; font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
 											
-											<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer;" 
+											<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;" 
 														ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset);" class="dropdown-item"  >
 													 
 														Line
@@ -512,7 +538,7 @@
 		
 											</button>
 											<button ng-show="chartName != 'Pie'" style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;  " 
-											ng-click="activeOption = 4; activeName = 'pieChart';  chartName = 'Pie' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset); " class="dropdown-item" >
+											ng-click="activeOption = 4; activeName = 'pieChart';  chartName = 'Pie' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; $root.overCol[tableId] = false; options.chart.type = activeName;  refreshNew(dataset); " class="dropdown-item" >
 													Pie  
 													<span class="pull-right">
 															<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
@@ -773,10 +799,12 @@
 
 												id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
 												style="border-right:1px solid #ccc; border-top:1px solid #ddd;  font-size:0.7em;   cursor:pointer; vertical-align:baseline;" 
-												ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible ? 'steelblue':'#f0efef', 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff':'#333' }"
-												ng-repeat="col in headerrow.columns" ng-if="col.visible  " 
+												ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible  ? 'steelblue': (chartName === 'Pie' && $index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1   ? 'steelblue':'#f0efef'), 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff': ($index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1 && chartName === 'Pie' ? '#fff': '#333') }"
+												ng-repeat="col in headerrow.columns track by $index"  ng-if="col.visible  " 
 											 	colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-												
+												 <span ng-if="chartName === 'Pie' && $index != selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1  "  style="width:10px; height:10px; font-size:1.2em;  background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer" 
+												 ng-click="selectColumnForPieChart(col, $index)"  ><small><i class="fa fa-pie-chart"></i>   </small></span>	
+										 
 												<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:top; cursor:pointer" 
 													ng-click="increaseDataWidth()"  ><small><i class="fa fa-caret-right"></i></small></span>
 												<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:left;display:inline-block; margin:0 auto; left:-5px; top:-5px; vertical-align:bottom; cursor:pointer" 
