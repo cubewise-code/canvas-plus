@@ -299,6 +299,13 @@
 		 
 		 
 	}
+	#triangle-topleft {
+      width: 0;
+      height: 0;
+      border-top: 10px solid red;
+      border-left: 10px solid transparent;
+			margin-right:8px;
+  }
 	 
 		</style>
 	 
@@ -356,8 +363,8 @@
 					ng-click="$root.componentFullScreen[tableId] = !$root.componentFullScreen[tableId] ; $root.toggleFullScreenComponent(tableId, $root.componentFullScreen[tableId]);  doResizeChart($root.componentFullScreen[tableId]);"  
 					class="pull-left text-left"  
 					style="margin:7px;   margin-left:0px; width:auto; overflow:hidden; height:auto; color:#fff; float:left; left:0px; padding-left:10px; cursor:pointer;">
-						<i   ng-class="{'fa-compress':$root.componentFullScreen[tableId], 'fa-expand':!$root.componentFullScreen[tableId]}" 
-						class="fa  "></i>
+						<i ng-class="{'fa-compress':$root.componentFullScreen[tableId], 'fa-expand':!$root.componentFullScreen[tableId]}" 
+						class="fa "></i>
 	
 				 
 				</span>  
@@ -840,7 +847,7 @@
 									<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
 											 
 											class="{{tableDimensionColumnClass}} overflowhidden"
-											ng-style="{ 'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
+											ng-style="{  'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
 											style=" border-left:1px solid #ccc; border-right:1px solid #ccc; " 
 											ng-repeat="el in row.elements track by $index" 
 											 
@@ -866,8 +873,29 @@
 										ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); " 
 										ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
 										ng-repeat="cell in row.cells track by $index" class="text-right" >
-										
+										 
 									 
+										<span  ng-show="cell.cellUpdate" style="text-align:right; width:100%; height:auto; ">
+											 <!-- <span style="color:red" ng-if="cell.cellUpdateVal < 0 && isNaN(cell.cellUpdateVal)" >({{(cell.cellUpdateVal).split('-').join('')}})</span>
+											 <span style="color:#333" ng-if="cell.cellUpdateVal > 0 && isNaN(cell.cellUpdateVal)" >{{cell.cellUpdateVal}}</span>
+											 <span style="color:#333" ng-if="!isNaN(cell.cellUpdateVal)" >{{cell.cellUpdateVal}}</span> -->
+											 <input style="font-size:1em !important; border:2px solid red"
+											  
+											 contenteditable='true'  
+											 id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
+											 
+											 type="text"  
+											 class="form-control text-right" 
+											  
+											 ng-attr-tabindex="{{row.index}}" 
+											  
+											 
+											 ng-value="cell.cellUpdateVal" 
+											 ng-focus="getFocus($event);  " 
+											 ng-blur="lostFocus($event);"  />
+	 
+										</span>
+									 	<span ng-show="!cell.cellUpdate">
 									 
 											<input style="font-size:1em !important;"
 											cellref="{{(cell.reference()).toString()}}" 
@@ -964,7 +992,7 @@
 											 tm1-elements='{{(cell.reference()).toString()}}' 
 											 >
 										</tm1-ui-dbr>
-										
+										</span>
 										<span ng-if="  !$root.useDbr && $root.useMdxNow && $root.useMdxNow === true " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
 									 
 										<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
