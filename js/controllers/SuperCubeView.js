@@ -41,6 +41,7 @@
                 scope.lists = {
                   records:[]
                 }
+                scope.mouseOverCellUploadedFromExcel = [];
                 scope.panelHeading = $attributes.panelHeading;
                 scope.hideCol = $location.search()['hideCol'];
                 scope.hideColumn = [];
@@ -894,7 +895,8 @@
                                         console.log(scope.table.data()[currentRow].cells[colCount].value, "@@@@");
                                         scope.table.data()[currentRow].cells[colCount].cellUpdate = true;
                                         scope.table.data()[currentRow].cells[colCount].cellUpdateVal = ((vv+'').split('(').join('-')).split(')').join('');
-                                         console.log(currentRow, colCount, "saving value into the cube", ((vv+'').split('(').join('-')).split(')').join(''))
+                                        scope.table.data()[currentRow].rowToUpdate = true;
+                                        console.log(currentRow, colCount, "saving value into the cube", ((vv+'').split('(').join('-')).split(')').join(''))
                                         scope.sendValueToCube(ref, ((vv+'').split('(').join('-')).split(')').join(''), currentRow, colCount);
                                         scope.sent++;
                                            
@@ -991,7 +993,7 @@
                 
             }
             $rootScope.saveAllElements = function(){
-        //console.log(scope.lists.cellPutRequests, scope.lists.cellPutRequests.length, "save");
+            //console.log(scope.lists.cellPutRequests, scope.lists.cellPutRequests.length, "save");
               if( scope.lists.cellPutRequests.length > 0){
                     $tm1Ui.cellSetPut(scope.lists.cellPutRequests).then(function(result){
                                         
@@ -2008,7 +2010,7 @@
                 )
                 
             }
-            scope.decideRowToHideRow = function(tableinview, searchfield, searchexists){
+            scope.decideRowToHideRow = function(tableinview, searchfield, searchexists, rowtoUpdate){
 
                // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows[scope.tableId]), "function to decide row view")
                 if(tableinview === true){
@@ -2022,15 +2024,33 @@
                    // console.log("hide row")
                     return true;
                   }else{
+                    if(scope.lists.cellPutRequests.length > 0 && !rowtoUpdate){
+                      return true;
+                    }else{
+                      return false;
+                    }
                     //console.log("show row")
-                    return false;
+                     
                   }
                  
                 }
                  
                  
             }
-            scope.decideRowToHideFreezePane = function(tableinviewfreeze, searchfieldfreeze, searchexistsfreeze){
+            scope.removeRecordFromList = function(cell){
+              var currentCell =  (cell.reference()).toString();
+               
+              for(var cellinList = 0 ; cellinList < scope.lists.cellPutRequests.length; cellinList++ ){
+                if((scope.lists.cellPutRequests[cellinList].cubeElements).toString() === currentCell){
+                   
+                  scope.lists.cellPutRequests.splice(cellinList, cellinList+1)
+                }else{
+                  
+                }
+                console.log(cell.reference());
+              }
+            }
+            scope.decideRowToHideFreezePane = function(tableinviewfreeze, searchfieldfreeze, searchexistsfreeze, rowtoUpdate){
 
               // console.log(tableinview,searchfield, (searchexists+'').indexOf(scope.selections.searchRows[scope.tableId]), "function to decide row view")
                if(tableinviewfreeze === false){
@@ -2051,7 +2071,11 @@
                 
                  }else{
                    //console.log("show row")
+                   if(scope.lists.cellPutRequests.length > 0 && !rowtoUpdate){
+                    return false;
+                  }else{
                    return true;
+                  }
                  }
                 
                }

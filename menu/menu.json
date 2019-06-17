@@ -22,5 +22,31 @@
       "page": "namedmdx-grid"
     },
     "expanded": false
+  },
+  {
+    "label": "Page1",
+    "icon_class": "fa-file-text-o",
+    "children": [
+      {
+        "label": "Sub Page 1",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "page1/sub-page-1"
+        },
+        "expanded": false
+      },
+      {
+        "label": "Sub Page 2",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "page1/sub-page-2"
+        },
+        "expanded": false
+      }
+    ],
+    "data": {
+      "page": "page1"
+    },
+    "expanded": true
   }
 ]
