@@ -945,7 +945,7 @@
 						</td>
 						<td id="headerColHeight{{tableId}}{{$index}}"
 							ng-style="{  'width':dataWidth+'px ', 'min-width':dataWidth+'px ' , 'border': cell.cellUpdate ?  '2px solid red':'1px solid #ccc'}"
-							 
+							ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); "
 							ng-mouseover="mouseOverCellUploadedFromExcel[$parent.$index][$index] = true"
 							ng-mouseleave="mouseOverCellUploadedFromExcel[$parent.$index][$index] = false"
 							ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"
@@ -967,16 +967,15 @@
 										ng-click="cell.cellUpdate = false; row.rowToUpdate = false; removeRecordFromList(cell)"></i>
 
 								</span>
-								<input style="font-size:1em !important; " ng-if="!isNaN(cell.cellUpdateVal)" contenteditable='true'
-									id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" type="text"
+								<input cellref="{{(cell.reference()).toString()}}" style="font-size:1em !important; " ng-if="!isNaN(cell.cellUpdateVal)" contenteditable='true'
+								 type="text"
 									class="form-control text-right" ng-attr-tabindex="{{row.index}}"
-									ng-value="(cell.cellUpdateVal | number:0)" ng-focus="getFocus($event);  "
-									ng-blur="lostFocus($event);" />
+									ng-value="(cell.cellUpdateVal | number:0)" />
 
-								<input style="font-size:1em !important; " ng-if="isNaN(cell.cellUpdateVal)" contenteditable='true'
-									id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" type="text"
+								<input  style="font-size:1em !important; " ng-if="isNaN(cell.cellUpdateVal)" contenteditable='true'
+								 type="text"
 									class="form-control text-left" ng-attr-tabindex="{{row.index}}" ng-value="(cell.cellUpdateVal)"
-									ng-focus="getFocus($event);  " ng-blur="lostFocus($event);" />
+								  />
 
 							</span>
 							<span ng-show="!cell.cellUpdate || !mouseOverCellUploadedFromExcel[row.index][$index]">

@@ -1250,12 +1250,13 @@
                           }
                       
                 }
-                
+                scope.focusedInputElementArray =[];
                 scope.getFocus = function($event) {           
                    scope.focusObj = $event.target.id;
                    
-                   scope.focusedInputElementArray =  document.getElementById(scope.focusObj).getAttribute('cellref')
-                 //console.log("add paste event listener",$event.target.id,scope.focusedInputElementArray )
+                   var focusObjId = $event.target.getAttribute('cellref');
+                   scope.focusedInputElementArray =  document.getElementById($event.target.id).getAttribute('cellref');
+                  console.log("add paste event listener",$event.target.id, focusObjId, scope.focusedInputElementArray , document.getElementById($event.target.id).getAttribute('cellref'))
                 }
                 scope.addEventListerToInput = function(id){
                    // document.getElementById(id).addEventListener('paste', scope.handlePaste);
@@ -2045,7 +2046,7 @@
                    
                   scope.lists.cellPutRequests.splice(cellinList, cellinList+1)
                 }else{
-                  
+
                 }
                 console.log(cell.reference());
               }
