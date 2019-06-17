@@ -1053,12 +1053,22 @@
               }
            
             }
+            scope.cancelFileUpload = function(){
+              $("#ngexcelfile")[0].files = [];
+            }
             scope.getFileLoaded = function(){
             if($("#ngexcelfile")[0] != undefined && $("#ngexcelfile")[0] != null){
               if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name != '' ){
                 //  console.log($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name);
                 //  return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
+                if($("#ngexcelfile")[0].files[0].name != ''){
                   return 'PREVIEW';
+                }else{
+                  return '';
+                }
+
+                  
+                  
 
                 }else{
                   return '';
@@ -1253,7 +1263,7 @@
                 scope.focusedInputElementArray =[];
                 scope.getFocus = function($event) {           
                    scope.focusObj = $event.target.id;
-                   
+
                    var focusObjId = $event.target.getAttribute('cellref');
                    scope.focusedInputElementArray =  document.getElementById($event.target.id).getAttribute('cellref');
                   console.log("add paste event listener",$event.target.id, focusObjId, scope.focusedInputElementArray , document.getElementById($event.target.id).getAttribute('cellref'))
@@ -1395,7 +1405,7 @@
                                       
                 scope.dataset = scope.dataset;
                     
-                    scope.optionsNew[scope.tableId] = {preload: false, watch: false,  filter: scope.filter};
+                    scope.optionsNew[scope.tableId] = {preload: false, watch: false, pageSize: scope.currentRowCount, filter: scope.filter};
                     
                    scope.tableNew[scope.tableId] = $tm1Ui.tableCreate(scope, scope.datasetNew[scope.tableId].rows, scope.optionsNew[scope.tableId]);
                    
@@ -2044,11 +2054,16 @@
               for(var cellinList = 0 ; cellinList < scope.lists.cellPutRequests.length; cellinList++ ){
                 if((scope.lists.cellPutRequests[cellinList].cubeElements).toString() === currentCell){
                    
-                  scope.lists.cellPutRequests.splice(cellinList, cellinList+1)
+                  scope.lists.cellPutRequests.splice(cellinList, cellinList+1);
+                  
                 }else{
 
                 }
+
                 console.log(cell.reference());
+              }
+              if(scope.lists.cellPutRequests.length === 0){
+                scope.cancelFileUpload();
               }
             }
             scope.decideRowToHideFreezePane = function(tableinviewfreeze, searchfieldfreeze, searchexistsfreeze, rowtoUpdate){

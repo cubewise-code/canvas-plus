@@ -375,6 +375,14 @@
 		opacity: 1;
 		text-align: center;
 	}
+	 
+	td {
+		padding:5px !important;
+		vertical-align: middle !important;
+		 
+	}
+	 
+	 
 </style>
 
 
@@ -445,7 +453,7 @@
 				<span ng-click="$root.saveAllElements()"
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"
 					ng-show="lists.cellPutRequests.length && !$root.useMdxNow">SAVE ALL</span>
-				<span ng-click="lists.cellPutRequests = [];"
+				<span ng-click="lists.cellPutRequests = []; cancelFileUpload();"
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"
 					ng-show="lists.cellPutRequests.length && !$root.useMdxNow">CANCEL</span>
 				<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "
@@ -739,7 +747,7 @@
 
 
 					</div>
-					<div ng-click="sortTableBy(dataset.headers[$parent.$index]['columns'][$index]['element'].key)"
+					<div 
 						ng-show="col.visible" class="text-center center "
 						ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index))+'px'} "
 						ng-repeat="col in headerrrow.columns track by $index"
@@ -795,7 +803,7 @@
 					</tr>
 					<tr
 						ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() , row.rowToUpdate)"
-						ng-repeat="row in  table.data() | orderBy:columnSorted  track by $index">
+						ng-repeat="row in  table.data() track by $index">
 						<td
 							ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px',   'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
 							style=" border:0px solid transparent; border-right:0px solid #ccc; border-left:1px solid #ccc; vertical-align:text-top; "
@@ -839,7 +847,7 @@
 
 				<tbody ng-click="showChartOptions = false; showTypeLineOptions = false;" id="bodyContent{{tableId}}">
 
-					<tr ng-if="chartVisible && !hideChartAsOption">
+					<tr ng-if="chartVisible && !hideChartAsOption " ng-show="!lists.cellPutRequests.length">
 
 						<td ng-show="!hideTableAsOption  || $index == 0" ng-repeat="el in table.data()[0].elements track by $index"
 							ng-show="el.visible || $index === 0" style="background-color:transparent;">
@@ -888,7 +896,7 @@
 								ng-click="reduceDataWidth()"><small><i class="fa fa-caret-left"></i></small></span>
 
 							<span
-								ng-click="sortTableBy(dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]], dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key)">
+							 >
 								{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}
 
 								<span class="pull-right"
@@ -917,7 +925,7 @@
 
 					<tr id="rowHeightElement{{$index}}" ng-show="!hideTableAsOption "
 						ng-hide=" decideRowToHideRow(tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase(), row.rowToUpdate )"
-						ng-repeat="row in table.data() | orderBy:columnSorted  track by $index">
+						ng-repeat="row in table.data() track by $index">
 						<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"
 							class="{{tableDimensionColumnClass}} overflowhidden"
 							ng-style="{  'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
@@ -948,7 +956,7 @@
 							ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); "
 							ng-mouseover="mouseOverCellUploadedFromExcel[$parent.$index][$index] = true"
 							ng-mouseleave="mouseOverCellUploadedFromExcel[$parent.$index][$index] = false"
-							ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"
+							ng-class="{'tm1-ui-element-consol':  cell.isReadOnly  }"
 							ng-repeat="cell in row.cells track by $index" class="text-right">
 
 
@@ -964,7 +972,7 @@
 									<small class="pull-left" style="padding-left:5px;">New</small>
 									<i class="fa fa-times pull-right" 
 										class="pull-right text-right" 
-										ng-click="cell.cellUpdate = false; row.rowToUpdate = false; removeRecordFromList(cell)"></i>
+										ng-click="cell.cellUpdate = false; row.rowToUpdate = false; removeRecordFromList(cell); "></i>
 
 								</span>
 								<input cellref="{{(cell.reference()).toString()}}" style="font-size:1em !important; " ng-if="!isNaN(cell.cellUpdateVal)" contenteditable='true'
