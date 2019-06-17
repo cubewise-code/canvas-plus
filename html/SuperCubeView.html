@@ -1,1226 +1,1339 @@
+<style type="text/css">
+	.tm1-ui-element-consol {
+		background-color: #f8f8f8;
 
-  <style  type="text/css">
-		.tm1-ui-element-consol{
-			background-color: #f8f8f8;
-	
-		}
-		.tm1-ui-element-consol-1{
-			background-color: #bdebfd;
-	
-		}
-		.tm1-ui-element-consol-2{
-			background-color: #bdebfd;
-	
-		}
-		.tm1-ui-element-consol-3{
-			background-color: #bdebfd;
-	
-		}
-	 
-			.stickyContainer{
-				padding-top:0px;
-				position:fixed;
-				left:0px;
-				background-color:#fff;
-				top:146px;
-				width:100% ;
-				max-width:100%;
-				max-height:100%;
-				padding-bottom:20px;
-				overflow:auto; 
-				transition-property:width, height;  
-					transition-duration: 0.5s, 0.5s;  
-			}
-			 
-	 
-			.fixed-container{
-			
-				pointer-events: none;
-				padding:0px;
-				position:fixed;
-				top:146px;
-				left:0px;
-				width:100%;
-				height:auto;
-				z-index:2;
-				display:block;
-				background-color: transparent;
-				color:#333;
-				display:none;
-				overflow:hidden;
-			}
-			.fixed-container-chart{
-			
-				pointer-events: auto;
-				padding:0px;
-				position:fixed;
-				top:169px;
-				left:0px;
-				width:100%;
-				height:auto;
-				z-index:2;
-				display:block;
-				background-color: transparent;
-				color:#333;
-				
-				overflow:hidden;
-			}
-			.fixed-container-debug{
-				pointer-events: auto;
-				padding:0px;
-				position:fixed;
-				top:169px;
-				left:0px;
-				width:100%;
-				height:auto;
-				z-index:2;
-				display:block;
-				background-color: transparent;
-				color:#333;
-				
-				overflow:hidden;
-			}
-			.fixed-container-side{
-			
-				pointer-events: auto;
-				padding:0px;
-				position:fixed;
-				top:169px;
-				left:0px;
-				width:100%;
-				height:auto;
-				z-index:33;
-				display:block;
-				background-color: transparent;
-				color:#333;
-				
-				overflow:hidden;
-			}
-			.sticky-header{ 
-				opacity:0;
-				background-color:#f0efef;  
-				color:#333;
-				width:2000px;
-			}
-			.fixedFirstColHeader{
-				position:fixed;
-				left:0px;
-				z-index:38;
-				background-color:#fff;
-				display: block;
-			}
-			 
-			.white-bg{
-				background-color: white;
-				color:#666;
-			}
-			.grey-bg{
-				background-color: #f8f8f8;
-				color:#666;
-			}
-			.black-bg{
-				z-index:999;
-				pointer-events:none;
-				background-color: rgba(0,0,0,0);
-				width:100%;
-				height:100%;
-				top:0px;
-				left:0px;
-				display:block;
-				position:fixed;
-				color:#fff;
-				text-align: center;
-			}
-			 
-			 .myPoint{
-					
-				 opacity:0;
-	
-			 }
-			.tm1-ui-export a:last-child{
-			display:none
-			}
-			.tm1-ui-export a:first-child{
-				visibility: hidden;
-				position: relative;
-				color:#fff;
-			}
-			
-			.tm1-ui-export a:first-child::before {
-				padding-left:10px;
-				vertical-align: top;
-				visibility: visible;
-				font-size:1.3em;
-				color:#fff;
-				font-family: FontAwesome;
-				content: "\f1c3";
-			}
-			
-			.table{
-				margin-bottom:0px;
-	
-			}
-			.overflowhidden{
-				overflow:overlay;
-				overflow-x:hidden;
-			}
-			.dashed {
-			stroke-dasharray: 5,5;
 	}
-	
+
+	.tm1-ui-element-consol-1 {
+		background-color: #bdebfd;
+
+	}
+
+	.tm1-ui-element-consol-2 {
+		background-color: #bdebfd;
+
+	}
+
+	.tm1-ui-element-consol-3 {
+		background-color: #bdebfd;
+
+	}
+
+	.stickyContainer {
+		padding-top: 0px;
+		position: fixed;
+		left: 0px;
+		background-color: #fff;
+		top: 146px;
+		width: 100%;
+		max-width: 100%;
+		max-height: 100%;
+		padding-bottom: 20px;
+		overflow: auto;
+		transition-property: width, height;
+		transition-duration: 0.5s, 0.5s;
+	}
+
+
+	.fixed-container {
+
+		pointer-events: none;
+		padding: 0px;
+		position: fixed;
+		top: 146px;
+		left: 0px;
+		width: 100%;
+		height: auto;
+		z-index: 2;
+		display: block;
+		background-color: transparent;
+		color: #333;
+		display: none;
+		overflow: hidden;
+	}
+
+	.fixed-container-chart {
+
+		pointer-events: auto;
+		padding: 0px;
+		position: fixed;
+		top: 169px;
+		left: 0px;
+		width: 100%;
+		height: auto;
+		z-index: 2;
+		display: block;
+		background-color: transparent;
+		color: #333;
+
+		overflow: hidden;
+	}
+
+	.fixed-container-debug {
+		pointer-events: auto;
+		padding: 0px;
+		position: fixed;
+		top: 169px;
+		left: 0px;
+		width: 100%;
+		height: auto;
+		z-index: 2;
+		display: block;
+		background-color: transparent;
+		color: #333;
+
+		overflow: hidden;
+	}
+
+	.fixed-container-side {
+
+		pointer-events: auto;
+		padding: 0px;
+		position: fixed;
+		top: 169px;
+		left: 0px;
+		width: 100%;
+		height: auto;
+		z-index: 33;
+		display: block;
+		background-color: transparent;
+		color: #333;
+
+		overflow: hidden;
+	}
+
+	.sticky-header {
+		opacity: 0;
+		background-color: #f0efef;
+		color: #333;
+		width: 2000px;
+	}
+
+	.fixedFirstColHeader {
+		position: fixed;
+		left: 0px;
+		z-index: 38;
+		background-color: #fff;
+		display: block;
+	}
+
+	.white-bg {
+		background-color: white;
+		color: #666;
+	}
+
+	.grey-bg {
+		background-color: #f8f8f8;
+		color: #666;
+	}
+
+	.black-bg {
+		z-index: 999;
+		pointer-events: none;
+		background-color: rgba(0, 0, 0, 0);
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+		display: block;
+		position: fixed;
+		color: #fff;
+		text-align: center;
+	}
+
+	.myPoint {
+
+		opacity: 0;
+
+	}
+
+	.tm1-ui-export a:last-child {
+		display: none
+	}
+
+	.tm1-ui-export a:first-child {
+		visibility: hidden;
+		position: relative;
+		color: #fff;
+	}
+
+	.tm1-ui-export a:first-child::before {
+		padding-left: 10px;
+		vertical-align: top;
+		visibility: visible;
+		font-size: 1.3em;
+		color: #fff;
+		font-family: FontAwesome;
+		content: "\f1c3";
+	}
+
+	.table {
+		margin-bottom: 0px;
+
+	}
+
+	.overflowhidden {
+		overflow: overlay;
+		overflow-x: hidden;
+	}
+
+	.dashed {
+		stroke-dasharray: 5, 5;
+	}
+
 	.nvd3.nv-scatter .nv-groups .nv-point.hover,
 	.nvd3 .nv-groups .nv-point.hover {
-			stroke-width: 15px !important;
-			fill-opacity: .5 !important;
-			stroke-opacity: .5 !important;
+		stroke-width: 15px !important;
+		fill-opacity: .5 !important;
+		stroke-opacity: .5 !important;
 	}
-	
-	.nvtooltip .with-3d-shadow, .with-3d-shadow .nvtooltip{
-		height:auto;
-		overflow:auto;
-		z-index:33 !important;
-		left:0px !important;
-		position:fixed;
-		margin-top:0px;
-	 
-	 
-		
+
+	.nvtooltip .with-3d-shadow,
+	.with-3d-shadow .nvtooltip {
+		height: auto;
+		overflow: auto;
+		z-index: 33 !important;
+		left: 0px !important;
+		position: fixed;
+		margin-top: 0px;
+
+
+
 	}
-	.nvtooltip,.nvtooltip table  {
-		font-size:10px !important;
+
+	.nvtooltip,
+	.nvtooltip table {
+		font-size: 10px !important;
 	}
+
 	.nvd3 text {
-			font: 400 12px Arial;
-			font-size: x-small;
+		font: 400 12px Arial;
+		font-size: x-small;
 	}
+
 	.responsive-text {
 		font-size: 1vmax;
 	}
+
 	@media screen and (min-width: 1200px) {
 		.responsive-text {
-			 font-size: 13px;
+			font-size: 13px;
 		}
 	}
+
 	.shadow {
-		 -moz-box-shadow:    inset 0px 10px 10px rgba(0,0,0,0.3);
-		 -webkit-box-shadow: inset 0px 10px 10px rgba(0,0,0,0.3);
-		 box-shadow:         inset 0px 10px 10px rgba(0,0,0,0.3);
+		-moz-box-shadow: inset 0px 10px 10px rgba(0, 0, 0, 0.3);
+		-webkit-box-shadow: inset 0px 10px 10px rgba(0, 0, 0, 0.3);
+		box-shadow: inset 0px 10px 10px rgba(0, 0, 0, 0.3);
 	}
+
 	.out-shadow {
-		 -moz-box-shadow:     0px 10px 10px rgba(0,0,0,0.3);
-		 -webkit-box-shadow:  0px 10px 10px rgba(0,0,0,0.3);
-		 box-shadow:          0px 10px 10px rgba(0,0,0,0.3);
+		-moz-box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
+		-webkit-box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
+		box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
 	}
-	.fixedFirstColHeader{
-		display:none;
+
+	.fixedFirstColHeader {
+		display: none;
 	}
+
 	svg:not(:root) {
-			overflow: visible;
+		overflow: visible;
 	}
-	.dropdown-item{
-		cursor:pointer;
+
+	.dropdown-item {
+		cursor: pointer;
 		text-align: left;
-		padding-top:10px;
-		padding-bottom:10px;
+		padding-top: 10px;
+		padding-bottom: 10px;
 		border: 0px solid steelblue;
-		border-top:2px solid steelblue;
+		border-top: 2px solid steelblue;
 	}
-	#pagination .btn{
-		font-size:0.7em;
+
+	#pagination .btn {
+		font-size: 0.7em;
 	}
+
 	.tm1-ui-dbr-context-button {
-		font-size:1em;
+		font-size: 1em;
 	}
+
 	.tm1-ui-dbr-context-menu {
-		font-size:1em;
+		font-size: 1em;
 	}
-	 .fa-sitemap{
+
+	.fa-sitemap {
 		transform: rotate(-90deg);
-	
-	/* Legacy vendor prefixes that you probably don't need... */
-	
-	/* Safari */
-	-webkit-transform: rotate(-90deg);
-	
-	/* Firefox */
-	-moz-transform: rotate(-90deg);
-	
-	/* IE */
-	-ms-transform: rotate(-90deg);
-	
-	/* Opera */
-	-o-transform: rotate(-90deg);
-	
-	/* Internet Explorer */
-	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-	
-	 }
+
+		/* Legacy vendor prefixes that you probably don't need... */
+
+		/* Safari */
+		-webkit-transform: rotate(-90deg);
+
+		/* Firefox */
+		-moz-transform: rotate(-90deg);
+
+		/* IE */
+		-ms-transform: rotate(-90deg);
+
+		/* Opera */
+		-o-transform: rotate(-90deg);
+
+		/* Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+	}
+
 	.rotate {
-	
-	transform: rotate(-270deg);
-	
-	/* Legacy vendor prefixes that you probably don't need... */
-	
-	/* Safari */
-	-webkit-transform: rotate(-270deg);
-	
-	/* Firefox */
-	-moz-transform: rotate(-270deg);
-	
-	/* IE */
-	-ms-transform: rotate(-270deg);
-	
-	/* Opera */
-	-o-transform: rotate(-270deg);
-	
-	/* Internet Explorer */
-	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-	
+
+		transform: rotate(-270deg);
+
+		/* Legacy vendor prefixes that you probably don't need... */
+
+		/* Safari */
+		-webkit-transform: rotate(-270deg);
+
+		/* Firefox */
+		-moz-transform: rotate(-270deg);
+
+		/* IE */
+		-ms-transform: rotate(-270deg);
+
+		/* Opera */
+		-o-transform: rotate(-270deg);
+
+		/* Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
 	}
+
 	.form-group label {
-    float: left;
-    text-align: left;
-    font-weight: normal;
-}
+		float: left;
+		text-align: left;
+		font-weight: normal;
+	}
 
-.form-group select {
-    display: inline-block;
-    width: auto;
-    vertical-align: middle;
-}
-	
+	.form-group select {
+		display: inline-block;
+		width: auto;
+		vertical-align: middle;
+	}
+
 	@page {
-	 
-		margin: 0;
-		 
-	
-	}
-	@media print {
-		 
-		 
-	}
-	 
-		</style>
-	 
-	
-	<style ng-if="!$root.colorHide">
-					
-				 #sideContainer >  tbody > tr > td {
-					 
-						
-						border-top: 0px solid #ddd ;
-					}
-					 input[type="button"], input[type="reset"], input[type="submit"] {
-					 	-webkit-appearance:none;
-						cursor: pointer;
-						background-color: transparent;
-						border: none;
-						color: #fff;
-						margin-left:-100px;
-						opacity:0;
-				}
-				input[type="file"] {
-    display: none;
-}		
-.custom-file-upload {
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding:5px 5px;
- 
-    cursor: pointer;
-		background-color: transparent !important; 
-		color: #fff; 
-		border:1px solid #fff; 
-		display:inline-block; 
-		top:0px; 
-		width:67px; 
-		opacity:1;
-		text-align:center;
-}
-		 
-	</style>
-	 
-		 
-	 
-		
-			<div     >
-					 
-				<div id="optionSection{{tableId}}"  
-				 
-				 ng-show="$root.showView && !$root.isPrinting "  
-				 ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}" 
-				 style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;" 
-				 >
-				<span  
-					ng-if="useGrid" 
-					ng-click="$root.componentFullScreen[tableId] = !$root.componentFullScreen[tableId] ; $root.toggleFullScreenComponent(tableId, $root.componentFullScreen[tableId]);  doResizeChart($root.componentFullScreen[tableId]);"  
-					class="pull-left text-left"  
-					style="margin:7px;   margin-left:0px; width:auto; overflow:hidden; height:auto; color:#fff; float:left; left:0px; padding-left:10px; cursor:pointer;">
-						<i   ng-class="{'fa-compress':$root.componentFullScreen[tableId], 'fa-expand':!$root.componentFullScreen[tableId]}" 
-						class="fa  "></i>
-	
-				 
-				</span>  
-				 <span ng-click="hideToolbar  = !hideToolbar;  showChartOptions = hideToolbar ? false:''; showTypeLineOptions = hideToolbar ? false:''; " 	style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff;">
-				 <i ng-class="{'fa-toggle-off':!$root.hideToolbar,'fa-toggle-on':$root.hideToolbar}" class="fa "></i>
-				 </span>
-				 <span class="pull-left" style="font-size:1.2em; padding-top:0.6em;">{{ !hideToolbar ? panelHeading:''}}</span> 
-				 <span ng-show="hideToolbar"> 					
-					 <span ng-if="customPage && customPage != ''"  ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"  
-						style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-							 Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}" class="fa "></i>
-						</span>
-					 
-						 <span ng-hide="hideTableAsOption === 'true'">
-							
-						<span ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "  
-						 style="margin:2px; padding:5px; display:inline-block;  padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff; ">
-								Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i> 
-						</span>
-						
-					 
-						 <span ng-if="!tableHide  "  class="pull-left text-left"  style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-								<tm1-ui-export    tm1-target-id="af{{tableId}}" tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
-						</span>
-						<div ng-if="!tableHide  " ng-hide="lists.cellPutRequests.length > 0 || $root.useMdxNow"  class="pull-left text-left"  
-							style=" margin-left:0px; width:auto; overflow:hidden; height:33px; padding:5px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-								 	 	<input  ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"  
-											style=" float: right; display: block;top: 0px; width: 200px; height:33px; margin-left:67px;  position:absolute; opacity:0;" type="button" value=""  ng-click="READ(file)" ng-mouseover="getFileLoaded()"  />  
-								<label class="custom-file-upload">
-									<span>UPLOAD</span>
-									<input  type="file" id="ngexcelfile"  ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()" ng-change="getFileLoaded()" ng-model="file"/>
 
-								 
-									</label> 
-								 
-								 
-						</div>
-						<span ng-if="!tableHide" ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"  
-						 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
-					   ng-show="!lists.cellPutRequests.length && !$root.useMdxNow" >{{getFileLoaded()}}</span>
-						<span ng-click="$root.saveAllElements()"   
-						style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
-							ng-show="lists.cellPutRequests.length && !$root.useMdxNow" >SAVE ALL</span>
-							<span ng-click="lists.cellPutRequests = [];"   
-							  style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"  
-								ng-show="lists.cellPutRequests.length && !$root.useMdxNow" >CANCEL</span>
-					 
-						 
-			 
-					 
-						<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "  
-						 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-							 DBR's <i ng-class="{'fa-toggle-off':!$root.useDbr ,'fa-toggle-on': $root.useDbr }" class="fa "></i>
-						</span>
-						<span ng-if="!tableHide  " ng-click="   $root.colorHide = !$root.colorHide;   "  
-						style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
-							Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }" class="fa "></i>
-					 </span>
-					 <span ng-if="!tableHide && uiProcessName && uiProcessName != ''" ng-click="  runTi(uiProcessName);   "  
-					 style="margin:0px; padding:0px; font-size:1em; display:inline-block; margin-top:4px; padding:3px; border:1px solid #fff;float:left; left:0px; cursor:pointer; ">
-							{{(uiProcessName+'').split('.')[(uiProcessName+'').split('.').length-1]}} Ti
-					</span>
-					</span>
-				 
-							<span ng-show="!hideChartAsOption">
-						<span ng-hide="hideChartAsOption === 'true'"	ng-click="$root.overCol[tableId] = false; $root.parametersVisible = false; chartVisible = !chartVisible; showChartOptions = !chartVisible ? false:''; showTypeLineOptions = !chartVisible ? false:'';   updateUrlChart(); dispatchResize(); api.update();"   
-						style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
-							 Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
-						</span>
-						<span ng-hide="hideChartAsOption === 'true'" id="chartDrop{{tableId}}" ng-show="chartVisible" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
-						style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
-								<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
-										<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
-										style="width:100%; max-width:100px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
-										data-toggle="dropdown" ng-click="showChartOptions = !showChartOptions" aria-haspopup="true" aria-expanded="false" 
-										 >
-									 {{chartName}} 
-										<span class="pull-right"> <i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i></span>	
-										</button>
-										 
-								</div>
-						</span>
-						<span  ng-hide="hideChartAsOption === 'true'" id="chartTypeDrop{{tableId}}" ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'" ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
-						style="margin:0px; margin-top:5px; border-left:1px solid steelblue;  display:inline-block;  padding:0px;  float:left; left:0px;" > 
-								<div class="pull-right control-group" style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;" >
-										<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"   
-										style="width:100%; max-width:100px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;";
-										data-toggle="dropdown" ng-click="showTypeLineOptions = !showTypeLineOptions" aria-haspopup="true" aria-expanded="false" 
-										 >
-										<small>type: {{$root.lineType}} </small>
-										<span class="pull-right"> <i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i></span>	
-										</button>
-										 
-								</div>
-						</span>
-						<span ng-hide="hideChartAsOption === 'true'" ng-show="chartVisible" > 
-							 
-								<span ng-click="   chartOptionsOpen = !chartOptionsOpen;  dispatchResize(); api.refresh(); "  
-								 style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-								Options	<i ng-class="{'fa-toggle-off':!chartOptionsOpen,'fa-toggle-on':chartOptionsOpen}" class="fa "></i>
-								</span>
-	
-								<span ng-if="chartOptionsOpen" ng-click="options['chart']['showLegend'] = !options['chart']['showLegend']; dispatchResize(); api.refresh(); "  
-								 style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-								Legend <i ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}" class="fa "></i>
-								</span>
-	
-								<span ng-if="chartOptionsOpen && chartName === 'Line' || chartName === 'Stacked Area'" ng-click="hideColumn[tableId] = [];options['chart']['focusEnable'] = !options['chart']['focusEnable']; options['chart']['focusShowAxisX'] = false; dispatchResize(); api.refresh(); "  
-								style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-								Focus <i ng-class="{'fa-toggle-off':!options['chart']['focusEnable'],'fa-toggle-on':options['chart']['focusEnable']}" class="fa "></i>
-							 </span>
-							 
-							<span ng-if=" chartOptionsOpen && chartName != 'Stacked Area'" ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); " 
-							style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
-							Group Tooltip	<i ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}" class="fa "></i>
-							</span>  
-							
-						 
-							 
-						</span>
-					</span>
-				 
-						<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right" ng-if="!tableHide && $root.useMdxNow && !$root.useDbr " 
-						 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
-						 <span ng-show="!$root.warningOff"> <i class="fa fa-info-circle" aria-hidden="true"></i> Read Only Cells, No Format Used {{$root.warningOff}}<i   class="fa fa-times" aria-hidden="true"></i></span>
+		margin: 0;
+
+
+	}
+
+	@media print {}
+
+	#triangle-topleft {
+		width: 0;
+		height: 0;
+		border-top: 10px solid red;
+		border-left: 10px solid transparent;
+		margin-right: 8px;
+	}
+</style>
+
+<style ng-if="!$root.colorHide">
+	#sideContainer>tbody>tr>td {
+
+
+		border-top: 0px solid #ddd;
+	}
+
+	input[type="button"],
+	input[type="reset"],
+	input[type="submit"] {
+		-webkit-appearance: none;
+		cursor: pointer;
+		background-color: transparent;
+		border: none;
+		color: #fff;
+		margin-left: -100px;
+		opacity: 0;
+	}
+
+	input[type="file"] {
+		display: none;
+	}
+
+	.custom-file-upload {
+		border: 1px solid #ccc;
+		display: inline-block;
+		padding: 5px 5px;
+
+		cursor: pointer;
+		background-color: transparent !important;
+		color: #fff;
+		border: 1px solid #fff;
+		display: inline-block;
+		top: 0px;
+		width: 67px;
+		opacity: 1;
+		text-align: center;
+	}
+</style>
+
+
+
+
+<div>
+
+	<div id="optionSection{{tableId}}" ng-show="$root.showView && !$root.isPrinting "
+		ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}"
+		style="position:fixed; font-size:0.7em; z-index:99 ; left:0px;  background-color:steelblue; color:#fff; padding-top:0px; min-height:29px; height:30px; overflow:hidden;  text-align:center;">
+		<span ng-if="useGrid"
+			ng-click="$root.componentFullScreen[tableId] = !$root.componentFullScreen[tableId] ; $root.toggleFullScreenComponent(tableId, $root.componentFullScreen[tableId]);  doResizeChart($root.componentFullScreen[tableId]);"
+			class="pull-left text-left"
+			style="margin:7px;   margin-left:0px; width:auto; overflow:hidden; height:auto; color:#fff; float:left; left:0px; padding-left:10px; cursor:pointer;">
+			<i ng-class="{'fa-compress':$root.componentFullScreen[tableId], 'fa-expand':!$root.componentFullScreen[tableId]}"
+				class="fa "></i>
+
+
+		</span>
+		<span
+			ng-click="$root.hideToolbar  = !$root.hideToolbar;  showChartOptions = $root.hideToolbar ? false:''; showTypeLineOptions = $root.hideToolbar ? false:''; "
+			style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff;">
+			<i ng-class="{'fa-toggle-off':!$root.hideToolbar,'fa-toggle-on':$root.hideToolbar}" class="fa "></i>
+		</span>
+		<span class="pull-left" style="font-size:1.2em; padding-top:0.6em;">{{ !$root.hideToolbar ? panelHeading:''}}</span>
+		<span ng-show="$root.hideToolbar">
+			<span ng-if="customPage && customPage != ''"
+				ng-click="$root.parametersVisible = !$root.parametersVisible;   api.update();   dispatchResize();"
+				style="margin:2px; padding:5px; display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+				Parameters <i ng-class="{'fa-toggle-off':!$root.parametersVisible,'fa-toggle-on':$root.parametersVisible}"
+					class="fa "></i>
+			</span>
+
+			<span ng-hide="hideTableAsOption === 'true'">
+
+				<span
+					ng-click="$root.parametersVisible = false;  tableHide = !tableHide; updateUrlTable(tableHide); dispatchResize(); api.update();  "
+					style="margin:2px; padding:5px; display:inline-block;  padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; border-left:1px solid #fff; ">
+					Table <i ng-class="{'fa-toggle-off':tableHide ,'fa-toggle-on': !tableHide }" class="fa "></i>
+				</span>
+
+
+				<span ng-if="!tableHide  " class="pull-left text-left"
+					style="margin:5px;  margin-right:10px; margin-left:0px; width:25px; overflow:hidden;height:auto; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
+					<tm1-ui-export tm1-target-id="af{{tableId}}"
+						tm1-output-name="{{cubeName}}-{{cubeView}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" tm1-field-separator=""
+						tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+				</span>
+				<div ng-if="!tableHide  " ng-hide="lists.cellPutRequests.length > 0 || $root.useMdxNow"
+					class="pull-left text-left"
+					style=" margin-left:0px; width:auto; overflow:hidden; height:33px; padding:5px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
+					<input ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"
+						style=" float: right; display: block;top: 0px; width: 200px; height:33px; margin-left:67px;  position:absolute; opacity:0;"
+						type="button" value="" ng-click="READ(file)" ng-mouseover="getFileLoaded()" />
+					<label class="custom-file-upload">
+						<span>UPLOAD</span>
+						<input type="file" id="ngexcelfile" ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()"
+							ng-change="getFileLoaded()" ng-model="file" />
+
+
+					</label>
+
+
+				</div>
+				<span ng-if="!tableHide" ng-style="{'display': getFileLoaded() === '' ? 'none':'block' }"
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"
+					ng-show="!lists.cellPutRequests.length && !$root.useMdxNow">{{getFileLoaded()}}</span>
+				<span ng-click="$root.saveAllElements()"
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"
+					ng-show="lists.cellPutRequests.length && !$root.useMdxNow">SAVE ALL</span>
+				<span ng-click="lists.cellPutRequests = [];"
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"
+					ng-show="lists.cellPutRequests.length && !$root.useMdxNow">CANCEL</span>
+				<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+					DBR's <i ng-class="{'fa-toggle-off':!$root.useDbr ,'fa-toggle-on': $root.useDbr }" class="fa "></i>
+				</span>
+				<span ng-if="!tableHide  " ng-click="   $root.colorHide = !$root.colorHide;   "
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+					Hide Row Color <i ng-class="{'fa-toggle-off':!$root.colorHide ,'fa-toggle-on': $root.colorHide }"
+						class="fa "></i>
+				</span>
+				<span ng-if="!tableHide && uiProcessName && uiProcessName != ''" ng-click="  runTi(uiProcessName);   "
+					style="margin:0px; padding:0px; font-size:1em; display:inline-block; margin-top:4px; padding:3px; border:1px solid #fff;float:left; left:0px; cursor:pointer; ">
+					{{(uiProcessName+'').split('.')[(uiProcessName+'').split('.').length-1]}} Ti
+				</span>
+			</span>
+
+			<span ng-show="!hideChartAsOption">
+				<span ng-hide="hideChartAsOption === 'true'"
+					ng-click="$root.overCol[tableId] = false; $root.parametersVisible = false; chartVisible = !chartVisible; showChartOptions = !chartVisible ? false:''; showTypeLineOptions = !chartVisible ? false:'';   updateUrlChart(); dispatchResize(); api.update();"
+					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
+					Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
+				</span>
+				<span ng-hide="hideChartAsOption === 'true'" id="chartDrop{{tableId}}" ng-show="chartVisible"
+					ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;">
+					<div class="pull-right control-group"
+						style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;">
+						<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"
+							style="width:100%; max-width:100px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;"
+							; data-toggle="dropdown" ng-click="showChartOptions = !showChartOptions" aria-haspopup="true"
+							aria-expanded="false">
+							{{chartName}}
+							<span class="pull-right"> <i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i></span>
+						</button>
+
 					</div>
-						<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right " ng-if="!tableHide && $root.useDbr ||  table.data().length >= 300  " 
-						 style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
-						 <span ng-show="!$root.warningOff"><i class="fa fa-info-circle" aria-hidden="true"></i>	DBR's with extra functionality {{$root.warningOff}}<i   class="fa fa-times" aria-hidden="true"></i></span>
-						</div>
-						<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right  " ng-if="!tableHide && $root.useDbr && table.data().length >= 200  " 
-						style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
-						<span ng-show="!$root.warningOff">
-							<i class="fa fa-info-circle" aria-hidden="true"></i>	Warning: Reduce Rows <i   class="fa fa-times" aria-hidden="true"></i>
-					</span>	</div>
-						 
+				</span>
+				<span ng-hide="hideChartAsOption === 'true'" id="chartTypeDrop{{tableId}}"
+					ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'"
+					ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+					style="margin:0px; margin-top:5px; border-left:1px solid steelblue;  display:inline-block;  padding:0px;  float:left; left:0px;">
+					<div class="pull-right control-group"
+						style="margin : 5px; margin-left:0px; height:auto; top:0px;width:100px; padding:0px; margin:0px;background-color:#fff; color:#666;">
+						<button type="button" class="btn btn-primary dropdown-toggle dropdown-btn"
+							style="width:100%; max-width:100px; font-size: 0.9em; padding:5px; float:left; background-color:transparent !important; color:steelblue; border:0px solid #fff !important; text-align:left; cursor:pointer;"
+							; data-toggle="dropdown" ng-click="showTypeLineOptions = !showTypeLineOptions" aria-haspopup="true"
+							aria-expanded="false">
+							<small>type: {{$root.lineType}} </small>
+							<span class="pull-right"> <i class="fa fa-angle-down dropdown-arrow" aria-hidden="true"></i></span>
+						</button>
+
+					</div>
+				</span>
+				<span ng-hide="hideChartAsOption === 'true'" ng-show="chartVisible">
+
+					<span ng-click="   chartOptionsOpen = !chartOptionsOpen;  dispatchResize(); api.refresh(); "
+						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+						Options <i ng-class="{'fa-toggle-off':!chartOptionsOpen,'fa-toggle-on':chartOptionsOpen}" class="fa "></i>
 					</span>
-					<span class="pull-right"   ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros'+tableId, options.suppressZeros); refresh(cubeName, cubeView)   "  
-						style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; "  >
-						 Zero Sup. <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }" class="fa "></i> 
-					 </span>
-				</div>
-		 
-				<div ng-show="showChartOptions " id="" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartDrop'+tableId)+20)+'px','left': getContainerLeft('chartDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
-								style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
-									
-									 
-										<div class="out-shadow" ng-init="activeOption = 1" 
-										style="width:100%; max-width:100px; font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
-											
-											<button ng-show="chartName != 'Line'" style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;" 
-														ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset);" class="dropdown-item"  >
-													 
-														Line
-														<span class="pull-right">
-																<i ng-if="activeOption == 1" class="fa fa-check dropdown-check" aria-hidden="true"></i>
-														</span>
-												 
-											</button> 
-											<button ng-show="chartName != 'Multi Bar'" style="width:100%; background-color:#fff; color:steelblue; cursor:pointer; padding:5px; " 
-											ng-click="activeOption = 2; activeName = 'multiBarChart'; chartName = 'Multi Bar' ; options['chart']['margin']['left'] = 0; options['chart']['margin']['right'] = 0; options.chart.type = activeName;   refreshNew(dataset);" class="dropdown-item" >
-												 
-													Multi Bar 
-													<span class="pull-right">
-															<i ng-if="activeOption == 2 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
-														</span>
-		
-												 
-											</button>
-										 
-											<button ng-show="chartName != 'Stacked Area'" style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; padding:5px; " 
-											ng-click="activeOption = 3; activeName = 'stackedAreaChart';  chartName = 'Stacked Area' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset);" class="dropdown-item" >
-													 Stacked Area 
-													<span class="pull-right">
-															<i ng-if="activeOption == 3 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
-													
-														</span>
-		
-											</button>
-											<button ng-show="chartName != 'Pie'" style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;  " 
-											ng-click="activeOption = 4; activeName = 'pieChart';  chartName = 'Pie' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; $root.overCol[tableId] = false; options.chart.type = activeName;  refreshNew(dataset); " class="dropdown-item" >
-													Pie  
-													<span class="pull-right">
-															<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>	
-													
-														</span>
-		
-											</button>
-	
-											 
-											 
-										 
-										</div>
-				</div>
-				<div ng-show="showTypeLineOptions" id="lineOptions{{tableId}}" class="pull-left control-group"  ng-style="{'top': (getContainerTop('chartTypeDrop'+tableId)+20)+'px','left': getContainerLeft('chartTypeDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
-								style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  " > 
-									
-									 
-										<div ng-show="showTypeLineOptions" class="out-shadow" ng-init="$root.activeLineTypeOption  = 1" 
-										style="width:100%; max-width:100px;  font-size:0.7em; float:left; background-color:steelblue; color:steelblue;"> 
-											
-											<button ng-repeat="item in ['cardinal','linear', 'step-before', 'step-after', 'basis', 'basis-open', 'bases', 'bases-closed', 'bundle', 'cardinal-open', 'cardinal-closed', 'monotone' ] track by $index" 
-													style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;" 
-														ng-click="$root.activeLineTypeOption = ($index+1); $root.lineType = item;  activeType = item; lineType = item; options.chart.interpolate = item;  options.chart.lines2.interpolate = item; api.update(); options.chart.lines.interpolate = item; api.update();" class="dropdown-item"  >
-													 
-														{{item}}
-														<span class="pull-right">
-																<i ng-if="$root.activeLineTypeOption  === ($index+1)" class="fa fa-check dropdown-check" aria-hidden="true"></i>
-														</span>
-												 
-											</button> 
-											 
-											 
-											 
-										 
-										</div>
-				</div>
-					 
-				<div id="stickyContainer{{tableId}}"   class="stickyContainer "  
-					ng-style="{ 'height': setTableHeight('stickyContainer'+tableId)+'px',  'position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}"> 
-					<span  >
-					<style >
-					html{
-						overflow: hidden;
-					}
-					body{
-						overflow:hidden
-					}
-					#exportModal > .tm1-ui-export a:first-child{
-						visibility: hidden;
-						position: relative;
-						color:#333 !important;
-					}
-					#content {
-							display: table;
-					}
-				 
-					g .nvd3 .nv-legend{
-						min-height:150px;
-						overflow:auto;
-						padding-top:100px;
-					}
-					</style>
+
+					<span ng-if="chartOptionsOpen"
+						ng-click="options['chart']['showLegend'] = !options['chart']['showLegend']; dispatchResize(); api.refresh(); "
+						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+						Legend <i
+							ng-class="{'fa-toggle-off':!options['chart']['showLegend'],'fa-toggle-on':options['chart']['showLegend']}"
+							class="fa "></i>
 					</span>
-					<div class="fixedFirstColHeader  "  id="fixedFirstColHeader" style="  z-index:102;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2);" 
-					ng-style="{'top': ( (getContainerTop('stickyContainer'+tableId) + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'height':(getContainerHeight('headCol'+tableId))+'px', 'left':getTableLeft()} " >
-					
-						<div ng-style=" {'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px' } " 
-							class="text-left " 
-							style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
-							<table class="table  "  >
-								<thead >
-									<tr ng-repeat="row in dataset.headers track by $index" 	ng-style="{'height':(getContainerHeight('headCol'+tableId) )+'px'}" >
-										<th  
-									 
-										style="border-right:1px solid #ccc; background-color: #f0efef; " 
-										ng-repeat="col in row.rows track by $index" 
-										ng-if="col.visible || $parent.$index === 0 " colspan="{{col.colspan}}" 
-										rowspan="{{col.rowspan}}" 
-										class="text-center {{tableDimensionColumnClass}}" >
-							
-									
-										<span style="padding:8px;" ng-show="$index != 0 ">{{col.dimension}} </span> 
-											<input ng-if="$index === 0" class="form-control" 
-												ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-												style="display:inline-block;width:100%;font-size:1em; background-color: rgb(240, 239, 239);display:inline-block;border: none;" 
-												type="text" ng-model="selections.searchRows[tableId]"   
-												placeholder="{{col.dimension}}...">
-												
-												<span ng-if="$index === 0 && selections.searchRows[tableId]" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" 
-												style="position: absolute; display: block; top: 0px; right: 0px; padding: 10px; padding-left:5px; padding-right:5px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer; right:0px;width:30px; left: 145.333px;" >
-													<i ng-click="selections.searchRows[tableId] = ''" class="fa fa-times"></i>
-												</span> 
-												<!-- <span  class="pull-right" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}"  ng-if="$index === 0 " style="position: absolute; display: block; top: 0px; right:0px; padding: 10px; margin: 0px; background-color: rgb(204, 204, 204); width:30px; cursor: pointer; ">
+
+					<span ng-if="chartOptionsOpen && chartName === 'Line' || chartName === 'Stacked Area'"
+						ng-click="hideColumn[tableId] = [];options['chart']['focusEnable'] = !options['chart']['focusEnable']; options['chart']['focusShowAxisX'] = false; dispatchResize(); api.refresh(); "
+						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+						Focus <i
+							ng-class="{'fa-toggle-off':!options['chart']['focusEnable'],'fa-toggle-on':options['chart']['focusEnable']}"
+							class="fa "></i>
+					</span>
+
+					<span ng-if=" chartOptionsOpen && chartName != 'Stacked Area'"
+						ng-click="options.chart.useInteractiveGuideline = !options.chart.useInteractiveGuideline;  refreshNew(dataset);  dispatchResize(); api.update(); "
+						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
+						Group Tooltip <i
+							ng-class="{'fa-toggle-off':!options.chart.useInteractiveGuideline,'fa-toggle-on':options.chart.useInteractiveGuideline}"
+							class="fa "></i>
+					</span>
+
+
+
+				</span>
+			</span>
+
+			<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right"
+				ng-if="!tableHide && $root.useMdxNow && !$root.useDbr "
+				style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
+				<span ng-show="!$root.warningOff"> <i class="fa fa-info-circle" aria-hidden="true"></i> Read Only Cells, No
+					Format Used {{$root.warningOff}}<i class="fa fa-times" aria-hidden="true"></i></span>
+			</div>
+			<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right "
+				ng-if="!tableHide && $root.useDbr ||  table.data().length >= 300  "
+				style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
+				<span ng-show="!$root.warningOff"><i class="fa fa-info-circle" aria-hidden="true"></i> DBR's with extra
+					functionality {{$root.warningOff}}<i class="fa fa-times" aria-hidden="true"></i></span>
+			</div>
+			<div ng-click="$root.warningOff = !$root.warningOff" class="pull-right  "
+				ng-if="!tableHide && $root.useDbr && table.data().length >= 200  "
+				style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px;  ">
+				<span ng-show="!$root.warningOff">
+					<i class="fa fa-info-circle" aria-hidden="true"></i> Warning: Reduce Rows <i class="fa fa-times"
+						aria-hidden="true"></i>
+				</span> </div>
+
+		</span>
+		<span class="pull-right"
+			ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros'+tableId, options.suppressZeros); refresh(cubeName, cubeView)   "
+			style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
+			Zero Sup. <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }"
+				class="fa "></i>
+		</span>
+	</div>
+
+	<div ng-show="showChartOptions " id="" class="pull-left control-group"
+		ng-style="{'top': (getContainerTop('chartDrop'+tableId)+20)+'px','left': getContainerLeft('chartDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+		style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  ">
+
+
+		<div class="out-shadow" ng-init="activeOption = 1"
+			style="width:100%; max-width:100px; font-size:0.7em; float:left; background-color:steelblue; color:steelblue;">
+
+			<button ng-show="chartName != 'Line'"
+				style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;"
+				ng-click="activeOption = 1; chartName = 'Line';  activeName = 'lineChart';  options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset);"
+				class="dropdown-item">
+
+				Line
+				<span class="pull-right">
+					<i ng-if="activeOption == 1" class="fa fa-check dropdown-check" aria-hidden="true"></i>
+				</span>
+
+			</button>
+			<button ng-show="chartName != 'Multi Bar'"
+				style="width:100%; background-color:#fff; color:steelblue; cursor:pointer; padding:5px; "
+				ng-click="activeOption = 2; activeName = 'multiBarChart'; chartName = 'Multi Bar' ; options['chart']['margin']['left'] = 0; options['chart']['margin']['right'] = 0; options.chart.type = activeName;   refreshNew(dataset);"
+				class="dropdown-item">
+
+				Multi Bar
+				<span class="pull-right">
+					<i ng-if="activeOption == 2 " class="fa fa-check dropdown-check" aria-hidden="true"></i>
+				</span>
+
+
+			</button>
+
+			<button ng-show="chartName != 'Stacked Area'"
+				style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; padding:5px; "
+				ng-click="activeOption = 3; activeName = 'stackedAreaChart';  chartName = 'Stacked Area' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; options.chart.type = activeName;  refreshNew(dataset);"
+				class="dropdown-item">
+				Stacked Area
+				<span class="pull-right">
+					<i ng-if="activeOption == 3 " class="fa fa-check dropdown-check" aria-hidden="true"></i>
+
+				</span>
+
+			</button>
+			<button ng-show="chartName != 'Pie'"
+				style="width:100%;background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;  "
+				ng-click="activeOption = 4; activeName = 'pieChart';  chartName = 'Pie' ; options['chart']['useInteractiveGuideline'] = true; options['chart']['margin']['left'] = 50; options['chart']['margin']['right'] = 50; $root.overCol[tableId] = false; options.chart.type = activeName;  refreshNew(dataset); "
+				class="dropdown-item">
+				Pie
+				<span class="pull-right">
+					<i ng-if="activeOption == 4 " class="fa fa-check dropdown-check" aria-hidden="true"></i>
+
+				</span>
+
+			</button>
+
+
+
+
+		</div>
+	</div>
+	<div ng-show="showTypeLineOptions" id="lineOptions{{tableId}}" class="pull-left control-group"
+		ng-style="{'top': (getContainerTop('chartTypeDrop'+tableId)+20)+'px','left': getContainerLeft('chartTypeDrop'+tableId)+'px','background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
+		style="margin:0px; margin-top:5px; position:fixed;  display:block; width:100px; z-index:99;height:auto;  padding:0px;  float:left;  ">
+
+
+		<div ng-show="showTypeLineOptions" class="out-shadow" ng-init="$root.activeLineTypeOption  = 1"
+			style="width:100%; max-width:100px;  font-size:0.7em; float:left; background-color:steelblue; color:steelblue;">
+
+			<button
+				ng-repeat="item in ['cardinal','linear', 'step-before', 'step-after', 'basis', 'basis-open', 'bases', 'bases-closed', 'bundle', 'cardinal-open', 'cardinal-closed', 'monotone' ] track by $index"
+				style="width:100%; background-color:#fff;  color:steelblue; cursor:pointer; padding:5px;"
+				ng-click="$root.activeLineTypeOption = ($index+1); $root.lineType = item;  activeType = item; lineType = item; options.chart.interpolate = item;  options.chart.lines2.interpolate = item; api.update(); options.chart.lines.interpolate = item; api.update();"
+				class="dropdown-item">
+
+				{{item}}
+				<span class="pull-right">
+					<i ng-if="$root.activeLineTypeOption  === ($index+1)" class="fa fa-check dropdown-check"
+						aria-hidden="true"></i>
+				</span>
+
+			</button>
+
+
+
+
+		</div>
+	</div>
+
+	<div id="stickyContainer{{tableId}}" class="stickyContainer "
+		ng-style="{ 'height': setTableHeight('stickyContainer'+tableId)+'px',  'position': getTablePosition(),'width':getTableWidth(),'left':getTableLeft(),'top':getTableTop()+'px'}">
+		<span>
+			<style>
+				html {
+					overflow: hidden;
+				}
+
+				body {
+					overflow: hidden
+				}
+
+				#exportModal>.tm1-ui-export a:first-child {
+					visibility: hidden;
+					position: relative;
+					color: #333 !important;
+				}
+
+				#content {
+					display: table;
+				}
+
+				g .nvd3 .nv-legend {
+					min-height: 150px;
+					overflow: auto;
+					padding-top: 100px;
+				}
+			</style>
+		</span>
+		<div class="fixedFirstColHeader  " id="fixedFirstColHeader"
+			style="  z-index:102;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2);"
+			ng-style="{'top': ( (getContainerTop('stickyContainer'+tableId) + (getContainerHeight('chartRow')) ) + getContainerHeight('visualiseChartValues')   )+'px' ,  'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'height':(getContainerHeight('headCol'+tableId))+'px', 'left':getTableLeft()} ">
+
+			<div ng-style=" {'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px' } "
+				class="text-left "
+				style="display:inline-block; margin: 0 auto;  padding:0px; background-color: #f0efef;	border: 1px solid #ddd; border-right:0px solid #ddd;   float:left; ">
+				<table class="table  ">
+					<thead>
+						<tr ng-repeat="row in dataset.headers track by $index"
+							ng-style="{'height':(getContainerHeight('headCol'+tableId) )+'px'}">
+							<th style="border-right:1px solid #ccc; background-color: #f0efef; "
+								ng-repeat="col in row.rows track by $index" ng-if="col.visible || $parent.$index === 0 "
+								colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center {{tableDimensionColumnClass}}">
+
+
+								<span style="padding:8px;" ng-show="$index != 0 ">{{col.dimension}} </span>
+								<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); "
+									ng-blur="dispatchResize()"
+									style="display:inline-block;width:100%;font-size:1em; background-color: rgb(240, 239, 239);display:inline-block;border: none;"
+									type="text" ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
+
+								<span ng-if="$index === 0 && selections.searchRows[tableId]"
+									ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}"
+									style="position: absolute; display: block; top: 0px; right: 0px; padding: 10px; padding-left:5px; padding-right:5px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer; right:0px;width:30px; left: 145.333px;">
+									<i ng-click="selections.searchRows[tableId] = ''" class="fa fa-times"></i>
+								</span>
+								<!-- <span  class="pull-right" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}"  ng-if="$index === 0 " style="position: absolute; display: block; top: 0px; right:0px; padding: 10px; margin: 0px; background-color: rgb(204, 204, 204); width:30px; cursor: pointer; ">
 														<i  ng-click="$root.allCollapsed = !$root.allCollapsed; collapseAll($root.allCollapsed); refreshNew(dataset);" ng-class="{'':$root.allCollapsed, 'rotate':!$root.allCollapsed}" class="fa fa-sitemap" aria-hidden="true"></i> 
 											 </span> -->
-										</th>
-									
-									</tr>
-								</thead>
-							</table>
-	
-						</div>
-					
+							</th>
+
+						</tr>
+					</thead>
+				</table>
+
+			</div>
+
+		</div>
+
+		<div class="fixed-container" id="fixedHeaderContainer{{tableId}}"
+			ng-style="{'width':getTableWidth(), 'position': getTablePosition(),'left':getTableLeft(),'top':((getTableTop())-9)+'px'}"
+			style=" background-color:#f0efef; padding-top:8px; white-space: nowrap; z-index:101;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2); overflow:hidden;">
+			<div id="{{'sticky-header'+tableId}}"
+				ng-show="selections.searchRows[tableId] && rowsToDisplay() != 0 || !selections.searchRows[tableId]"
+				class="sticky-header" style="display:inline-block; float:left; margin:0 auto;" ng-style="{'width': 'auto' } ">
+				<span
+					ng-style="{'width': (getContainerWidth('headCol'+tableId))+'px',  'left':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px' }"
+					style="padding:0px; margin:0 auto; position:relative; display:inline-block;  white-space: nowrap; top:0px; float:left; background-color:#f0efef"
+					ng-repeat="headerrrow in dataset.headers track by $index">
+					<div ng-if="  col.visible " ng-repeat="col in headerrrow.rows track by $index"
+						ng-style="{   'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0) )+'px'  } "
+						class="text-left"
+						style="background-color: #f0efef; font-weight:600; font-size:0.7em; display:inline-block; margin: 0 auto;  padding:0px; 	  float:left; ">
+
+
 					</div>
-	
-					<div class="fixed-container" id="fixedHeaderContainer{{tableId}}" 
-						ng-style="{'width':getTableWidth(), 'position': getTablePosition(),'left':getTableLeft(),'top':((getTableTop())-9)+'px'}"  
-						style=" background-color:#f0efef; padding-top:8px; white-space: nowrap; z-index:101;  box-shadow: 5px 10px 18px rgba(0,0,0,0.2); overflow:hidden;">
-							<div id="{{'sticky-header'+tableId}}" ng-show="selections.searchRows[tableId] && rowsToDisplay() != 0 || !selections.searchRows[tableId]" 	
-								class="sticky-header"   style="display:inline-block; float:left; margin:0 auto;"
-								ng-style="{'width': 'auto' } " 
-							>
-							<span   ng-style="{'width': (getContainerWidth('headCol'+tableId))+'px',  'left':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px' }"
-									style="padding:0px; margin:0 auto; position:relative; display:inline-block;  white-space: nowrap; top:0px; float:left; background-color:#f0efef" 
-									ng-repeat="headerrrow in dataset.headers track by $index">
-									<div  
-										ng-if="  col.visible " 
-									 ng-repeat="col in headerrrow.rows track by $index" 
-										ng-style="{   'width':(getContainerWidth('rowHieghtElement'+(tableId+'')+0+'-'+0) )+'px'  } " class="text-left" 
-										style="background-color: #f0efef; font-weight:600; font-size:0.7em; display:inline-block; margin: 0 auto;  padding:0px; 	  float:left; ">
-								 
-	
-								</div>
-								<div    
-										ng-click="sortTableBy(dataset.headers[$parent.$index]['columns'][$index]['element'].key)"
-										ng-show="col.visible"   
-										class="text-center center " 
-										ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index))+'px'} " 
-										ng-repeat="col in headerrrow.columns track by $index" 
-										style="    white-space: initial;     padding: 8px;  vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600; font-size:0.7em; border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; ">
-										<span >
-											 
-	 
-												{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
-									 
-										</span>	
-										
-									 
-										<!-- <span class="pull-right"><i ng-show="col.element.type === 'C'"  
+					<div ng-click="sortTableBy(dataset.headers[$parent.$index]['columns'][$index]['element'].key)"
+						ng-show="col.visible" class="text-center center "
+						ng-style="{'width':((getContainerWidth('headerRowHeight'+tableId+''+$parent.$index+''+$index)  ))+'px' , 'height':(getContainerHeight('headerRowHeight'+tableId+''+$parent.$index+''+$index))+'px'} "
+						ng-repeat="col in headerrrow.columns track by $index"
+						style="    white-space: initial;     padding: 8px;  vertical-align: middle; background-color: #f0efef; display:inline-block; font-weight:600; font-size:0.7em; border-left: 1px solid #ddd;     margin: 0 auto;  border-top:1px solid #ddd; border-left:1px solid #ddd; float:left; ">
+						<span>
+
+
+							{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][((  dataset.headers[$parent.$index]['columns'][$index]['dimension']  )+'')]] :( dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default']  ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}
+
+						</span>
+
+
+						<!-- <span class="pull-right"><i ng-show="col.element.type === 'C'"  
 											ng-click=" $root.collapseCol = !$root.collapseCol; $root.collapseColumn(col, $parent.$parent.$index, $index); " 
 											ng-class="{'fa-minus-square-o':!$root.collapseCol, 'fa-plus-square-o':$root.collapseCol }"
 											class="fa   fa-fw" style="margin-right:5px; cursor: pointer;" ></i></span> -->
-									</div>
-							</span>
-						
-						</div>
 					</div>
-	
-					<div  id="sideContent{{tableId}}" ng-hide="tableHide || useGrid && !$root.showSectionFullScreen[tableId] && $root.showSectionFullScreenActive"
-						class="fixed-container-side" 
-						style="   box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:101; background-color:#fff;"  
-						ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
-						<table id="sideContainer" class="table "  >
-							<tbody  >
-									<tr   id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index" 
-									ng-style="{'min-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'max-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px '}">
-												
-										<td    class="firstHeaderColHeight" id="firstHeaderColHeight{{tableId}}{{$index}}"
-												ng-if="  col.visible  "  
-												style=" border:0px solid transparent; border-right:1px solid #ccc;  font-weight:700; text-align:center;  vertical-align: bottom; background-color: #f0efef"
-											
-													ng-repeat="col in headerrow.rows track by $index"   
-													colspan="{{col.colspan}}" 
-													rowspan="{{col.rowspan}}" 
-													class="text-center " >
-													{{$index != 0 ? col.dimension:''}} 
-													
-													<input ng-if="$index === 0" class="form-control" 
-													ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-													style="background-color: transparent;display:inline-block;border: none; font-size:1em;" 
-													type="text" ng-model="selections.searchRows[tableId]"   
-													placeholder="{{col.dimension}}..."> 
-													<span ng-if="$index === 0 && selections.searchRows[tableId]" ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" 
-													style="position: absolute; display: block; top: 0px; right: 0px; padding: 10px; padding-left:5px; padding-right:5px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer; right:0px;width:30px; z-index: 222; left: 145.333px;" >
-														<i  ng-click="selections.searchRows[tableId] = ''" class="fa fa-times"></i>
-													</span> 
-													<!-- <span class="pull-right" ng-if="$index === 0 " ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" style="position: absolute; display: block; top: 0px; right:0px; padding: 10px; width:30px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer;    ">
+				</span>
+
+			</div>
+		</div>
+
+		<div id="sideContent{{tableId}}"
+			ng-hide="tableHide || useGrid && !$root.showSectionFullScreen[tableId] && $root.showSectionFullScreenActive"
+			class="fixed-container-side"
+			style="   box-shadow: 5px 10px 18px rgba(0,0,0,0.2); z-index:101; background-color:#fff;"
+			ng-style="{'top': (  (getContainerTop('stickyContainer'+tableId))  +(getContainerHeight('chartRow'+tableId))  )+'px' , 'width':(getContainerWidth('searchColumn'+tableId))*(table.data()[0].elements.length)+'px', 'position': getTablePosition(),'left':getTableLeft()}">
+			<table id="sideContainer" class="table ">
+				<tbody>
+					<tr id="firstHeaderColHeightNew" ng-repeat="headerrow in dataset.headers track by $index"
+						ng-style="{'min-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'max-height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px ', 'height':getContainerHeight('headerRowHeight'+tableId+''+($index+'')+''+(0))+'px '}">
+
+						<td class="firstHeaderColHeight" id="firstHeaderColHeight{{tableId}}{{$index}}" ng-if="  col.visible  "
+							style=" border:0px solid transparent; border-right:1px solid #ccc;  font-weight:700; text-align:center;  vertical-align: bottom; background-color: #f0efef"
+							ng-repeat="col in headerrow.rows track by $index" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}"
+							class="text-center ">
+							{{$index != 0 ? col.dimension:''}}
+
+							<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+								style="background-color: transparent;display:inline-block;border: none; font-size:1em;" type="text"
+								ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
+							<span ng-if="$index === 0 && selections.searchRows[tableId]"
+								ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}"
+								style="position: absolute; display: block; top: 0px; right: 0px; padding: 10px; padding-left:5px; padding-right:5px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer; right:0px;width:30px; z-index: 222; left: 145.333px;">
+								<i ng-click="selections.searchRows[tableId] = ''" class="fa fa-times"></i>
+							</span>
+							<!-- <span class="pull-right" ng-if="$index === 0 " ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}" style="position: absolute; display: block; top: 0px; right:0px; padding: 10px; width:30px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer;    ">
 															 <i  ng-click="$root.allCollapsed = !$root.allCollapsed; collapseAll($root.allCollapsed); refreshNew(dataset);" ng-class="{'':$root.allCollapsed, 'rotate':!$root.allCollapsed}" class="fa fa-sitemap" aria-hidden="true"></i> 
 													</span> -->
-													 
-										</td>
-									
-										</tr>
-									<tr    ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
-									ng-repeat="row in  table.data()  track by $index"  >
-									<td  ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px',   'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
-																style=" border:0px solid transparent; border-right:0px solid #ccc; border-left:1px solid #ccc; vertical-align:text-top; "                                                              
-																ng-repeat="el in row.elements track by $index"  
-																colspan="{{el.colspan}}" 
-																class="{{tableDimensionColumnClass}} overflowhidden"
-																ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
-																
-															 
-																<span stye="cursor:pointer" ng-show="!selections.searchRows[tableId] && el.visible">
-																		<span ng-show="el.visible" class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-																		<span ng-show="el.visible" ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
-																		<i ng-show="el.visible" ng-if="el.element.type == 'C' && !el.element.collapsed  " ng-click="  seeData($parent.$parent.$index, $index, table); " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																		<i ng-show="el.visible" ng-if="el.element.type == 'C' && el.element.collapsed  " ng-click="   seeData($parent.$parent.$index, $index,table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																</span>    
-																<span ng-show="el.visible"   ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
-																<span ng-show="el.visible"  >	{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
-																 </span>
-																	<!--{{randomColor}} -->	
-																	</span>
-									</td>
-									
-								</tr>
-	
-							</tbody>
-						</table>
-					</div>
-			 
-				
-					 
-					<div  ng-show="!tableHide || chartVisible" ng-style="{ 'height':tableHeight ? tableHeight+'px' : 'unset', 'left':getTableLeft(),'top':getTableTop()+'px'}">
-						
-						<table class="table" id="af1{{tableId}}">
-	
-						
-						
-							<tbody ng-click="showChartOptions = false; showTypeLineOptions = false;" id="bodyContent{{tableId}}"  > 
-									 
-									<tr ng-if="chartVisible && !hideChartAsOption"  >
-											 
-										<td ng-show="!hideTableAsOption  || $index == 0" ng-repeat="el in table.data()[0].elements track by $index" ng-show="el.visible || $index === 0" style="background-color:transparent;" > 
-											<span ng-show="false"> {{cubeName}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}</span>
-										</td>
-											<!-- <td class="overflowhidden"  ng-repeat="columnrem in hideColumn[tableId] track by $index" ng-if="hideColumn[tableId][$index]  && $index <= (table.data()[0]['cells'].length) "></td> -->
-											<td    id="chartRow{{tableId}}" ng-if="chartVisible  "  colspan="{{(table.data()[0]['cells'].length)}}" style="padding:0px;">
-													
-												<nvd3   id="chart{{tableId}}"  ng-mouseover="mouseOverChart[tableId] = true;" ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"  api="api" on-ready="callback" ></nvd3>
-												 
-											</td>
-											 
-										</tr>
-										<tr    style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}" 
-												ng-repeat="headerrow in dataset.headers track by $index">
-												
-												<td    
-												ng-show="!hideTableAsOption || $index == 0"
-													ng-if="  col.visible  "  
-													style="border-right:1px solid #ccc; background-color: #f0efef"
-													id="searchColumn{{tableId}}"
-													ng-repeat="col in headerrow.rows track by $index"   
-													colspan="{{col.colspan}}" 
-													rowspan="{{col.rowspan}}" 
-													class="text-center {{tableDimensionColumnClass}} overflowhidden" >
-													
-													{{!tableHide || chartVisible && $index > 0 ? col.dimension:''}} 
-													<input ng-if="$index === 0" class="form-control" 
-													ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-													style="background-color: transparent;display:inline-block;border: none;" 
-													type="text" ng-model="selections.searchRows[tableId]"   
-													placeholder="{{col.dimension}}..."> 
-													 
-										</td>
-												<td   
 
-												id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}" 
-												style="border-right:1px solid #ccc; border-top:1px solid #ddd;  font-size:0.7em;   cursor:pointer; vertical-align:baseline;" 
-												ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible  ? 'steelblue': (chartName === 'Pie' && $index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1   ? 'steelblue':'#f0efef'), 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff': ($index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1 && chartName === 'Pie' ? '#fff': '#333') }"
-												ng-repeat="col in headerrow.columns track by $index"  ng-if="col.visible  " 
-											 	colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-												 <span ng-if="chartName === 'Pie' && $index != selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1  "  style="width:10px; height:10px; font-size:1.2em;  background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer" 
-												 ng-click="selectColumnForPieChart(col, $index)"  ><small><i class="fa fa-pie-chart"></i>   </small></span>	
-										 
-												<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:top; cursor:pointer" 
-													ng-click="increaseDataWidth()"  ><small><i class="fa fa-caret-right"></i></small></span>
-												<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0" style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:left;display:inline-block; margin:0 auto; left:-5px; top:-5px; vertical-align:bottom; cursor:pointer" 
-													ng-click="reduceDataWidth()"  ><small><i class="fa fa-caret-left"></i></small></span>
-												 
-												<span ng-click="sortTableBy(dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]], dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key)"  	  >  
-													{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}  
-												 
-														<span class="pull-right" ng-if="columnSorted === dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key">
-												  
-															 <i ng-if="columnSortedRev"   class="fa fa-caret-down"></i>  
-															 <i ng-if="!columnSortedRev"   class="fa fa-caret-up"></i>  
-														</span>
-												</span>
-												<span ng-show=" !options['chart']['focusEnable'] && chartVisible && (($index === 0 && !hideColumn[tableId][$index]) || hideColumn[tableId][$index-1] && !hideColumn[tableId][$index]) "  
-													style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
-													ng-click=" hideColumn[tableId][$index] = true; changeUrl(hideColumn[tableId][$index], $index); refreshNew(dataset);   " >
-														<small><i class="fa fa-minus"></i></small>
-												</span>
-												<span ng-show="!options['chart']['focusEnable'] && chartVisible && ((hideColumn[tableId][$index]) )"  style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"  
-													ng-click=" hideColumn[tableId].splice($index, 1); changeUrl(hideColumn[tableId][$index], $index); refreshNew(dataset);  " >
-														<small><i class="fa fa-times"></i></small>
-												</span>  
-												<!-- <span class="pull-right"><i ng-show="col.element.type === 'C'"  ng-click=" $root.collapseCol = !$root.collapseCol; $root.collapseColumn(col, $parent.$parent.$index, $index); " 
+						</td>
+
+					</tr>
+					<tr
+						ng-show="decideRowToHideFreezePane(!tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() , row.rowToUpdate)"
+						ng-repeat="row in  table.data() | orderBy:columnSorted  track by $index">
+						<td
+							ng-style="{'height':(getContainerHeight('rowHieghtElement'+(tableId+'')+$parent.$index+'-'+$index))+'px',   'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
+							style=" border:0px solid transparent; border-right:0px solid #ccc; border-left:1px solid #ccc; vertical-align:text-top; "
+							ng-repeat="el in row.elements track by $index" colspan="{{el.colspan}}"
+							class="{{tableDimensionColumnClass}} overflowhidden"
+							ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }">
+
+
+							<span stye="cursor:pointer" ng-show="!selections.searchRows[tableId] && el.visible">
+								<span ng-show="el.visible" class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+								<span ng-show="el.visible" ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+								<i ng-show="el.visible" ng-if="el.element.type == 'C' && !el.element.collapsed  "
+									ng-click="  seeData($parent.$parent.$index, $index, table); " class="fa fa-caret-down fa-fw"
+									style="margin-right:5px; cursor: pointer;"></i>
+								<i ng-show="el.visible" ng-if="el.element.type == 'C' && el.element.collapsed  "
+									ng-click="seeData($parent.$parent.$index, $index,table);" class="fa fa-caret-right fa-fw"
+									style="margin-right:5px; cursor: pointer;"></i>
+							</span>
+							<span ng-show="el.visible" ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
+								<span ng-show="el.visible">
+									{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
+								</span>
+								<!--{{randomColor}} -->
+							</span>
+						</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+
+
+
+		<div ng-show="!tableHide || chartVisible"
+			ng-style="{ 'height':tableHeight ? tableHeight+'px' : 'unset', 'left':getTableLeft(),'top':getTableTop()+'px'}">
+
+			<table class="table" id="af1{{tableId}}">
+
+
+
+				<tbody ng-click="showChartOptions = false; showTypeLineOptions = false;" id="bodyContent{{tableId}}">
+
+					<tr ng-if="chartVisible && !hideChartAsOption">
+
+						<td ng-show="!hideTableAsOption  || $index == 0" ng-repeat="el in table.data()[0].elements track by $index"
+							ng-show="el.visible || $index === 0" style="background-color:transparent;">
+							<span ng-show="false"> {{cubeName}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}</span>
+						</td>
+						<!-- <td class="overflowhidden"  ng-repeat="columnrem in hideColumn[tableId] track by $index" ng-if="hideColumn[tableId][$index]  && $index <= (table.data()[0]['cells'].length) "></td> -->
+						<td id="chartRow{{tableId}}" ng-if="chartVisible  " colspan="{{(table.data()[0]['cells'].length)}}"
+							style="padding:0px;">
+
+							<nvd3 id="chart{{tableId}}" ng-mouseover="mouseOverChart[tableId] = true;"
+								ng-mouseleave="mouseOverChart[tableId] = false;" options="options" data="data[tableId]" events="events"
+								api="api" on-ready="callback"></nvd3>
+
+						</td>
+
+					</tr>
+					<tr style="font-weight:700" id="headCol{{tableId}}" class="headCol{{tableId}}"
+						ng-repeat="headerrow in dataset.headers track by $index">
+
+						<td ng-show="!hideTableAsOption || $index == 0" ng-if="  col.visible  "
+							style="border-right:1px solid #ccc; background-color: #f0efef" id="searchColumn{{tableId}}"
+							ng-repeat="col in headerrow.rows track by $index" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}"
+							class="text-center {{tableDimensionColumnClass}} overflowhidden">
+
+							{{!tableHide || chartVisible && $index > 0 ? col.dimension:''}}
+							<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+								style="background-color: transparent;display:inline-block;border: none;" type="text"
+								ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
+
+						</td>
+						<td id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}"
+							style="border-right:1px solid #ccc; border-top:1px solid #ddd;  font-size:0.7em;   cursor:pointer; vertical-align:baseline;"
+							ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible  ? 'steelblue': (chartName === 'Pie' && $index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1   ? 'steelblue':'#f0efef'), 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff': ($index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1 && chartName === 'Pie' ? '#fff': '#333') }"
+							ng-repeat="col in headerrow.columns track by $index" ng-if="col.visible  " colspan="{{col.colspan}}"
+							rowspan="{{col.rowspan}}" class="text-center">
+							<span
+								ng-if="chartName === 'Pie' && $index != selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1  "
+								style="width:10px; height:10px; font-size:1.2em;  background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"
+								ng-click="selectColumnForPieChart(col, $index)"><small><i class="fa fa-pie-chart"></i> </small></span>
+
+							<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0"
+								style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto; right:-5px; top:-5px; vertical-align:top; cursor:pointer"
+								ng-click="increaseDataWidth()"><small><i class="fa fa-caret-right"></i></small></span>
+							<span ng-if="$parent.$parent.$index === (dataset.headers.length-1) && $index === 0"
+								style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:left;display:inline-block; margin:0 auto; left:-5px; top:-5px; vertical-align:bottom; cursor:pointer"
+								ng-click="reduceDataWidth()"><small><i class="fa fa-caret-left"></i></small></span>
+
+							<span
+								ng-click="sortTableBy(dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]], dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key)">
+								{{dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key )}}
+
+								<span class="pull-right"
+									ng-if="columnSorted === dataset.headers[$parent.$parent.$index]['columns'][$index]['element'].key">
+
+									<i ng-if="columnSortedRev" class="fa fa-caret-down"></i>
+									<i ng-if="!columnSortedRev" class="fa fa-caret-up"></i>
+								</span>
+							</span>
+							<span
+								ng-show=" !options['chart']['focusEnable'] && chartVisible && (($index === 0 && !hideColumn[tableId][$index]) || hideColumn[tableId][$index-1] && !hideColumn[tableId][$index]) "
+								style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"
+								ng-click=" hideColumn[tableId][$index] = true; changeUrl(hideColumn[tableId][$index], $index); refreshNew(dataset);   ">
+								<small><i class="fa fa-minus"></i></small>
+							</span>
+							<span ng-show="!options['chart']['focusEnable'] && chartVisible && ((hideColumn[tableId][$index]) )"
+								style="width:10px; height:10px;   background-color:transparent; cursor:pointer; position:relative; float:right;display:inline-block; margin:0 auto;  margin-right:10px; right:-5px; top:-5px; vertical-align:bottom; cursor:pointer"
+								ng-click=" hideColumn[tableId].splice($index, 1); changeUrl(hideColumn[tableId][$index], $index); refreshNew(dataset);  ">
+								<small><i class="fa fa-times"></i></small>
+							</span>
+							<!-- <span class="pull-right"><i ng-show="col.element.type === 'C'"  ng-click=" $root.collapseCol = !$root.collapseCol; $root.collapseColumn(col, $parent.$parent.$index, $index); " 
 													ng-class="{'fa-minus-square-o':!$root.collapseCol, 'fa-plus-square-o':$root.collapseCol }"
 													class="fa   fa-fw" style="margin-right:5px; cursor: pointer;" ></i></span> -->
-											</td>
-											</tr>
-										
-								<tr id="rowHeightElement{{$index}}"  ng-show="!hideTableAsOption"
-									ng-hide=" decideRowToHideRow(tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() )"
-									ng-repeat="row in  table.data()  track by $index" >
-									<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}" 
-											 
-											class="{{tableDimensionColumnClass}} overflowhidden"
-											ng-style="{ 'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
-											style=" border-left:1px solid #ccc; border-right:1px solid #ccc; " 
-											ng-repeat="el in row.elements track by $index" 
-											 
-											colspan="{{el.colspan}}"  
-											ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }"  >
-											<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-											<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
-											
-											<span ng-show="!selections.searchRows[tableId]">
-																						<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																						<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="   seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-																					</span>   <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
-																			
-																				<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
-																						{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}} 
-																						
-																				</span>
-																				
-									</td>
-									<td   
-										id="headerColHeight{{tableId}}{{$index}}"  
-										ng-style="{  'width':dataWidth+'px ', 'min-width':dataWidth+'px ' ,  'border-right':'1px solid #ccc'}" 
-										ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); " 
-										ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"  
-										ng-repeat="cell in row.cells track by $index" class="text-right" >
-										
-									 
-									 
-											<input style="font-size:1em !important;"
-											cellref="{{(cell.reference()).toString()}}" 
-											contenteditable='true'  
-											id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-											ng-if=" !$root.useDbr && !$root.useMdxNow && !cell.isReadOnly && row.cells[$index].isNumeric === true && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 " 
-											type="text"  
-											class="form-control text-right" 
-											tm1-ui-format-number="0" 
-											ng-attr-tabindex="{{row.index}}" 
-											ng-model="cell.value " 
-											ng-paste="handlePaste($event)"
-											ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:0) : (cell.value | formatNumber:0)" 
-											ng-focus="getFocus($event);  " 
-											ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
-	
-											<input  style="font-size:1em !important;"
-											cellref="{{(cell.reference()).toString()}}" 
-											contenteditable='true'  
-											id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-											ng-if=" !$root.useDbr && !$root.useMdxNow &&  !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false" 
-											type="text" 
-											class="form-control text-left"  
-											ng-attr-tabindex="{{row.index}}" 
-											ng-model="cell.value " 
-											ng-paste="handlePasteText($event)"
-											ng-value="cell.value" 
-											ng-focus="getFocus($event);  " 
-																					ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
-																					
-																					<input  style="font-size:1em !important;"
-											cellref="{{(cell.reference()).toString()}}" 
-											contenteditable='true'  
-											id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-											ng-if=" $root.useDbr && !$root.useMdxNow &&  !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false" 
-											type="text" 
-											class="form-control text-left"  
-											ng-attr-tabindex="{{row.index}}" 
-											ng-model="cell.value " 
-											ng-paste="handlePasteText($event)"
-											ng-value="cell.value" 
-											ng-focus="getFocus($event);  " 
-											ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
-										<!--cell.update(query)-->
-	
-										<input style="font-size:1em !important;"
-											cellref="{{(cell.reference()).toString()}}" 
-											contenteditable='true'  
-											id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}" 
-											ng-if="!$root.useDbr && !$root.useMdxNow && !cell['HasPicklist'] && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) && !cell.isReadOnly && row.cells[$index].isNumeric === true" 
-											type="text" 
-											class="form-control text-right" 
-											tm1-ui-format-number="0" 
-											ng-attr-tabindex="{{row.index}}" 
-											ng-model="cell.value " 
-											ng-paste="handlePaste($event)"
-											ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? ((cell.value) | formatPercentage:2) : (cell.value | formatPercentage:2)" 
-											ng-focus="getFocus($event);  " 
-											ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
-	
-											 
-										<tm1-ui-dbr 
-											ng-focus="getFocus($event);  " 
-											ng-blur="lostFocus($event); "
-											ng-paste="handlePaste($event)"
-											cellref="{{(cell.reference()).toString()}}" 
-											ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1) "
-											tm1-instance="{{tm1Instance}}"
-											tm1-cube="{{cubeName}}"
-											tm1-elements='{{(cell.reference()).toString()}}' >
-										</tm1-ui-dbr>	 
-										<tm1-ui-dbr  
-										ng-focus="getFocus($event);  " 
-											ng-blur="lostFocus($event); "
-										ng-paste="handlePaste($event)"
-										cellref="{{(cell.reference()).toString()}}" 
-												ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) "
-												tm1-instance="{{tm1Instance}}"
-												tm1-cube="{{cubeName}}"
-												tm1-elements='{{(cell.reference()).toString()}}' 
-												tm1-data-decimal="2"
-												tm1-format-percentage="true"
-											 
-												>
-										</tm1-ui-dbr>	 
-											<tm1-ui-dbr 
-											ng-focus="getFocus($event);  " 
-											ng-blur="lostFocus($event); "
-											ng-paste="handlePaste($event)"
-											cellref="{{(cell.reference()).toString()}}" 
-											 ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
-											 tm1-instance="{{tm1Instance}}"
-											 tm1-cube="{{cubeName}}"
-											 tm1-elements='{{(cell.reference()).toString()}}' 
-											 >
-										</tm1-ui-dbr>
-										
-										<span ng-if="  !$root.useDbr && $root.useMdxNow && $root.useMdxNow === true " style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
-									 
-										<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  " style="padding-right: 10px;"> {{cell.value }} </span>
-										
-										 <!-- {{ $root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]   }} | {{dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']}} :{{!$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] ? 'NOTHING':'' }} | {{(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%')}} {{(dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%')}}   -->
-									 
-										<span ng-if=" !$root.useDbr && !$root.useMdxNow  && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
-													 style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-										<span ng-if="  !$root.useDbr && !$root.useMdxNow  &&  (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0" 
-														style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
-										<span ng-if=" !$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 " 
-														style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-									 
-									 
-										<span ng-if="!$root.useDbr  && !$root.useMdxNow &&  !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']]  && row.cells[$index].isNumeric  && cell.isReadOnly && cell.value < 0 " 
-															style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-										 <span ng-if="!$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value >= 0" 
-															 style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+						</td>
+					</tr>
 
-															 
-															 <span ng-if="$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value >= 0" 
-																	style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+					<tr id="rowHeightElement{{$index}}" ng-show="!hideTableAsOption "
+						ng-hide=" decideRowToHideRow(tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase(), row.rowToUpdate )"
+						ng-repeat="row in table.data() | orderBy:columnSorted  track by $index">
+						<td id="rowHieghtElement{{tableId}}{{$parent.$index}}-{{$index}}"
+							class="{{tableDimensionColumnClass}} overflowhidden"
+							ng-style="{  'border-top': el.visible  && !$root.colorHide ? '5px solid '+ (randomColor[row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]] || row.elements[0].element.attributes['alias'] || row.elements[0].name || row.elements[0].key ]).toString() : (el.visible ? '1px solid #ccc' : '0px solid #ccc' )}"
+							style=" border-left:1px solid #ccc; border-right:1px solid #ccc; "
+							ng-repeat="el in row.elements track by $index" colspan="{{el.colspan}}"
+							ng-class="{'tm1-ui-element-consol': el.element.type == 'C'  }">
+							<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+							<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
 
-																	<span ng-if="$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value < 0" 
-																			style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
-										 
-										 
-										
-										<span ng-if="!$root.useDbr && !$root.useMdxNow && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
-													 style="padding-right: 10px; color:darkred">({{((formatPercentageString(cell.value, 2)+'') | number:2).split('-').join('')}})%</span>
-										<span ng-if="!$root.useDbr && !$root.useMdxNow   && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1 )&& row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
-														 style="padding-right: 10px;"> {{((formatPercentageString(cell.value, 2)+'') | number:2)}}%    </span>
-	
-			 
-	
-										<span ng-if="!$root.useDbr && !$root.useMdxNow  && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0" 
-																	style="padding-right: 10px; color:darkred">({{((formatPercentageString(cell.value, 2)+'') | number:2).split('-').join('')}})%</span>
-										<span ng-if="!$root.useDbr && !$root.useMdxNow  && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 ||  (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0" 
-																		style="padding-right: 10px;"> {{((formatPercentageString(cell.value, 2)+'') | number:2)}}%  </span>
-			
-										
-											 
-						 
-			
-								 
-									 
-										 
-									</td>
-								</tr>
-							</tbody>
-						</table>
-	
-						 <table ng-if=" !$root.isPrinting" ng-show="false" id="af{{tableId}}"class="table table-striped" >
-							<thead>
-								<tr ng-repeat="row in dataset.headers track by $index">
-									<th ng-repeat="col in row.rows track by $index"  class="text-center" >
-										{{col.dimension}}
-									</th>
-									<th ng-repeat="col in row.columns track by $index"  class="text-center" >
-										{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}   
-										
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr  
-								ng-if=" decideRowToHideRow(tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() ) === false"
-								ng-repeat="row in  table.data()  track by $index" >
-								<td  
-										 
-								 
-										 
-										ng-repeat="el in row.elements track by $index" >
-									 
-																					 {{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}} 
-																					
-																		 
-								</td>
-								<td   
-									 
-								 
-								 
-									ng-repeat="cell in row.cells track by $index" class="text-right" >
-									
-									
-										<span ng-if=" row.cells[$index].isNumeric === true" style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
-										<span ng-if=" !row.cells[$index].isNumeric || row.cells[$index].isNumeric === false" style="padding-right: 10px;">{{cell.value}}</span>
-									</td>
-								</tr>
-							</tbody>
-						</table> 
-						
-						<div   id="pagination"   ng-style="{'top':((getContainerTop('stickyContainer'+tableId)) + (getContainerHeight('stickyContainer'+tableId)) ) + 'px','width':getTableWidth(), 'left':getTableLeft()}" 
-						style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:105;  left:0px;" 
-						>
-							<div ng-hide="$root.isPrinting || hideTableAsOption || tableHide" class="btn-group pull-right" role="group" style="padding-top:3px;"   >
-								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default"     ng-click="table.previous(); "><i class="fa fa-angle-left"></i></button>
-								<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of {{table.pages()}}</span>
-								<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default"   ng-click="table.next(); "><i class="fa fa-angle-right"></i></button>
-							</div>
-							<div ng-hide="$root.isPrinting || hideTableAsOption || tableHide" class="btn-group pull-right" role="group" style="padding-top:3px;" >
-									<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(10)}" ng-click="table.pageSize(10); currentRowCount = 10; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">10</button>
-									<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(15)}" ng-click="table.pageSize(15); currentRowCount = 15; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">15</button>
-									<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(30)}" ng-click="table.pageSize(30); currentRowCount = 30; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">30</button>
-									<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(50)}" ng-click="table.pageSize(50); currentRowCount = 50; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">50</button>
-									<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(100)}" ng-click="table.pageSize(100);  currentRowCount = 100;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">100</button>
-									<button  ng-disabled="$root.isLoading" ng-show=" table.isPageSize(100) || table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(200)}" ng-click="table.pageSize(200);  currentRowCount = 200;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">200</button>
-									<button  ng-disabled="$root.isLoading" ng-show=" table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(300)}" ng-click="table.pageSize(300);  currentRowCount = 300;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">300</button>
-									<button  ng-disabled="$root.isLoading" ng-show="  table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(400)}" ng-click="table.pageSize(400);  currentRowCount = 400; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">400</button>
-									<button  ng-disabled="$root.isLoading" ng-show=" table.isPageSize(400) || table.isPageSize(500)"  type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(500)}" ng-click="table.pageSize(500);  currentRowCount = 500; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">500</button>
-									<button  ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(1000)}" ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">All</button>
-								</div>
-						</div>
-					
-				
-					</div>
-				</div> 
-			</div>
-		 
-			 
-	
-		<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-		 
-			<div class="modal-dialog" style="width:90%" role="document">
-				<div class="modal-content"  >
-					<div class="modal-header" style="min-height:70px;">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-						<div class="modal-title" id="myModalLabel">
-							<span class="pull-left">Cell Reference</span> 
-						 
-						</div>
-					</div>
-					<div class="modal-body table-responsive">
-						<span class="pull-right" >
-							<small style=" text-align:right; font-size:0.9em;">	
-								<tm1-ui-dbr
-								ng-if="cellreferenceArray.length"
-								 tm1-instance="{{tm1Instance}}"
-								 tm1-cube="{{cubeName}}"
-								 tm1-elements='{{cellreferenceArray.toString()}}' 
-								 >
-							</tm1-ui-dbr>
-						</small>
-						</span>
-						<table class="table">
-	
-								<thead>
-									<th>
-										Dimension
-									</th>
-									<th class="text-right">
-										Element
-									</th>
-								</thead>
-	
-								<tbody>
-								 
-									<tr ng-repeat="dimension in dimensionArray track by $index" >
-										<td class="text-left">
-											{{dimension}}
-										</td>
-										<td class="text-right">
-											{{cellreferenceArray[$index]}}
-									</td>
-									 
-								</tr>
-								</tbody>
-							</table> 
-							 <hr>
-							<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width:100%;">
-								<div class="btn-group" role="group" aria-label="First group" style="width:100%; font-size:0.7em;">
-									<button ng-repeat="drillName in drillNames track by $index" ng-click="getDrillTable(cellreferenceArray, drillName.name)">{{drillName.name}}</button>
-									<span style="padding:0px; margin:0px; background-color:steelblue;  width:30px; font-size:1em; overflow: hidden; color:#fff; cursor:pointer;"	ng-show="tableDrill.length > 0 || tableDrillCol.length > 0"  class="   pull-right"  > 
-									 
-										<span id="exportModal" style="color:#666 !important; "> 
-											<tm1-ui-export 
-										 
-											 
-											tm1-target-id="{{tableDrillCol.length && drillNameChosen != 'Transactions' ? 'af2': 'af2'+tableId}}" 
-											tm1-output-name="{{(cellreferenceArray.toString()+'').split(',').join('-')}}-{{drillNameChosen}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}" 
-											m1-field-separator="" 
-											tm1-field-qualifier="" 
-											tm1-locale=""></tm1-ui-export>
-											</span> 
-								 
-									</span>
-									 
-								</div>
-								 
-							 </div>
-					</div>
-	
-					<div class="modal-footer" style="overflow:auto; height:500px;">
-					<!--	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-				 
-						<table id="af2{{tableId}}" ng-show="datasetDrill && !loading && drillNameChosen === 'Transactions'" class="table table-striped" ng-if="!loading">
-							<thead>
-								<tr ng-repeat="row in datasetDrill.headers">
-									<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-										{{col.dimension}}
-									</th>
-									<th ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}" class="text-center" >
-										{{col.name}}
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="row in tableDrill[tableId].data() track by $index" >
-									<td ng-repeat="el in row.elements" ng-if="el.visible || $parent.$index == 0" colspan="{{el.colspan}}" rowspan="{{el.rowspan}}" ng-class="{'tm1-ui-element-consol': el.element.type == 'C'}"  >
-											<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
-											<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
-										<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-down fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-										<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0" ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-right fa-fw" style="margin-right:5px; cursor: pointer;" ></i>
-										<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw" style="margin-right:5px;" ></i>
-										{{el.name}}
-									</td>
-									<td ng-repeat="cell in row.cells" class="text-right" >
-										<input ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0" ng-model="cell.value" ng-blur="cell.update(query);" />
-										<span ng-if="cell.isReadOnly" style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<table id="af2" ng-if="tableDrillCol.length && drillNameChosen != 'Transactions'" 
-						class="table table-striped" >
-							<thead>
-							 
-									<th ng-repeat="item in tableDrillCol track by $index">
-										{{item}}
-									</th>
-							 
-							</thead>
-							 <tbody>
-								 <tr ng-repeat="row in tableDrillSource track by $index"> 
-										<td ng-repeat="item in row track by $index">
-											{{item}}
-										</td>
-								 </tr>
-							 </tbody>
-						</table>
-					 
-					</div>
+							<span ng-show="!selections.searchRows[tableId]">
+								<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0"
+									ng-click="  seeData($parent.$parent.$index, table);  " class="fa fa-caret-down fa-fw"
+									style="margin-right:5px; cursor: pointer;"></i>
+								<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0"
+									ng-click="   seeData($parent.$parent.$index, table);" class="fa fa-caret-right fa-fw"
+									style="margin-right:5px; cursor: pointer;"></i>
+							</span> <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw"
+								style="margin-right:5px;"></i>
+
+							<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
+								{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
+
+							</span>
+
+						</td>
+						<td id="headerColHeight{{tableId}}{{$index}}"
+							ng-style="{  'width':dataWidth+'px ', 'min-width':dataWidth+'px ' , 'border': cell.cellUpdate ?  '2px solid red':'1px solid #ccc'}"
+							ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); "
+							ng-mouseover="mouseOverCellUploadedFromExcel[$parent.$index][$index] = true"
+							ng-mouseleave="mouseOverCellUploadedFromExcel[$parent.$index][$index] = false"
+							ng-class="{'tm1-ui-element-consol':     row.elements[0].element.type === 'C' || row.elements[1].element.type === 'C' || row.elements[2].element.type === 'C' || dataset.headers[1]['columns'][$index]['element']['type'] === 'C' || dataset.headers[0]['columns'][$index]['element']['type'] === 'C' || dataset.headers[2]['columns'][$index]['element']['type'] === 'C'  }"
+							ng-repeat="cell in row.cells track by $index" class="text-right">
+
+
+
+							<span ng-show="cell.cellUpdate && mouseOverCellUploadedFromExcel[$parent.$index][$index]"
+								style="text-align:right; width:100%; height:auto; ">
+								<!-- <span style="color:red" ng-if="cell.cellUpdateVal < 0 && isNaN(cell.cellUpdateVal)" >({{(cell.cellUpdateVal).split('-').join('')}})</span>
+											 <span style="color:#333" ng-if="cell.cellUpdateVal > 0 && isNaN(cell.cellUpdateVal)" >{{cell.cellUpdateVal}}</span>
+											 <span style="color:#333" ng-if="!isNaN(cell.cellUpdateVal)" >{{cell.cellUpdateVal}}</span> -->
+								<span ng-if="cell.cellUpdate && mouseOverCellUploadedFromExcel[$parent.$index][$index] "
+									class="pull-left"
+									style=" padding:5px; position: flex; color:#fff;cursor:pointer; text-align:left; width:100%; height:25px; background-color:red; ">
+									<small class="pull-left" style="padding-left:5px;">New</small>
+									<i class="fa fa-times pull-right" 
+										class="pull-right text-right" 
+										ng-click="cell.cellUpdate = false; row.rowToUpdate = false; removeRecordFromList(cell)"></i>
+
+								</span>
+								<input cellref="{{(cell.reference()).toString()}}" style="font-size:1em !important; " ng-if="!isNaN(cell.cellUpdateVal)" contenteditable='true'
+								 type="text"
+									class="form-control text-right" ng-attr-tabindex="{{row.index}}"
+									ng-value="(cell.cellUpdateVal | number:0)" />
+
+								<input  style="font-size:1em !important; " ng-if="isNaN(cell.cellUpdateVal)" contenteditable='true'
+								 type="text"
+									class="form-control text-left" ng-attr-tabindex="{{row.index}}" ng-value="(cell.cellUpdateVal)"
+								  />
+
+							</span>
+							<span ng-show="!cell.cellUpdate || !mouseOverCellUploadedFromExcel[row.index][$index]">
+								<span ng-if="cell.cellUpdate && mouseOverCellUploadedFromExcel[$parent.$index][$index]"
+									style=" padding:5px; position: flex; color:#fff;cursor:pointer; text-align:left; width:100%; height:25px; background-color:#ccc; "
+									class="pull-left">
+									<small style="padding:5px;">Current</small>
+								</span>
+								<input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
+									contenteditable='true' id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}"
+									ng-if=" !$root.useDbr && !$root.useMdxNow && !cell.isReadOnly && row.cells[$index].isNumeric === true && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1 "
+									type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}"
+									ng-model="cell.value " ng-paste="handlePaste($event)"
+									ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? (cell.value | number:0) : (cell.value | formatNumber:0)"
+									ng-focus="getFocus($event);  "
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+
+								<input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
+									contenteditable='true' id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}"
+									ng-if=" !$root.useDbr && !$root.useMdxNow &&  !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false"
+									type="text" class="form-control text-left" ng-attr-tabindex="{{row.index}}" ng-model="cell.value "
+									ng-paste="handlePasteText($event)" ng-value="cell.value" ng-focus="getFocus($event);  "
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+
+								<input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
+									contenteditable='true' id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}"
+									ng-if=" $root.useDbr && !$root.useMdxNow &&  !cell['HasPicklist'] && !cell.isReadOnly && row.cells[$index].isNumeric === false"
+									type="text" class="form-control text-left" ng-attr-tabindex="{{row.index}}" ng-model="cell.value "
+									ng-paste="handlePasteText($event)" ng-value="cell.value" ng-focus="getFocus($event);  "
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+								<!--cell.update(query)-->
+
+								<input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
+									contenteditable='true' id="{{'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index}}"
+									ng-if="!$root.useDbr && !$root.useMdxNow && !cell['HasPicklist'] && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) && !cell.isReadOnly && row.cells[$index].isNumeric === true"
+									type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}"
+									ng-model="cell.value " ng-paste="handlePaste($event)"
+									ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? ((cell.value) | formatPercentage:2) : (cell.value | formatPercentage:2)"
+									ng-focus="getFocus($event);  "
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " />
+
+
+								<tm1-ui-dbr ng-focus="getFocus($event);  " ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
+									cellref="{{(cell.reference()).toString()}}"
+									ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1) "
+									tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
+									tm1-elements='{{(cell.reference()).toString()}}'>
+								</tm1-ui-dbr>
+								<tm1-ui-dbr ng-focus="getFocus($event);  " ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
+									cellref="{{(cell.reference()).toString()}}"
+									ng-if="!$root.isPrinting && cell.reference().length && $root.useDbr && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) "
+									tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
+									tm1-elements='{{(cell.reference()).toString()}}' tm1-data-decimal="2" tm1-format-percentage="true">
+								</tm1-ui-dbr>
+								<tm1-ui-dbr ng-focus="getFocus($event);  " ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
+									cellref="{{(cell.reference()).toString()}}"
+									ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && !cell.isReadOnly   "
+									tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
+									tm1-elements='{{(cell.reference()).toString()}}'>
+								</tm1-ui-dbr>
+							</span>
+							<span ng-if="  !$root.useDbr && $root.useMdxNow && $root.useMdxNow === true "
+								style="padding-right: 10px;"> {{cell.value | formatNumber:0 }} </span>
+
+							<span ng-if=" !$root.useDbr &&  row.cells[$index].isNumeric === false && cell.isReadOnly  "
+								style="padding-right: 10px;"> {{cell.value }} </span>
+
+							<!-- {{ $root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]   }} | {{dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']}} :{{!$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] ? 'NOTHING':'' }} | {{(row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%')}} {{(dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%')}}   -->
+
+							<span
+								ng-if=" !$root.useDbr && !$root.useMdxNow  && (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 "
+								style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+							<span
+								ng-if="  !$root.useDbr && !$root.useMdxNow  &&  (row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value >= 0"
+								style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+							<span
+								ng-if=" !$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][row.elements[row.elements.length-1]['dimension'] ]  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') === -1 && row.cells[$index].isNumeric === true && cell.isReadOnly && cell.value < 0 "
+								style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+
+
+							<span
+								ng-if="!$root.useDbr  && !$root.useMdxNow &&  !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']]  && row.cells[$index].isNumeric  && cell.isReadOnly && cell.value < 0 "
+								style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+							<span
+								ng-if="!$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value >= 0"
+								style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+
+
+							<span
+								ng-if="$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value >= 0"
+								style="padding-right: 10px;"> {{cell.value | formatNumber:0}} </span>
+
+							<span
+								ng-if="$root.useDbr && !$root.useMdxNow  && !$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension']] && row.cells[$index].isNumeric && cell.isReadOnly && cell.value < 0"
+								style="padding-right: 10px; color:darkred"> {{cell.value | formatNumber:0}} </span>
+
+
+
+							<span
+								ng-if="!$root.useDbr && !$root.useMdxNow && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0"
+								style="padding-right: 10px; color:darkred">({{((formatPercentageString(cell.value, 2)+'') | number:2).split('-').join('')}})%</span>
+							<span
+								ng-if="!$root.useDbr && !$root.useMdxNow   && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1 )&& row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0"
+								style="padding-right: 10px;"> {{((formatPercentageString(cell.value, 2)+'') | number:2)}}% </span>
+
+
+
+							<span
+								ng-if="!$root.useDbr && !$root.useMdxNow  && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) < 0"
+								style="padding-right: 10px; color:darkred">({{((formatPercentageString(cell.value, 2)+'') | number:2).split('-').join('')}})%</span>
+							<span
+								ng-if="!$root.useDbr && !$root.useMdxNow  && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1 ||  (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] ]]).indexOf('%') > -1) && row.cells[$index].isNumeric === true && cell.isReadOnly && ((cell.value )*1000) >= 0"
+								style="padding-right: 10px;"> {{((formatPercentageString(cell.value, 2)+'') | number:2)}}% </span>
+
+
+
+
+
+
+
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table ng-if=" !$root.isPrinting" ng-show="false" id="af{{tableId}}" class="table table-striped">
+				<thead>
+					<tr ng-repeat="row in dataset.headers track by $index">
+						<th ng-repeat="col in row.rows track by $index" class="text-center">
+							{{col.dimension}}
+						</th>
+						<th ng-repeat="col in row.columns track by $index" class="text-center">
+							{{dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]]  ? dataset.headers[$parent.$index]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[$parent.$index]['columns'][$index]['dimension'] )+'')]] : (dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] ? dataset.headers[$parent.$index]['columns'][$index]['element']['attributes']['Caption_Default'] : dataset.headers[$parent.$index]['columns'][$index]['element'].key )}}
+
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr
+						ng-if=" decideRowToHideRow(tableHide,  selections.searchRows[tableId], (row.elements[0].element.attributes[$root.attributeOptions['alias'][((row.elements[0]['dimension'])+'')]]+' '+ row.elements[0].element.name+' '+ row.elements[0].key).toLowerCase() ) === false"
+						ng-repeat="row in  table.data()  | orderBy:columnSorted track by $index">
+						<td ng-repeat="el in row.elements track by $index">
+
+							{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
+
+
+						</td>
+						<td ng-repeat="cell in row.cells track by $index" class="text-right">
+
+
+							<span ng-if=" row.cells[$index].isNumeric === true"
+								style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
+							<span ng-if=" !row.cells[$index].isNumeric || row.cells[$index].isNumeric === false"
+								style="padding-right: 10px;">{{cell.value}}</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div id="pagination"
+				ng-style="{'top':((getContainerTop('stickyContainer'+tableId)) + (getContainerHeight('stickyContainer'+tableId)) ) + 'px','width':getTableWidth(), 'left':getTableLeft()}"
+				style="position:fixed; padding:0px;  height:32px; background-color:#fff;  padding-left:0px; padding-right:20px; box-shadow: 5px -10px 18px rgba(0,0,0,0.2);  z-index:105;  left:0px;">
+				<div ng-hide="$root.isPrinting || hideTableAsOption || tableHide" class="btn-group pull-right" role="group"
+					style="padding-top:3px;">
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-click="table.previous(); "><i
+							class="fa fa-angle-left"></i></button>
+					<span class="btn btn-default" style="width: 100px; font-weight:0.7em;">{{table.page()}} of
+						{{table.pages()}}</span>
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default" ng-click="table.next(); "><i
+							class="fa fa-angle-right"></i></button>
+				</div>
+				<div ng-hide="$root.isPrinting || hideTableAsOption || tableHide" class="btn-group pull-right" role="group"
+					style="padding-top:3px;">
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default"
+						ng-class="{'active': table.isPageSize(10)}"
+						ng-click="table.pageSize(10); currentRowCount = 10; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">10</button>
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default"
+						ng-class="{'active': table.isPageSize(15)}"
+						ng-click="table.pageSize(15); currentRowCount = 15; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">15</button>
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default"
+						ng-class="{'active': table.isPageSize(30)}"
+						ng-click="table.pageSize(30); currentRowCount = 30; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">30</button>
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default"
+						ng-class="{'active': table.isPageSize(50)}"
+						ng-click="table.pageSize(50); currentRowCount = 50; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">50</button>
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default"
+						ng-class="{'active': table.isPageSize(100)}"
+						ng-click="table.pageSize(100);  currentRowCount = 100;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">100</button>
+					<button ng-disabled="$root.isLoading"
+						ng-show=" table.isPageSize(100) || table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"
+						type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(200)}"
+						ng-click="table.pageSize(200);  currentRowCount = 200;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">200</button>
+					<button ng-disabled="$root.isLoading"
+						ng-show=" table.isPageSize(200) || table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)"
+						type="button" class="btn btn-default" ng-class="{'active': table.isPageSize(300)}"
+						ng-click="table.pageSize(300);  currentRowCount = 300;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">300</button>
+					<button ng-disabled="$root.isLoading"
+						ng-show="  table.isPageSize(300) || table.isPageSize(400) || table.isPageSize(500)" type="button"
+						class="btn btn-default" ng-class="{'active': table.isPageSize(400)}"
+						ng-click="table.pageSize(400);  currentRowCount = 400; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">400</button>
+					<button ng-disabled="$root.isLoading" ng-show=" table.isPageSize(400) || table.isPageSize(500)" type="button"
+						class="btn btn-default" ng-class="{'active': table.isPageSize(500)}"
+						ng-click="table.pageSize(500);  currentRowCount = 500; refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">500</button>
+					<button ng-disabled="$root.isLoading" type="button" class="btn btn-default"
+						ng-class="{'active': table.isPageSize(1000)}"
+						ng-click="table.pageSize(1000);  currentRowCount = 1000;  refresh(cubeName,cubeView); consolidatedRowsOnly = false;    api.update();">All</button>
 				</div>
 			</div>
-			 
+
+
 		</div>
-		 
-	 
-	 
-	
-		<div ng-style="{'height':((innerHeight))+'px'}"  style="z-index:33; background-color:transparent; display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
-		ng-if="customPage && customPage != ''" ng-show="customPage && customPage != '' && $root.parametersVisible "   >
-	 <span ng-click="$root.parametersVisible = !$root.parametersVisible " ng-style="{'height':((innerHeight))+'px'}"  style=" background-color:rgba(0,0,0,0.2); display:block; left:0px; top:0px; position:fixed; width:100%; overflow:visible; padding-top:30px;"></span>
-		<div ng-include="'html/'+customPage+'.html'" ></div>
-		
 	</div>
-	 
-	 
-	
+</div>
+
+
+
+<div id="refModal{{tableId}}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel">
+
+	<div class="modal-dialog" style="width:90%" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="min-height:70px;">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+						aria-hidden="true">×</span></button>
+				<div class="modal-title" id="myModalLabel">
+					<span class="pull-left">Cell Reference</span>
+
+				</div>
+			</div>
+			<div class="modal-body table-responsive">
+				<span class="pull-right">
+					<small style=" text-align:right; font-size:0.9em;">
+						<tm1-ui-dbr ng-if="cellreferenceArray.length" tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
+							tm1-elements='{{cellreferenceArray.toString()}}'>
+						</tm1-ui-dbr>
+					</small>
+				</span>
+				<table class="table">
+
+					<thead>
+						<th>
+							Dimension
+						</th>
+						<th class="text-right">
+							Element
+						</th>
+					</thead>
+
+					<tbody>
+
+						<tr ng-repeat="dimension in dimensionArray track by $index">
+							<td class="text-left">
+								{{dimension}}
+							</td>
+							<td class="text-right">
+								{{cellreferenceArray[$index]}}
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+				<hr>
+				<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups"
+					style="width:100%;">
+					<div class="btn-group" role="group" aria-label="First group" style="width:100%; font-size:0.7em;">
+						<button ng-repeat="drillName in drillNames track by $index"
+							ng-click="getDrillTable(cellreferenceArray, drillName.name)">{{drillName.name}}</button>
+						<span
+							style="padding:0px; margin:0px; background-color:steelblue;  width:30px; font-size:1em; overflow: hidden; color:#fff; cursor:pointer;"
+							ng-show="tableDrill.length > 0 || tableDrillCol.length > 0" class="   pull-right">
+
+							<span id="exportModal" style="color:#666 !important; ">
+								<tm1-ui-export
+									tm1-target-id="{{tableDrillCol.length && drillNameChosen != 'Transactions' ? 'af2': 'af2'+tableId}}"
+									tm1-output-name="{{(cellreferenceArray.toString()+'').split(',').join('-')}}-{{drillNameChosen}}-{{yearNow}}-{{monthNow}}-{{dateNumber}}"
+									m1-field-separator="" tm1-field-qualifier="" tm1-locale=""></tm1-ui-export>
+							</span>
+
+						</span>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="modal-footer" style="overflow:auto; height:500px;">
+				<!--	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+
+				<table id="af2{{tableId}}" ng-show="datasetDrill && !loading && drillNameChosen === 'Transactions'"
+					class="table table-striped" ng-if="!loading">
+					<thead>
+						<tr ng-repeat="row in datasetDrill.headers">
+							<th ng-repeat="col in row.rows" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}"
+								class="text-center">
+								{{col.dimension}}
+							</th>
+							<th ng-repeat="col in row.columns" ng-if="col.visible" colspan="{{col.colspan}}" rowspan="{{col.rowspan}}"
+								class="text-center">
+								{{col.name}}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in tableDrill[tableId].data() track by $index">
+							<td ng-repeat="el in row.elements" ng-if="el.visible || $parent.$index == 0" colspan="{{el.colspan}}"
+								rowspan="{{el.rowspan}}" ng-class="{'tm1-ui-element-consol': el.element.type == 'C'}">
+								<span class="tm1-ui-indent" ng-repeat="item in el.element.indent"></span>
+								<span ng-if="el.element.type != 'C'" style="margin-right:20px;"></span>
+								<i ng-if="el.element.type == 'C' && !el.element.collapsed && $index == 0"
+									ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-down fa-fw"
+									style="margin-right:5px; cursor: pointer;"></i>
+								<i ng-if="el.element.type == 'C' && el.element.collapsed && $index == 0"
+									ng-click="el.element.toggle();table.refresh();" class="fa fa-caret-right fa-fw"
+									style="margin-right:5px; cursor: pointer;"></i>
+								<i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw"
+									style="margin-right:5px;"></i>
+								{{el.name}}
+							</td>
+							<td ng-repeat="cell in row.cells" class="text-right">
+								<input ng-if="!cell.isReadOnly" type="text" class="form-control text-right" tm1-ui-format-number="0"
+									ng-model="cell.value" ng-blur="cell.update(query);" />
+								<span ng-if="cell.isReadOnly" style="padding-right: 10px;">{{cell.value | formatNumber:0}}</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table id="af2" ng-if="tableDrillCol.length && drillNameChosen != 'Transactions'" class="table table-striped">
+					<thead>
+
+						<th ng-repeat="item in tableDrillCol track by $index">
+							{{item}}
+						</th>
+
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in tableDrillSource track by $index">
+							<td ng-repeat="item in row track by $index">
+								{{item}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+<div ng-style="{'height':((innerHeight))+'px'}"
+	style="z-index:33; background-color:transparent; display:block; left:0px; top:0px; position:fixed; width:100%; overflow:auto; padding-top:30px;"
+	ng-if="customPage && customPage != ''" ng-show="customPage && customPage != '' && $root.parametersVisible ">
+	<span ng-click="$root.parametersVisible = !$root.parametersVisible " ng-style="{'height':((innerHeight))+'px'}"
+		style=" background-color:rgba(0,0,0,0.2); display:block; left:0px; top:0px; position:fixed; width:100%; overflow:visible; padding-top:30px;"></span>
+	<div ng-include="'html/'+customPage+'.html'"></div>
+
+</div>

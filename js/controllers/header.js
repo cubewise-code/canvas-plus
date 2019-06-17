@@ -28,6 +28,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $rootScope.selectedsubParentPage = '';
     $rootScope.topOffSetPageView = $rootScope.topOffSet+60;
     $rootScope.hasNum = [];
+    $rootScope.subPageOver = '';
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";
@@ -513,12 +514,12 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
             if (mediaType === 'string') {
                 if (media === '' || (media.indexOf('screen') !== -1)) {
-                styleSheet = document.styleSheets[i];
+                    styleSheet = document.styleSheets[i];
                 }
             }
             else if (mediaType=='object') {
                 if (media.mediaText === '' || (media.mediaText.indexOf('screen') !== -1)) {
-                styleSheet = document.styleSheets[i];
+                    styleSheet = document.styleSheets[i];
                 }
             }
 

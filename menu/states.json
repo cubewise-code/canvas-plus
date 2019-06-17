@@ -26,5 +26,17 @@
   "namedmdx-grid": {
     "url": "/namedmdx-grid",
     "templateUrl": "html/NamedMdx Grid.html"
+  },
+  "page1": {
+    "url": "/page1",
+    "templateUrl": "html/Page1.html"
+  },
+  "page1/sub-page-1": {
+    "url": "/page1/sub-page-1",
+    "templateUrl": "html/Sub Page 1.html"
+  },
+  "page1/sub-page-2": {
+    "url": "/page1/sub-page-2",
+    "templateUrl": "html/Sub Page 2.html"
   }
 }

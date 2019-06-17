@@ -406,8 +406,15 @@
     id="pop-over-body" 
     ng-if="$root.showView && $root.menuData[0]['children'][$root.indexOver].children.length > 0" 
     style="top:75px !important; font-size:0.7em; margin-top:0px;"  class="popOverContainer" >
-    <li ng-repeat="subitem in $root.menuData[0]['children'][$root.indexOver].children track by $index" role="menuitem" ng-click="status.isopen = false; $root.indexOver = '';  " style="cursor:pointer; margin:0px; text-decorations:none; padding:0px; padding:1em; border-bottom:thin solid #777; ">
-        <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" style=" width:100%; margin:0px; padding-top:1em; color:#555; text-decorations:none;">{{subitem.label}} 
+    <li ng-repeat="subitem in $root.menuData[0]['children'][$root.indexOver].children track by $index" 
+    ng-mouseover="$root.subPageOver = subitem.label"
+    ng-style="{'background-color':$root.subPageOver != subitem.label ? $root.applicationHeaderColorSecondary : '#fff', 'color':$root.subPageOver != subitem.label ?  '#fff' : $root.applicationHeaderColorSecondary  }"
+    role="menuitem" 
+    ng-click="status.isopen = false; $root.indexOver = '';  " 
+    style="cursor:pointer; margin:0px; text-decorations:none; padding:0px; padding:1em; border-bottom:thin solid #777;  ">
+        <a class="listitem" ng-href="#/{{findClickthrough(subitem.data.page)}}" 
+         ng-style="{'color':$root.subPageOver != subitem.label ?  '#fff':$root.applicationHeaderColorSecondary}"
+         style=" width:100%; margin:0px; padding-top:1em; text-decorations:none;">{{subitem.label}} 
         <span style="display:inline-block; float:left; text-align:left; position:absolute; left:0px;   width:100%; height:47px; "></span></a>  
     </li>
 </ul>
