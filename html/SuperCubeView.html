@@ -435,7 +435,7 @@
 				</span>
 				<div    ng-if="!tableHide && !removeLoader " ng-hide="  $root.useMdxNow"
 					class="pull-left text-left"
-					style=" margin-left:0px; width:67px; overflow:hidden; height:33px; padding:0px;  color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
+					style=" margin-left:0px; width:67px; overflow:hidden; height:33px; padding:0px;  border:0px solid #fff; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 					<input ng-if="!canceledArray" ng-style="{'pointer-events': getFileLoaded() === ' '  ? 'none' :'auto'}"
 						style=" float: right; display: inline-block; top: 0px; width: 88px; height: 33px; margin-left:0px; position: absolute; opacity: 0; " 
 						ng-style="{'margin-left': getFileLoaded() != ' '  ? '0px':'67px'}"
@@ -453,12 +453,13 @@
 
 				</div>
 			 
-				<span ng-if="!tableHide " ng-click="$root.saveAllElements()"
-					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"
-					ng-show="lists.cellPutRequests.length > 0 && !$root.useMdxNow">SAVE ALL</span>
+			 
 				<span ng-if="!tableHide " ng-click="  cancelFileUpload();"
-					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:1px solid #fff;"
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:none; border-left:1px solid #fff;"
 					ng-show="getFileLoaded() != ' '  && !$root.useMdxNow">CANCEL</span>
+				<span ng-if="!tableHide " ng-click="$root.saveAllElements()"
+					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:none;border-left:1px solid #fff;"
+					ng-show="lists.cellPutRequests.length > 0 && !$root.useMdxNow">SAVE ALL</span>
 				<span ng-if="!tableHide  " ng-click="   $root.useDbr = !$root.useDbr;   "
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 					DBR's <i ng-class="{'fa-toggle-off':!$root.useDbr ,'fa-toggle-on': $root.useDbr }" class="fa "></i>
