@@ -363,12 +363,12 @@
 	.custom-file-upload {
 		border: 1px solid #ccc;
 		display: inline-block;
-		padding: 5px 5px;
+		padding: 5px;
 
 		cursor: pointer;
 		background-color: transparent !important;
 		color: #fff;
-		border: 1px solid #fff;
+		border: 0px solid #fff;
 		display: inline-block;
 		top: 0px;
 		width: 67px;
@@ -433,14 +433,14 @@
 				</span>
 				<div    ng-if="!tableHide && !removeLoader " ng-hide="  $root.useMdxNow"
 					class="pull-left text-left"
-					style=" margin-left:0px; width:67px; overflow:hidden; height:33px; padding:5px;  color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
+					style=" margin-left:0px; width:67px; overflow:hidden; height:33px; padding:0px;  color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 					<input ng-if="!canceledArray" ng-style="{'pointer-events': getFileLoaded() === ' '  ? 'none' :'auto'}"
 						style=" float: right; display: inline-block; top: 0px; width: 88px; height: 33px; margin-left:0px; position: absolute; opacity: 0; " 
 						ng-style="{'margin-left': getFileLoaded() != ' '  ? '0px':'67px'}"
 						type="button" value="" ng-click="READ(file)" />
-					<label class="custom-file-upload" >
-						<span >{{ getFileLoaded() != ''   ? uploadText: 'UPLOAD'}}</span>
-						<input  ng-click=" lists.cellPutRequests.length > 0  ? cancelFileUpload():getFileLoaded()" 
+					<label class="custom-file-upload" ng-style="{'padding':  $root.colorHide ? '8px':'8px' }">
+						<span ng-style="{'padding': getFileLoaded() != '' ? '0px':'0px','margin': getFileLoaded() != '' ? '5px':'5px'}">{{ getFileLoaded() != ''   ? uploadText: 'UPLOAD'}}</span>
+						<input  ng-click=" lists.cellPutRequests.length > 0  ? cancelFileUpload():getFileLoaded()" style="height:0px; width:0px; border:none;" 
 						type="file" id="ngexcelfile" ng-mouseover="getFileLoaded()"    ng-mouseout="getFileLoaded()"
 							ng-change="getFileLoaded()"  ng-model="file" />
 							
