@@ -369,6 +369,8 @@
 		background-color: transparent !important;
 		color: #fff;
 		border: 0px solid #fff;
+		border-left: 0px solid #fff;
+    
 		display: inline-block;
 		top: 0px;
 		width: 67px;
@@ -438,7 +440,7 @@
 						style=" float: right; display: inline-block; top: 0px; width: 88px; height: 33px; margin-left:0px; position: absolute; opacity: 0; " 
 						ng-style="{'margin-left': getFileLoaded() != ' '  ? '0px':'67px'}"
 						type="button" value="" ng-click="READ(file)" />
-					<label class="custom-file-upload" ng-style="{'padding':  $root.colorHide ? '8px':'8px' }">
+					<label  class="custom-file-upload" ng-style="{'padding':  $root.colorHide ? '8px':'8px' }">
 						<span ng-style="{'padding': getFileLoaded() != '' ? '0px':'0px','margin': getFileLoaded() != '' ? '5px':'5px'}">{{ getFileLoaded() != ''   ? uploadText: 'UPLOAD'}}</span>
 						<input  ng-click=" lists.cellPutRequests.length > 0  ? cancelFileUpload():getFileLoaded()" style="height:0px; width:0px; border:none;" 
 						type="file" id="ngexcelfile" ng-mouseover="getFileLoaded()"    ng-mouseout="getFileLoaded()"
