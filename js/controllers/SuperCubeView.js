@@ -88,6 +88,8 @@
                 scope.useGrid = $attributes.useGrid;
                 scope.consolidatedColumnsElementNames = [];
                 
+                scope.uploadText = 'UPLOAD';
+
                 if($attributes.uiProcessName && $attributes.uiProcessName != '' && $attributes.uiProcessName != null && $attributes.uiProcessName != 'undefined'  ){
                   scope.uiProcessName = $attributes.uiProcessName;
                 }
@@ -899,7 +901,7 @@
                                         console.log(currentRow, colCount, "saving value into the cube", ((vv+'').split('(').join('-')).split(')').join(''))
                                         scope.sendValueToCube(ref, ((vv+'').split('(').join('-')).split(')').join(''), currentRow, colCount);
                                         scope.sent++;
-                                           
+                                        
                                            
                                        }
                                       }
@@ -983,7 +985,8 @@
                         
                      
                   
-                  
+                 
+                     
                  
                    // console.log(request);
 
@@ -1025,7 +1028,7 @@
                                               function(){
                                                 scope.lists.cellPutRequests = [];
                                                 $tm1Ui.dataRefresh();
-                                                $("#ngexcelfile")[0].files[0].name = '';
+                                             //   $("#ngexcelfile")[0].files[0].name = '';
                                                 
                                               },2000
                                             )
@@ -1044,7 +1047,7 @@
                     function(){
                       scope.lists.cellPutRequests = [];
                       $tm1Ui.dataRefresh();
-                      $("#ngexcelfile")[0].files[0].name = '';
+                      //$("#ngexcelfile")[0].files[0].name = '';
                       
                     },2000
                   )
@@ -1053,8 +1056,25 @@
               }
            
             }
+            
             scope.cancelFileUpload = function(){
-              $("#ngexcelfile")[0].files = [];
+              
+                scope.lists.cellPutRequests = [];
+                scope.file = ''
+                console.log("clear");
+
+                scope.refreshNew(scope.dataset);
+                scope.removeLoader = true;
+                tableHide  = true;
+                $timeout(
+                  function(){
+                    scope.removeLoader = false;
+                    tableHide  = true;
+                  },1000
+                )
+                if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] != undefined && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] != null){
+              $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name = '';
+                }
             }
             scope.getFileLoaded = function(){
             if($("#ngexcelfile")[0] != undefined && $("#ngexcelfile")[0] != null){
@@ -1062,18 +1082,26 @@
                 //  console.log($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name);
                 //  return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
                 if($("#ngexcelfile")[0].files[0].name != ''){
-                  return 'PREVIEW';
+                  scope.uploadText = 'PREVIEW';
+                  return 'Upload : '+$("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name;
+                  
                 }else{
-                  return '';
+                  scope.uploadText = 'UPLOAD';
+                  return ' ';
+                  
                 }
 
                   
                   
 
                 }else{
-                  return '';
+                   scope.uploadText = 'UPLOAD';
+                  return ' ';
                 }
-            }
+            }else{
+              scope.uploadText = 'UPLOAD';
+             return ' ';
+           }
                   
                 
                
