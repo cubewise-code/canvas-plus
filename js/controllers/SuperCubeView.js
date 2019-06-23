@@ -212,7 +212,8 @@
                 scope.optionsNew = [];
                 scope.options = [];
                 scope.cellRef = {};
-
+                  scope.phaseAmount = [];
+                  $rootScope.showRowFunctionality = [];
                 scope.activeName = 'lineChart';
                 scope.chartName = 'Line'
         var chart;
@@ -802,7 +803,54 @@
               )
                
             }
-          
+            scope.cellRefToPhase = [];
+             
+            scope.applyPasing = function(amount, element, index, cellArray){
+           
+             if(amount > 0 && amount != undefined){
+                  
+               var countPhaceCol = 0;
+                for(var tr = 0 ; tr < cellArray.length; tr++){
+                  if(!cellArray[tr].isReadOnly){
+                  //console.log(amount, cellArray[tr].isReadOnly,element, index, cellArray, tr, "do pop over");
+                  countPhaceCol++;
+                    scope.cellRefToPhase[tr] = cellArray[tr].reference();
+                    
+                  }   
+                }
+                
+                 var amountToPhasePerColumn = amount/countPhaceCol;
+                for(var hd = 0; hd < scope.cellRefToPhase.length; hd++){
+                 if(scope.cellRefToPhase[hd]){
+                    scope.lists.cellPhaseRequests = [];
+                                        var request = {
+                                          value: amountToPhasePerColumn, 
+                                          instance:$rootScope.defaults.settingsInstance, 
+                                          cube: scope.cubeName, 
+                                          cubeElements:  scope.cellRefToPhase[hd]
+                                        };
+                                        scope.lists.cellPhaseRequests.push(request);
+                                        console.log(scope.lists.cellPhaseRequests)
+                                        $tm1Ui.cellSetPut(scope.lists.cellPhaseRequests).then(function(result){
+                                              if(!result.failed){
+                                                     scope.lists.cellPutRequests = []; 
+                                                 
+                                                    
+                                                    
+                                              }
+                                        });
+                    }
+                    //console.log(amountToPhasePerColumn,  scope.cellRefToPhase[hd], "do phase");
+                    if(hd === scope.cellRefToPhase.length-1){
+                                                   
+                      scope.refresh(scope.cubeName,scope.cubeView);
+                  }
+                }
+               
+             }
+
+              
+            }
             scope.READ = function(workbook) {
                
                       
@@ -1060,21 +1108,21 @@
             scope.cancelFileUpload = function(){
               
                 scope.lists.cellPutRequests = [];
-                scope.file = ''
-                console.log("clear");
-
+                scope.file = '' 
                 scope.refreshNew(scope.dataset);
                 scope.removeLoader = true;
                 tableHide  = true;
+                if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] != undefined && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] != null){
+                  $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name = '';
+                }
                 $timeout(
                   function(){
+                    scope.lists.cellPutRequests = [];
                     scope.removeLoader = false;
                     tableHide  = true;
                   },1000
                 )
-                if($("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] != undefined && $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1] != null){
-              $("#ngexcelfile")[0].files[$("#ngexcelfile")[0].files.length-1].name = '';
-                }
+                
             }
             scope.getFileLoaded = function(){
             if($("#ngexcelfile")[0] != undefined && $("#ngexcelfile")[0] != null){
@@ -1727,7 +1775,7 @@
                         
                        for(jjjk = 0; jjjk < myRowObjElement.elements.length; jjjk++){
                          //console.log(  myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]] , "DIMENSION" );
-                           if(myRowObjElement.elements[jjjk].element.attributes['Description']){
+                           if(myRowObjElement.elements[jjjk] && myRowObjElement.elements[jjjk].element.attributes['Description']){
                                if(rowNameArray[gggh]){
                                    rowNameArray[gggh] +=  ' :- ' + (myRowObjElement.elements[jjjk].element.attributes[$rootScope.attributeOptions['alias'][myRowObjElement.elements[jjjk]['dimension']]]);
                                  }else{

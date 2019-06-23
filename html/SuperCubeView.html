@@ -436,7 +436,7 @@
 				<div    ng-if="!tableHide && !removeLoader " ng-hide="  $root.useMdxNow"
 					class="pull-left text-left"
 					style=" margin-left:0px; width:67px; overflow:hidden; height:33px; padding:0px;  border:0px solid #fff; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
-					<input ng-if="!canceledArray" ng-style="{'pointer-events': getFileLoaded() === ' '  ? 'none' :'auto'}"
+					<input ng-if="!canceledArray"  ng-style="{'pointer-events': getFileLoaded() === ' '  ? 'none' :'auto'}"
 						style=" float: right; display: inline-block; top: 0px; width: 88px; height: 33px; margin-left:0px; position: absolute; opacity: 0; " 
 						ng-style="{'margin-left': getFileLoaded() != ' '  ? '0px':'67px'}"
 						type="button" value="" ng-click="READ(file)" />
@@ -457,7 +457,7 @@
 			 
 				<span ng-if="!tableHide " ng-click="  cancelFileUpload();"
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:none; border-left:1px solid #fff;"
-					ng-show="getFileLoaded() != ' '  && !$root.useMdxNow">CANCEL</span>
+					ng-show="getFileLoaded() != ' '  && !$root.useMdxNow"   >CANCEL</span>
 				<span ng-if="!tableHide " ng-click="$root.saveAllElements()"
 					style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; color:#fff; border:none;border-left:1px solid #fff;"
 					ng-show="lists.cellPutRequests.length > 0 && !$root.useMdxNow">SAVE ALL</span>
@@ -482,7 +482,7 @@
 					style="margin:2px; margin-right:1px;  display:inline-block;  padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;  border-left:1px solid #fff; ">
 					Chart <i ng-class="{'fa-toggle-off':!chartVisible,'fa-toggle-on':chartVisible}" class="fa "></i>
 				</span>
-				<span ng-hide="hideChartAsOption === 'true'" id="chartDrop{{tableId}}" ng-show="chartVisible"
+				<span ng-hide="!chartVisible || hideChartAsOption === 'true'" id="chartDrop{{tableId}}" ng-show="chartVisible"
 					ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px;  display:inline-block;  padding:0px;  float:left; left:0px;">
 					<div class="pull-right control-group"
@@ -497,7 +497,7 @@
 
 					</div>
 				</span>
-				<span ng-hide="hideChartAsOption === 'true'" id="chartTypeDrop{{tableId}}"
+				<span ng-hide="!chartVisible ||  hideChartAsOption === 'true'" id="chartTypeDrop{{tableId}}"
 					ng-show="chartVisible && chartName === 'Line' || chartName === 'Stacked Area'"
 					ng-style="{'background-color': chartVisible ? '#fff':'transparent','color': chartVisible ? 'steelblue':'#fff' }"
 					style="margin:0px; margin-top:5px; border-left:1px solid steelblue;  display:inline-block;  padding:0px;  float:left; left:0px;">
@@ -513,7 +513,7 @@
 
 					</div>
 				</span>
-				<span ng-hide="hideChartAsOption === 'true'" ng-show="chartVisible">
+				<span ng-hide="!chartVisible ||  hideChartAsOption === 'true'" ng-show="chartVisible">
 
 					<span ng-click="   chartOptionsOpen = !chartOptionsOpen;  dispatchResize(); api.refresh(); "
 						style="margin : 5px; margin-bottom:0px; margin-top:2px; display:inline-block; padding:5px; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer;">
@@ -570,7 +570,7 @@
 				</span> </div>
 
 		</span>
-		<span class="pull-right"
+		<span ng-show="getFileLoaded() === ' ' " class="pull-right"
 			ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros'+tableId, options.suppressZeros); refresh(cubeName, cubeView)   "
 			style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 			Zero Sup. <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }"
@@ -712,7 +712,7 @@
 
 
 								<span style="padding:8px;" ng-show="$index != 0 ">{{col.dimension}} </span>
-								<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); "
+								<input ng-if="$index === 0" class="form-control text-left" ng-change="dispatchResize(); "
 									ng-blur="dispatchResize()"
 									style="display:inline-block;width:100%;font-size:1em; background-color: rgb(240, 239, 239);display:inline-block;border: none;"
 									type="text" ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
@@ -791,9 +791,9 @@
 							class="text-center ">
 							{{$index != 0 ? col.dimension:''}}
 
-							<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-								style="background-color: transparent;display:inline-block;border: none; font-size:1em;" type="text"
-								ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
+							<input ng-if="$index === 0" class="form-control text-left" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+								style="background-color: transparent;display:inline-block;border: none; font-size:1em; text-align:left !important;" type="text"
+								ng-model="selections.searchRows[tableId]" placeholder="Search {{col.dimension}}...">
 							<span ng-if="$index === 0 && selections.searchRows[tableId]"
 								ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}"
 								style="position: absolute; display: block; top: 0px; right: 0px; padding: 10px; padding-left:5px; padding-right:5px; margin: 0px; background-color: rgb(204, 204, 204); cursor: pointer; right:0px;width:30px; z-index: 222; left: 145.333px;">
@@ -830,6 +830,23 @@
 							<span ng-show="el.visible" ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
 								<span ng-show="el.visible">
 									{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
+
+									<span class="pull-right" ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly" 
+									ng-click="$root.showRowFunctionality[row.index] = !$root.showRowFunctionality[row.index]" 
+									style="cursor:pointer; padding-right:8px;  position:absolute; right:10px;">
+										
+										<i class="fa fa-ellipsis-v" style="cursor:pointer; padding:0px; padding:5px;font-size:1.2em;"  aria-hidden="true"></i>
+									</span>
+									<span class="pull-right" ng-if="$root.showRowFunctionality[row.index]"  >
+										<span class="pull-right" style="cursor:pointer; " ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">
+											<i style="position:absolute; right:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
+											<input class="form-control pull-left"  
+											style="background-color: transparent; width:calc(100%); display:inline-block;border: none; text-align:left !important;" type="text"
+											ng-model="phaseAmount[el.key]" placeholder="Enter Phase Amount">
+										</span>
+									</span>
+
+
 								</span>
 								<!--{{randomColor}} -->
 							</span>
@@ -878,14 +895,14 @@
 							class="text-center {{tableDimensionColumnClass}} overflowhidden">
 
 							{{!tableHide || chartVisible && $index > 0 ? col.dimension:''}}
-							<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-								style="background-color: transparent;display:inline-block;border: none;" type="text"
+							<input ng-if="$index === 0" class="form-control text-left" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+								style="background-color: transparent;display:inline-block;border: none; text-align:left !important;" type="text"
 								ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
 
 						</td>
 						<td id="headerRowHeight{{tableId}}{{$parent.$parent.$index}}{{$index}}"
 							style="border-right:1px solid #ccc; border-top:1px solid #ddd;  font-size:0.7em;   cursor:pointer; vertical-align:baseline;"
-							ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === $index && chartVisible  ? 'steelblue': (chartName === 'Pie' && $index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1   ? 'steelblue':'#f0efef'), 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff': ($index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1 && chartName === 'Pie' ? '#fff': '#333') }"
+							ng-style="{'border-bottom':chartVisible && hideColumn[tableId][$index] ? '5px solid red':'1px solid #ddd', 'background-color':!options['chart']['focusEnable'] && $root.overCol[tableId] === ($index) && chartVisible  ? 'steelblue': (chartName === 'Pie' && $index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1   ? 'steelblue':'#f0efef'), 'color':!options['chart']['focusEnable'] &&  $root.overCol[tableId] === $index && chartVisible  ? '#fff': ($index === selectedColumnForPieChart  && $parent.$parent.$index === dataset.headers.length-1 && chartName === 'Pie' ? '#fff': '#333') }"
 							ng-repeat="col in headerrow.columns track by $index" ng-if="col.visible  " colspan="{{col.colspan}}"
 							rowspan="{{col.rowspan}}" class="text-center">
 							<span
@@ -951,8 +968,22 @@
 								style="margin-right:5px;"></i>
 
 							<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
-								{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
-
+								{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
+								<span class="pull-right" ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly" 
+								ng-click="$root.showRowFunctionality[row.index] = !$root.showRowFunctionality[row.index]" 
+								style="cursor:pointer; padding-right:8px;  position:absolute; right:10px;">
+									
+									<i class="fa fa-ellipsis-v" style="cursor:pointer; padding:0px; padding:5px;font-size:1.2em;"  aria-hidden="true"></i>
+								</span>
+								<span class="pull-right" ng-if="$root.showRowFunctionality[row.index]"  >
+									<span class="pull-right" style="cursor:pointer; " ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">
+										<i style="position:absolute; right:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
+										<input class="form-control pull-left"  
+										style="background-color: transparent; width:calc(100%); display:inline-block;border: none; text-align:left !important;" type="text"
+										ng-model="phaseAmount[el.key]" placeholder="Enter Phase Amount">
+									</span>
+								</span>
+	
 							</span>
 
 						</td>
@@ -1134,7 +1165,20 @@
 						<td ng-repeat="el in row.elements track by $index">
 
 							{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
-
+							<span class="pull-right" ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly" 
+									ng-click="$root.showRowFunctionality[row.index] = !$root.showRowFunctionality[row.index]" 
+									style="cursor:pointer; padding-right:8px;  position:absolute; right:10px;">
+										
+										<i class="fa fa-ellipsis-v" style="cursor:pointer; padding:0px; padding:5px;font-size:1.2em;"  aria-hidden="true"></i>
+									</span>
+									<span class="pull-right" ng-if="$root.showRowFunctionality[row.index]"  >
+										<span class="pull-right" style="cursor:pointer; " ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">
+											<i style="position:absolute; right:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
+											<input class="form-control pull-left"  
+											style="background-color: transparent; width:calc(100%); display:inline-block;border: none; text-align:left !important;" type="text"
+											ng-model="phaseAmount[el.key]" placeholder="Enter Phase Amount">
+										</span>
+									</span>
 
 						</td>
 						<td ng-repeat="cell in row.cells track by $index" class="text-right">
