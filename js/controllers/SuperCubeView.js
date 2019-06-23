@@ -808,7 +808,7 @@
             scope.applyPasing = function(amount, element, index, cellArray){
            
              if(amount > 0 && amount != undefined){
-                  
+                  var added = 0;
                var countPhaceCol = 0;
                 for(var tr = 0 ; tr < cellArray.length; tr++){
                   if(!cellArray[tr].isReadOnly){
@@ -831,21 +831,33 @@
                                         };
                                         scope.lists.cellPhaseRequests.push(request);
                                         console.log(scope.lists.cellPhaseRequests)
-                                        $tm1Ui.cellSetPut(scope.lists.cellPhaseRequests).then(function(result){
-                                              if(!result.failed){
-                                                     scope.lists.cellPutRequests = []; 
-                                                 
-                                                    
-                                                    
-                                              }
-                                        });
+                                         
                     }
-                    //console.log(amountToPhasePerColumn,  scope.cellRefToPhase[hd], "do phase");
-                    if(hd === scope.cellRefToPhase.length-1){
+                    
+                 if(scope.lists.cellPhaseRequests ){
+                  $tm1Ui.cellSetPut(scope.lists.cellPhaseRequests).then(function(result){
+                    if(!result.failed){
+                       added++;
+                           //scope.refresh(scope.cubeName,scope.cubeView);
+                           if(added === scope.cellRefToPhase.length-1){
                                                    
-                      scope.refresh(scope.cubeName,scope.cubeView);
-                  }
+                    
+                            scope.refreshNew(scope.dataset);
+                                scope.lists.cellPutRequests = []; 
+                               
+                        }
+                        
+                           //scope.refreshNew(scope.dataset);
+                          
+                    }
+              });  
+                 }
+                 
+            
+                    //console.log(amountToPhasePerColumn,  scope.cellRefToPhase[hd], "do phase");
+                    
                 }
+                
                
              }
 

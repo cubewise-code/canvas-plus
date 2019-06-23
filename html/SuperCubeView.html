@@ -831,17 +831,17 @@
 								<span ng-show="el.visible">
 									{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
 
-									<span class="pull-right" ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly" 
+									<span class="pull-right"     ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly" 
 									ng-click="$root.showRowFunctionality[row.index] = !$root.showRowFunctionality[row.index]" 
 									style="cursor:pointer; padding-right:8px;  position:absolute; right:10px;">
 										
 										<i class="fa fa-ellipsis-v" style="cursor:pointer; padding:0px; padding:5px;font-size:1.2em;"  aria-hidden="true"></i>
 									</span>
-									<span class="pull-right" ng-if="$root.showRowFunctionality[row.index]"  >
-										<span class="pull-right" style="cursor:pointer; " ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">
-											<i style="position:absolute; right:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
+									<span class="pull-right" ng-if="$root.showRowFunctionality[row.index]" style="width:100%;" >
+										<span  class="pull-right" style="cursor:pointer; width:100%;" ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells ); phaseAmount = [];  ">
+											<i ng-show="phaseAmount[el.key] > 0"  style="position:absolute; right:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
 											<input class="form-control pull-left"  
-											style="background-color: transparent; width:calc(100%); display:inline-block;border: none; text-align:left !important;" type="text"
+											style="background-color: transparent; width:100%; display:inline-block;border: none; text-align:left !important;" type="text"
 											ng-model="phaseAmount[el.key]" placeholder="Enter Phase Amount">
 										</span>
 									</span>
@@ -971,18 +971,18 @@
 								{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}  
 								<span class="pull-right" ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly" 
 								ng-click="$root.showRowFunctionality[row.index] = !$root.showRowFunctionality[row.index]" 
-								style="cursor:pointer; padding-right:8px;  position:absolute; right:10px;">
-									
-									<i class="fa fa-ellipsis-v" style="cursor:pointer; padding:0px; padding:5px;font-size:1.2em;"  aria-hidden="true"></i>
-								</span>
-								<span class="pull-right" ng-if="$root.showRowFunctionality[row.index]"  >
-									<span class="pull-right" style="cursor:pointer; " ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">
-										<i style="position:absolute; right:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
-										<input class="form-control pull-left"  
-										style="background-color: transparent; width:calc(100%); display:inline-block;border: none; text-align:left !important;" type="text"
-										ng-model="phaseAmount[el.key]" placeholder="Enter Phase Amount">
+								style="cursor:pointer; padding-right:8px; ">
+										
+										<i class="fa fa-ellipsis-v"  aria-hidden="true"></i>
 									</span>
-								</span>
+									<span class="pull-left"  ng-if="$root.showRowFunctionality[row.index] && el.element.type != 'C'"  >
+										<span style="cursor:pointer; " ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">
+											<i ng-show="phaseAmount[el.key] > 0" style="position:absolute; left:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
+											<input class="form-control text-left" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+											style="background-color: transparent; width:calc(100%); display:inline-block;border: none; text-align:left !important;" type="text"
+											ng-model="phaseAmount[el.key]" placeholder="...">
+										</span>
+									</span>
 	
 							</span>
 
@@ -1165,20 +1165,19 @@
 						<td ng-repeat="el in row.elements track by $index">
 
 							{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
-							<span class="pull-right" ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly" 
-									ng-click="$root.showRowFunctionality[row.index] = !$root.showRowFunctionality[row.index]" 
-									style="cursor:pointer; padding-right:8px;  position:absolute; right:10px;">
+							<span class="pull-right" ng-if=" el.element.type === 'N' && !row.cells[row.cells.length-1].isReadOnly  " 
+							ng-click="$root.showRowFunctionality[row.index] = !$root.showRowFunctionality[row.index]" 
+							style="cursor:pointer; padding-right:8px; ">
 										
-										<i class="fa fa-ellipsis-v" style="cursor:pointer; padding:0px; padding:5px;font-size:1.2em;"  aria-hidden="true"></i>
+									<i class="fa fa-ellipsis-v"  aria-hidden="true"></i>
+								</span>
+								<span class="pull-right" ng-if="$root.showRowFunctionality[row.index] && el.element.type != 'C'"  >
+									<span style="cursor:pointer; "  ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">Phase &nbsp;
+										<input class="form-control text-left" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
+										style="background-color: transparent; width:calc(100% - 54px);display:inline-block;border: none; text-align:left !important;" type="text"
+										ng-model="phaseAmount[el.key]" placeholder="...">
 									</span>
-									<span class="pull-right" ng-if="$root.showRowFunctionality[row.index]"  >
-										<span class="pull-right" style="cursor:pointer; " ng-click="applyPasing(phaseAmount[el.key], el, $parent.$parent.$index,  row.cells )">
-											<i style="position:absolute; right:8px;  padding:8px; margin-top:15px;background-color:steelblue; color:#fff; font-size:1.2em; " class="fa fa-flash"></i> &nbsp;
-											<input class="form-control pull-left"  
-											style="background-color: transparent; width:calc(100%); display:inline-block;border: none; text-align:left !important;" type="text"
-											ng-model="phaseAmount[el.key]" placeholder="Enter Phase Amount">
-										</span>
-									</span>
+								</span>
 
 						</td>
 						<td ng-repeat="cell in row.cells track by $index" class="text-right">
