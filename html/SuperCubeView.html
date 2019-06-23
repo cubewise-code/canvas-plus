@@ -441,7 +441,8 @@
 						ng-style="{'margin-left': getFileLoaded() != ' '  ? '0px':'67px'}"
 						type="button" value="" ng-click="READ(file)" />
 					<label  class="custom-file-upload" ng-style="{'padding':  $root.colorHide ? '8px':'8px' }">
-						<span ng-style="{'padding': getFileLoaded() != '' ? '0px':'0px','margin': getFileLoaded() != '' ? '5px':'5px'}">{{ getFileLoaded() != ''   ? uploadText: 'UPLOAD'}}</span>
+						<span ng-style="{ 'margin': getFileLoaded() != '' ? '5px':'5px'}">
+							{{ getFileLoaded() != ''   ? uploadText: 'UPLOAD'}}</span>
 						<input  ng-click=" lists.cellPutRequests.length > 0  ? cancelFileUpload():getFileLoaded()" style="height:0px; width:0px; border:none;" 
 						type="file" id="ngexcelfile" ng-mouseover="getFileLoaded()"    ng-mouseout="getFileLoaded()"
 							ng-change="getFileLoaded()"  ng-model="file" />
@@ -973,7 +974,7 @@
 								<span ng-if="cell.cellUpdate && mouseOverCellUploadedFromExcel[$parent.$index][$index] "
 									class="pull-left"
 									style=" padding:5px; position: flex; color:#fff;cursor:pointer; text-align:left; width:100%; height:25px; background-color:red; ">
-									<small class="pull-left" style="padding-left:5px;">New - {{cell.cellUpdate}} - {{row.rowToUpdate}}</small>
+									<small class="pull-left" style="padding-left:5px;">New</small>
 									<i class="fa fa-times pull-right" 
 										class="pull-right text-right" 
 										ng-click="cell.cellUpdate = false; row.rowToUpdate = false; removeRecordFromList(cell); "></i>

@@ -218,6 +218,7 @@ td > .form-control .input {
     font-size: inherit;
     line-height: inherit;
     color: #555;
+    text-align:inherit;
     background-color: #fff;
     background-image: none;
     border: none;
