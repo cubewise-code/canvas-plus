@@ -787,7 +787,7 @@
 							{{$index != 0 ? col.dimension:''}}
 
 							<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); " ng-blur="dispatchResize()"
-								style="background-color: transparent;display:inline-block;border: none; font-size:1em;" type="text"
+								style="background-color: transparent;display:inline-block;border: none; font-size:1em; text-align:left;" type="text"
 								ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
 							<span ng-if="$index === 0 && selections.searchRows[tableId]"
 								ng-style="{'left':((getContainerWidth('searchColumn'+tableId)*(table.data()[0].elements.length))-30)+'px'}"
