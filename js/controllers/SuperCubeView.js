@@ -2121,7 +2121,7 @@
            $(window).focus(function() {
         
             
-            scope.refresh(scope.cubeName,scope.cubeView);
+            scope.refreshNew(scope.dataset);
              
         });
            $rootScope.setMdx = function(mdxPassed){
