@@ -709,7 +709,7 @@
 								<span style="padding:8px;" ng-show="$index != 0 ">{{col.dimension}} </span>
 								<input ng-if="$index === 0" class="form-control" ng-change="dispatchResize(); "
 									ng-blur="dispatchResize()"
-									style="display:inline-block;width:100%;font-size:1em; background-color: rgb(240, 239, 239);display:inline-block;border: none;"
+									style="display:inline-block;width:100%;font-size:1em; background-color: rgb(240, 239, 239);display:inline-block;border: none; text-align:left;"
 									type="text" ng-model="selections.searchRows[tableId]" placeholder="{{col.dimension}}...">
 
 								<span ng-if="$index === 0 && selections.searchRows[tableId]"
@@ -1019,14 +1019,14 @@
 									ng-focus="getFocus($event);  "
 									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " /> -->
 
-									<input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
+									<!-- <input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
 									contenteditable='true' id="{{'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index}}"
 									ng-if=" $root.useDbr && !$root.useMdxNow &&  !cell['HasPicklist'] && (cell.isReadOnly === false || !cell.isReadOnly) && row.cells[$index].isNumeric  && ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1) "
 									type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}"
 									ng-model="cell.value " ng-paste="handlePaste($event)"
 									ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? ((cell.value) | formatNumber:0) : (cell.value | formatNumber:0)"
 									ng-focus="getFocus($event);  "
-									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value), 'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index):'';    " />
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value), 'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index):'';    " /> -->
 
 									<input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
 									contenteditable='true' id="{{'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index}}"
@@ -1060,12 +1060,12 @@
 									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index):'';    " /> -->
 
 
-								<tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
+								<!-- <tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
 									cellref="{{(cell.reference()).toString()}}"
 									ng-if="$root.useDbr && !$root.isPrinting && cell.reference().length &&  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1  && (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1) "
 									tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
 									tm1-elements='{{(cell.reference()).toString()}}'>
-								</tm1-ui-dbr>
+								</tm1-ui-dbr> -->
 								<tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
 									cellref="{{(cell.reference()).toString()}}"
 									ng-if="$root.useDbr && !$root.isPrinting && cell.reference().length &&  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') > -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') > -1) "
@@ -1076,25 +1076,25 @@
 
 								<tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
 									cellref="{{(cell.reference()).toString()}}"
-									ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting && cell['HasPicklist'] && cell.reference().length && (cell.isReadOnly === false || !cell.isReadOnly)   "
+									ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting  && cell.reference().length    "
 									tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
 									tm1-elements='{{(cell.reference()).toString()}}'>
 								</tm1-ui-dbr>
-								<tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
+								<!-- <tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
 									cellref="{{(cell.reference()).toString()}}"
 									ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting && !cell['HasPicklist'] && cell.reference().length && (cell.isReadOnly === false || !cell.isReadOnly) &&  ((row.elements[row.elements.length-1].element.attributes[$root.attributeOptions['alias'][((row.elements[row.elements.length-1]['dimension'])+'')]]).indexOf('%') === -1  || (dataset.headers[(dataset.headers.length-1)]['columns'][$index]['element'].attributes[$root.attributeOptions['alias'][(( dataset.headers[(dataset.headers.length-1)]['columns'][$index]['dimension'] )+'')]]).indexOf('%') === -1)  "
 									tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
 									tm1-elements='{{(cell.reference()).toString()}}'>
-								</tm1-ui-dbr>
+								</tm1-ui-dbr> -->
 							</span>
 							<span ng-show="!cell.cellUpdate || !mouseOverCellUploadedFromExcel[row.index][$index] && scope.lists.cellPutRequests.length === 0">
 							 
-							<tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
+							<!-- <tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
 								cellref="{{(cell.reference()).toString()}}"
 								ng-if="$root.useDbr && !$root.useMdxNow && !$root.isPrinting && !cell['HasPicklist'] && cell.reference().length && cell.isReadOnly   "
 								tm1-instance="{{tm1Instance}}" tm1-cube="{{cubeName}}"
 								tm1-elements='{{(cell.reference()).toString()}}'>
-							</tm1-ui-dbr>
+							</tm1-ui-dbr> -->
 							<tm1-ui-dbr ng-focus="getFocus($event);  " class="text-right" ng-blur="lostFocus($event); " ng-paste="handlePaste($event)"
 								cellref="{{(cell.reference()).toString()}}"
 								ng-if="!$root.useDbr && !$root.useMdxNow && cell['HasPicklist'] && cell.reference().length     "
