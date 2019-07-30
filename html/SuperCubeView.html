@@ -361,14 +361,14 @@
 	}
 
 	.custom-file-upload {
-		border: 1px solid #ccc;
+		border: 0px solid #ccc;
 		display: inline-block;
 		padding: 5px 5px;
 
 		cursor: pointer;
 		background-color: transparent !important;
 		color: #fff;
-		border: 1px solid #fff;
+		 
 		display: inline-block;
 		top: 0px;
 		width: 67px;
@@ -433,13 +433,13 @@
 				</span>
 				<div ng-if="!tableHide   " ng-hide="lists.cellPutRequests.length > 0 || $root.useMdxNow || hideTableUploadAsOption"
 					class="pull-left text-left"
-					style=" margin-left:0px; width:auto; overflow:hidden; height:33px; padding:5px; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
+					style=" margin-left:0px; width:auto; overflow:hidden; height:33px; padding:3px !important; color:#fff; float:left; left:0px; padding-left:0px; cursor:pointer;">
 					<input ng-style="{'pointer-events': getFileLoaded() === '' ? 'none':'auto' }"
-						style=" float: right; display: block;top: 0px; width: 200px; height:33px; margin-left:67px;  position:absolute; opacity:0;"
+						style=" float: right; display: inline-block;top: 0px; width: 100px; height:33px; margin-left:67px;  position:absolute; opacity:0;"
 						type="button" value="" ng-click="READ(file)" ng-mouseover="getFileLoaded()" />
 					<label class="custom-file-upload">
-						<span>UPLOAD</span>
-						<input type="file" id="ngexcelfile" ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()"
+						<span ng-style="{'margin-top':$root.colorHide ? '0px':'0px'}" style="padding:6px;  border:1px solid #fff;">UPLOAD</span>
+						<input type="file" style="opacity:0; width:60px;" id="ngexcelfile" ng-mouseover="getFileLoaded()" ng-mouseout="getFileLoaded()"
 							ng-change="getFileLoaded()" ng-model="file" />
 
 
@@ -953,7 +953,7 @@
 						</td>
 						<td id="headerColHeight{{tableId}}{{$index}}"   
 							 
-							ng-style="{   'width':dataWidth+'px ', 'min-width':dataWidth+'px ' , 'border': cell.cellUpdate ?  '2px solid red':'1px solid #ccc', 'border-bottom':!$root.useDbr && rowCells[$parent.$index][$index] ? '1px solid red ':''}"
+							ng-style="{   'width':dataWidth+'px ', 'min-width':dataWidth+'px ' , 'border': cell.cellUpdate ?  '1px solid #ccc':'1px solid #ccc', 'background-color': cell.cellUpdate ?  'orange':'inherit' }"
 							ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); "
 							ng-mouseover="mouseOverCellUploadedFromExcel[$parent.$index][$index] = true"
 							ng-mouseleave="mouseOverCellUploadedFromExcel[$parent.$index][$index] = false"
@@ -965,21 +965,21 @@
 								</span> -->
 								<span ng-if="cell.cellUpdate && mouseOverCellUploadedFromExcel[$parent.$index][$index]"
 								style="text-align:right; width:100%; height:auto; ">
-								<!-- <span style="color:red" ng-if="cell.cellUpdateVal < 0 && isNaN(cell.cellUpdateVal)" >({{(cell.cellUpdateVal).split('-').join('')}})</span>
+								 <!-- <span style="color:red" ng-if="cell.cellUpdateVal < 0 && isNaN(cell.cellUpdateVal)" >({{(cell.cellUpdateVal).split('-').join('')}})</span>
 											 <span style="color:#333" ng-if="cell.cellUpdateVal > 0 && isNaN(cell.cellUpdateVal)" >{{cell.cellUpdateVal}}</span>
-											 <span style="color:#333" ng-if="!isNaN(cell.cellUpdateVal)" >{{cell.cellUpdateVal}}</span> -->
-								<span ng-if="cell.cellUpdate && mouseOverCellUploadedFromExcel[$parent.$index][$index] "
+											 <span style="color:#333" ng-if="!isNaN(cell.cellUpdateVal)" >{{cell.cellUpdateVal}}</span>  -->
+								<span  
 									class="pull-left"
-									style=" padding:5px; position: flex; color:#fff;cursor:pointer; text-align:left; width:100%; height:25px; background-color:red; ">
+									style=" padding:5px; position: flex; color:#fff;cursor:pointer; text-align:left; width:100%; height:25px; background-color:orange; ">
 									<small class="pull-left" style="padding-left:5px;">New</small>
 									<i class="fa fa-times pull-right" 
 										class="pull-right text-right" 
 										ng-click="cell.cellUpdate = false; row.rowToUpdate = false; removeRecordFromList(cell); "></i>
 
 								</span>
-								<input cellref="{{(cell.reference()).toString()}}" style="font-size:1em !important; " ng-if="!isNaN(cell.cellUpdateVal)" contenteditable='true'
+								<input cellref="{{(cell.reference()).toString()}}" style="font-size:1em !important; border: 1px solid orange " ng-if="!isNaN(cell.cellUpdateVal)" contenteditable='true'
 								 type="text"
-									class="form-control text-right" ng-attr-tabindex="{{row.index}}"
+									class="form-control text-right"  ng-attr-tabindex="{{row.index}}"
 									ng-value="(cell.cellUpdateVal | number:0)" />
 
 								<input  style="font-size:1em !important; " ng-if="isNaN(cell.cellUpdateVal)" contenteditable='true'

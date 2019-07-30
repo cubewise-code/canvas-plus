@@ -894,7 +894,7 @@
                                          }
                                       }
                                       
-                                      if(scope.createRequest === true && ((vv+'').split('(').join('-')).split(')').join('') !=  scope.table.data()[currentRow].cells[colCount].value ){
+                                      if(scope.createRequest === true && (((vv+'').split('(').join('-')).split(')').join('')).split(',').join('') !=  scope.table.data()[currentRow].cells[colCount].value ){
                                         console.log(scope.table.data()[currentRow].cells[colCount].value, "@@@@");
                                         scope.table.data()[currentRow].cells[colCount].cellUpdate = true;
                                         scope.table.data()[currentRow].cells[colCount].cellUpdateVal = ((vv+'').split('(').join('-')).split(')').join('');
