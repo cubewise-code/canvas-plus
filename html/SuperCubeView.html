@@ -953,7 +953,7 @@
 						</td>
 						<td id="headerColHeight{{tableId}}{{$index}}"   
 							 
-							ng-style="{   'width':dataWidth+'px ', 'min-width':dataWidth+'px ' , 'border': cell.cellUpdate ?  '1px solid #ccc':'1px solid #ccc', 'background-color': cell.cellUpdate ?  'orange':'inherit' }"
+							ng-style="{   'width':dataWidth+'px ', 'min-width':dataWidth+'px ' , 'border': cell.cellUpdate ?  '1px solid #ccc':'1px solid #ccc', 'background-color': cell.cellUpdate ?  'orange':!cell.isReadOnly ? '#fff':'#f8f8f8' }"
 							ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); "
 							ng-mouseover="mouseOverCellUploadedFromExcel[$parent.$index][$index] = true"
 							ng-mouseleave="mouseOverCellUploadedFromExcel[$parent.$index][$index] = false"
