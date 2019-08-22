@@ -1,4 +1,7 @@
 <style type="text/css">
+	.tm1-ui-indent{
+		margin-left:3%;
+	}
 	.tm1-ui-element-consol {
 		background-color: #f8f8f8;
 
@@ -219,6 +222,7 @@
 		.responsive-text {
 			font-size: 13px;
 		}
+		
 	}
 
 	.shadow {
@@ -326,6 +330,12 @@
 
 	}
 
+	@media screen and (max-width: 614px) {
+		 
+		.tm1-ui-indent{
+			margin-left:0px;
+		}
+	}
 	@media print {}
 
 	#triangle-topleft {
@@ -388,7 +398,7 @@
 
 
 
-<div>
+<div   >
 
 	<div id="optionSection{{tableId}}" ng-show="$root.showView && !$root.isPrinting "
 		ng-style="{ 'width':getTableWidth(), 'left':tableLeft, 'top':(getTableTop()-30)+'px'}"
@@ -566,7 +576,7 @@
 
 		</span>
 		<span class="pull-right"
-			ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros'+tableId, options.suppressZeros); refresh(cubeName, cubeView)   "
+			ng-click="  options.suppressZeros = !options.suppressZeros; updateUrl('suppressZeros'+tableId, options.suppressZeros); table.refresh()   "
 			style="margin:2px; padding:5px;  display:inline-block; padding-left:10px; padding-right:10px; float:left; left:0px; cursor:pointer; ">
 			Zero Sup. <i ng-class="{'fa-toggle-off':!options.suppressZeros ,'fa-toggle-on': options.suppressZeros }"
 				class="fa "></i>
@@ -819,12 +829,12 @@
 									ng-click="  seeData($parent.$parent.$index, $index, table); " class="fa fa-caret-down fa-fw"
 									style="margin-right:5px; cursor: pointer;"></i>
 								<i ng-show="el.visible" ng-if="el.element.type == 'C' && el.element.collapsed  "
-									ng-click="seeData($parent.$parent.$index, $index,table);" class="fa fa-caret-right fa-fw"
+									ng-click="  seeData($parent.$parent.$index, $index,table) ;" class="fa fa-caret-right fa-fw"
 									style="margin-right:5px; cursor: pointer;"></i>
 							</span>
-							<span ng-show="el.visible" ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
-								<span ng-show="el.visible">
-									{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
+							<span ng-show="el.visible  || row.rowToUpdate " ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
+								<span ng-show="el.visible || row.rowToUpdate  ">
+								 {{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
 								</span>
 								<!--{{randomColor}} -->
 							</span>
@@ -945,7 +955,7 @@
 							</span> <i ng-if="el.element.type == 'C' && $index > 0" class="fa fa-angle-down fa-fw"
 								style="margin-right:5px;"></i>
 
-							<span ng-style="{'padding-right':el.element.type != 'C' ? '20px':'0px'}">
+							<span ng-style="{'padding-right':el.element.type != 'C' ? '1%':'0px'}">
 								{{el.element.attributes[$root.attributeOptions['alias'][((el['dimension'])+'')]] || el.element.attributes['alias'] || el.name || el.key}}
 
 							</span>
@@ -957,6 +967,10 @@
 							ng-right-click="  openRefModel(cell.reference().toString(), cell['HasDrillthrough']); "
 							ng-mouseover="mouseOverCellUploadedFromExcel[$parent.$index][$index] = true"
 							ng-mouseleave="mouseOverCellUploadedFromExcel[$parent.$index][$index] = false"
+							ng-mouseup="mouseUp(tableId,$parent.$index,$index ,row.index)"
+							ng-mousedown=" isKeyPressed(tableId,$parent.$index,$index,row.index); mouseDown(tableId,$parent.$index,$index,row.index);"
+							ng-mouseenter="mouseEnter(tableId,$parent.$index,$index,row.index)"
+							 
 							ng-class="{'tm1-ui-element-consol':  cell.isReadOnly  }"
 							ng-repeat="cell in row.cells track by $index" class="text-right">
 								 <!-- <span  
@@ -1001,6 +1015,7 @@
 									ng-model="cell.value " ng-paste="handlePaste($event)"
 									ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? ((cell.value) | formatPercentage:2) : (cell.value | formatPercentage:2)"
 									ng-focus="getFocus($event);  "
+									 
 									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " /> 
 
 								<!-- <input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
@@ -1033,6 +1048,7 @@
 									ng-if=" !$root.useDbr && !$root.useMdxNow &&  !cell['HasPicklist'] && !cell.isReadOnly && !row.cells[$index].isNumeric"
 									type="text" class="form-control text-left" ng-attr-tabindex="{{row.index}}" ng-model="cell.value "
 									ng-paste="handlePasteText($event)" ng-value="cell.value" ng-focus="getFocus($event);  "
+								 
 									ng-blur="lostFocus($event);   cell.value != cell.lastValue ? saveValue(cell.value, 'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index):'';    " />
 
 									<input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
@@ -1041,6 +1057,7 @@
 									type="text" class="form-control text-left" ng-attr-tabindex="{{row.index}}" ng-model="cell.value "
 									ng-paste="handlePasteText($event)" ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? ((cell.value) | formatNumber:0) : (cell.value | formatNumber:0)"
 									ng-focus="getFocus($event);  "
+									 
 									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value), 'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index):'';    " />
 
 								<!--cell.update(query)-->

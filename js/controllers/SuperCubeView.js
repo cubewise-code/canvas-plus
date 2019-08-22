@@ -1,6 +1,7 @@
 (function(){
         var app = angular.module('app');
-        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout','filterFilter', '$window','$anchorScroll','$location','$ngBootbox',  function($log, $rootScope, $tm1Ui, $timeout , $window, filterFilter, $anchorScroll,  $location, $ngBootbox ) {
+        
+        app.directive('superCubeView', ['$log','$rootScope','$tm1Ui', '$timeout', '$document','filterFilter', '$window','$anchorScroll','$location','$ngBootbox',  function($log, $rootScope, $tm1Ui, $timeout , $window, $document,  filterFilter, $anchorScroll,  $location, $ngBootbox ) {
             return {
                 templateUrl: 'html/SuperCubeView.html',
                 scope:{
@@ -1099,7 +1100,7 @@
                   if(row['cells'][cell].value === 0 || (row['cells'][cell].value+'').indexOf('5e-') > -1 || row['cells'][cell].value === 'undefined' || row['cells'][cell].value === '-' || row['cells'][cell].value === '' ){
                     zeroCounted++;
                   }else{
-                    //console.log(zeroCounted, row['cells'].length, row.elements[0].element['attributes'].Description,  row.cells, "decide to show row ")
+                     console.log(zeroCounted, row['cells'].length, row.elements[0].element['attributes'].Description,  row.cells, "decide to show row ")
                   }
                   
                 }
@@ -2909,7 +2910,105 @@
                 });
            }
           
-           
+        scope.mouseUp = function(tableid, rowindex, colindex) {
+          scope.dragging = false;
+          //console.log(tableid, rowindex, colindex);
+          
+          // Select or deselect the all class switchers
+
+          // Make sure that headers are not selected for weekdays
+            
+         
+          // Make sure that headers are not selected for hours
+         // scope.setEndCell(tableid, rowindex, colindex);
+
+
+        }
+
+        scope.mouseDown = function(tableid, rowindex, colindex, rowIndex) {
+            scope.dragging = true;
+            scope.setStartCell(tableid, rowindex, colindex, rowIndex);
+            
+            //console.log(tableid, rowindex, colindex);
+            
+             
+            
+        }
+
+      
+        scope.isKeyShift = false;
+        angular.element(document).bind('keydown', function (ev) {
+          console.log( "Event Shift is pressed", 'DOWN' ,ev.key);
+
+          if(ev.key ==="Shift"){
+            scope.isKeyShift = true;
+            
+          }else{
+         
+            scope.isKeyShift = false;
+          }
+         
+        });
+        angular.element(document).bind('keyup', function (ev) {
+          console.log( "Event Shift is pressed", "UP", ev.key);
+          if(ev.key ==="Shift"){
+            scope.isKeyShift = false;
+            
+          }else{
+         
+            scope.isKeyShift = false;
+          }
+         
+        });
+        scope.isKeyPressed = function(tableid, rowindex, colindex, rowIndex){
+          if( scope.isKeyShift === true){
+            scope.setEndCell(tableid, rowindex, colindex, rowIndex);
+            console.log( "Event Shift is pressed",scope.startRowIndex,scope.endRowIndex,  "start", scope.startCellTableId, scope.startCellRowIndex, scope.startCellColIndex,"     End: " ,scope.endCellTableId, scope.endCellRowIndex, scope.endCellColIndex, );
+            for(row in scope.table.data()){
+             console.log(row)
+            }
+          }else{
+             
+          }
+         
+
+        }
+        scope.setStartCell = function(tableid, rowindex, colindex, rowIndex) {
+            scope.startCellTableId = tableid;
+            scope.startCellRowIndex =  rowindex;
+            scope.startCellColIndex =  colindex;
+            scope.startRowIndex = rowIndex;
+
+            // (1) determine if we're removing or adding based on the start cell
+            //isRemoving = el.hasClass(cls);
+        }
+
+        scope.mouseEnter = function(tableid, rowindex, colindex, rowIndex) { 
+          if (!scope.dragging){
+            return; 
+          }else{
+            scope.setEndCell(tableid, rowindex, colindex, rowIndex); 
+          }
+        }
+
+
+        scope.setEndCell = function(tableid, rowindex, colindex, rowIndex) {
+            
+            scope.endCellTableId = tableid;
+            scope.endCellRowIndex =  rowindex;
+            scope.endCellColIndex =  colindex;
+            scope.endRowIndex = rowIndex
+            //console.log(tableid, rowindex, colindex, "element");
+        }
+
+
+      
+        
+       
+        
+
+
+
                  
                 scope.goToNewPage = function(url){
                     location.assign(url)
@@ -3048,7 +3147,7 @@
         }]);
 
 
-
+        
  
    
 })();
