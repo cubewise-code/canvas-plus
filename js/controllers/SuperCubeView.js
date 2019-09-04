@@ -91,7 +91,12 @@
                 scope.mdxIdUrlValue = decodeURI($location.search()['mdxId']); 
                 scope.useGrid = $attributes.useGrid;
                 scope.consolidatedColumnsElementNames = [];
+               
+                scope.selectedCellArray = [];
+                scope.finalarrayRowSelected = [];
+                scope.arrayCellsSelected = [];
                 
+                scope.arrayRowSelected = [];
                 if($attributes.uiProcessName && $attributes.uiProcessName != '' && $attributes.uiProcessName != null && $attributes.uiProcessName != 'undefined'  ){
                   scope.uiProcessName = $attributes.uiProcessName;
                 }
@@ -1284,7 +1289,7 @@
                 scope.focusedInputElementArray =[];
                 scope.getFocus = function($event) {           
                    scope.focusObj = $event.target.id;
-
+                   ////may be better to get the element array another way instead of from the dom
                    var focusObjId = $event.target.getAttribute('cellref');
                    scope.focusedInputElementArray =  document.getElementById($event.target.id).getAttribute('cellref');
                  // console.log("add paste event listener",$event.target.id, focusObjId, scope.focusedInputElementArray , document.getElementById($event.target.id).getAttribute('cellref'))
@@ -1555,7 +1560,7 @@
                                // console.log("dont hide",gss);
                               }
                                
-                                
+                      
                                 
                                         
                                     
@@ -1763,7 +1768,7 @@
                        "color": scope.randomColor[((rowNameFinalArray[row]+'').split(' :- ')[0])], "values":[]};
                        }
                          for(var gs = 0; gs < scope.table.data()[row].cells.length; gs++){
-                           
+                        
                            if( scope.hideColumn[scope.tableId][gs] ){  
                             // console.log("HIDE COLUMN",gs);
                              
@@ -1795,8 +1800,9 @@
                                }
                              } 
 
-                           }    
-                       }
+                           } 
+                        }   
+                      
                        var tt = JSON.stringify(cellArrayFromJson) 
                        if(scope.chartName === 'Pie'){
                           var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]); 
@@ -2224,7 +2230,7 @@
                            
                           for(row in scope.table.data()){
                            // console.log(scope.table.data()[row].elements[scope.table.data()[row].elements.length-1].element['attributes']['Color'], "Color of element")
-                           
+                         
                                                              
                               var cellArrayFromJson = [];
                               scope.charRowCount++;
@@ -2273,7 +2279,7 @@
                                     
                                     //console.log("dont hide",gs); $rootScope.attributeOptions[] 
                                   }
-                               
+                                
                                     
                                   
                                   
@@ -2285,6 +2291,7 @@
                                       
                                       
                               }
+                            
                               var tt = JSON.stringify(cellArrayFromJson) 
                               if(scope.chartName === 'Pie'){
                                  var ttT = JSON.stringify(cellArrayFromJson[scope.selectedColumnForPieChart]); 
@@ -2322,7 +2329,7 @@
              )
              
           }
-
+          
           scope.formatToHeaderName = function(number){
          //   console.log(number)
             var useNumberNew =  number ;
@@ -2912,6 +2919,7 @@
           
         scope.mouseUp = function(tableid, rowindex, colindex) {
           scope.dragging = false;
+          scope.startCellTableId = tableid;
           //console.log(tableid, rowindex, colindex);
           
           // Select or deselect the all class switchers
@@ -2921,12 +2929,13 @@
          
           // Make sure that headers are not selected for hours
          // scope.setEndCell(tableid, rowindex, colindex);
-
+          
 
         }
 
         scope.mouseDown = function(tableid, rowindex, colindex, rowIndex) {
             scope.dragging = true;
+            scope.startCellTableId = tableid;
             scope.setStartCell(tableid, rowindex, colindex, rowIndex);
             
             //console.log(tableid, rowindex, colindex);
@@ -2937,20 +2946,34 @@
 
       
         scope.isKeyShift = false;
+         scope.isKeyAlt = false;
         angular.element(document).bind('keydown', function (ev) {
           console.log( "Event Shift is pressed", 'DOWN' ,ev.key);
-
-          if(ev.key ==="Shift"){
-            scope.isKeyShift = true;
-            
-          }else{
-         
-            scope.isKeyShift = false;
-          }
+          $timeout(
+            function(){
+              if(ev.key ==="Shift"){
+                scope.isKeyShift = true;
+                
+              }else{
+                
+                scope.isKeyShift = false;
+              }
+              if(scope.isKeyShift  && ev.key ==="Alt"){
+                scope.isKeyAlt = true;
+                //console.log("Alt is pressed Down")
+              }else{
+                
+                scope.isKeyAlt = false;
+              }
+            }
+          )
+          
          
         });
         angular.element(document).bind('keyup', function (ev) {
           console.log( "Event Shift is pressed", "UP", ev.key);
+          $timeout(
+            function(){
           if(ev.key ==="Shift"){
             scope.isKeyShift = false;
             
@@ -2958,196 +2981,495 @@
          
             scope.isKeyShift = false;
           }
+          if(ev.key ==="Alt"){
+            scope.isKeyAlt = false;
+           // console.log("Alt is Up")
+          }else{
+            
+            scope.isKeyAlt = false;
+          }
+        });
          
         });
-        scope.isKeyPressed = function(tableid, rowindex, colindex, rowIndex){
+        scope.mouseMove = function(tableid, rowindex, colindex, rowIndex) {
           if( scope.isKeyShift === true){
-            scope.setEndCell(tableid, rowindex, colindex, rowIndex);
-            console.log( "Event Shift is pressed",scope.startRowIndex,scope.endRowIndex,  "start", scope.startCellTableId, scope.startCellRowIndex, scope.startCellColIndex,"     End: " ,scope.endCellTableId, scope.endCellRowIndex, scope.endCellColIndex, );
-            for(row in scope.table.data()){
-             console.log(row)
-            }
+            scope.isKeyPressed(tableid, rowindex, colindex, rowIndex); 
           }else{
+           
+          }
+        };
+
+        scope.selectAllInRow = function(table,index, rowindex, decider){
+          
+          scope.selectedCellArray[index] = [];
+         
+              if(!decider){
+                console.log(scope.selectedCellArray, "scope.selectedCellArrayscope.selectedCellArrayscope.selectedCellArray");
+                scope.selectedCellArray[index].selected = true;
+                if(scope.isKeyShift === true){
+                  scope.isKeyPressed(table,index,(scope.table.data()[row].cells.length)-1 ,rowindex)
+                }else{
+                  scope.startCellRowIndex =  index;
+                  scope.startCellColIndex =  0;
+                  scope.startRowIndex = rowindex;
+                  scope.isKeyShift = true;
+                  
+                 
+                }
+              
+                
+                
+              }else{
+                scope.selectedCellArray[index].selected = null;
+                scope.startCellRowIndex =  null;
+                scope.startCellColIndex =  null;
+                scope.startRowIndex = null;
+                  
+                scope.isKeyShift = false;
+               
+                scope.mouseUp(table,index,(scope.table.data()[row].cells.length)-1 ,rowindex)
+                 
+                  
+                    
+                
+              }
+              
+              $timeout(
+                function(){
+                  scope.exportF(); 
+                    scope.isKeyShift = false;
+                },100
+              )
+           
+          
+       
+        }
+       
+
+        
+       
+        scope.isKeyPressed = function(tableid, rowindex, colindex, rowIndex){
+          scope.startCellTableId = tableid;
+          scope.arrayCellsSelected = []; 	
+          scope.selectedCellArray = []; 
+          scope.arrayRowSelected = [];
+
+          if( scope.isKeyShift === true ){
+              
+            scope.arrayCellsSelected.pop();
+            scope.setEndCell(tableid, rowindex, colindex, rowIndex);
+            console.log(rowIndex, "row index @@@@@@@@@@@@@@@@@");
+            //console.log( "Event Shift is pressed", scope.startRowIndex,scope.endRowIndex,  "start", scope.startCellTableId, scope.startCellRowIndex, scope.startCellColIndex,"     End: " ,scope.endCellTableId, scope.endCellRowIndex, scope.endCellColIndex, );
+            for(row in scope.table.data()){
+              var rowInd = scope.table.data()[row]['index'];
              
+              scope.selectedCellArray[row] = [];
+              scope.arrayRowSelected[row] = [];
+              scope.arrayRowSelected[row].selected = false;
+              if(parseInt(scope.startCellRowIndex) < parseInt(scope.endCellRowIndex) ){
+                // is start selected row lower than end
+               
+                if(parseInt(row) >=  parseInt(scope.startCellRowIndex) && parseInt(row)  <= parseInt(scope.endCellRowIndex) && parseInt(scope.endCellColIndex) >= parseInt(scope.startCellColIndex)   ){
+                  // need to take in values in another way
+                  scope.arrayCellsSelected.push(scope.table.data()[row]['elements'][0].alias);
+                  for(col in scope.table.data()[row].cells){
+                    scope.selectedCellArray[row][col] = [];
+                    scope.selectedCellArray[row][col].selected = false;
+                
+                    if(parseInt(scope.startCellRowIndex) != parseInt(scope.endCellRowIndex)){
+                     
+                      if( parseInt(row) != parseInt(scope.startCellRowIndex) && parseInt(row) != parseInt(scope.endCellRowIndex) ){ 
+                        //console.log(scope.table.data()[row].cells[col].value, row, col)
+                       
+                            if(parseInt(col) >= parseInt(scope.startCellColIndex)  && parseInt(col) <= parseInt(scope.endCellColIndex)    ){
+                              // console.log(scope.table.data()[row].cells[col].value, row, col)
+                              scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                              scope.selectedCellArray[row][col].selected = true;
+                              scope.arrayRowSelected[row].selected = true;
+                            }else{
+
+                            }
+                          
+                      }else{
+                        
+                      if(parseInt(col) >= parseInt(scope.startCellColIndex)  && parseInt(col) <= parseInt(scope.endCellColIndex)   && parseInt(row) === parseInt(scope.startCellRowIndex) ){
+                      // console.log(scope.table.data()[row].cells[col].value, row, col)
+                          scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                          scope.selectedCellArray[row][col].selected = true;
+                          scope.arrayRowSelected[row].selected = true;
+                      }else{
+                        if( parseInt(col) >= parseInt(scope.startCellColIndex)  && parseInt(col) <= parseInt(scope.endCellColIndex)   && parseInt(row) === parseInt(scope.endCellRowIndex) ){
+                          // console.log(scope.table.data()[row].cells[col].value, row, col)
+                          scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                          scope.selectedCellArray[row][col].selected = true;
+                          scope.arrayRowSelected[row].selected = true;
+                        } 
+                      }
+                    }
+                  }else{
+                    console.log(parseInt(scope.startCellRowIndex), parseInt(scope.endCellRowIndex), "if startrow == endrow");
+                    if(parseInt(col) >= parseInt(scope.startCellColIndex) && parseInt(col) <= parseInt(scope.endCellColIndex)  ){
+                    // console.log(scope.table.data()[row].cells[col].value, row, col)
+                    scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                    scope.selectedCellArray[row][col].selected = true;
+                    scope.arrayRowSelected[row].selected = true;
+                    } 
+
+                  } 
+                }
+                }else{
+                  if(parseInt(row) >=  parseInt(scope.startCellRowIndex) && parseInt(row)  <= parseInt(scope.endCellRowIndex) && parseInt(scope.endCellColIndex) < parseInt(scope.startCellColIndex)   ){
+                    scope.arrayCellsSelected.push(scope.table.data()[row]['elements'][0].alias);
+                    for(col in scope.table.data()[row].cells){
+                      scope.selectedCellArray[row][col] = [];
+                      scope.selectedCellArray[row][col].selected = false;
+                  
+                      if(parseInt(scope.startCellRowIndex) != parseInt(scope.endCellRowIndex)){
+                       
+                        if( parseInt(row) != parseInt(scope.startCellRowIndex) && parseInt(row) != parseInt(scope.endCellRowIndex) ){ 
+                          //console.log(scope.table.data()[row].cells[col].value, row, col)
+                         
+                              if(parseInt(col) <= parseInt(scope.startCellColIndex)  && parseInt(col) >= parseInt(scope.endCellColIndex)    ){
+                                // console.log(scope.table.data()[row].cells[col].value, row, col)
+                                scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                                scope.selectedCellArray[row][col].selected = true;
+                                scope.arrayRowSelected[row].selected = true;
+                              }else{
+  
+                              }
+                            
+                        }else{
+                          
+                        if(parseInt(col) <= parseInt(scope.startCellColIndex)  && parseInt(col) >= parseInt(scope.endCellColIndex)   && parseInt(row) === parseInt(scope.startCellRowIndex) ){
+                        // console.log(scope.table.data()[row].cells[col].value, row, col)
+                            scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                            scope.selectedCellArray[row][col].selected = true;
+                            scope.arrayRowSelected[row].selected = true;
+                        }else{
+                          if( parseInt(col) <= parseInt(scope.startCellColIndex)  && parseInt(col) >= parseInt(scope.endCellColIndex)   && parseInt(row) === parseInt(scope.endCellRowIndex) ){
+                            // console.log(scope.table.data()[row].cells[col].value, row, col)
+                            scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                            scope.selectedCellArray[row][col].selected = true;
+                            scope.arrayRowSelected[row].selected = true;
+                          } 
+                        }
+                      }
+                    }else{
+                      console.log(parseInt(scope.startCellRowIndex), parseInt(scope.endCellRowIndex), "if startrow == endrow");
+                      if(parseInt(col) >= parseInt(scope.startCellColIndex) && parseInt(col) <= parseInt(scope.endCellColIndex)  ){
+                      // console.log(scope.table.data()[row].cells[col].value, row, col)
+                      scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                      scope.selectedCellArray[row][col].selected = true;
+                      scope.arrayRowSelected[row].selected = true;
+                      } 
+  
+                    } 
+                  }
+                  }
+                  
+                }
+              }else{
+             
+                if( parseInt(scope.endCellRowIndex) < parseInt(scope.startCellRowIndex)  ){
+                 
+                //is start selected row is higher than end
+                if(parseInt(row) >= parseInt(scope.endCellRowIndex) && parseInt(row) <= parseInt(scope.startCellRowIndex ) && parseInt(scope.endCellColIndex) <= parseInt(scope.startCellColIndex)  ){
+                  
+                  for(col in scope.table.data()[row].cells){
+                    scope.selectedCellArray[row][col] = [];
+                    
+                    scope.selectedCellArray[row][col].selected = false;
+                    
+                      if( parseInt(row) != parseInt(scope.endCellRowIndex) && parseInt(row) != parseInt(scope.startCellRowIndex)    ){ 
+                        
+                        if(parseInt(col) <= parseInt(scope.startCellColIndex)  && parseInt(col) >= parseInt(scope.endCellColIndex)    ){
+                            //console.log(scope.table.data()[row].cells[col].value, row, col)
+                            
+                            scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                            scope.selectedCellArray[row][col].selected = true;
+                            scope.arrayRowSelected[row].selected = true;
+                        } 
+                      }else{
+                        
+                        if( parseInt(row) === parseInt(scope.endCellRowIndex) && parseInt(col) >= parseInt(scope.endCellColIndex) && parseInt(col) <= parseInt(scope.startCellColIndex)   ){
+                        // console.log(scope.table.data()[row].cells[col].value, row, col)
+                            scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                            scope.selectedCellArray[row][col].selected = true;
+                            scope.arrayRowSelected[row].selected = true;
+                        }else{
+                          if(  parseInt(row) === parseInt(scope.startCellRowIndex) && parseInt(col) <= parseInt(scope.startCellColIndex) && parseInt(col) >= parseInt(scope.endCellColIndex)  ){
+                            // console.log(scope.table.data()[row].cells[col].value, row, col)
+                            scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                            scope.selectedCellArray[row][col].selected = true;
+                            scope.arrayRowSelected[row].selected = true;
+                          }
+                        }
+                      }
+                    } 
+                  }else{
+                    if(parseInt(row) >= parseInt(scope.endCellRowIndex) && parseInt(row) <= parseInt(scope.startCellRowIndex ) && parseInt(scope.endCellColIndex) >= parseInt(scope.startCellColIndex)  ){
+                      
+                      
+                        for(col in scope.table.data()[row].cells){
+                        scope.selectedCellArray[row][col] = [];
+                        
+                        scope.selectedCellArray[row][col].selected = false;
+                        
+                          if( parseInt(row) != parseInt(scope.endCellRowIndex) && parseInt(row) != parseInt(scope.startCellRowIndex)    ){ 
+                            
+                            if(parseInt(col) >= parseInt(scope.startCellColIndex)  && parseInt(col) <= parseInt(scope.endCellColIndex)    ){
+                                //console.log(scope.table.data()[row].cells[col].value, row, col)
+                                
+                                scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                                scope.selectedCellArray[row][col].selected = true;
+                                scope.arrayRowSelected[row].selected = true;
+                            } 
+                          }else{
+                            
+                            if( parseInt(row) === parseInt(scope.endCellRowIndex) && parseInt(col) >= parseInt(scope.startCellColIndex) && parseInt(col) <= parseInt(scope.endCellColIndex)   ){
+                            // console.log(scope.table.data()[row].cells[col].value, row, col)
+                                scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                                scope.selectedCellArray[row][col].selected = true;
+                                scope.arrayRowSelected[row].selected = true;
+                            }else{
+                              if(  parseInt(row) === parseInt(scope.startCellRowIndex) && parseInt(col) >= parseInt(scope.startCellColIndex) && parseInt(col) <= parseInt(scope.endCellColIndex)  ){
+                                // console.log(scope.table.data()[row].cells[col].value, row, col)
+                                scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                                scope.selectedCellArray[row][col].selected = true;
+                                scope.arrayRowSelected[row].selected = true;
+                              }
+                            }
+                          }
+                        } 
+
+
+                    }
+                  }
+                }else{
+                  console.log('start =  end');
+                  //even start selected and finish row
+                  if( parseInt(row) === parseInt(scope.startCellRowIndex) && parseInt(row) === parseInt(scope.endCellRowIndex)   ){
+                    for(col in scope.table.data()[row].cells){
+                      scope.selectedCellArray[row][col] = [];
+                      scope.selectedCellArray[row][col].selected = false;
+                     
+                    
+                      if(parseInt(scope.startCellColIndex)  <= parseInt(scope.endCellColIndex)  ){
+                        if(parseInt(col) >= parseInt(scope.startCellColIndex) && parseInt(col) <= parseInt(scope.endCellColIndex) ){
+                          // console.log(scope.table.data()[row].cells[col].value, row, col)
+                              scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                              scope.selectedCellArray[row][col].selected = true;
+                              scope.arrayRowSelected[row].selected = true;
+                          } 
+                      }else{
+                        if(parseInt(scope.startCellColIndex) > parseInt(scope.endCellColIndex)  ){
+                          if(parseInt(col) >= parseInt(scope.endCellColIndex) && parseInt(col) <= parseInt(scope.startCellColIndex)     ){
+                          // console.log(scope.table.data()[row].cells[col].value, row, col)
+                              scope.arrayCellsSelected.push(scope.table.data()[row].cells[col].value);
+                              scope.selectedCellArray[row][col].selected = true;
+                              scope.arrayRowSelected[row].selected = true;
+                          }
+                        }
+                      }  
+                    }
+                  }
+                }
+              } 
+            }
+          } 
+          //scope.writeClipboard( scope.arrayCellsSelected );
+          //console.log(scope.arrayCellsSelected, scope.selectedCellArray)
+          if(scope.arrayCellsSelected.length > 0 && scope.arrayCellsSelected.length  ){
+            scope.exportF(); 
+          }else{ 
           }
          
+        }
+        scope.exportF = function(elem) {
+            var table = document.getElementById('excelCopy');
+            var html = table.outerHTML;
+            //var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
+            scope.writeClipboard( html);
+            //window.open(url);
+             
 
+           // return false;
+          
+        }
+        scope.writeClipboard = function(text){
+            
+              if (!navigator.clipboard) {
+                //fallbackCopyTextToClipboard(text);
+                return;
+              }
+              
+              navigator.clipboard.writeText(text).then(function() {
+                console.log('Async: Copying to clipboard was successful!');
+              }, function(err) {
+                console.error('Async: Could not copy text: ', err);
+              });
+          
         }
         scope.setStartCell = function(tableid, rowindex, colindex, rowIndex) {
-            scope.startCellTableId = tableid;
-            scope.startCellRowIndex =  rowindex;
-            scope.startCellColIndex =  colindex;
-            scope.startRowIndex = rowIndex;
-
-            // (1) determine if we're removing or adding based on the start cell
-            //isRemoving = el.hasClass(cls);
+            if( scope.isKeyShift === true){
+          
+            }else{
+              scope.startCellTableId = tableid;
+              scope.startCellRowIndex =  rowindex;
+              scope.startCellColIndex =  colindex;
+              scope.startRowIndex = rowIndex;
+            }
+              // (1) determine if we're removing or adding based on the start cell
+              //isRemoving = el.hasClass(cls);
         }
 
         scope.mouseEnter = function(tableid, rowindex, colindex, rowIndex) { 
-          if (!scope.dragging){
-            return; 
-          }else{
-            scope.setEndCell(tableid, rowindex, colindex, rowIndex); 
-          }
+            if (!scope.dragging){
+              return; 
+            }else{
+              scope.setEndCell(tableid, rowindex, colindex, rowIndex); 
+            }
         }
 
 
         scope.setEndCell = function(tableid, rowindex, colindex, rowIndex) {
-            
-            scope.endCellTableId = tableid;
-            scope.endCellRowIndex =  rowindex;
-            scope.endCellColIndex =  colindex;
-            scope.endRowIndex = rowIndex
-            //console.log(tableid, rowindex, colindex, "element");
+              
+              scope.endCellTableId = tableid;
+              scope.endCellRowIndex =  rowindex;
+              scope.endCellColIndex =  colindex;
+              scope.endRowIndex = rowIndex;
+              //console.log(tableid, rowindex, colindex, "element");
         }
-
-
-      
-        
-       
-        
-
-
-
-                 
-                scope.goToNewPage = function(url){
-                    location.assign(url)
-                }
-                scope.rowsToDisplay = function(){
-                    var count = 0;
-                    var obg = scope.table.data();
-                    var arrayOfAliasAndNames = [];
-                    for(row in obg){
-                        
-                        if(obg[row].elements[0].element.attributes['Description']){
-                             arrayOfAliasAndNames = obg[row].elements[0].element.attributes['Description'].toLowerCase()+" "+obg[row].elements[0].element.name +''+obg[row].elements[0].element.alias;
-                        }else{
-                            arrayOfAliasAndNames = ""+obg[row].elements[0].element.name+" ";
-                        }
-                         
-                        if(scope.selections.searchRows[scope.tableId] && (arrayOfAliasAndNames).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) > -1){
-                           
-                            count++;
-                           // console.log("rows to display",  arrayOfAliasAndNames, (arrayOfAliasAndNames).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) );
-                        }else{
-                            
-                        }
-                    }
-                   
-                    return count;
-                }
-                 
-
-                $(window).resize(function() { 
-                  if( scope.api){
-                    scope.api.refresh()
-                  }
-                  if(scope.chartVisible  ){
-                    if(scope.chartHeight){
-                      scope.offsetTop = (( scope.chartHeight));
-                    }else{
-                      scope.offsetTop = ((window.innerHeight /2));
-                    }
-                    
-
-                  }else{
-                    scope.offsetTop = 1;
-                  }
-                  
-                            scope.innerHeight = window.innerHeight;
-                            scope.innerWidth =  window.innerWidth;
-                    
-                });
+          
+        scope.goToNewPage = function(url){
+            location.assign(url)
+        }
+        scope.rowsToDisplay = function(){
+            var count = 0;
+            var obg = scope.table.data();
+            var arrayOfAliasAndNames = [];
+            for(row in obg){
                 
-                scope.$watch(function () {
-                  return $attributes.attributeOptions;
+                if(obg[row].elements[0].element.attributes['Description']){
+                      arrayOfAliasAndNames = obg[row].elements[0].element.attributes['Description'].toLowerCase()+" "+obg[row].elements[0].element.name +''+obg[row].elements[0].element.alias;
+                }else{
+                    arrayOfAliasAndNames = ""+obg[row].elements[0].element.name+" ";
+                }
                   
-                  }, function (newValue, oldValue) { 
-                      if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                      //console.log(newValue, "attribute changes inside directive");
-                        scope.attributeOptions = newValue;
-                        scope.refresh(scope.cubeName, scope.cubeView)
-                      }
-                     
-                              
-                  })
-
-                  scope.$watch(function () {
-                    return $attributes.cubeMdxParams;
+                if(scope.selections.searchRows[scope.tableId] && (arrayOfAliasAndNames).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) > -1){
                     
-                    }, function (newValue, oldValue) { 
-                      if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                      //   console.log(newValue, "mdx attributes changed inside directive");
-                          
-                          scope.cubeMdxParams = JSON.parse(newValue)
-                          scope.refresh(scope.cubeName, scope.cubeMdx)
-                      }
-                                
-                    })
-  
-                scope.$watch(function () {
-                    return $attributes.tableWidth;
+                    count++;
+                    // console.log("rows to display",  arrayOfAliasAndNames, (arrayOfAliasAndNames).indexOf((scope.selections.searchRows[scope.tableId]).toLowerCase()) );
+                }else{
                     
-                    }, function (newValue, oldValue) { 
-                        if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                          //console.log(newValue, "Year changes inside directive");
+                }
+            }
+            
+            return count;
+        }
+        
 
-                        }
-                       
-                                
-                    })
-                    scope.$watch(function () {
-                      return $attributes.cubeView;
+        $(window).resize(function() { 
+          if( scope.api){
+            scope.api.refresh()
+          }
+          if(scope.chartVisible  ){
+            if(scope.chartHeight){
+              scope.offsetTop = (( scope.chartHeight));
+            }else{
+              scope.offsetTop = ((window.innerHeight /2));
+            }
+            
+
+          }else{
+            scope.offsetTop = 1;
+          }
+          
+                    scope.innerHeight = window.innerHeight;
+                    scope.innerWidth =  window.innerWidth;
+            
+        });
+        
+        scope.$watch(function () {
+        return $attributes.attributeOptions;
+        
+        }, function (newValue, oldValue) { 
+            if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+            //console.log(newValue, "attribute changes inside directive");
+              scope.attributeOptions = newValue;
+              scope.refresh(scope.cubeName, scope.cubeView)
+            }
+            
+                    
+        })
+
+        scope.$watch(function () {
+        return $attributes.cubeMdxParams;
+        
+        }, function (newValue, oldValue) { 
+          if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+          //   console.log(newValue, "mdx attributes changed inside directive");
+              
+              scope.cubeMdxParams = JSON.parse(newValue)
+              scope.refresh(scope.cubeName, scope.cubeMdx)
+          }
+                    
+        })
+
+        scope.$watch(function () {
+          return $attributes.tableWidth;
+          
+        }, function (newValue, oldValue) { 
+            if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+              //console.log(newValue, "Year changes inside directive");
+
+            }
+            
                       
-                      }, function (newValue, oldValue) { 
-                          if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                           //console.log(newValue, "cube View has changed inside watch");
-                              scope.cubeView = newValue;
-                              scope.selections.searchRows[scope.tableId] = '';
-                              if($rootScope.isPrinting){
-                                scope.currentRowCount = 10000;
-                                
-                               }else{
-                                scope.currentRowCount = scope.rowsToLoad;
-                               }
-                              scope.refresh(scope.cubeName, newValue);
-                          }
-                         
-                                  
-                      })
-
-                      scope.$watch(function () {
-                        return $attributes.cubeName;
-                        
-                        }, function (newValue, oldValue) { 
-                            if(newValue != '' && newValue != oldValue && oldValue != 'undefined' && oldValue != null){
-                             //console.log(newValue, "cube Name has changed inside watch");
-                               scope.cubeName = newValue;
-                               $location.search('cubeName', newValue); 
-                               scope.selections.searchRows[scope.tableId] = '';
-                               if($rootScope.isPrinting){
-                                scope.currentRowCount = 10000;
-                               }else{
-                                scope.currentRowCount = scope.rowsToLoad;
-                               }
-                               
-                               scope.refresh(newValue, scope.cubeView)
-                            }
-                           
-                                    
-                        })
-
-
- 
+        })
+        scope.$watch(function () {
+            return $attributes.cubeView;
+            
+            }, function (newValue, oldValue) { 
+                if(newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                  //console.log(newValue, "cube View has changed inside watch");
+                    scope.cubeView = newValue;
+                    scope.selections.searchRows[scope.tableId] = '';
+                    if($rootScope.isPrinting){
+                      scope.currentRowCount = 10000;
+                      
+                      }else{
+                      scope.currentRowCount = scope.rowsToLoad;
+                      }
+                    scope.refresh(scope.cubeName, newValue);
                 }
-
-
                 
-            };
-        }]);
+                        
+          })
 
-
-        
+        scope.$watch(function () {
+          return $attributes.cubeName;
+          
+          }, function (newValue, oldValue) { 
+              if(newValue != '' && newValue != oldValue && oldValue != 'undefined' && oldValue != null){
+                //console.log(newValue, "cube Name has changed inside watch");
+                  scope.cubeName = newValue;
+                  $location.search('cubeName', newValue); 
+                  scope.selections.searchRows[scope.tableId] = '';
+                  if($rootScope.isPrinting){
+                  scope.currentRowCount = 10000;
+                  }else{
+                  scope.currentRowCount = scope.rowsToLoad;
+                  }
+                  
+                  scope.refresh(newValue, scope.cubeView)
+              }
+              
+                      
+        })
  
-   
+      }           
+    };
+  }]);
+
 })();

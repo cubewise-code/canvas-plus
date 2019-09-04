@@ -45,6 +45,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout, $l
      
     $rootScope.attributeOptions = {"alias": {"Year":"Financial Year","Region":"Description" ,"Account": 'Description', "Period": 'Short Description', "Department": 'Description', "Product":"Code&Description", "Version": 'Caption_Default', "Employee": 'Full Name'} }
     $scope.startAllFiltersAreHere = function(){
+        $rootScope.filters = 'Year: '+$rootScope.selections.year +" | Region: "+$rootScope.selections.region+" | Department: "+$rootScope.selections.department+"";
         $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
 
         //console.log($rootScope.mdxParameters);
@@ -61,7 +62,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout, $l
              //console.log(newValue, "mdx attributes changed inside directive");
               
              $rootScope.mdxParameters =  {parameters: {Year:newValue, Region:$rootScope.selections.region,Department:$rootScope.selections.department}}
-
+             $rootScope.filters = 'Year: '+newValue +" | Region: "+$rootScope.selections.region+" | Department: "+$rootScope.selections.department+"";
             }
                     
         })
@@ -73,7 +74,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout, $l
                //  console.log(newValue, "mdx attributes changed inside directive");
                   
                  $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:newValue, Department:$rootScope.selections.department}}
-    
+                 $rootScope.filters = 'Year: '+$rootScope.selections.year +" | Region: "+newValue+" | Department: "+$rootScope.selections.department+"";
                 }
                         
             })
@@ -85,7 +86,7 @@ function($scope,  $rootScope, $log, $tm1Ui, $localStorage, $window, $timeout, $l
                  //    console.log(newValue, "mdx attributes changed inside directive");
                       
                      $rootScope.mdxParameters =  {parameters: {Year:$rootScope.selections.year, Region:$rootScope.selections.region, Department:newValue}}
-        
+                     $rootScope.filters = 'Year: '+$rootScope.selections.year +" | Region: "+$rootScope.selections.region+" | Department: "+newValue+"";
                     }
                             
                 })

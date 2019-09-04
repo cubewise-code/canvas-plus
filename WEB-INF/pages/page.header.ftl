@@ -389,7 +389,7 @@
             {{$root.defaults.year}} | 
             <tm1-ui-dbra tm1-instance="{{$root.defaults.settingsInstance}}" tm1-dimension="Region" tm1-element="{{$root.defaults.region}}" tm1-attribute="Description"  ng-model="$root.defaults.regionName" 
              tm1-read-only="true"></tm1-ui-dbra> <span ng-if=" $root.defaults.regionName " ng-init=" $root.getWeather($root.defaults.regionName, $root.user.FriendlyName);"></span>| 
-            <tm1-ui-dbra tm1-instance="{{$root.defaults.settingsInstance}}" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category" tm1-read-only="true"></tm1-ui-dbra> 
+            <tm1-ui-dbra ng-if="$root.defaults.department" tm1-instance="{{$root.defaults.settingsInstance}}" tm1-dimension="Department" tm1-element="{{$root.defaults.department}}" tm1-attribute="Product Category"  ng-model="$root.defaults.departmentName" tm1-read-only="true"></tm1-ui-dbra> 
             
         </span>
       
