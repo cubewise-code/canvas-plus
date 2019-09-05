@@ -1023,8 +1023,10 @@
 									type="text" class="form-control text-right" tm1-ui-format-number="0" ng-attr-tabindex="{{row.index}}"
 									ng-model="cell.value " ng-paste="handlePaste($event)"
 									ng-value="focusObj === 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index ? ((cell.value) | formatPercentage:2) : (cell.value | formatPercentage:2)"
-									ng-focus="getFocus($event);  " 
-									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " /> 
+									ng-focus="getFocus($event);  isKeyPressed(tableId,$parent.$index,$index,row.index); " 
+									ng-blur="lostFocus($event); cell.value != '' && cell.value != cell.lastValue ? saveValue((cell.value/100), 'input-'+tableId+'-'+$parent.$parent.$index+'-'+$index):'';    " 
+									
+									/> 
 
 								<!-- <input style="font-size:1em !important;" cellref="{{(cell.reference()).toString()}}"
 									contenteditable='true' id="{{'input-'+tableId+'-'+$parent.$parent.$parent.$index+'-'+$index}}"
