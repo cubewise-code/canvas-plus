@@ -32,7 +32,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
     $scope.print={};
     $scope.print.pageOrientation = "Landscape";
     $scope.print.pageSize = "A3";
-
+    $rootScope.filters = '';
     $rootScope.desktop = false;
      
         var ua = navigator.userAgent;
@@ -333,16 +333,16 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
 
                 $rootScope.values.user = data;
                 
+
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "year", {"tm1Dimension":"Year", "tm1Alias":"Caption_Default"});
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "region", {"tm1Dimension":"Region", "tm1Alias":"Description"});
                 globals.updateSettings($rootScope.values, $rootScope.defaults, $rootScope.selections, "department", {"tm1Dimension":"Department", "tm1Alias":"Description"});
-            
-                 
+                $rootScope.filters = 'Year: '+$rootScope.defaults.year +" | Region: "+$rootScope.defaults.region+" | Department: "+ $rootScope.defaults.departmentName+"";
             
             });   
             
         }
-            
+         
             //Initialize all variables
         $scope.updateSettings = function (values, defaults, selections, parameter, options){
                
@@ -350,7 +350,7 @@ function($scope, $rootScope, $log, $tm1Ui, $transitions,$location, $timeout, glo
           
             globals.updateSettings(values, defaults, selections, parameter, options); 
             $rootScope.getWeather($rootScope.defaults.regionName, $rootScope.user.FriendlyName);
-            
+            $rootScope.filters = 'Year: '+$rootScope.defaults.year +" | Region: "+$rootScope.defaults.regionName+" | Department: "+ $rootScope.defaults.departmentName+"";
             // $rootScope.refreshCalendar();
             //console.log($scope.defaults.year, $scope.defaults.version, $scope.defaults.region, $scope.defaults.department, $scope.defaults.homeSubset, $scope.defaults.homeAccount);
           
@@ -807,5 +807,6 @@ app.filter('capitalize', function() {
       return   stringTotest;
    }
 });
+ 
 
  
